@@ -20,14 +20,8 @@ if (isset($_POST['login'])) {
             echo "<script type='text/javascript'> document.location = 'index.php'; </script>";
         }
     } else {
-        // if (password_verify($_POST['password'], $hash == false)) {
-        //     echo "<script>alert('Incorrect Password');</script>";
-        // }
-        // else {
-        //     echo "<script>alert('Incorrect Email');</script>";
-        // }
 
-        echo "<script>alert('Invalid Details');</script>";
+        echo "<script>alert('Incorrect Email Address or Password');</script>";
     }
 }
 ?>
