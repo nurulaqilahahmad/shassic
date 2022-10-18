@@ -3,31 +3,24 @@ session_start();
 include('includes/config.php');
 
 if (isset($_POST['login'])) {
+    //getting the post values
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $hash = password_hash($password, PASSWORD_DEFAULT);
 
     //Query for searching data
-    $sql = "SELECT email, password FROM user WHERE email=:email and password=:password";
+    $sql = "SELECT * FROM user WHERE email=:email and password=:password";
     $query = $dbh->prepare($sql);
     $query->bindParam(':email', $email, PDO::PARAM_STR);
     $query->bindParam(':password', $password, PDO::PARAM_STR);
     $query->execute();
     $results = $query->fetchAll(PDO::FETCH_OBJ);
     if ($query->rowCount() > 0) {
-        if (password_verify($password, $results['password'])) {
+        if (password_verify($password, $results["password"])) {
             $_SESSION['login'] = $_POST['email'];
             echo "<script type='text/javascript'> document.location = 'index.php'; </script>";
         }
-    } else {
-        // if (password_verify($_POST['password'], $hash == false)) {
-        //     echo "<script>alert('Incorrect Password');</script>";
-        // }
-        // else {
-        //     echo "<script>alert('Incorrect Email');</script>";
-        // }
-
-        echo "<script>alert('Invalid Details');</script>";
+    }else {
+        echo "<script>alert('Incorrect Email Address or Password');</script>";
     }
 }
 ?>
@@ -43,7 +36,7 @@ if (isset($_POST['login'])) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Login</title>
+    <title>SHASSIC | Log In</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -73,9 +66,9 @@ if (isset($_POST['login'])) {
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form class="user" method="POST" action="index.html">
+                                    <form class="user" method="POST">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Email Address">
+                                            <input type="email" class="form-control form-control-user" id="email" name="email" aria-describedby="emailHelp" placeholder="Email Address" required>
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password" required>
@@ -91,20 +84,20 @@ if (isset($_POST['login'])) {
                                         <!-- <a href="index.html" class="btn btn-primary btn-user btn-block">
                                             Login
                                         </a>
-                                        <!-- <hr>
+                                        <hr>
                                         <a href="index.html" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google
                                         </a>
                                         <a href="index.html" class="btn btn-facebook btn-user btn-block">
                                             <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                        </a>
+                                        </a> -->
                                     </form>
                                     <hr>
                                     <div class="text-center">
                                         <a class="small" href="forgot-password.html">Forgot Password?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="register.html">Create an Account!</a>
+                                        <a class="small" href="register.php">Create an Account!</a>
                                     </div>
                                 </div>
                             </div>
