@@ -1,7 +1,35 @@
 <?php
 session_start();
-error_reporting(0);
 include('includes/config.php');
+
+if (isset($_POST['login'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    $hash = password_hash($password, PASSWORD_DEFAULT);
+
+    //Query for searching data
+    $sql = "SELECT email, password FROM user WHERE email=:email and password=:password";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':email', $email, PDO::PARAM_STR);
+    $query->bindParam(':password', $password, PDO::PARAM_STR);
+    $query->execute();
+    $results = $query->fetchAll(PDO::FETCH_OBJ);
+    if ($query->rowCount() > 0) {
+        if (password_verify($password, $results['password'])) {
+            $_SESSION['login'] = $_POST['email'];
+            echo "<script type='text/javascript'> document.location = 'index.php'; </script>";
+        }
+    } else {
+        // if (password_verify($_POST['password'], $hash == false)) {
+        //     echo "<script>alert('Incorrect Password');</script>";
+        // }
+        // else {
+        //     echo "<script>alert('Incorrect Email');</script>";
+        // }
+
+        echo "<script>alert('Invalid Details');</script>";
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -15,7 +43,7 @@ include('includes/config.php');
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SHASSIC Assessment</title>
+    <title>SB Admin 2 - Login</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -45,12 +73,12 @@ include('includes/config.php');
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form class="user">
+                                    <form class="user" method="POST" action="index.html">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address...">
+                                            <input type="email" class="form-control form-control-user" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Email Address">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Password">
+                                            <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password" required>
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
@@ -59,10 +87,11 @@ include('includes/config.php');
                                                     Me</label>
                                             </div>
                                         </div>
-                                        <a href="index.html" class="btn btn-primary btn-user btn-block">
+                                        <button type="submit" class="btn btn-primary btn-user btn-block" name="login">Log In</button>
+                                        <!-- <a href="index.html" class="btn btn-primary btn-user btn-block">
                                             Login
                                         </a>
-                                        <hr>
+                                        <!-- <hr>
                                         <a href="index.html" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google
                                         </a>

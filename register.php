@@ -1,6 +1,5 @@
 <?php
 session_start();
-error_reporting(0);
 include('includes/config.php');
 
 if (isset($_POST['submit'])) {
@@ -44,7 +43,7 @@ if (isset($_POST['submit'])) {
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Register</title>
+    <title>SHASSIC | Register</title>
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -71,21 +70,21 @@ if (isset($_POST['submit'])) {
                             </div>
                             <form class="user" method="POST">
                                 <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" name="fullname" id="fullname" placeholder="Full Name">
+                                    <input type="text" class="form-control form-control-user" name="fullname" id="fullname" placeholder="Full Name" required>
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" name="username" id="username" placeholder="Username">
+                                        <input type="text" class="form-control form-control-user" name="username" id="username" placeholder="Username" required>
                                     </div>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" name="code" id="code" placeholder="Code">
+                                        <input type="text" class="form-control form-control-user" name="code" id="code" placeholder="Code" required>
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Email Address">
+                                    <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Email Address" required>
                                 </div>
                                 <div class="form-group">
-                                    <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password">
+                                    <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password" required>
                                 </div>
                                 <!-- <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
