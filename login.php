@@ -15,7 +15,7 @@ if (isset($_POST['login'])) {
     $query->execute();
     $results = $query->fetchAll(PDO::FETCH_OBJ);
     if ($query->rowCount() > 0) {
-        if (password_verify($password, $results['password'])) {
+        if (password_verify($password, $hash)) {
             $_SESSION['login'] = $_POST['email'];
             echo "<script type='text/javascript'> document.location = 'index.php'; </script>";
         }
