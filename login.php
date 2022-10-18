@@ -15,7 +15,7 @@ if (isset($_POST['login'])) {
     $query->execute();
     $results = $query->fetchAll(PDO::FETCH_OBJ);
     if ($query->rowCount() > 0) {
-        if (password_verify($password, $hash)) {
+        if (password_verify($password, $results['password'])) {
             $_SESSION['login'] = $_POST['email'];
             echo "<script type='text/javascript'> document.location = 'index.php'; </script>";
         }
@@ -91,13 +91,13 @@ if (isset($_POST['login'])) {
                                         <!-- <a href="index.html" class="btn btn-primary btn-user btn-block">
                                             Login
                                         </a>
-                                        <!-- <hr>
+                                        <hr>
                                         <a href="index.html" class="btn btn-google btn-user btn-block">
                                             <i class="fab fa-google fa-fw"></i> Login with Google
                                         </a>
                                         <a href="index.html" class="btn btn-facebook btn-user btn-block">
                                             <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                        </a>
+                                        </a> -->
                                     </form>
                                     <hr>
                                     <div class="text-center">
