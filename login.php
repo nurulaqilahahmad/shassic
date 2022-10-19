@@ -3,23 +3,19 @@ session_start();
 include('includes/config.php');
 
 if (isset($_POST['login'])) {
-    //getting the post values
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    //Query for searching data
-    $sql = "SELECT * FROM user WHERE email=:email and password=:password";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':email', $email, PDO::PARAM_STR);
-    $query->bindParam(':password', $password, PDO::PARAM_STR);
-    $query->execute();
-    $results = $query->fetchAll(PDO::FETCH_OBJ);
-    if ($query->rowCount() > 0) {
-        if (password_verify($password, $results["password"])) {
-            $_SESSION['login'] = $_POST['email'];
-            echo "<script type='text/javascript'> document.location = 'index.php'; </script>";
-        }
-    }else {
+    $sql = "SELECT * FROM user WHERE email = ?";
+    $result = $dbh->prepare($sql);
+    $result->bindParam(1, $email);
+    $result->execute();
+
+    $user = $result->fetch();
+
+    if (password_verify($password, $user['password'])) {
+        echo "<script type='text/javascript'> document.location = 'index.php'; </script>";
+    } else {
         echo "<script>alert('Incorrect Email Address or Password');</script>";
     }
 }
@@ -66,7 +62,7 @@ if (isset($_POST['login'])) {
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                                     </div>
-                                    <form class="user" method="POST">
+                                    <form class="user" action="login.php" method="post">
                                         <div class="form-group">
                                             <input type="email" class="form-control form-control-user" id="email" name="email" aria-describedby="emailHelp" placeholder="Email Address" required>
                                         </div>
@@ -81,16 +77,6 @@ if (isset($_POST['login'])) {
                                             </div>
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block" name="login">Log In</button>
-                                        <!-- <a href="index.html" class="btn btn-primary btn-user btn-block">
-                                            Login
-                                        </a>
-                                        <hr>
-                                        <a href="index.html" class="btn btn-google btn-user btn-block">
-                                            <i class="fab fa-google fa-fw"></i> Login with Google
-                                        </a>
-                                        <a href="index.html" class="btn btn-facebook btn-user btn-block">
-                                            <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
-                                        </a> -->
                                     </form>
                                     <hr>
                                     <div class="text-center">
