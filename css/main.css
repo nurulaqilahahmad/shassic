@@ -6,6 +6,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Poppins', sans-serif;
+    scroll-behavior: smooth;
 }
 
 body {
@@ -17,14 +18,15 @@ body {
 /* Header*/
 #header {
     position: absolute;
-    top: 0;
-    left: 0;
+    /* top: 0;
+    left: 0; */
     width: 100%;
     padding: 30px 80px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 1000;
+    background: transparent;
 }
 
 #header .logo {
@@ -32,6 +34,7 @@ body {
     font-weight: 800;
     font-size: 2em;
     text-decoration: none;
+    margin-right: auto;
 }
 
 #header ul li {
@@ -58,68 +61,105 @@ body {
     border-radius: 20px;
 }
 
-.navigation li a:hover,
+.navigation li a:hover {
+    background: #558381;
+    color: #fff;
+}
 .navigation li a.active {
     background: #112434;
     color: #fff;
 }
 
 /*1st Section*/
-.parallax {
+section{
     position: relative;
-    width: 100%;
-    min-height: 100vh;
+    height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
-.parallax img {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
+/* .parallax {
+    position: relative;
     width: 100%;
-    height: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+} */
+
+.parallax img{
+    position: absolute;
+    padding-top: 400px;
+    /* top: 0;
+    bottom: 0;
+    left: 0; */
+    /* width: 100%;
+    height: 200%; */
     pointer-events: none;
+    align-items: center;
 }
 
-.parallax #text {
+#cartoon{
+    transform: translateY(-5%);
+    right: 5%;
+}
+
+.parallax #text{
     position: absolute;
-    /* top: 40%; */
-    /* transform: translateY(-50%); */
+    /* transform: translateY(-5%); */
     color: #112434;
-    font-size: 6em;
-    text-align: center;
+    font-size: 4em;
     line-height: 0.55em;
-    /* font-family: 'Rancho', cursive; */
-    transform: translateY(-30px);
+    top: 30%;
+    width: 20%;
+    /* transform: translateY(-30px); */
+}
+
+.parallax #def pre{
+    font-size: small;
+    position: absolute;
+    color: #112434;
+    width: 20%;
 }
 
 .parallax #text span {
-    font-size: 0.20em;
+    font-size: 0.5px;
     letter-spacing: 2px;
     font-weight: 400;
 }
 
-#btn {
-    text-decoration: none;
-    display: inline-block;
-    padding: 8px 30px;
+#button {
+    position: absolute;
+    display: block;
     background: #fff;
+    transform: translateY(200%);
     color: #112434;
-    font-size: 1.2em;
-    font-weight: 500;
-    letter-spacing: 2px;
-    border-radius: 40px;
-    transform: translateY(50px);
+    /* font-size: 3em; */
+    text-align: center;
+    line-height: 0.55em;
+    /* left: 6%; */
+    width: 20%;
+    font-size: .8rem;
+    border-radius: 10rem;
+    padding: .75rem 1rem;
+    color: #fff;
+    background-color: #112434;
+    border-color: #112434;
+    top: 30%;
+    /* transform: translateY(-20%); */
+}
 
+#button:hover {
+    text-decoration: none;
+    color: #fff;
+    background-color: #558381;
+    border-color: #558381
 }
 
 .sec {
     position: relative;
     padding: 100px;
-    background: #157579;
+    background:  #558381;
 }
 
 .sec {

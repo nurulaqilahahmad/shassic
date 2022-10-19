@@ -55,33 +55,17 @@ if (isset($_POST['submit'])) {
 
 </head>
 
-<!-- <body class="bg-gradient-primary"> -->
-<body>
+<body class="bg-gradient-primary">
 
-    <header id="header">
-        <!-- <a href="#" class="logo">CIDBH</a> -->
-        <a href="main.html" class="logo"><img src="img/LogoCIDBHoldings.png" width="126" height="52"></a>
-        <ul class="navigation">
-            <li><a href="main.html"><b>Home</b></a></li>
-            <li><a href="register.php" class="active"><b>Register</b></a></li>
-            <li><a href="#"><b>About</b></a></li>
-        </ul>
-    </header>
-    <section class="parallax">
-    <h2 id="text"><b>SHASSIC</b></h2>
-        <!-- <h2 id="text">SHASSIC<br><span>Safety and Health Assessment System Construction Industry</span></h2> -->
-        <a href="#card-body" id="button"><b>CLICK HERE &darr;</b></a>
-        <img src="img/building2.png" id="building" width="110%" height="200%">
-        <!-- <img src="img/cartoon.png" id="cartoon" width="80%" height="190%"> -->
-    </section>
-
-    <!-- <div class="container"> -->
-    <section class="sec">
+    <div class="container">
 
         <div class="card o-hidden border-0 shadow-lg my-5">
             <div class="p-0" id="card-body">
                 <!-- Nested Row within Card Body -->
                 <div id="row">
+                    <!-- <div class="col-lg-5 d-none d-lg-block">
+                        <img src="img/building2.png" id="building">
+                    </div> -->
                     <div class="col-lg-12">
                         <div class="p-5">
                             <div class="text-center">
@@ -120,8 +104,7 @@ if (isset($_POST['submit'])) {
             </div>
         </div>
 
-    <!-- </div> -->
-    </section>
+    </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -132,46 +115,6 @@ if (isset($_POST['submit'])) {
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Animated Web Design -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/ScrollTrigger.min.js"></script>
-    <script>
-        let text = document.getElementById('text');
-        let cartoon = document.getElementById('cartoon');
-        let button = document.getElementById('button');
-
-        window.addEventListener('scroll', function(){
-            let value = window.scrollY;
-            text.style.marginTop = value * 1.5 + 'px';
-            button.style.marginTop = value * 1.5 + 'px';
-            // cartoon.style.left = 15 + value * 0.09 + '%';
-        })
-        // gsap.from("#building",{
-        //     scrollTrigger : {
-        //         scrub: true
-        //     },
-        //     y: 200,
-        // })
-        // gsap.from("#cartoon",{
-        //     scrollTrigger : {
-        //         scrub: true
-        //     },
-        //     x: -50,
-        // })
-        // gsap.from("#text",{
-        //     scrollTrigger : {
-        //         scrub: true
-        //     },
-        //     x: -390,
-        // })
-        // gsap.from("#button",{
-        //     scrollTrigger : {
-        //         scrub: true
-        //     },
-        //     x: -9,
-        // })
-    </script> 
 
 </body>
 
