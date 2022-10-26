@@ -14,7 +14,7 @@ if (isset($_POST['login'])) {
     $user = $result->fetch();
 
     if (password_verify($password, $user['password'])) {
-        echo "<script type='text/javascript'> document.location = 'index.php'; </script>";
+        echo "<script type='text/javascript'> document.location = 'main.html'; </script>";
     } else {
         echo "<script>alert('Incorrect Email Address or Password');</script>";
     }
@@ -80,7 +80,7 @@ if (isset($_POST['login'])) {
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="forgot-password.html">Forgot Password?</a>
+                                        <a class="small" href="forgot-password.php">Forgot Password?</a>
                                     </div>
                                     <div class="text-center">
                                         <a class="small" href="register.php">Create an Account!</a>

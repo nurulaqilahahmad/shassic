@@ -1,36 +1,4 @@
-<?php
-session_start();
-include('includes/config.php');
-
-if (isset($_POST['submit'])) {
-    //getting the post values
-    $fullname = $_POST['fullname'];
-    $username = $_POST['username'];
-    $code = $_POST['code'];
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $hash = password_hash($password, PASSWORD_DEFAULT);
-
-    //Query for data insertion
-    $sql = "INSERT INTO user(username, email, password, code, fullname) VALUES(:username, :email, :password, :code, :fullname)";
-
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':username', $username, PDO::PARAM_STR);
-    $query->bindParam(':email', $email, PDO::PARAM_STR);
-    $query->bindParam(':password', $hash, PDO::PARAM_STR);
-    $query->bindParam(':code', $code, PDO::PARAM_STR);
-    $query->bindParam(':fullname', $fullname, PDO::PARAM_STR);
-    $query->execute();
-
-    $lastInsertId = $dbh->lastInsertId();
-    if ($lastInsertId) {
-        echo "<script>alert('You have successfully signed up');</script>";
-        echo "<script type='text/javascript'> document.location ='login.php'; </script>";
-    } else {
-        echo "<script>alert('Something Went Wrong. Please try again');</script>";
-    }
-}
-?>
+<?php require_once "controller.php"; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -105,12 +73,9 @@ if (isset($_POST['submit'])) {
                                 <div class="form-group">
                                     <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password" required>
                                 </div>
-                                <button type="submit" class="btn btn-primary btn-user btn-block" name="submit">Register Account</button>
+                                <button type="submit" class="btn btn-primary btn-user btn-block" name="register">Register Account</button>
                             </form>
                             <hr>
-                            <div class="text-center">
-                                <a class="small" href="forgot-password.html">Forgot Password?</a>
-                            </div>
                             <div class="text-center">
                                 <a class="small" href="login.php">Already have an account? Login!</a>
                             </div>
@@ -145,33 +110,8 @@ if (isset($_POST['submit'])) {
             let value = window.scrollY;
             text.style.marginTop = value * 1.5 + 'px';
             button.style.marginTop = value * 1.5 + 'px';
-            // cartoon.style.left = 15 + value * 0.09 + '%';
         })
-        // gsap.from("#building",{
-        //     scrollTrigger : {
-        //         scrub: true
-        //     },
-        //     y: 200,
-        // })
-        // gsap.from("#cartoon",{
-        //     scrollTrigger : {
-        //         scrub: true
-        //     },
-        //     x: -50,
-        // })
-        // gsap.from("#text",{
-        //     scrollTrigger : {
-        //         scrub: true
-        //     },
-        //     x: -390,
-        // })
-        // gsap.from("#button",{
-        //     scrollTrigger : {
-        //         scrub: true
-        //     },
-        //     x: -9,
-        // })
-    </script> 
+    </script>
 
 </body>
 
