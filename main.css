@@ -10,7 +10,7 @@
 
 body {
     overflow-x: hidden;
-    background: rgb(213, 224, 236);
+    background: rgb(138, 155, 170);
     min-height: 100vh;
 }
 
@@ -28,7 +28,7 @@ body {
 }
 
 #header .logo {
-    color: #112434;
+    color: rgb(55, 76, 93);
     font-weight: 800;
     font-size: 2em;
     text-decoration: none;
@@ -54,14 +54,14 @@ body {
 .navigation li a {
     text-decoration: none;
     padding: 6px 15px;
-    color: #112434;
+    color: rgb(55, 76, 93);
     border-radius: 20px;
 }
 
 .navigation li a:hover,
 .navigation li a.active {
-    background: #112434;
-    color: #fff;
+    background: rgb(55, 76, 93);
+    color: rgb(255, 255, 255);
 }
 
 /*1st Section*/

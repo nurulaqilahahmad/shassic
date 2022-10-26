@@ -132,43 +132,6 @@ if (isset($_POST['login'])) {
 
     </div>
 
-    <!-- <script type="text/javascript">
-        function setcookie() {
-            var u = document.getElementById('email').value;
-            var p = document.getElementById('password').value;
-
-            document.cookie = "myemail=" + u + ";path=http://localhost/shassic/";
-            document.cookie = "mypswd=" + p + ";path=http://localhost/shassic/";
-        }
-
-        function getcookiedata() {
-
-            console.Log(document.cookie);
-
-            var user = getCookie('myemail');
-            var pswd = getCookie('mypswd');
-
-            document.getElementById('email').value = user;
-            document.getElementById('password').value = pswd;
-        }
-
-        function getCookie(cname) {
-            var name = cname + "=";
-            var decodedCookie = decodeURIComponent(document.cookie);
-            var ca = decodedCookie.split(';');
-            for (var i = 0; i < ca.length; i++) {
-                var c = ca[i];
-                while (c.chartAt(0) == ' ') {
-                    c = c.substring(1);
-                }
-                if (c.indexOf(name) == 0) {
-                    return c.substring(name.length, c.length);
-                }
-            }
-            return "";
-        }
-    </script> -->
-
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

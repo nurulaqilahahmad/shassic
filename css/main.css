@@ -11,7 +11,7 @@
 
 body {
     overflow-x: hidden;
-    background: rgb(213, 224, 236);
+    background: rgb(26, 33, 41);
     min-height: 100vh;
 }
 
@@ -78,14 +78,14 @@ section{
     justify-content: center;
     align-items: center;
 }
-/* .parallax {
+.parallax {
     position: relative;
     width: 100%;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-} */
+}
 
 .parallax img{
     position: absolute;
