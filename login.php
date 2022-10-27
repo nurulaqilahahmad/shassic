@@ -14,18 +14,6 @@ if (isset($_POST['login'])) {
     $password = $_POST['password'];
 
     $sql = "SELECT * FROM user WHERE email = ?";
-<<<<<<< HEAD
-    $result = $dbh->prepare($sql);
-    $result->bindParam(1, $email);
-    $result->execute();
-
-    $user = $result->fetch();
-
-    if (password_verify($password, $user['password'])) {
-        echo "<script type='text/javascript'> document.location = 'main.html'; </script>";
-    } else {
-        echo "<script>alert('Incorrect Email Address or Password');</script>";
-=======
     $query = $dbh->prepare($sql);
     $query->bindParam(1, $email);
     $query->execute();
@@ -34,7 +22,7 @@ if (isset($_POST['login'])) {
     //$result=mysqli_query($con, $sql);
     if ($result) {
         if ($query->rowCount() > 0) {
-        //if(mysqli_num_rows($result)==1){
+            //if(mysqli_num_rows($result)==1){
             $result_fetch = mysqli_fetch_assoc($result);
             if (password_verify($password, $result['password'])) {
                 $_SESSION['login'] = true;
@@ -51,7 +39,6 @@ if (isset($_POST['login'])) {
                 echo "<script>alert('Incorrect Email Address or Password');</script>";
             }
         }
->>>>>>> 5bd021d20e11cd4b0fc7a2d03e6ef97d2889d36d
     }
 }
 ?>
