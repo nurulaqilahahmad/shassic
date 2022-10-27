@@ -2,17 +2,13 @@
     margin: 0;
     padding: 0;
     font-family: 'Poppins', sans-serif;
-    background-color: rgb(17, 36, 52);
-    /* background-image: url('img/landing/background.jpg');
-    background-repeat: no repeat;
-    background-attachment: fixed;
-    background-size: cover; */
 }
 
 body {
     overflow-x: hidden;
     background: rgb(26, 33, 41);
     min-height: 100vh;
+    background-color: rgb(17, 36, 52);
 }
 
 .landing-container {
@@ -22,13 +18,13 @@ body {
     padding-right: 8%;
     box-sizing: border-box;
     overflow: hidden;
-} /* done copy at sb-admin-2-min.css */
+}
 
 .landing-navbar {
     width: 100%;
     display: flex;
     align-items: center;
-} /* done copy at sb-admin-2-min.css */
+}
 
 .landing-logo {
     width: 80px;
@@ -36,48 +32,48 @@ body {
     margin: 50px 0;
     margin-bottom: 40px;
 
-} /* done copy at sb-admin-2-min.css */
+}
 
 .menu-icon {
     width: 25px;
     cursor: pointer;
     display: none;
-} /* done copy at sb-admin-2-min.css */
+}
 
 nav.landing-nav {
     flex: 1;
     text-align: right;
-} /* done copy at sb-admin-2-min.css */
+}
 
-nav.landing-nav ul li {
+nav.landing-nav ul#menuList li {
     list-style: none;
     display: inline-block;
     margin-right: 30px;
-} /* done copy at sb-admin-2-min.css */
+}
 
-nav.landing-nav ul li a {
+nav.landing-nav ul#menuList li a {
     text-decoration: none;
     color: rgb(255, 255, 255);
     font-size: 15px;
     font-weight: bold;
-} /* done copy at sb-admin-2-min.css */
+}
 
-nav.landing-nav ul li a:hover {
+nav.landing-nav ul#menuList li a:hover {
     color: #fff2af;
-} /* done copy at sb-admin-2-min.css */
+}
 
 .landing-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-} /* done copy at sb-admin-2-min.css */
+}
 
 .col-1 {
     flex-basis: 40%;
     position: relative;
     /* margin-left: 5px; */
     margin-bottom: 50px;
-} /* done copy at sb-admin-2-min.css */
+}
 
 .col-1 p {
     font-size: 16px;
@@ -86,13 +82,13 @@ nav.landing-nav ul li a:hover {
     margin: 20px 0;
     font-size: 15px;
     text-align: justify;
-} /* done copy at sb-admin-2-min.css */
+}
 
 .col-1 h2 {
     font-size: 100px;
     color: rgb(6, 25, 44);
     -webkit-text-stroke: 0.3vw #fff491;
-} /* done copy at sb-admin-2-min.css */
+}
 
 h2::before {
     content: attr(data-text);
@@ -106,7 +102,7 @@ h2::before {
     /* border-right: 2px solid #fff; */
     overflow: hidden;
     animation: animate 6s linear infinite;
-} /* done copy at sb-admin-2-min.css */
+}
 
 @keyframes animate {
 

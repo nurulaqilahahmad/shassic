@@ -74,15 +74,13 @@ if (isset($_POST['login'])) {
             <img src="img/landing/logo.png" class="landing-logo">
             <nav class="landing-nav">
                 <ul id="menuList">
-                    <li class="nav-item active"><a class="nav-link" href="login.php">LOGIN</a></li>
+                    <li><a href="login.php">LOGIN</a></li>
                     <li><a href="register.php">REGISTER</a></li>
                     <li><a href="">ABOUT</a></li>
                 </ul>
             </nav>
             <img src="img/landing/menu.png" class="menu-icon" onclick="togglemenu()">
         </div>
-    </div>
-    <div class="container">
 
         <!-- Outer Row -->
         <div class="row justify-content-center">
