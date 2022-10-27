@@ -14,18 +14,6 @@ if (isset($_POST['login'])) {
     $password = $_POST['password'];
 
     $sql = "SELECT * FROM user WHERE email = ?";
-<<<<<<< HEAD
-    $result = $dbh->prepare($sql);
-    $result->bindParam(1, $email);
-    $result->execute();
-
-    $user = $result->fetch();
-
-    if (password_verify($password, $user['password'])) {
-        echo "<script type='text/javascript'> document.location = 'main.html'; </script>";
-    } else {
-        echo "<script>alert('Incorrect Email Address or Password');</script>";
-=======
     $query = $dbh->prepare($sql);
     $query->bindParam(1, $email);
     $query->execute();
@@ -51,7 +39,6 @@ if (isset($_POST['login'])) {
                 echo "<script>alert('Incorrect Email Address or Password');</script>";
             }
         }
->>>>>>> 5bd021d20e11cd4b0fc7a2d03e6ef97d2889d36d
     }
 }
 ?>
@@ -71,10 +58,11 @@ if (isset($_POST['login'])) {
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
 
 </head>
 
