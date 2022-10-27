@@ -62,25 +62,38 @@ if (isset($_POST['login'])) {
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/landing.css">
 
 </head>
 
 <body class="bg-gradient-primary">
 
+    <div class="landing-container">
+
+        <div class="landing-navbar">
+            <img src="img/landing/logo.png" class="landing-logo">
+            <nav class="landing-nav">
+                <ul id="menuList">
+                    <li class="nav-item active"><a class="nav-link" href="login.php">LOGIN</a></li>
+                    <li><a href="register.php">REGISTER</a></li>
+                    <li><a href="">ABOUT</a></li>
+                </ul>
+            </nav>
+            <img src="img/landing/menu.png" class="menu-icon" onclick="togglemenu()">
+        </div>
+    </div>
     <div class="container">
 
         <!-- Outer Row -->
         <div class="row justify-content-center">
 
-            <div class="col-xl-10 col-lg-12 col-md-9">
+            <div class="col-xl-7 col-lg-12 col-md-9">
 
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
-                        <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image"></div>
-                            <div class="col-lg-6">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>

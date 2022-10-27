@@ -7,14 +7,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SHASSIC | Main</title>
 
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+
     <link rel="stylesheet" type="text/css" href="css/landing.css">
 </head>
 
 <body>
-    <div class="container">
-        <div class="navbar">
-            <img src="img/landing/logo.png" class="logo">
-            <nav>
+    <div class="landing-container">
+        <div class="landing-navbar">
+            <img src="img/landing/logo.png" class="landing-logo">
+            <nav class="landing-nav">
                 <ul id="menuList">
                     <li><a href="login.php">LOGIN</a></li>
                     <li><a href="register.php">REGISTER</a></li>
@@ -24,14 +28,14 @@
             <img src="img/landing/menu.png" class="menu-icon" onclick="togglemenu()">
         </div>
 
-        <div class="row">
+        <div class="landing-row">
             <div class="col-1">
                 <h2 data-text="SHASSIC">SHASSIC</h2>
                 <!-- <p>Safety and Health Assessment <br> System in Construction</p> -->
-                <button type="button">EXPLORE<img src="img/landing/arrow.png"></button>
+                <button type="button" class="landing-button">EXPLORE<img src="img/landing/arrow.png"></button>
             </div>
 
-            <div class="col-2">
+            <div class="landing-col-2">
                 <img src="img/landing/engineer.png" class="controller">
                 <div class="color-box"></div>
             </div>

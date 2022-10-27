@@ -43,7 +43,8 @@
 *,
 ::after,
 ::before {
-    box-sizing: border-box
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
 }
 
 html {
@@ -63,12 +64,13 @@ hgroup,
 main,
 nav,
 section {
-    display: block
+    /* display: block; */
+    flex: 1;
+    text-align: right;
 }
 
 body {
     margin: 0;
-    font-family: Nunito, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
     font-size: 1rem;
     font-weight: 400;
     line-height: 1.5;
@@ -95,6 +97,20 @@ h5,
 h6 {
     margin-top: 0;
     margin-bottom: .5rem
+}
+
+h2::before {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: #fff491;
+    -webkit-text-stroke: 0vw rgb(6, 25, 44);
+    /* border-right: 2px solid #fff; */
+    overflow: hidden;
+    animation: animate 6s linear infinite;
 }
 
 p {
@@ -241,6 +257,14 @@ th {
 label {
     display: inline-block;
     margin-bottom: .5rem
+}
+
+.logo {
+    width: 80px;
+    cursor: pointer;
+    margin: 50px 0;
+    margin-bottom: 40px;
+
 }
 
 button {
@@ -725,6 +749,12 @@ pre code {
     max-width: 100%
 }
 
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
 .row-cols-1>* {
     flex: 0 0 100%;
     max-width: 100%
@@ -764,6 +794,28 @@ pre code {
 .col-1 {
     flex: 0 0 8.33333%;
     max-width: 8.33333%
+}
+
+.col-1 {
+    flex-basis: 40%;
+    position: relative;
+    /* margin-left: 5px; */
+    margin-bottom: 50px;
+}
+
+.col-1 p {
+    font-size: 16px;
+    color: rgb(250, 250, 250);
+    font-weight: 10;
+    margin: 20px 0;
+    font-size: 15px;
+    text-align: justify;
+}
+
+.col-1 h2 {
+    font-size: 100px;
+    color: rgb(6, 25, 44);
+    -webkit-text-stroke: 0.3vw #fff491;
 }
 
 .col-2 {
@@ -4445,6 +4497,24 @@ input[type=submit].btn-block {
     list-style: none
 }
 
+nav ul#menuList li {
+    list-style: none;
+    display: inline-block;
+    margin-right: 30px;
+}
+
+nav ul#menuList li a {
+    text-decoration: none;
+    color: rgb(255, 255, 255);
+    font-size: 15px;
+    font-weight: bold;
+}
+
+nav ul#menuList li a:hover {
+    text-decoration: none;
+    color: #fff2af;
+}
+
 .nav-link {
     display: block;
     padding: .5rem 1rem
@@ -4528,12 +4598,13 @@ input[type=submit].btn-block {
 }
 
 .navbar {
+    width: 100%;
     position: relative;
     display: flex;
     flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
-    padding: .5rem 1rem
+    padding: .5rem 1rem;
 }
 
 .navbar .container,
@@ -4545,7 +4616,7 @@ input[type=submit].btn-block {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: space-between
+    justify-content: space-between;
 }
 
 .navbar-brand {
@@ -5714,6 +5785,20 @@ a.badge-dark:focus {
     }
 }
 
+@keyframes animate {
+
+    0%,
+    10%,
+    100% {
+        width: 0;
+    }
+
+    70%,
+    90% {
+        width: 100%;
+    }
+}
+
 .progress {
     display: flex;
     height: 1rem;
@@ -5766,6 +5851,12 @@ a.badge-dark:focus {
 
 .media-body {
     flex: 1
+}
+
+.menu-icon {
+    width: 25px;
+    cursor: pointer;
+    display: none;
 }
 
 .list-group {

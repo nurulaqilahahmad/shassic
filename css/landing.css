@@ -1,7 +1,7 @@
 * {
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
+    font-family: 'Poppins', sans-serif;
     background-color: rgb(17, 36, 52);
     /* background-image: url('img/landing/background.jpg');
     background-repeat: no repeat;
@@ -9,69 +9,75 @@
     background-size: cover; */
 }
 
-.container {
+body {
+    overflow-x: hidden;
+    background: rgb(26, 33, 41);
+    min-height: 100vh;
+}
+
+.landing-container {
     width: 100%;
     min-height: 100vh;
     padding-left: 8%;
     padding-right: 8%;
     box-sizing: border-box;
     overflow: hidden;
-}
+} /* done copy at sb-admin-2-min.css */
 
-.navbar {
+.landing-navbar {
     width: 100%;
     display: flex;
     align-items: center;
-}
+} /* done copy at sb-admin-2-min.css */
 
-.logo {
+.landing-logo {
     width: 80px;
     cursor: pointer;
     margin: 50px 0;
     margin-bottom: 40px;
 
-}
+} /* done copy at sb-admin-2-min.css */
 
 .menu-icon {
     width: 25px;
     cursor: pointer;
     display: none;
-}
+} /* done copy at sb-admin-2-min.css */
 
-nav {
+nav.landing-nav {
     flex: 1;
     text-align: right;
-}
+} /* done copy at sb-admin-2-min.css */
 
-nav ul li {
+nav.landing-nav ul li {
     list-style: none;
     display: inline-block;
     margin-right: 30px;
-}
+} /* done copy at sb-admin-2-min.css */
 
-nav ul li a {
+nav.landing-nav ul li a {
     text-decoration: none;
     color: rgb(255, 255, 255);
     font-size: 15px;
     font-weight: bold;
-}
+} /* done copy at sb-admin-2-min.css */
 
-nav ul li a:hover {
+nav.landing-nav ul li a:hover {
     color: #fff2af;
-}
+} /* done copy at sb-admin-2-min.css */
 
-.row {
+.landing-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
-}
+} /* done copy at sb-admin-2-min.css */
 
 .col-1 {
     flex-basis: 40%;
     position: relative;
     /* margin-left: 5px; */
     margin-bottom: 50px;
-}
+} /* done copy at sb-admin-2-min.css */
 
 .col-1 p {
     font-size: 16px;
@@ -80,13 +86,13 @@ nav ul li a:hover {
     margin: 20px 0;
     font-size: 15px;
     text-align: justify;
-}
+} /* done copy at sb-admin-2-min.css */
 
 .col-1 h2 {
     font-size: 100px;
     color: rgb(6, 25, 44);
     -webkit-text-stroke: 0.3vw #fff491;
-}
+} /* done copy at sb-admin-2-min.css */
 
 h2::before {
     content: attr(data-text);
@@ -100,7 +106,7 @@ h2::before {
     /* border-right: 2px solid #fff; */
     overflow: hidden;
     animation: animate 6s linear infinite;
-}
+} /* done copy at sb-admin-2-min.css */
 
 @keyframes animate {
 
@@ -116,7 +122,7 @@ h2::before {
     }
 }
 
-button {
+button.landing-button {
     width: 140px;
     border: 0;
     padding: 12px 10px;
@@ -130,24 +136,24 @@ button {
     margin-top: 30px;
 }
 
-button img {
+button.landing-button img {
     width: 30px;
     display: none;
     background: transparent;
 }
 
-button:hover img {
+button.landing-button:hover img {
     display: block;
 }
 
-button:hover {
+button.landing-button:hover {
     width: 160px;
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
 
-.col-2 {
+.landing-col-2 {
     position: relative;
     flex-basis: 60%;
     display: flex;
@@ -155,11 +161,11 @@ button:hover {
     margin: 20px 0;
 }
 
-.col-2 .controller {
+.landing-col-2 .controller {
     width: 70%;
 }
 
-.col-2 img {
+.landing-col-2 img {
     position: relative;
     background: transparent;
     z-index: 100;
