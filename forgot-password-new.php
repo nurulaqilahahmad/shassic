@@ -26,6 +26,7 @@ if($email == false){
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
 
 </head>
 
@@ -36,40 +37,45 @@ if($email == false){
         <!-- Outer Row -->
         <div class="row justify-content-center">
 
-            <div class="col-xl-10 col-lg-12 col-md-9">
+            <div class="col-xl-7 col-lg-12 col-md-9">
 
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
-                        <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-password-image"></div>
-                            <div class="col-lg-6">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-2">New Password</h1>
+                                        <h1 class="h4 text-gray-900 mb-4">New Password</h1>
                                         <br>
-                                        <!-- <?php
-                                                if (isset($_SESSION['info'])) {
-                                                ?>
-                                                <div class="alert alert-success text-center" style="padding: 0.4rem 0.4rem">
-                                                    <?php echo $_SESSION['info']; ?>
-                                                </div>
-                                            <?php
-                                                }
+                                        <?php
+                                            if ($_SESSION['info'] != "") {
                                             ?>
-                                            <?php
-                                            if (count($error) > 0) {
-                                            ?>
-                                                <div class="alert alert-danger text-center">
-                                                    <?php
-                                                    foreach ($error as $showerror) {
-                                                        echo $showerror;
-                                                    }
-                                                    ?>
+                                                <div class="col-lg-12 mb-4">
+                                                    <div class="card bg-success text-white shadow">
+                                                        <div class="card-body text-center" style="margin: 10px;">
+                                                            <?php echo $_SESSION['info']; ?>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             <?php
                                             }
-                                            ?> -->
+                                            ?>
+                                            <?php
+                                            if (count($errors) > 0) {
+                                            ?>
+                                                <div class="col-lg-12 mb-4">
+                                                    <div class="card bg-danger text-white shadow">
+                                                        <div class="card-body text-center" style="margin: 10px;">
+                                                            <?php foreach ($errors as $error) {
+                                                                echo $error;
+                                                            } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php
+                                            }
+                                            ?>
                                     </div>
                                     <form class="user" method="post">
                                         <div class="form-group">

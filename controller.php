@@ -4,16 +4,16 @@ include('includes/config.php');
 
 $email = "";
 $name = "";
-$error = array();
+$errors = array();
 
 use PHPMailer\PHPMailer\PHPMailer;
-use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception;
+// use PHPMailer\PHPMailer\SMTP;
+// use PHPMailer\PHPMailer\Exception; 
 
-require 'vendor/autoload.php';
-require 'phpmailer/src/Exception.php';
-require 'phpmailer/src/PHPMailer.php';
-require 'phpmailer/src/SMTP.php';
+require_once 'vendor/autoload.php';
+require_once 'phpmailer/src/Exception.php';
+require_once 'phpmailer/src/PHPMailer.php';
+require_once 'phpmailer/src/SMTP.php';
 
 // if user click register button in register form
 if (isset($_POST['register'])) {
@@ -45,47 +45,8 @@ if (isset($_POST['register'])) {
     }
 }
 
-// // if user click reset password button in forgot password form
-// if (isset($_POST['check-email'])) {
-//     // getting the post values
-//     $email = $_POST['email'];
-
-//     // query for data selection
-//     $sql = "SELECT * FROM user WHERE email=:email";
-//     $query = $dbh->prepare($sql);
-//     $query->bindParam(':email', $email, PDO::PARAM_STR);
-//     $query->execute();
-//     $user = $query->fetch();
-
-//     if ($query->rowCount() > 0) {
-//         $password_code = rand(999999, 111111);
-//         $run_query = "UPDATE user SET password_code='$password_code' WHERE email=:email";
-//         $success = $dbh->prepare($run_query);
-//         $success->execute();
-
-//         if ($success->rowCount() > 0) {
-//             $subject = "RESET PASSWORD CODE";
-//             $message = "The code for reset password is $password_code";
-//             $sender = "From: shassic@cidb.gov.my";
-//             if (mail($email, $subject, $message, $sender)) {
-//                 $info = "A reset password code has been sent to your email";
-//                 $_SESSION['info'] = $info;
-//                 $_SESSION['email'] = $email;
-//                 header('location: forgot-password-code.php');
-//                 exit();
-//             } else {
-//                 $error['pwcode-error'] = "Sending code FAILED!";
-//             }
-//         } else {
-//             $error['db-error'] = "Something went wrong!";
-//         }
-//     } else {
-//         $error['email'] = "This email address does not exist!";
-//     }
-// }
-
 // if user click check email 2 button in forgot password form
-if (isset($_POST['check-email2'])) {
+if (isset($_POST['check-email'])) {
     // getting the post values
     $email = $_POST['email'];
 
@@ -98,52 +59,45 @@ if (isset($_POST['check-email2'])) {
     if ($result->rowCount() > 0) {
         $password_code = mt_rand(100000, 999999);
         $insert_pwcode = $dbh->prepare("UPDATE user SET password_code=? WHERE email=?");
-        // $insert_pwcode->bindParam(':password_code', $password_code, PDO::PARAM_INT);
         $insert_pwcode->execute([$password_code, $email]);
-        // $insert_pwcode->execute();
-        // $row = $insert_pwcode->fetch();
 
         if ($insert_pwcode->rowCount() > 0) {
-            $subject = "RESET PASSWORD CODE";
-            $message = "The code for reset password is $password_code";
-            $sender = "From: shassic@cidb.gov.my";
+            $subject = "SHASSIC | RESET PASSWORD REQUEST";
+            $message = "<h1 align='center'>SHASSIC</h1><p align='center'>You have requested to change password.<br> The code for reset password is $password_code</p> <p font-size='small'>IMPORTANT: Do not reply to this email</p>";
+            try{
+                $mail = new PHPMailer(true);
 
-            // $mail = new PHPMailer(true);
-
-            // $mail->isSMTP();
-            // $mail->SMTPAuth = true;
-            // $mail->SMTPSecure = 'ssl';
-            // $mail->SMTPDebug = SMTP::DEBUG_SERVER;
-
-            // $mail->Host = 'smtp.example.com';
-            // $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            // $mail->Port = 587;
-
-            // $mail->Username = 'you@example.com';
-            // $mail->Password = 'password';
-
-            // $mail->setFrom('shassic@cidb.gov.my');
-            // $mail->addAddress($email);
-
-            // $mail->isHTML(true);
-
-            // $mail->Subject = $subject;
-            // $mail->Body = $message;
-
-            // $mail->send();
-
-            $_SESSION['email'] = $email;
-            header('location: forgot-password-code.php');
-            // if (mail($email, $subject, $message, $sender)) {
-            //     $info = "A reset password code has been sent to your email";
-            //     $_SESSION['info'] = $info;
-            //     $_SESSION['email'] = $email;
-            //     header('location: forgot-password-code.php');
-            //     exit();
-            // } else {
-            //     $error['pwcode-error'] = "Sending code FAILED!";
-            // }
+                $mail->isSMTP();
+                $mail->SMTPAuth = true;
+                $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+    
+                $mail->Host = 'smtp.gmail.com';
+                $mail->Port = 587;
+    
+                $mail->Username = 'nrlaqilahahmd@gmail.com';
+                $mail->Password = 'lakykidmxxwegolu';
+    
+                $mail->setFrom('nrlaqilahahmd@gmail.com');
+                $mail->addAddress($email);
+    
+                $mail->isHTML(true);
+    
+                $mail->Subject = $subject;
+                $mail->Body = $message;
+    
+                $mail->send();
+    
+                $_SESSION['info'] = "Password code has been sent to your email!";
+                $_SESSION['email'] = $email;
+                header('location: forgot-password-code.php');
+            }
+            catch (Exception $e){
+                $errors['otp-error'] = $e;
+            }
         }
+    }
+    else {
+        $errors['email'] = "ERROR: Email address does not exist!";
     }
 }
 
@@ -165,12 +119,11 @@ if (isset($_POST['check-pwcode'])) {
         $result = $query->fetch();
         $email = $result['email'];
         $_SESSION['email'] = $email;
-        $info = "Please create a new password that you don't use on any other site.";
-        $_SESSION['info'] = $info;
+        $_SESSION['info'] = "Please create a new password that are not the same as before";
         header('location: forgot-password-new.php');
         exit();
     } else {
-        $error['pwcode-error'] = "You've entered incorrect code!";
+        $errors['pwcode-error'] = "ERROR: Incorrect code!";
     }
 }
 
@@ -194,11 +147,10 @@ if (isset($_POST['change-password'])) {
     $query->execute([$hash, $code, $email]);
 
     if ($query) {
-        $info = "Your password has been changed. You can now login with your new password.";
-        $_SESSION['info'] = $info;
+        $_SESSION['info'] = "Your password has been changed. You can now login with your new password.";
         header('location: forgot-password-changed.php');
     } else {
-        $error['db-error'] = "Something went wrong!";
+        $errors['db-error'] = "Something went wrong!";
     }
 }
 
