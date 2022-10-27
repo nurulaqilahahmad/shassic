@@ -22,7 +22,7 @@ if (isset($_POST['login'])) {
     //$result=mysqli_query($con, $sql);
     if ($result) {
         if ($query->rowCount() > 0) {
-        //if(mysqli_num_rows($result)==1){
+            //if(mysqli_num_rows($result)==1){
             $result_fetch = mysqli_fetch_assoc($result);
             if (password_verify($password, $result['password'])) {
                 $_SESSION['login'] = true;
