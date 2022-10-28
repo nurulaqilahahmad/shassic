@@ -1,9 +1,9 @@
 <?php require_once "controller.php"; ?>
 
-<?php 
+<?php
 $email = $_SESSION['email'];
-if($email == false){
-  header('Location: login.php');
+if ($email == false) {
+    header('Location: login.php');
 }
 ?>
 
@@ -20,19 +20,22 @@ if($email == false){
 
     <title>SHASSIC | Forgot Password</title>
 
+    <link rel="icon" type="image/x-icon" href="img/favicon.png">
+
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/landing.css">
 
 </head>
 
 <body class="bg-gradient-primary">
 
-    <div class="container">
+    <div class="landing-container">
+
 
         <!-- Outer Row -->
         <div class="row justify-content-center">
@@ -49,33 +52,33 @@ if($email == false){
                                         <h1 class="h4 text-gray-900 mb-4">New Password</h1>
                                         <br>
                                         <?php
-                                            if ($_SESSION['info'] != "") {
-                                            ?>
-                                                <div class="col-lg-12 mb-4">
-                                                    <div class="card bg-success text-white shadow">
-                                                        <div class="card-body text-center" style="margin: 10px;">
-                                                            <?php echo $_SESSION['info']; ?>
-                                                        </div>
+                                        if ($_SESSION['info'] != "") {
+                                        ?>
+                                            <div class="col-lg-12 mb-4">
+                                                <div class="card bg-success text-white shadow">
+                                                    <div class="card-body text-center" style="margin: 10px;">
+                                                        <?php echo $_SESSION['info']; ?>
                                                     </div>
                                                 </div>
-                                            <?php
-                                            }
-                                            ?>
-                                            <?php
-                                            if (count($errors) > 0) {
-                                            ?>
-                                                <div class="col-lg-12 mb-4">
-                                                    <div class="card bg-danger text-white shadow">
-                                                        <div class="card-body text-center" style="margin: 10px;">
-                                                            <?php foreach ($errors as $error) {
-                                                                echo $error;
-                                                            } ?>
-                                                        </div>
+                                            </div>
+                                        <?php
+                                        }
+                                        ?>
+                                        <?php
+                                        if (count($errors) > 0) {
+                                        ?>
+                                            <div class="col-lg-12 mb-4">
+                                                <div class="card bg-danger text-white shadow">
+                                                    <div class="card-body text-center" style="margin: 10px;">
+                                                        <?php foreach ($errors as $error) {
+                                                            echo $error;
+                                                        } ?>
                                                     </div>
                                                 </div>
-                                            <?php
-                                            }
-                                            ?>
+                                            </div>
+                                        <?php
+                                        }
+                                        ?>
                                     </div>
                                     <form class="user" method="post">
                                         <div class="form-group">
