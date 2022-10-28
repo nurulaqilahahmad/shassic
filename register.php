@@ -26,22 +26,11 @@
 <!-- <body class="bg-gradient-primary"> -->
 <body>
 
-    <header id="header">
-        <!-- <a href="#" class="logo">CIDBH</a> -->
-        <a href="main.html" class="logo"><img src="img/LogoCIDBHoldings.png" width="126" height="52"></a>
-        <ul class="navigation">
-            <li><a href="main.html"><b>Home</b></a></li>
-            <li><a href="register.php" class="active"><b>Register</b></a></li>
-            <li><a href="#"><b>About</b></a></li>
-        </ul>
-    </header>
-    <section class="parallax">
-    <h2 id="text"><b>SHASSIC</b></h2>
-        <!-- <h2 id="text">SHASSIC<br><span>Safety and Health Assessment System Construction Industry</span></h2> -->
-        <a href="#card-body" id="button"><b>CLICK HERE &darr;</b></a>
-        <img src="img/building2.png" id="building" width="110%" height="200%">
-        <!-- <img src="img/cartoon.png" id="cartoon" width="80%" height="190%"> -->
-    </section>
+    <!-- <div class="container"> -->
+    <div class="landing-container">
+
+        <!-- Outer Row -->
+        <div class="row justify-content-center">
 
     <!-- <div class="container"> -->
     <section class="sec">
