@@ -24,49 +24,54 @@
 </head>
 
 <!-- <body class="bg-gradient-primary"> -->
+
 <body>
 
     <!-- <div class="container"> -->
     <div class="container">
 
-        <div class="card o-hidden border-0 shadow-lg my-5">
-            <div class="p-0" id="card-body">
-                <!-- Nested Row within Card Body -->
-                <div id="row">
-                    <div class="col-lg-12">
-                        <div class="p-5">
-                            <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
-                            </div>
-                            <form class="user" method="POST">
-                                <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" name="fullname" id="fullname" placeholder="Full Name" required>
+        <div class="col-xl-7 col-lg-12 col-md-9">
+
+            <div class="card o-hidden border-0 shadow-lg my-5">
+                <div class="p-0" id="card-body">
+                    <!-- Nested Row within Card Body -->
+                    <div id="row">
+                        <div class="col-lg-12">
+                            <div class="p-5">
+                                <div class="text-center">
+                                    <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
                                 </div>
-                                <div class="form-group" id="row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" name="username" id="username" placeholder="Username" required>
+                                <form class="user" method="POST">
+                                    <div class="form-group">
+                                        <input type="text" class="form-control form-control-user" name="fullname" id="fullname" placeholder="Full Name" required>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" name="code" id="code" placeholder="Code" required>
+                                    <div class="form-group" id="row">
+                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                            <input type="text" class="form-control form-control-user" name="username" id="username" placeholder="Username" required>
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input type="text" class="form-control form-control-user" name="code" id="code" placeholder="Code" required>
+                                        </div>
                                     </div>
+                                    <div class="form-group">
+                                        <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Email Address" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-user btn-block" name="register">Register Account</button>
+                                </form>
+                                <hr>
+                                <div class="text-center">
+                                    <a class="small" href="login.php">Already have an account? Login!</a>
                                 </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Email Address" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-user btn-block" name="register">Register Account</button>
-                            </form>
-                            <hr>
-                            <div class="text-center">
-                                <a class="small" href="login.php">Already have an account? Login!</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
     <!-- </div> -->
     </section>
@@ -89,7 +94,7 @@
         let cartoon = document.getElementById('cartoon');
         let button = document.getElementById('button');
 
-        window.addEventListener('scroll', function(){
+        window.addEventListener('scroll', function() {
             let value = window.scrollY;
             text.style.marginTop = value * 1.5 + 'px';
             button.style.marginTop = value * 1.5 + 'px';
