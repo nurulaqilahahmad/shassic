@@ -13,17 +13,20 @@
 
     <title>SHASSIC | Register</title>
 
+    <link rel="icon" type="image/x-icon" href="img/favicon.png">
+
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Poppins:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/landing.css">
 
 </head>
 
 <!-- <body class="bg-gradient-primary"> -->
+
 <body>
 
     <!-- <div class="container"> -->
@@ -32,8 +35,8 @@
         <!-- Outer Row -->
         <div class="row justify-content-center">
 
-    <!-- <div class="container"> -->
-    <section class="sec">
+            <!-- <div class="container"> -->
+            <div class="col-xl-7 col-lg-12 col-md-9">
 
                 <div class="card o-hidden border-0 shadow-lg my-5">
                     <div class="p-0" id="card-body">
@@ -95,7 +98,7 @@
         let cartoon = document.getElementById('cartoon');
         let button = document.getElementById('button');
 
-        window.addEventListener('scroll', function(){
+        window.addEventListener('scroll', function() {
             let value = window.scrollY;
             text.style.marginTop = value * 1.5 + 'px';
             button.style.marginTop = value * 1.5 + 'px';
