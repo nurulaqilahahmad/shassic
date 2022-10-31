@@ -45,20 +45,20 @@ nav.landing-nav {
     text-align: right;
 }
 
-nav.landing-nav ul#menuList li {
+nav.landing-nav ul li {
     list-style: none;
     display: inline-block;
     margin-right: 30px;
 }
 
-nav.landing-nav ul#menuList li a {
+nav.landing-nav ul li a {
     text-decoration: none;
     color: rgb(255, 255, 255);
     font-size: 15px;
     font-weight: bold;
 }
 
-nav.landing-nav ul#menuList li a:hover {
+nav.landing-nav ul li a:hover {
     color: #fff2af;
 }
 
@@ -182,7 +182,7 @@ button.landing-button:hover {
 
 @media only screen and (max-width:700px) {
 
-    nav ul {
+    nav.landing-nav ul {
         width: 100%;
         background: linear-gradient(#fff491, #988925);
         position: absolute;
@@ -191,14 +191,14 @@ button.landing-button:hover {
         z-index: 2;
     }
 
-    nav ul li {
+    nav.landing-nav ul li {
         background: transparent;
         display: block;
         margin-top: 10px;
-        margin-bottom: 20px;
+        margin-bottom: 10px;
     }
 
-    nav ul li a {
+    nav.landing-nav ul li a {
         background: transparent;
         color: #fff;
     }
