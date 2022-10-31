@@ -45,7 +45,7 @@ if (isset($_POST['register'])) {
     }
 }
 
-// if user click check email 2 button in forgot password form
+// if user click check email button in forgot password form
 if (isset($_POST['check-email'])) {
     // getting the post values
     $email = $_POST['email'];
@@ -63,7 +63,10 @@ if (isset($_POST['check-email'])) {
 
         if ($insert_pwcode->rowCount() > 0) {
             $subject = "SHASSIC | RESET PASSWORD REQUEST";
-            $message = "<h1 align='center'>SHASSIC</h1><p align='center'>You have requested to change password.<br> The code for reset password is $password_code</p> <p font-size='small'>IMPORTANT: Do not reply to this email</p>";
+            $message = 
+            "<h1 class='h4 text-gray-900 mb-4' style='font-weight: bold;'>SHASSIC</h1>
+            <p style='text-align:center; font-family:'Poppins', sans-serif;'>You have requested to change password.<br> The code for reset password is <b>$password_code</b></p>
+            <p style='font-size:smaller; text-align:center; font-family:'Poppins', sans-serif;'>IMPORTANT: Do not reply to this email</p>";
             try{
                 $mail = new PHPMailer(true);
 

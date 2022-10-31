@@ -49,13 +49,13 @@ if ($email == false) {
                                 <div class="p-5">
                                     <form class="user" method="post">
                                         <div class="text-center">
-                                            <h1 class="h4 text-gray-900 mb-4">Code Verification</h1> <br>
+                                            <h1 class="h4 text-gray-900 mb-4" style="font-weight: bold;">Code Verification</h1>
                                             <?php
                                             if ($_SESSION['info'] != "") {
                                             ?>
                                                 <div class="col-lg-12 mb-4">
                                                     <div class="card bg-success text-white shadow">
-                                                        <div class="card-body text-center" style="margin: 10px;">
+                                                        <div class="card-body text-center" style="margin: 10px; font-weight: bold;">
                                                             <?php echo $_SESSION['info']; ?>
                                                         </div>
                                                     </div>
@@ -68,7 +68,7 @@ if ($email == false) {
                                             ?>
                                                 <div class="col-lg-12 mb-4">
                                                     <div class="card bg-danger text-white shadow">
-                                                        <div class="card-body text-center" style="margin: 10px;">
+                                                        <div class="card-body text-center" style="margin: 10px; font-weight: bold;">
                                                             <?php foreach ($errors as $error) {
                                                                 echo $error;
                                                             } ?>
@@ -80,9 +80,9 @@ if ($email == false) {
                                             ?>
                                         </div>
                                         <div class="form-group mb-4">
-                                            <input type="number" class="form-control form-control-user" id="password_code" name="password_code" aria-describedby="emailHelp" placeholder="Code" required>
+                                            <input type="number" class="form-control form-control-user" id="password_code" name="password_code" aria-describedby="emailHelp" placeholder="Code" required style="font-weight: bold;">
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block" name="check-pwcode">Submit</button>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block" name="check-pwcode" style="font-weight: bold;">Submit</button>
                                     </form>
                                 </div>
                             </div>
