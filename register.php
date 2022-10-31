@@ -35,47 +35,47 @@
     <!-- <div class="container"> -->
     <section class="sec">
 
-        <div class="card o-hidden border-0 shadow-lg my-5">
-            <div class="p-0" id="card-body">
-                <!-- Nested Row within Card Body -->
-                <div id="row">
-                    <div class="col-lg-12">
-                        <div class="p-5">
-                            <div class="text-center">
-                                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
-                            </div>
-                            <form class="user" method="POST">
-                                <div class="form-group">
-                                    <input type="text" class="form-control form-control-user" name="fullname" id="fullname" placeholder="Full Name" required>
-                                </div>
-                                <div class="form-group" id="row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" name="username" id="username" placeholder="Username" required>
+                <div class="card o-hidden border-0 shadow-lg my-5">
+                    <div class="p-0" id="card-body">
+                        <!-- Nested Row within Card Body -->
+                        <div id="row">
+                            <div class="col-lg-12">
+                                <div class="p-5">
+                                    <div class="text-center">
+                                        <h1 class="h4 text-gray-900 mb-4" style="font-weight: bold;">Create an Account!</h1>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" name="code" id="code" placeholder="Code" required>
+                                    <form class="user" method="POST">
+                                        <div class="form-group">
+                                            <input type="text" class="form-control form-control-user" name="fullname" id="fullname" placeholder="Full Name" required style="font-weight: bold;">
+                                        </div>
+                                        <div class="form-group" id="row">
+                                            <div class="col-sm-6 mb-3 mb-sm-0">
+                                                <input type="text" class="form-control form-control-user" name="username" id="username" placeholder="Username" required style="font-weight: bold;">
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <input type="text" class="form-control form-control-user" name="code" id="code" placeholder="Code" required style="font-weight: bold;">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Email Address" required style="font-weight: bold;">
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password" required style="font-weight: bold;">
+                                        </div>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block" name="register" style="font-weight: bold;">Register Account</button>
+                                    </form>
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small" href="login.php" style="font-weight: bold;">Already have an account? Login!</a>
                                     </div>
                                 </div>
-                                <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" name="email" id="email" placeholder="Email Address" required>
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" class="form-control form-control-user" name="password" id="password" placeholder="Password" required>
-                                </div>
-                                <button type="submit" class="btn btn-primary btn-user btn-block" name="register">Register Account</button>
-                            </form>
-                            <hr>
-                            <div class="text-center">
-                                <a class="small" href="login.php">Already have an account? Login!</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
-    <!-- </div> -->
-    </section>
+    </div>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>

@@ -83,30 +83,30 @@ if (isset($_POST['login'])) {
                             <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
+                                        <h1 class="h4 text-gray-900 mb-4" style="font-weight: bold;">Log In</h1>
                                     </div>
                                     <form class="user" action="login.php" method="post">
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user" id="email" name="email" aria-describedby="emailHelp" placeholder="Email Address" required value="<?php echo $email ?>">
+                                            <input type="email" class="form-control form-control-user" id="email" name="email" aria-describedby="emailHelp" placeholder="Email Address" required value="<?php echo $email ?>" style="font-weight: bold;">
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password" required value="<?php echo $password ?>">
+                                            <input type="password" class="form-control form-control-user" id="password" name="password" placeholder="Password" required value="<?php echo $password ?>" style="font-weight: bold;">
                                         </div>
                                         <div class="form-group">
                                             <div class="custom-control custom-checkbox small">
                                                 <input type="checkbox" class="custom-control-input" id="customCheck" name="remember_me">
-                                                <label class="custom-control-label" for="customCheck">Remember
+                                                <label class="custom-control-label" for="customCheck" style="font-weight: bold;">Remember
                                                     Me</label>
                                             </div>
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block" name="login">Log In</button>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block" name="login" style="font-weight: bold;">Log In</button>
                                     </form>
                                     <hr>
                                     <div class="text-center">
-                                        <a class="small" href="forgot-password.php">Forgot Password?</a>
+                                        <a class="small" href="forgot-password.php" style="font-weight: bold;">Forgot Password?</a>
                                     </div>
                                     <div class="text-center">
-                                        <a class="small" href="register.php">Create an Account!</a>
+                                        <a class="small" href="register.php" style="font-weight: bold;">Create an Account!</a>
                                     </div>
                                 </div>
                             </div>
