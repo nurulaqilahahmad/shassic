@@ -34,9 +34,24 @@ CREATE TABLE `user` (
   `password` varchar(200) NOT NULL,
   `code` varchar(200) NOT NULL,
   `fullname` varchar(200) NOT NULL,
-  `password_code` mediumint(50) NOT NULL
+  `password_code` mediumint(50) NOT NULL,
+  `CreationDate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+INSERT INTO `user` (`id`, `username`, `email`, `password`, `code`, `fullname`) VALUES
+(1, 'Irma Zafirah', 'irmazafirah@gmail.com', 'irma123', '123456', 'Irma Zafirah binti Mohd Ikram');
+
+CREATE TABLE `assessment` (
+  `assesseeName` varchar(200) NOT NULL,
+  `projectDate` varchar(11) NOT NULL,
+  `projectLocation` varchar(200) DEFAULT NULL,
+  `projectPicture` varchar(100) DEFAULT NULL,
+  `Creationdate` timestamp NULL DEFAULT current_timestamp(),
+  `UpdationDate` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `assessment` (`assesseeName`, `projectDate`, `projectLocation`, `projectPicture`) VALUES
+('Nurul Aqilah', '2022-10-17', 'Sungai Buloh', 'image 1.JPG');
 --
 -- Indexes for dumped tables
 --
