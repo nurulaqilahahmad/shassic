@@ -35,23 +35,27 @@ CREATE TABLE `user` (
   `code` varchar(200) NOT NULL,
   `fullname` varchar(200) NOT NULL,
   `password_code` mediumint(50) NOT NULL,
-  `CreationDate` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `user` (`id`, `username`, `email`, `password`, `code`, `fullname`) VALUES
 (1, 'Irma Zafirah', 'irmazafirah@gmail.com', 'irma123', '123456', 'Irma Zafirah binti Mohd Ikram');
 
 CREATE TABLE `assessment` (
-  `assesseeName` varchar(200) NOT NULL,
-  `projectDate` varchar(11) NOT NULL,
-  `projectLocation` varchar(200) DEFAULT NULL,
-  `projectPicture` varchar(100) DEFAULT NULL,
-  `Creationdate` timestamp NULL DEFAULT current_timestamp(),
-  `UpdationDate` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `assessee_id` int(11) NOT NULL,
+  `assessee_name` varchar(200) NOT NULL,
+  `project_name` varchar (200) NOT NULL, 
+  `project_date` varchar(11) NOT NULL,
+  `project_location` varchar(200) DEFAULT NULL,
+  `project_picture` varchar(100) DEFAULT NULL,
+  `assessment_progress` int(11) NOT NULL, 
+  `calculation_id` int(11) NOT NULL,
+  `creation_date` timestamp NULL DEFAULT current_timestamp(),
+  `updation_date` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `assessment` (`assesseeName`, `projectDate`, `projectLocation`, `projectPicture`) VALUES
-('Nurul Aqilah', '2022-10-17', 'Sungai Buloh', 'image 1.JPG');
+INSERT INTO `assessment` (`assessee_id`, `assessee_name`,`project_name`, `project_date`, `project_location`, `project_picture`) VALUES
+('1', 'Nurul Aqilah', 'shassic', '2022-10-17', 'Sungai Buloh', 'image1.jpg');
 --
 -- Indexes for dumped tables
 --

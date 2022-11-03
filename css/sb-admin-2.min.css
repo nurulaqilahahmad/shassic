@@ -5178,7 +5178,7 @@ nav ul#menuList li a:hover {
 .card-img-bottom,
 .card-img-top {
     flex-shrink: 0;
-    width: 100%
+    width: 20%
 }
 
 .card-img,
