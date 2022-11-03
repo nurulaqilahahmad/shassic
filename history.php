@@ -374,10 +374,7 @@ include('includes/config.php');
                                                     <th>Project Name</th>
                                                     <th>Assessee</th>
                                                     <th>Progress</th>
-                                                    <th>
-                                                        <th>First</th>
-                                                        <
-                                                    </th>
+                                                    <th>Test</th>
                                                 </tr>
                                             </thead>
                                             <tfoot>
@@ -386,7 +383,7 @@ include('includes/config.php');
                                                     <th>Assessee</th>
                                                     <th>Client</th>
                                                     <th>Progress</th>
-                                                    <th></th>
+                                                    <th>Test</th>
                                                 </tr>
                                             </tfoot>
                                             <tbody>
@@ -395,16 +392,8 @@ include('includes/config.php');
                                                     <td class="project_name"><?php echo htmlentities($result->project_name); ?></td>
                                                     <td class="assessee_name"><?php echo htmlentities($result->assessee_name); ?></td>
                                                     <td class="project_percentage"><?php echo htmlentities($result->project_percentage); ?></td>
-                                                    <td></td>
+                                                    <td>Test</td>
                                                 </tr>
-                                                <!-- <tr>
-                                            <td>Tiger Nixon</td>
-                                            <td>System Architect</td>
-                                            <td>Edinburgh</td>
-                                            <td>61</td>
-                                            <td>2011/04/25</td>
-                                            <td>$320,800</td>
-                                        </tr> -->
                                             </tbody>
                                     <?php }
                                     } ?>
