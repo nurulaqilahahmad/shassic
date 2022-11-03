@@ -37,11 +37,11 @@ require_once "controller.php";
         <div class="landing-container">
             <div class="landing-navbar">
                 <img src="img/landing/logo.png" class="landing-logo">
-                <nav class="landing-nav">
+                <!-- <nav class="landing-nav">
                     <ul class="landing-ul" id="menuList">
                         <li class="landing-li"><a href="about.php" class="landing-a">ABOUT</a></li>
                     </ul>
-                </nav>
+                </nav> -->
                 <img src="img/landing/menu.png" class="menu-icon" onclick="togglemenu()">
             </div>
 
@@ -69,52 +69,57 @@ require_once "controller.php";
 
                                 <!-- Begin Page Content -->
                                 <div class="container-fluid">
-                                    <a class="btn btn-secondary font-weight-bold" style="left: 0;" href="index.php">
-                                        < Back</a>
 
-                                            <!-- Outer Row -->
-                                            <div class="row justify-content-center">
+                                    <!-- Outer Row -->
+                                    <div class="row justify-content-center">
 
-                                                <div class="col-xl-7 col-lg-12 col-md-9">
-                                                    <div class="card o-hidden border-0 shadow-lg my-5">
-                                                        <div class="p-0" id="card-body">
-                                                            <div id="row">
-                                                                <div class="col-lg-12">
-                                                                    <div class="p-5">
-                                                                        <div class="text-center">
-                                                                            <!-- Page Heading -->
-                                                                            <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Add New Assessment</h1>
+
+                                        <div class="col-xl-12 col-lg-12 col-md-9">
+                                            <div class="card o-hidden border-0 shadow-lg my-5">
+                                                <div class="p-0" id="card-body">
+                                                    <div id="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="p-5">
+                                                                <div class="text-center">
+                                                                        <div class="text-center" style="display:flex; width:auto; justify-content: start;">
+                                                                            <a class="btn btn-secondary font-weight-bold" href="index.php">
+                                                                                &larr; Back</a>
                                                                         </div>
-                                                                        <form class="user" method="POST">
-                                                                            <div class="form-group">
-                                                                                <input type="text" class="form-control form-control-user font-weight-bold" name="fullname" id="fullname" placeholder="Assessee Name" required>
-                                                                            </div>
-                                                                            <div class="form-group" id="row">
-                                                                                <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                                    <input type="text" class="form-control form-control-user font-weight-bold" name="username" id="username" placeholder="Username" required>
-                                                                                </div>
-                                                                                <div class="col-sm-6">
-                                                                                    <input type="text" class="form-control form-control-user font-weight-bold" name="code" id="code" placeholder="Code" required>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <input type="email" class="form-control form-control-user font-weight-bold" name="email" id="email" placeholder="Email Address" required>
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <input type="password" class="form-control form-control-user font-weight-bold" name="password" id="password" placeholder="Password" required>
-                                                                            </div>
-                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="add">Save</button>
-                                                                        </form>
-                                                                    </div>
+
+                                                                        <!-- Page Heading -->
+                                                                        <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Add New Assessment</h1>
                                                                 </div>
+
+                                                                <form class="user" method="POST">
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control form-control-user font-weight-bold" name="assessee_name" id="assessee_name" placeholder="Assessee Name" required>
+                                                                    </div>
+                                                                    <div class="form-group" id="row">
+                                                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                                                            <input type="text" class="form-control form-control-user font-weight-bold" name="project_name" id="project_name" placeholder="Project Name" required>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <input placeholder="Project Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="form-control form-control-user font-weight-bold" name="project_date" id="project_date"  required>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control form-control-user font-weight-bold" name="project_location" id="project_location" placeholder="Project Location" required>
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <input type="file" class="form-control form-control-user font-weight-bold" name="project_picture" id="project_picture" required accept="image/*" onchange="document.getElementById('project_image').src = window.URL.createObjectURL(this.files[0])">
+                                                                    </div>
+                                                                    <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="add">Save</button>
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>
-
                                                 </div>
-
-
                                             </div>
+
+                                        </div>
+
+
+                                    </div>
 
                                 </div>
                                 <!-- /.container-fluid -->
@@ -160,7 +165,7 @@ require_once "controller.php";
                         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
                         <div class="modal-footer">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <a class="btn btn-primary" href="login.html">Logout</a>
+                            <a class="btn btn-primary" href="logout.php">Logout</a>
                         </div>
                     </div>
                 </div>
