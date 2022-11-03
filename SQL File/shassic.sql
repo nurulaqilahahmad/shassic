@@ -59,7 +59,21 @@ INSERT INTO `assessment` (`assessee_id`, `assessee_name`,`project_name`, `projec
 --
 -- Indexes for dumped tables
 --
+--
+-- Indexes for table `assessment`
+--
+ALTER TABLE `assessment`
+  ADD PRIMARY KEY (`assessee_id`);
 
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `assessment`
+--
+ALTER TABLE `assessment`
+  MODIFY `assessee_id` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- Indexes for table `user`
 --
