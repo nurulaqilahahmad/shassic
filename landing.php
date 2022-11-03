@@ -34,7 +34,7 @@
             <div class="col-1">
                 <h2 data-text="SHASSIC">SHASSIC</h2>
                 <!-- <p>Safety and Health Assessment <br> System in Construction</p> -->
-                <button type="button" class="landing-button" style="font-weight: bold;">EXPLORE<img src="img/landing/arrow.png"></button>
+                <button type="button" class="landing-button font-weight-bold">EXPLORE<img src="img/landing/arrow.png"></button>
             </div>
 
             <div class="landing-col-2">

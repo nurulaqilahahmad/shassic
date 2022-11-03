@@ -5,3 +5,4 @@
     - app password to let third-party access account with 2-Step Verification on
 3. Secure password - follow the minimum requirements for secured password
 4. User guide - when user click buttons, prompt message will appear to guide user
+5. User Profile image
