@@ -22,9 +22,9 @@
             <img src="img/landing/logo.png" class="landing-logo">
             <nav class="landing-nav">
                 <ul class="landing-ul" id="menuList">
-                    <li><a href="login.php">LOGIN</a></li>
-                    <li><a href="register.php">REGISTER</a></li>
-                    <li><a href="">ABOUT</a></li>
+                    <li class="landing-li"><a href="login.php" class="landing-a">LOGIN</a></li>
+                    <li class="landing-li"><a href="register.php" class="landing-a">REGISTER</a></li>
+                    <li class="landing-li"><a href="about.php" class="landing-a">ABOUT</a></li>
                 </ul>
             </nav>
             <img src="img/landing/menu.png" class="menu-icon" onclick="togglemenu()">
@@ -34,7 +34,7 @@
             <div class="col-1">
                 <h2 data-text="SHASSIC">SHASSIC</h2>
                 <!-- <p>Safety and Health Assessment <br> System in Construction</p> -->
-                <button type="button" class="landing-button">EXPLORE<img src="img/landing/arrow.png"></button>
+                <button type="button" class="landing-button" style="font-weight: bold;">EXPLORE<img src="img/landing/arrow.png"></button>
             </div>
 
             <div class="landing-col-2">

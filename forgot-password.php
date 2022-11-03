@@ -44,7 +44,7 @@
                                 <div class="p-5">
                                     <form class="user" method="post">
                                         <div class="text-center">
-                                            <h1 class="h4 text-gray-900 mb-4" style="font-weight: bold;">Forgot Your Password?</h1>
+                                            <h1 class="h4 text-gray-900 mb-4 font-weight-bold">Forgot Your Password?</h1>
                                             <p class="mb-4">We get it, stuff happens. Just enter your email address below
                                                 and we'll send you a code to reset your password!</p>
                                         </div>
@@ -53,7 +53,7 @@
                                         ?>
                                             <div class="col-lg-12 mb-4">
                                                 <div class="card bg-danger text-white shadow">
-                                                    <div class="card-body text-center" style="margin: 10px; font-weight: bold;">
+                                                    <div class="card-body text-center font-weight-bold" style="margin: 10px;">
                                                         <?php foreach ($errors as $error) {
                                                             echo $error;
                                                         } ?>
@@ -64,13 +64,13 @@
                                         }
                                         ?>
                                         <div class="form-group">
-                                            <input type="email" class="form-control form-control-user" id="email" name="email" placeholder="Email Address" required style="font-weight: bold;">
+                                            <input type="email" class="form-control form-control-user font-weight-bold" id="email" name="email" placeholder="Email Address" required>
                                         </div>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block" name="check-email" style="font-weight: bold;">Reset Password</button>
+                                        <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="check-email">Reset Password</button>
 
                                         <hr>
                                         <div class="text-center">
-                                            <a class="small" href="login.php" style="font-weight: bold;">&larr; Back to Login</a>
+                                            <a class="small font-weight-bold" href="login.php">&larr; Back to Login</a>
                                         </div>
                                     </form>
                                 </div>

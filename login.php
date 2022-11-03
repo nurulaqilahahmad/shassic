@@ -1,46 +1,5 @@
 <?php
-session_start();
-include('includes/config.php');
-if (isset($_COOKIE['email']) && isset($_COOKIE['password'])) {
-    $email = $_COOKIE['email'];
-    $password = $_COOKIE['password'];
-} else {
-    $email = "";
-    $password = "";
-}
-
-if (isset($_POST['login'])) {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-
-    $sql = "SELECT * FROM user WHERE email = ?";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(1, $email);
-    $query->execute();
-
-    $result = $query->fetch();
-    //$result=mysqli_query($con, $sql);
-    if ($result) {
-        if ($query->rowCount() > 0) {
-            //if(mysqli_num_rows($result)==1){
-            $result_fetch = mysqli_fetch_assoc($result);
-            if (password_verify($password, $result['password'])) {
-                $_SESSION['login'] = true;
-                $_SESSION['email'] = $result_fetch['email'];
-                if (isset($_POST['remember_me'])) {
-                    setcookie('email', $_POST['email'], time() + (60 * 60 * 24));
-                    setcookie('password', $_POST['password'], time() + (60 * 60 * 24));
-                } else {
-                    setcookie('email', '', time() - (60 * 60 * 24));
-                    setcookie('password', '', time() - (60 * 60 * 24));
-                }
-                echo "<script type='text/javascript'> document.location = 'index.php'; </script>";
-            } else {
-                echo "<script>alert('Incorrect Email Address or Password');</script>";
-            }
-        }
-    }
-}
+require_once "controller.php";
 ?>
 
 <!DOCTYPE html>
@@ -55,6 +14,8 @@ if (isset($_POST['login'])) {
     <meta name="author" content="">
 
     <title>SHASSIC | Log In</title>
+
+    <link rel="icon" type="image/x-icon" href="img/favicon.png">
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -83,7 +44,28 @@ if (isset($_POST['login'])) {
                             <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
+                                        <a href="landing.php"><img src="img/shassic-logo.jpg" width="200px"></a>
+                                        <br>
+                                        <br>
+                                    </div>
+
+                                    <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4" style="font-weight: bold;">Log In</h1>
+                                        <?php
+                                        if (count($errors) > 0) {
+                                        ?>
+                                            <div class="col-lg-12 mb-4">
+                                                <div class="card bg-danger text-white shadow">
+                                                    <div class="card-body text-center" style="margin: 10px; font-weight: bold;">
+                                                        <?php foreach ($errors as $error) {
+                                                            echo $error;
+                                                        } ?>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php
+                                        }
+                                        ?>
                                     </div>
                                     <form class="user" action="login.php" method="post">
                                         <div class="form-group">

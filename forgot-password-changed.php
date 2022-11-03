@@ -48,14 +48,14 @@ if ($_SESSION['info'] == false) {
                             <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4">Password Changed</h1>
+                                        <h1 class="h4 text-gray-900 mb-4 font-weight-bold">Password Changed</h1>
 
                                         <?php
                                         if ($_SESSION['info'] != "") {
                                         ?>
                                             <div class="col-lg-12 mb-4">
                                                 <div class="card bg-success text-white shadow">
-                                                    <div class="card-body text-center" style="margin: 10px;">
+                                                    <div class="card-body text-center font-weight-bold" style="margin: 10px;">
                                                         <?php echo $_SESSION['info']; ?>
                                                     </div>
                                                 </div>
@@ -68,7 +68,7 @@ if ($_SESSION['info'] == false) {
                                         ?>
                                             <div class="col-lg-12 mb-4">
                                                 <div class="card bg-danger text-white shadow">
-                                                    <div class="card-body text-center" style="margin: 10px;">
+                                                    <div class="card-body text-center font-weight-bold" style="margin: 10px;">
                                                         <?php foreach ($errors as $error) {
                                                             echo $error;
                                                         } ?>
@@ -80,14 +80,7 @@ if ($_SESSION['info'] == false) {
                                         ?>
                                     </div>
                                     <form class="user" method="post">
-                                        <!-- <div class="form-group">
-                                            <input type="password" class="form-control form-control-user" id="password" name="password" aria-describedby="emailHelp" placeholder="New Password">
-                                        </div>
-                                        <br> -->
-                                        <button type="submit" class="btn btn-primary btn-user btn-block" name="login-now">Login Now</button>
-                                        <!-- <a href="login.html" class="btn btn-primary btn-user btn-block">
-                                            Reset Password
-                                        </a> -->
+                                        <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="login-now">Login Now</button>
                                     </form>
                                 </div>
                             </div>

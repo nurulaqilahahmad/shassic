@@ -15,6 +15,49 @@ require_once 'phpmailer/src/Exception.php';
 require_once 'phpmailer/src/PHPMailer.php';
 require_once 'phpmailer/src/SMTP.php';
 
+if (isset($_COOKIE['email']) && isset($_COOKIE['password'])) {
+    $email = $_COOKIE['email'];
+    $password = $_COOKIE['password'];
+} else {
+    $email = "";
+    $password = "";
+}
+
+//if user click login button on login page
+if (isset($_POST['login'])) {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $sql = "SELECT * FROM user WHERE email = ?";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(1, $email);
+    $query->execute();
+
+    $result = $query->fetch();
+    //$result=mysqli_query($con, $sql);
+    if ($result) {
+        if ($query->rowCount() > 0) {
+            //if(mysqli_num_rows($result)==1){
+            $result_fetch = mysqli_fetch_assoc($result);
+            if (password_verify($password, $result['password'])) {
+                $_SESSION['login'] = $_POST['email'];
+                $_SESSION['email'] = $result_fetch['email'];
+                if (isset($_POST['remember_me'])) {
+                    setcookie('email', $_POST['email'], time() + (60 * 60 * 24));
+                    setcookie('password', $_POST['password'], time() + (60 * 60 * 24));
+                } else {
+                    setcookie('email', '', time() - (60 * 60 * 24));
+                    setcookie('password', '', time() - (60 * 60 * 24));
+                }
+                echo "<script type='text/javascript'> document.location = 'index.php'; </script>";
+            } else {
+                // echo "<script>alert('Incorrect Email Address or Password');</script>";
+                $errors['login-error'] = "ERROR: Incorrect details!";
+            }
+        }
+    }
+}
+
 // if user click register button in register form
 if (isset($_POST['register'])) {
     //getting the post values

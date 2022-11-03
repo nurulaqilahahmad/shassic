@@ -45,20 +45,20 @@ nav.landing-nav {
     text-align: right;
 }
 
-nav.landing-nav ul li {
+nav.landing-nav ul.landing-ul#menuList li.landing-li {
     list-style: none;
     display: inline-block;
     margin-right: 30px;
 }
 
-nav.landing-nav ul li a {
+nav.landing-nav ul.landing-ul#menuList li.landing-li a.landing-a {
     text-decoration: none;
     color: rgb(255, 255, 255);
     font-size: 15px;
     font-weight: bold;
 }
 
-nav.landing-nav ul li a:hover {
+nav.landing-nav ul.landing-ul#menuList li.landing-li a.landing-a:hover {
     color: #fff2af;
 }
 
