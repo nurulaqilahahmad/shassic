@@ -25,6 +25,7 @@ if (isset($_COOKIE['email']) && isset($_COOKIE['password'])) {
 
 //if user click login button on login page
 if (isset($_POST['login'])) {
+   
     $email = $_POST['email'];
     $password = $_POST['password'];
 
@@ -59,7 +60,7 @@ if (isset($_POST['login'])) {
 }
 
 // if user click register button in register form
-if (isset($_POST['register'])) {
+if (isset($_POST['register'])) {    
     //getting the post values
     $fullname = $_POST['fullname'];
     $username = $_POST['username'];
@@ -81,10 +82,13 @@ if (isset($_POST['register'])) {
 
     $lastInsertId = $dbh->lastInsertId();
     if ($lastInsertId) {
-        echo "<script>alert('You have successfully signed up');</script>";
-        echo "<script type='text/javascript'> document.location ='login.php'; </script>";
+        $_SESSION['info'] = "You have successfully signed up";
+        header('location: login.php');
+        // echo "<script>alert('You have successfully signed up');</script>";
+        // echo "<script type='text/javascript'> document.location ='login.php'; </script>";
     } else {
-        echo "<script>alert('Something Went Wrong. Please try again');</script>";
+        $errors['db-error'] = 'Something Went Wrong. Please try again';
+        // echo "<script>alert('Something Went Wrong. Please try again');</script>";
     }
 }
 

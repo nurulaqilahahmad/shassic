@@ -169,15 +169,7 @@ require_once "controller.php";
                             </div>
                             <!-- End of Main Content -->
 
-                            <!-- Footer -->
-                            <footer class="sticky-footer">
-                                <div class="container my-auto justify-content-center">
-                                    <div class="copyright text-center my-auto">
-                                        <span>Copyright &copy; SHASSIC 2022</span>
-                                    </div>
-                                </div>
-                            </footer>
-                            <!-- End of Footer -->
+
 
                         </div>
                         <!-- End of Content Wrapper -->
@@ -185,9 +177,20 @@ require_once "controller.php";
                     </div>
                     <!-- End of Page Wrapper -->
 
+                    <!-- Footer -->
+                    <footer class="small">
+                        <div class="container my-auto justify-content-center">
+                            <div class="copyright text-center my-auto">
+                                <span>Copyright &copy; SHASSIC 2022</span>
+                            </div>
+                        </div>
+                    </footer>
+                    <!-- End of Footer -->
+
                     <!-- Scroll to Top Button-->
                     <a class="scroll-to-top rounded" href="#page-top">
-                        <i class="fas fa-angle-up"></i>
+                        <!-- <i class="fas fa-angle-up"></i> -->
+                        &uarr;
                     </a>
 
                     <!-- Logout Modal-->
@@ -195,15 +198,15 @@ require_once "controller.php";
                         <div class="modal-dialog" role="document">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+                                    <h5 class="modal-title font-weight-bold" id="exampleModalLabel">Ready to Leave?</h5>
                                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">×</span>
                                     </button>
                                 </div>
-                                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                                <div class="modal-body font-weight-bold">Select "Logout" below if you are ready to end your current session.</div>
                                 <div class="modal-footer">
-                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                                    <a class="btn btn-primary" href="logout.php">Logout</a>
+                                    <button class="btn btn-secondary font-weight-bold" type="button" data-dismiss="modal">Cancel</button>
+                                    <a class="btn btn-primary font-weight-bold" href="logout.php">Logout</a>
                                 </div>
                             </div>
                         </div>
