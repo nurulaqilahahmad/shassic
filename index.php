@@ -106,7 +106,7 @@ require_once "controller.php";
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link font-weight-bold" href="#">
+                                <a class="nav-link font-weight-bold" href="history.php">
                                     <span>History</span>
                                 </a>
                             </li>
