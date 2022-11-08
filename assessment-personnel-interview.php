@@ -83,15 +83,15 @@ require_once "controller.php";
                                                             <div class="p-5">
                                                                 <div class="text-center">
                                                                     <div class="text-center" style="display:flex; width:auto; justify-content: start;">
-                                                                        <a class="font-weight-bold" href="index.php">
+                                                                        <a class="font-weight-bold" href="add-assessment.php">
                                                                             &larr; Back</a>
                                                                     </div>
 
                                                                     <!-- Page Heading -->
-                                                                    <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Add New Assessment</h1>
+                                                                    <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Personnel Interview</h1>
                                                                 </div>
 
-                                                                <form class="user" method="POST">
+                                                                <!-- <form class="user" method="POST">
                                                                     <div class="form-group">
                                                                         <input type="text" class="form-control form-control-user font-weight-bold" name="assessee_name" id="assessee_name" placeholder="Assessee Name" required>
                                                                     </div>
@@ -113,7 +113,7 @@ require_once "controller.php";
                                                                     </div>
                                                                     <div class="form-group" id="row">
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="assessment-document-check.php">
+                                                                            <a href="document-check.php">
                                                                                 <div class="card mb-4">
                                                                                     <div class="card-body card-hover py-3">
                                                                                         <h6 class="m-0 font-weight-bold">Document Check</h6>
@@ -122,7 +122,7 @@ require_once "controller.php";
                                                                             </a>
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="assessment-workplace-inspection.php">
+                                                                            <a href="#">
                                                                                 <div class="card mb-4">
                                                                                     <div class="card-body card-hover py-3">
                                                                                         <h6 class="m-0 font-weight-bold">Workplace Inspection</h6>
@@ -131,7 +131,7 @@ require_once "controller.php";
                                                                             </a>
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="assessment-personnel-interview.php">
+                                                                            <a href="#">
                                                                                 <div class="card mb-4">
                                                                                     <div class="card-body card-hover py-3">
                                                                                         <h6 class="m-0 font-weight-bold">Personnel Interview</h6>
@@ -147,7 +147,7 @@ require_once "controller.php";
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                     </div>
-                                                                </form>
+                                                                </form> -->
                                                             </div>
                                                         </div>
                                                     </div>
