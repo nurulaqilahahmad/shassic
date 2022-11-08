@@ -113,7 +113,7 @@ require_once "controller.php";
                                                                     </div>
                                                                     <div class="form-group" id="row">
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="index.php">
+                                                                            <a href="#">
                                                                                 <div class="card mb-4">
                                                                                     <div class="card-body card-hover py-3">
                                                                                         <h6 class="m-0 font-weight-bold">Document Check</h6>
@@ -122,7 +122,7 @@ require_once "controller.php";
                                                                             </a>
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="index.php">
+                                                                            <a href="#">
                                                                                 <div class="card mb-4">
                                                                                     <div class="card-body card-hover py-3">
                                                                                         <h6 class="m-0 font-weight-bold">Workplace Inspection</h6>
@@ -131,7 +131,7 @@ require_once "controller.php";
                                                                             </a>
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="index.php">
+                                                                            <a href="#">
                                                                                 <div class="card mb-4">
                                                                                     <div class="card-body card-hover py-3">
                                                                                         <h6 class="m-0 font-weight-bold">Personnel Interview</h6>
