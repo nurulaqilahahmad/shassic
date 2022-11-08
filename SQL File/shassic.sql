@@ -45,7 +45,7 @@ CREATE TABLE `assessment` (
   `assessee_id` int(11) NOT NULL,
   `assessee_name` varchar(200) NOT NULL,
   `project_name` varchar (200) NOT NULL, 
-  `project_date` varchar(11) NOT NULL,
+  `project_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `project_location` varchar(200) DEFAULT NULL,
   `project_picture` varchar(100) DEFAULT NULL,
   `assessment_progress` int(11) NOT NULL, 

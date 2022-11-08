@@ -162,7 +162,7 @@ require_once "controller.php";
                                     </div> -->
 
                                     <div class="row text-center">
-                                        <a class="mt-5 d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm font-weight-bold" href="assessment.php" style="margin-top: 10rem;">Add New Assessment</a>
+                                        <a class="mt-5 d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm font-weight-bold" href="add-assessment.php" style="margin-top: 10rem;">Add New Assessment</a>
                                     </div>
                                 </div>
 
@@ -231,7 +231,10 @@ require_once "controller.php";
         <script src="js/demo/chart-area-demo.js"></script>
         <script src="js/demo/chart-pie-demo.js"></script>
 
-    <?php } ?>
+    <?php }
+    else{
+        header("location: login.php");
+    } ?>
 </body>
 
 </html>

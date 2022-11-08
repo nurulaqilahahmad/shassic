@@ -208,3 +208,8 @@ if (isset($_POST['change-password'])) {
 if (isset($_POST['login-now'])) {
     header('Location: login.php');
 }
+
+// if user click save button in add new assessment page
+if (isset($_POST['add'])) {
+    header('location: index.php');
+}
