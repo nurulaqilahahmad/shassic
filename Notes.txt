@@ -7,3 +7,4 @@
 4. User guide - when user click buttons, prompt message will appear to guide user
 5. User Profile image
 6. Add new assessment - insert query
+7. Visible or invisible password

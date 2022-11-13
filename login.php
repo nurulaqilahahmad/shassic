@@ -52,24 +52,11 @@ require_once "controller.php";
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4" style="font-weight: bold;">Log In</h1>
                                         <?php
-                                        if ($_SESSION['info'] != "") {
-                                        ?>
-                                            <div class="col-lg-12 mb-4">
-                                                <div class="card bg-success text-white shadow">
-                                                    <div class="card-body text-center font-weight-bold" style="margin: 10px">
-                                                        <?php echo $_SESSION['info']; ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php
-                                        }
-                                        ?>
-                                        <?php
                                         if (count($errors) > 0) {
                                         ?>
                                             <div class="col-lg-12 mb-4">
                                                 <div class="card bg-danger text-white shadow">
-                                                    <div class="card-body text-center" style="margin: 10px; font-weight: bold;">
+                                                    <div class="card-body text-center font-weight-bold">
                                                         <?php foreach ($errors as $error) {
                                                             echo $error;
                                                         } ?>

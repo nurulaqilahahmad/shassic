@@ -25,7 +25,7 @@ if (isset($_COOKIE['email']) && isset($_COOKIE['password'])) {
 
 //if user click login button on login page
 if (isset($_POST['login'])) {
-   
+
     $email = $_POST['email'];
     $password = $_POST['password'];
 
@@ -60,7 +60,7 @@ if (isset($_POST['login'])) {
 }
 
 // if user click register button in register form
-if (isset($_POST['register'])) {    
+if (isset($_POST['register'])) {
     //getting the post values
     $fullname = $_POST['fullname'];
     $username = $_POST['username'];
@@ -82,8 +82,7 @@ if (isset($_POST['register'])) {
 
     $lastInsertId = $dbh->lastInsertId();
     if ($lastInsertId) {
-        $_SESSION['info'] = "You have successfully signed up";
-        header('location: login.php');
+        $_SESSION['info'] = "You have successfully signed up. ";
         // echo "<script>alert('You have successfully signed up');</script>";
         // echo "<script type='text/javascript'> document.location ='login.php'; </script>";
     } else {
@@ -110,43 +109,41 @@ if (isset($_POST['check-email'])) {
 
         if ($insert_pwcode->rowCount() > 0) {
             $subject = "SHASSIC | RESET PASSWORD REQUEST";
-            $message = 
-            "<h1 class='h4 text-gray-900 mb-4' style='font-weight: bold;'>SHASSIC</h1>
+            $message =
+                "<h1 class='h4 text-gray-900 mb-4' style='font-weight: bold;'>SHASSIC</h1>
             <p style='text-align:center; font-family:'Poppins', sans-serif;'>You have requested to change password.<br> The code for reset password is <b>$password_code</b></p>
             <p style='font-size:smaller; text-align:center; font-family:'Poppins', sans-serif;'>IMPORTANT: Do not reply to this email</p>";
-            try{
+            try {
                 $mail = new PHPMailer(true);
 
                 $mail->isSMTP();
                 $mail->SMTPAuth = true;
                 $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-    
+
                 $mail->Host = 'smtp.gmail.com';
                 $mail->Port = 587;
-    
+
                 $mail->Username = 'nrlaqilahahmd@gmail.com';
                 $mail->Password = 'lakykidmxxwegolu';
-    
+
                 $mail->setFrom('nrlaqilahahmd@gmail.com');
                 $mail->addAddress($email);
-    
+
                 $mail->isHTML(true);
-    
+
                 $mail->Subject = $subject;
                 $mail->Body = $message;
-    
+
                 $mail->send();
-    
+
                 $_SESSION['info'] = "Password code has been sent to your email!";
                 $_SESSION['email'] = $email;
                 header('location: forgot-password-code.php');
-            }
-            catch (Exception $e){
+            } catch (Exception $e) {
                 $errors['otp-error'] = $e;
             }
         }
-    }
-    else {
+    } else {
         $errors['email'] = "ERROR: Email address does not exist!";
     }
 }
@@ -209,7 +206,115 @@ if (isset($_POST['login-now'])) {
     header('Location: login.php');
 }
 
-// if user click save button in add new assessment page
+// if user click add button in add new assessment page
 if (isset($_POST['add'])) {
-    header('location: index.php');
+    //getting the post values
+    $assessor_id = $_POST['assessor_id'];
+    $assessor_name = $_POST['assessor_name'];
+    $assessee_name = $_POST['assessee_name'];
+    $project_name = $_POST['project_name'];
+    $project_date = $_POST['project_date'];
+    $project_location = $_POST['project_location'];
+    $project_picture = $_POST['project_picture'];
+
+    //Query for data insertion
+    $sql = "INSERT INTO assessment(assessor_id, assessor_name, assessee_name, project_name, project_date, project_location, project_picture) VALUES(:assessor_id, :assessor_name, :assessee_name, :project_name, :project_date, :project_location, :project_picture)";
+
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':assessor_id', $assessor_id, PDO::PARAM_STR);
+    $query->bindParam(':assessor_name', $assessor_name, PDO::PARAM_STR);
+    $query->bindParam(':assessee_name', $assessee_name, PDO::PARAM_STR);
+    $query->bindParam(':project_name', $project_name, PDO::PARAM_STR);
+    $query->bindParam(':project_date', $project_date, PDO::PARAM_STR);
+    $query->bindParam(':project_location', $project_location, PDO::PARAM_STR);
+    $query->bindParam(':project_picture', $project_picture, PDO::PARAM_STR);
+    $query->execute();
+
+    $lastInsertId = $dbh->lastInsertId();
+    if ($lastInsertId) {
+        $assessee_id = $lastInsertId;
+        $_SESSION['info'] = "You have successfully added a new assessment";
+        header("location: assessment-component.php?assessee_id=" . $assessee_id);
+        // echo "<script>alert('You have successfully signed up');</script>";
+        // echo "<script type='text/javascript'> document.location ='login.php'; </script>";
+    } else {
+        $errors['db-error'] = 'Something Went Wrong. Please try again';
+        // echo "<script>alert('Something Went Wrong. Please try again');</script>";
+    }
+}
+
+// if user click update button in edit assessment page
+if (isset($_POST['update'])) {
+    //getting the post values
+    $assessor_id = $_POST['assessor_id'];
+    $assessor_name = $_POST['assessor_name'];
+    $assessee_id = $_POST['assessee_id'];
+    $assessee_name = $_POST['assessee_name'];
+    $project_name = $_POST['project_name'];
+    $project_date = $_POST['project_date'];
+    $project_location = $_POST['project_location'];
+    $project_picture = $_POST['project_picture'];
+
+    // query for data selection
+    $sql = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+    $query->execute();
+    $result = $query->fetchAll(PDO::FETCH_OBJ);
+
+    if ($query->rowCount() > 0) {
+        //query for updation
+        $con = "UPDATE assessment SET assessor_id=:assessor_id, assessor_name=:assessor_name, assessee_name=:assessee_name, project_name=:project_name, project_date=:project_date, project_location=:project_location, project_picture=:project_picture WHERE assessee_id=:assessee_id";
+        $update = $dbh->prepare($con);
+        $update->bindParam(':assessor_id', $assessor_id, PDO::PARAM_STR);
+        $update->bindParam(':assessor_name', $assessor_name, PDO::PARAM_STR);
+        $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+        $update->bindParam(':assessee_name', $assessee_name, PDO::PARAM_STR);
+        $update->bindParam(':project_name', $project_name, PDO::PARAM_STR);
+        $update->bindParam(':project_date', $project_date, PDO::PARAM_STR);
+        $update->bindParam(':project_location', $project_location, PDO::PARAM_STR);
+        $update->bindParam(':project_picture', $project_picture, PDO::PARAM_STR);
+        $update->execute();
+
+        $_SESSION['info'] = "Updated successfully";
+        header("location: assessment-component.php?assessee_id=" . $assessee_id);
+    }
+}
+
+// if user click update-from-history button in edit assessment page
+if (isset($_POST['update-from-history'])) {
+    //getting the post values
+    $assessor_id = $_POST['assessor_id'];
+    $assessor_name = $_POST['assessor_name'];
+    $assessee_id = $_POST['assessee_id'];
+    $assessee_name = $_POST['assessee_name'];
+    $project_name = $_POST['project_name'];
+    $project_date = $_POST['project_date'];
+    $project_location = $_POST['project_location'];
+    $project_picture = $_POST['project_picture'];
+
+    // query for data selection
+    $sql = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+    $query->execute();
+    $result = $query->fetchAll(PDO::FETCH_OBJ);
+
+    if ($query->rowCount() > 0) {
+        //query for updation
+        $con = "UPDATE assessment SET assessor_id=:assessor_id, assessor_name=:assessor_name, assessee_name=:assessee_name, project_name=:project_name, project_date=:project_date, project_location=:project_location, project_picture=:project_picture WHERE assessee_id=:assessee_id";
+        $update = $dbh->prepare($con);
+        $update->bindParam(':assessor_id', $assessor_id, PDO::PARAM_STR);
+        $update->bindParam(':assessor_name', $assessor_name, PDO::PARAM_STR);
+        $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+        $update->bindParam(':assessee_name', $assessee_name, PDO::PARAM_STR);
+        $update->bindParam(':project_name', $project_name, PDO::PARAM_STR);
+        $update->bindParam(':project_date', $project_date, PDO::PARAM_STR);
+        $update->bindParam(':project_location', $project_location, PDO::PARAM_STR);
+        $update->bindParam(':project_picture', $project_picture, PDO::PARAM_STR);
+        $update->execute();
+
+        $_SESSION['info'] = "Updated successfully";
+        header("location: assessment-component.php?assessee_id=" . $assessee_id);
+    }
 }

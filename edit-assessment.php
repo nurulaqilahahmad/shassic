@@ -13,7 +13,7 @@ require_once "controller.php";
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SHASSIC | Add New Assessment</title>
+    <title>SHASSIC | Edit Assessment</title>
 
     <link rel="icon" type="image/x-icon" href="img/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -48,9 +48,10 @@ require_once "controller.php";
 
                 <?php
                 $email = $_SESSION['login'];
-                $sql = "SELECT * from user where email=:email";
+                $assessee_id = $_GET['assessee_id'];
+                $sql = "SELECT * from assessment where assessee_id=:assessee_id";
                 $query = $dbh->prepare($sql);
-                $query->bindParam(':email', $email, PDO::PARAM_STR);
+                $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
                 $query->execute();
                 $results = $query->fetchAll(PDO::FETCH_OBJ);
                 $cnt = 1;
@@ -80,71 +81,66 @@ require_once "controller.php";
                                                             <div class="p-5">
                                                                 <div class="text-center">
                                                                     <div class="text-center" style="display:flex; width:auto; justify-content: start;">
-                                                                        <a class="font-weight-bold" href="add-assessment.php">
+                                                                        <a class="font-weight-bold" href="index.php">
                                                                             &larr; Back</a>
                                                                     </div>
 
                                                                     <!-- Page Heading -->
-                                                                    <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Workplace Inspection</h1>
+                                                                    <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Edit Assessment</h1>
+                                                                    <?php
+                                                                    if (count($errors) > 0) {
+                                                                    ?>
+                                                                        <div class="col-lg-12 mb-4">
+                                                                            <div class="card bg-danger text-white shadow">
+                                                                                <div class="card-body text-center" style="font-weight: bold;">
+                                                                                    <?php foreach ($errors as $error) {
+                                                                                        echo $error;
+                                                                                    } ?>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    <?php
+                                                                    }
+                                                                    ?>
                                                                 </div>
 
-                                                                <!-- <form class="user" method="POST">
+                                                                <form class="user" method="POST">
                                                                     <div class="form-group">
-                                                                        <input type="text" class="form-control form-control-user font-weight-bold" name="assessee_name" id="assessee_name" placeholder="Assessee Name" required>
+                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessor_id" id="assessor_id" value="<?php echo htmlentities($result->assessor_id); ?>">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessor_name" id="assessor_name" value="<?php echo htmlentities($result->assessor_name); ?>">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?php echo htmlentities($result->assessee_id); ?>">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <input type="text" class="form-control form-control-user font-weight-bold" name="assessee_name" id="assessee_name" placeholder="Assessee Name" required value="<?php echo htmlentities($result->assessee_name); ?>">
                                                                     </div>
                                                                     <div class="form-group" id="row">
                                                                         <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                            <input type="text" class="form-control form-control-user font-weight-bold" name="project_name" id="project_name" placeholder="Project Name" required>
+                                                                            <input type="text" class="form-control form-control-user font-weight-bold" name="project_name" id="project_name" placeholder="Project Name" required value="<?php echo htmlentities($result->project_name); ?>">
                                                                         </div>
                                                                         <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                            <input type="text" onfocus="(this.type='date')" onchange="(this.type='date')" class="form-control form-control-user font-weight-bold" name="project_date" id="project_date" required placeholder="Project Date" date_format='dd/mm/yyyy'>
+                                                                            <input type="text" onfocus="(this.type='date')" onchange="(this.type='date')" class="form-control form-control-user font-weight-bold" name="project_date" id="project_date" required placeholder="Project Date" date_format='dd/mm/yyyy' value="<?php echo date_format(new DateTime($result->project_date), 'd/m/Y'); ?>">
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group" id="row">
                                                                         <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                            <input type="text" class="form-control form-control-user font-weight-bold" name="project_location" id="project_location" placeholder="Project Location" required>
+                                                                            <input type="text" class="form-control form-control-user font-weight-bold" name="project_location" id="project_location" placeholder="Project Location" required value="<?php echo htmlentities($result->project_location); ?>">
                                                                         </div>
                                                                         <div class="col-sm-6">
-                                                                            <input type="text" onfocus="(this.type='file')" class="form-control form-control-user font-weight-bold" name="project_picture" id="project_picture" required placeholder="Project Picture" accept="image/*" onchange="document.getElementById('project_picture').src = window.URL.createObjectURL(this.files[0])" />
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="document-check.php">
-                                                                                <div class="card mb-4">
-                                                                                    <div class="card-body card-hover py-3">
-                                                                                        <h6 class="m-0 font-weight-bold">Document Check</h6>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="#">
-                                                                                <div class="card mb-4">
-                                                                                    <div class="card-body card-hover py-3">
-                                                                                        <h6 class="m-0 font-weight-bold">Workplace Inspection</h6>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="#">
-                                                                                <div class="card mb-4">
-                                                                                    <div class="card-body card-hover py-3">
-                                                                                        <h6 class="m-0 font-weight-bold">Personnel Interview</h6>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
+                                                                            <input type="text" onfocus="(this.type='file')" class="form-control form-control-user font-weight-bold" name="project_picture" id="project_picture" required placeholder="Project Picture" accept="image/*" onchange="document.getElementById('project_picture').src = window.URL.createObjectURL(this.files[0])" value="<?php echo htmlentities($result->project_picture); ?>" />
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group" id="row">
                                                                         <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="add">Save</button>
+                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="update">Update</button>
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                     </div>
-                                                                </form> -->
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>

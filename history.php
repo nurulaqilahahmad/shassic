@@ -144,18 +144,18 @@ include('includes/config.php');
                                                     $sql = "SELECT *from assessment WHERE assessor_id='$result->id'";
                                                     $query = $dbh->prepare($sql);
                                                     $query->execute();
-                                                    $results = $query->fetchAll(PDO::FETCH_OBJ);
+                                                    $histories = $query->fetchAll(PDO::FETCH_OBJ);
                                                     $cnt = 1;
                                                     if ($query->rowCount() > 0) {
-                                                        foreach ($results as $result) {
+                                                        foreach ($histories as $history) {
                                                     ?>
                                                             <tr>
-                                                                <td class="project_image"> <img class="img-thumbnail" width="100" src="img/history/<?php echo htmlentities($result->project_picture); ?>" alt="project image" /></td>
-                                                                <td class="assessee_name"><?php echo htmlentities($result->assessee_name); ?></td>
-                                                                <td class="project_name"><?php echo htmlentities($result->project_name); ?></td>
-                                                                <td class="assessement_progress"><?php echo htmlentities($result->project_percentage); ?></td>
+                                                                <td class="project_image"> <img class="img-thumbnail" width="100" src="img/history/<?php echo htmlentities($history->project_picture); ?>" alt="project image" /></td>
+                                                                <td class="assessee_name"><?php echo htmlentities($history->assessee_name); ?></td>
+                                                                <td class="project_name"><?php echo htmlentities($history->project_name); ?></td>
+                                                                <td class="assessement_progress"><?php echo htmlentities($history->project_percentage); ?></td>
                                                                 <td>
-                                                                    <button onclick="window.location='tables.html';">Edit</button>
+                                                                    <button onclick="window.location='edit-assessment-from-history.php?assessee_id=<?php echo htmlentities($history->assessee_id); ?>';">Edit</button>
                                                                     <button onclick="window.location='tables.html';">Print</button>
                                                                 </td>
                                                             </tr>

@@ -60,6 +60,19 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4 font-weight-bold">Create an Account!</h1>
                                         <?php
+                                        if ($_SESSION['info'] != "") {
+                                        ?>
+                                            <div class="col-lg-12 mb-4">
+                                                <div class="card bg-success text-white shadow">
+                                                    <div class="card-body text-center font-weight-bold" style="margin: 10px">
+                                                        <?php echo $_SESSION['info']; ?><a class="small font-weight-bold" href="login.php">Login Now</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        <?php
+                                        }
+                                        ?>
+                                        <?php
                                         if (count($errors) > 0) {
                                         ?>
                                             <div class="col-lg-12 mb-4">

@@ -42,10 +42,12 @@ INSERT INTO `user` (`id`, `username`, `email`, `password`, `code`, `fullname`) V
 (1, 'Irma Zafirah', 'irmazafirah@gmail.com', 'irma123', '123456', 'Irma Zafirah binti Mohd Ikram');
 
 CREATE TABLE `assessment` (
+  `assessor_id` int(11) NOT NULL,
+  `assessor_name` varchar(200) NOT NULL,
   `assessee_id` int(11) NOT NULL,
   `assessee_name` varchar(200) NOT NULL,
   `project_name` varchar (200) NOT NULL, 
-  `project_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `project_date` date NOT NULL,
   `project_location` varchar(200) DEFAULT NULL,
   `project_picture` varchar(100) DEFAULT NULL,
   `assessment_progress` int(11) NOT NULL, 

@@ -13,10 +13,10 @@ require_once "controller.php";
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SHASSIC | Add New Assessment</title>
+    <title>SHASSIC | Assessment</title>
 
     <link rel="icon" type="image/x-icon" href="img/favicon.png">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"> -->
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -48,9 +48,10 @@ require_once "controller.php";
 
                 <?php
                 $email = $_SESSION['login'];
-                $sql = "SELECT * from user where email=:email";
+                $assessee_id = $_GET['assessee_id'];
+                $sql = "SELECT * from assessment where assessee_id=:assessee_id";
                 $query = $dbh->prepare($sql);
-                $query->bindParam(':email', $email, PDO::PARAM_STR);
+                $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
                 $query->execute();
                 $results = $query->fetchAll(PDO::FETCH_OBJ);
                 $cnt = 1;
@@ -79,38 +80,53 @@ require_once "controller.php";
                                                         <div class="col-lg-12">
                                                             <div class="p-5">
                                                                 <div class="text-center">
-                                                                    <div class="text-center" style="display:flex; width:auto; justify-content: start;">
-                                                                        <a class="font-weight-bold" href="add-assessment.php">
-                                                                            &larr; Back</a>
+                                                                    <div class="text-center" id="row">
+                                                                        <div class="col-sm-6" style="display:flex; width:auto; justify-content: start;">
+                                                                            <a class="font-weight-bold" href="edit-assessment.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
+                                                                                &larr; Back</a>
+                                                                        </div>
+                                                                        <div class="col-sm-6" style="display:flex; width:auto; justify-content: end;">
+                                                                            <a class="font-weight-bold" href="#">
+                                                                                Next &rarr;</a>
+                                                                        </div>
                                                                     </div>
 
                                                                     <!-- Page Heading -->
-                                                                    <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Workplace Inspection</h1>
+                                                                    <h1 class="h3 mb-4 text-gray-800 font-weight-bold"><?php echo htmlentities($result->assessee_name); ?> - <?php echo htmlentities($result->project_name); ?></h1>
+                                                                    <?php
+                                                                    if ($_SESSION['info'] != "") {
+                                                                    ?>
+                                                                        <div class="col-lg-12 mb-4">
+                                                                            <div class="card bg-success text-white shadow">
+                                                                                <div class="card-body text-center font-weight-bold">
+                                                                                    <?php echo $_SESSION['info']; ?>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    <?php
+                                                                    }
+                                                                    ?>
+                                                                    <?php
+                                                                    if (count($errors) > 0) {
+                                                                    ?>
+                                                                        <div class="col-lg-12 mb-4">
+                                                                            <div class="card bg-danger text-white shadow">
+                                                                                <div class="card-body text-center" style="font-weight: bold;">
+                                                                                    <?php foreach ($errors as $error) {
+                                                                                        echo $error;
+                                                                                    } ?>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    <?php
+                                                                    }
+                                                                    ?>
                                                                 </div>
 
-                                                                <!-- <form class="user" method="POST">
-                                                                    <div class="form-group">
-                                                                        <input type="text" class="form-control form-control-user font-weight-bold" name="assessee_name" id="assessee_name" placeholder="Assessee Name" required>
-                                                                    </div>
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                            <input type="text" class="form-control form-control-user font-weight-bold" name="project_name" id="project_name" placeholder="Project Name" required>
-                                                                        </div>
-                                                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                            <input type="text" onfocus="(this.type='date')" onchange="(this.type='date')" class="form-control form-control-user font-weight-bold" name="project_date" id="project_date" required placeholder="Project Date" date_format='dd/mm/yyyy'>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                            <input type="text" class="form-control form-control-user font-weight-bold" name="project_location" id="project_location" placeholder="Project Location" required>
-                                                                        </div>
-                                                                        <div class="col-sm-6">
-                                                                            <input type="text" onfocus="(this.type='file')" class="form-control form-control-user font-weight-bold" name="project_picture" id="project_picture" required placeholder="Project Picture" accept="image/*" onchange="document.getElementById('project_picture').src = window.URL.createObjectURL(this.files[0])" />
-                                                                        </div>
-                                                                    </div>
+                                                                <form class="user" method="POST">
                                                                     <div class="form-group" id="row">
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="document-check.php">
+                                                                            <a href="assessment-document-check.php">
                                                                                 <div class="card mb-4">
                                                                                     <div class="card-body card-hover py-3">
                                                                                         <h6 class="m-0 font-weight-bold">Document Check</h6>
@@ -119,7 +135,7 @@ require_once "controller.php";
                                                                             </a>
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="#">
+                                                                            <a href="assessment-workplace-inspection.php">
                                                                                 <div class="card mb-4">
                                                                                     <div class="card-body card-hover py-3">
                                                                                         <h6 class="m-0 font-weight-bold">Workplace Inspection</h6>
@@ -128,7 +144,7 @@ require_once "controller.php";
                                                                             </a>
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="#">
+                                                                            <a href="assessment-personnel-interview.php">
                                                                                 <div class="card mb-4">
                                                                                     <div class="card-body card-hover py-3">
                                                                                         <h6 class="m-0 font-weight-bold">Personnel Interview</h6>
@@ -137,14 +153,7 @@ require_once "controller.php";
                                                                             </a>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="add">Save</button>
-                                                                        </div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
-                                                                    </div>
-                                                                </form> -->
+                                                                </form>
                                                             </div>
                                                         </div>
                                                     </div>
