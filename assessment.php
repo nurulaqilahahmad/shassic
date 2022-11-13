@@ -63,7 +63,6 @@ require_once "controller.php";
                         <!-- Content Wrapper -->
                         <div id="content-wrapper" class="d-flex flex-column">
 
-
                             <!-- Main Content -->
                             <div id="content">
 
@@ -72,8 +71,6 @@ require_once "controller.php";
 
                                     <!-- Outer Row -->
                                     <div class="row justify-content-center">
-
-
                                         <div class="col-xl-12 col-lg-12 col-md-9">
                                             <div class="card o-hidden border-0 shadow-lg my-5">
                                                 <div class="p-0" id="card-body">
@@ -81,13 +78,13 @@ require_once "controller.php";
                                                         <div class="col-lg-12">
                                                             <div class="p-5">
                                                                 <div class="text-center">
-                                                                        <div class="text-center" style="display:flex; width:auto; justify-content: start;">
-                                                                            <a class="btn btn-secondary font-weight-bold" href="index.php">
-                                                                                &larr; Back</a>
-                                                                        </div>
+                                                                    <div class="text-center" style="display:flex; width:auto; justify-content: start;">
+                                                                        <a class="btn btn-secondary font-weight-bold" href="index.php">
+                                                                            &larr; Back</a>
+                                                                    </div>
 
-                                                                        <!-- Page Heading -->
-                                                                        <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Add New Assessment</h1>
+                                                                    <!-- Page Heading -->
+                                                                    <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Add New Assessment</h1>
                                                                 </div>
 
                                                                 <form class="user" method="POST">
@@ -99,7 +96,7 @@ require_once "controller.php";
                                                                             <input type="text" class="form-control form-control-user font-weight-bold" name="project_name" id="project_name" placeholder="Project Name" required>
                                                                         </div>
                                                                         <div class="col-sm-6">
-                                                                            <input placeholder="Project Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="form-control form-control-user font-weight-bold" name="project_date" id="project_date"  required>
+                                                                            <input placeholder="Project Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="form-control form-control-user font-weight-bold" name="project_date" id="project_date" required>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group">
