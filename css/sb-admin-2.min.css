@@ -333,6 +333,19 @@ input[type=radio] {
     padding: 0
 }
 
+input[type="file"] {
+    /* display: none; */
+    line-height: 10px;
+    overflow-x: hidden;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
 textarea {
     overflow: auto;
     resize: vertical
@@ -5080,6 +5093,12 @@ nav ul#menuList li a:hover {
     border-radius: .35rem
 }
 
+.card-hover:hover {
+        color: #fff;
+        background-color:#558381;
+        border-color:#558381
+}
+
 .card>hr {
     margin-right: 0;
     margin-left: 0
@@ -5107,10 +5126,10 @@ nav ul#menuList li a:hover {
     border-top: 0
 }
 
-#card-body {
+.card-body {
     flex: 1 1 auto;
     min-height: 1px;
-    padding: 1.25rem
+    padding: 1.25rem;
 }
 
 .card-title {
@@ -10855,7 +10874,7 @@ button.bg-dark:hover {
 }
 
 .text-primary {
-    color: #4e73df !important
+    color: #112434 !important
 }
 
 a.text-primary:focus,

@@ -19,6 +19,7 @@ require_once "controller.php";
     <title>SHASSIC | Add New Assessment</title>
 
     <link rel="icon" type="image/x-icon" href="img/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -79,12 +80,12 @@ require_once "controller.php";
                                                             <div class="p-5">
                                                                 <div class="text-center">
                                                                     <div class="text-center" style="display:flex; width:auto; justify-content: start;">
-                                                                        <a class="btn btn-secondary font-weight-bold" href="index.php">
+                                                                        <a class="font-weight-bold" href="index.php">
                                                                             &larr; Back</a>
                                                                     </div>
 
-                                                                    <!-- Page Heading -->
-                                                                    <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Add New Assessment</h1>
+                                                                        <!-- Page Heading -->
+                                                                        <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Add New Assessment</h1>
                                                                 </div>
 
                                                                 <form class="user" method="POST">
@@ -95,17 +96,54 @@ require_once "controller.php";
                                                                         <div class="col-sm-6 mb-3 mb-sm-0">
                                                                             <input type="text" class="form-control form-control-user font-weight-bold" name="project_name" id="project_name" placeholder="Project Name" required>
                                                                         </div>
-                                                                        <div class="col-sm-6">
-                                                                            <input placeholder="Project Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="form-control form-control-user font-weight-bold" name="project_date" id="project_date" required>
+                                                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                                                            <input type="text" onfocus="(this.type='date')" onchange="(this.type='date')" class="form-control form-control-user font-weight-bold" name="project_date" id="project_date" required placeholder="Project Date" date_format='dd/mm/yyyy'>
                                                                         </div>
                                                                     </div>
-                                                                    <div class="form-group">
-                                                                        <input type="text" class="form-control form-control-user font-weight-bold" name="project_location" id="project_location" placeholder="Project Location" required>
+                                                                    <div class="form-group" id="row">
+                                                                        <div class="col-sm-6 mb-3 mb-sm-0">
+                                                                            <input type="text" class="form-control form-control-user font-weight-bold" name="project_location" id="project_location" placeholder="Project Location" required>
+                                                                        </div>
+                                                                        <div class="col-sm-6">
+                                                                            <input placeholder="Project Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="form-control form-control-user font-weight-bold" name="project_date" id="project_date"  required>
+                                                                        </div>
                                                                     </div>
-                                                                    <div class="form-group">
-                                                                        <input type="file" class="form-control form-control-user font-weight-bold" name="project_picture" id="project_picture" required accept="image/*" onchange="document.getElementById('project_image').src = window.URL.createObjectURL(this.files[0])">
+                                                                    <div class="form-group" id="row">
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                            <a href="assessment-document-check.php">
+                                                                                <div class="card mb-4">
+                                                                                    <div class="card-body card-hover py-3">
+                                                                                        <h6 class="m-0 font-weight-bold">Document Check</h6>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                            <a href="assessment-workplace-inspection.php">
+                                                                                <div class="card mb-4">
+                                                                                    <div class="card-body card-hover py-3">
+                                                                                        <h6 class="m-0 font-weight-bold">Workplace Inspection</h6>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </a>
+                                                                        </div>
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                            <a href="assessment-personnel-interview.php">
+                                                                                <div class="card mb-4">
+                                                                                    <div class="card-body card-hover py-3">
+                                                                                        <h6 class="m-0 font-weight-bold">Personnel Interview</h6>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </a>
+                                                                        </div>
                                                                     </div>
-                                                                    <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="add">Save</button>
+                                                                    <div class="form-group" id="row">
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="add">Save</button>
+                                                                        </div>
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                    </div>
                                                                 </form>
                                                             </div>
                                                         </div>
@@ -149,25 +187,6 @@ require_once "controller.php";
                 &uarr;
             </a>
 
-            <!-- Logout Modal-->
-            <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">×</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                        <div class="modal-footer">
-                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                            <a class="btn btn-primary" href="logout.php">Logout</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Bootstrap core JavaScript-->
             <script src="vendor/jquery/jquery.min.js"></script>
             <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -178,7 +197,9 @@ require_once "controller.php";
             <!-- Custom scripts for all pages-->
             <script src="js/sb-admin-2.min.js"></script>
         </div>
-    <?php } ?>
+    <?php } else {
+        header("location: login.php");
+    } ?>
 </body>
 
 </html>
