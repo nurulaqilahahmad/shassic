@@ -80,10 +80,10 @@ require_once "controller.php";
                                             <tfoot>
                                                 <tr>
                                                     <th colspan="2">TOTAL SCORE</th>
-                                                    <th id="selectedC">00</th>
+                                                    <th id="selectedC" value="">00</th>
                                                     <th id="selectedNC">00</th>
                                                     <th id="selectedNA">00</th>
-                                                    <th>NO REMARKS</th>
+                                                    <th id="totalScore"></th>
                                                 </tr>
                                             </tfoot>
                                             <tbody>
@@ -183,37 +183,86 @@ require_once "controller.php";
             <!-- Custom scripts for all pages-->
             <script src="js/sb-admin-2.min.js"></script>
         </div>
+
     <?php } else {
         header("location: login.php");
     } ?>
 
     <script>
         var checkboxes = document.querySelectorAll('.checkbox1');
+        var checkboxes2 = document.querySelectorAll('.checkbox2');
+        var checkboxes3 = document.querySelectorAll('.checkbox3');
         //console.log(checkboxes);
+        var totalScore = 0;
         var countC = 0;
-            //SELECT ALL CHECKBOX AND RETURN OF ALL CHECKBOX
-            for (var checkbox of checkboxes) {
-                checkbox.checkbox = this.checkbox;
-                if(checkbox.checkbox == true) {
+        var countNC = 0;
+        var countNA = 0;
+        //SELECT ALL CHECKBOX AND RETURN OF ALL CHECKBOX
+        // for (var checkbox of checkboxes) {
+        //    countC = 0;
+        //     checkbox.checkbox = this.checkbox;
+        //     if (checkbox.checkbox == true) {
+        //         countC++;
+        //         document.getElementById('selectedC').innerHTML = countC;
+        //     } else {
+        //         countC = 0;
+        //         document.getElementById('selectedC').innerHTML = countC;
+        //     }
+        // }
+
+        //FOR INDIVIDUALS CHECKBOX  C COUNT
+        for (var i = 0; i < checkboxes.length; i++) {
+            checkboxes[i].addEventListener('click', function() {
+                // make sure if checkbox is checked or not
+                if (this.checked == true) {
                     countC++;
-                    document.getElementById('selectedC').innerHTML = countC;
-                }else {
-                    countC = 0;
-                    document.getElementById('selectedC').innerHTML = countC;
+                } else {
+                    countC--;
                 }
-            }
-            //FOR INDIVIDUALS CHECKBOX COUNT
-            for(var i = 0; i < checkboxes.length; i++){
-                checkboxes[i].addEventListener('click', function(){
-                    // make sure if checkbox is checked or not
-                    if(this.checked == true){
-                        countC++;
-                    }else {
-                        countC--;
-                    }
-                    document.getElementById('selectedC').innerHTML = countC;
-                })
-            }
+                document.getElementById('selectedC').innerHTML = countC;
+                totalScore += countC;
+                document.getElementById('totalScore').innerHTML = totalScore;
+            })
+        }
+
+        //FOR INDIVIDUALS CHECKBOX  NC COUNT
+        for (var i = 0; i < checkboxes2.length; i++) {
+            checkboxes2[i].addEventListener('click', function() {
+                // make sure if checkbox is checked or not
+                if (this.checked == true) {
+                    countNC++;
+                } else {
+                    countNC--;
+                }
+                document.getElementById('selectedNC').innerHTML = countNC;
+                totalScore += countNC;
+                document.getElementById('totalScore').innerHTML = totalScore;
+            })
+        }
+
+        //FOR INDIVIDUALS CHECKBOX  NA COUNT
+        for (var i = 0; i < checkboxes3.length; i++) {
+            checkboxes3[i].addEventListener('click', function() {
+                // make sure if checkbox is checked or not
+                if (this.checked == true) {
+                    countNA++;
+                } else {
+                    countNA--;
+                }
+                document.getElementById('selectedNA').innerHTML = countNA;
+                totalScore += countNA;
+                document.getElementById('totalScore').innerHTML = totalScore;
+            })
+        }
+
+        // totalScore = countC + countNA;
+        // document.getElementById('totalScore').innerHTML = totalScore;
+
+        // function DocumentCheck() {
+        //     C = document.getElementById('selectedC').value;
+        //     NA = document.getElementById('selectedNA').value;
+        //     document.getElementById("totalScore").innerHTML = C * NA;
+        // }
     </script>
 
 </body>
