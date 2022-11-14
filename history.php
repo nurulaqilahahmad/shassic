@@ -160,7 +160,7 @@ include('includes/config.php');
                                                                     <td class="project_name"><?php echo htmlentities($history->project_name); ?></td>
                                                                     <td class="assessement_progress"><?php echo htmlentities($history->project_percentage); ?></td>
                                                                     <td>
-                                                                        <button onclick="window.location='tables.html';">Edit</button>
+                                                                        <button onclick="window.location='edit-assessment-from-history.php?assessee_id=<?php echo htmlentities($history->assessee_id); ?>';">Edit</button>
                                                                         <button onclick="window.location='tables.html';">Print</button>
                                                                     </td>
                                                                 </tr>
