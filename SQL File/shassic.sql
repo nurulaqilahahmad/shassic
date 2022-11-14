@@ -38,6 +38,8 @@ CREATE TABLE `user` (
   `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Table structure for table `assessment`
+--
 
 CREATE TABLE `assessment` (
   `assessor_id` int(11) NOT NULL,
@@ -54,19 +56,74 @@ CREATE TABLE `assessment` (
   `updation_date` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+-- Table structure for table `workplace_inspection_section`
+--
+
+CREATE TABLE `workplace_inspection_section` (
+  `id` int(11) NOT NULL,
+  `item_no` varchar(200) NOT NULL,
+  `item_name` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Table structure for table `workplace_inspection_checklist`
+--
+
+CREATE TABLE `workplace_inspection_checklist` (
+  `id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `checklist` varchar(200) NOT NULL,
+  `c_status` int(1) NOT NULL,
+  `nc_status` int(1) NOT NULL,
+  `na_status` int(1) NOT NULL,
+  `remarks` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- Table structure for table `document_check_section`
+--
+
+CREATE TABLE `document_check_section` (
+  `id` int(11) NOT NULL,
+  `item_no` varchar(200) NOT NULL,
+  `item_name` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+
+-- Table structure for table `document_check_checklist`
+--
+
+CREATE TABLE `document_check_checklist` (
+  `id` int(11) NOT NULL,
+  `item_id` int(11) NOT NULL,
+  `checklist` varchar(200) NOT NULL,
+  `c_status` int(1) NOT NULL,
+  `nc_status` int(1) NOT NULL,
+  `na_status` int(1) NOT NULL,
+  `remarks` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
 INSERT INTO `assessment` (`assessee_id`, `assessee_name`,`project_name`, `project_date`, `project_location`, `project_picture`) VALUES
 ('1', 'Nurul Aqilah', 'shassic', '2022-10-17', 'Sungai Buloh', 'image1.jpg');
 --
 -- Indexes for dumped tables
+
 --
---
+ALTER TABLE `workplace_inspection_section`
+  ADD PRIMARY KEY (`id`);
 -- Indexes for table `assessment`
 --
 ALTER TABLE `assessment`
   ADD PRIMARY KEY (`assessee_id`);
 
 --
+--
 -- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `workplace_inspection_section`
+--
+ALTER TABLE `workplace_inspection_section`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 --
 
 --

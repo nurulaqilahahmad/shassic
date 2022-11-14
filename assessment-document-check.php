@@ -87,57 +87,76 @@ require_once "controller.php";
                                                 </tr>
                                             </tfoot>
                                             <tbody>
-                                                <tr>
-                                                    <td><b>A</b></td>
-                                                    <td colspan="5"><b>PROJECT OSH POLICY</b><br>(NOTE: Project OSH Policy is only applicable to organisations with more than five (5)
-                                                        employees)</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Whether there is a written Project OSH Policy
-                                                        Statement?</td>
-                                                    <td><input type="checkbox" class="checkbox1"></td>
-                                                    <td><input type="checkbox" class="checkbox2"></td>
-                                                    <td><input type="checkbox" class="checkbox3"></td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>Has the SHC conducted a review to ensure
-                                                        suitability of Project OSH Policy Statement?</td>
-                                                    <td><input type="checkbox" class="checkbox1"></td>
-                                                    <td><input type="checkbox" class="checkbox2"></td>
-                                                    <td><input type="checkbox" class="checkbox3"></td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>Whether Project OSH Policy Statement was written
-                                                        in Bahasa Malaysia?</td>
-                                                    <td><input type="checkbox" class="checkbox1"></td>
-                                                    <td><input type="checkbox" class="checkbox2"></td>
-                                                    <td><input type="checkbox" class="checkbox3"></td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td>Whether Project OSH Policy Statement was written
-                                                        in English?</td>
-                                                    <td><input type="checkbox" class="checkbox1"></td>
-                                                    <td><input type="checkbox" class="checkbox2"></td>
-                                                    <td><input type="checkbox" class="checkbox3"></td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>5</td>
-                                                    <td>Whether Project OSH Policy is signed by the top
-                                                        management?</td>
-                                                    <td><input type="checkbox" class="checkbox1"></td>
-                                                    <td><input type="checkbox" class="checkbox2"></td>
-                                                    <td><input type="checkbox" class="checkbox3"></td>
-                                                    <td></td>
-                                                </tr>
-
+                                                <?php
+                                                $sql = "SELECT * from document_check_section";
+                                                $query = $dbh->prepare($sql);
+                                                $query->execute();
+                                                $sections = $query->fetchAll(PDO::FETCH_OBJ);
+                                                $cnt = 1;
+                                                if ($query->rowCount() > 0) {
+                                                    foreach ($sections as $section) {
+                                                ?>
+                                                        <tr>
+                                                            <th><?php echo htmlentities($section->item_no) ?></th>
+                                                            <th colspan="5" class="text-left"><?php echo htmlentities($section->item_name) ?></th>
+                                                        </tr>
+                                                        <?php
+                                                        $sql = "SELECT * from document_check_checklist where item_id='$section->id'";
+                                                        $query = $dbh->prepare($sql);
+                                                        $query->execute();
+                                                        $checklists = $query->fetchAll(PDO::FETCH_OBJ);
+                                                        $cnt = 1;
+                                                        if ($query->rowCount() > 0) {
+                                                            foreach ($checklists as $checklist) {
+                                                        ?>
+                                                                <tr>
+                                                                    <td><?php echo htmlentities($cnt++) ?></td>
+                                                                    <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
+                                                                    <td><input type="checkbox" class="checkbox1"></td>
+                                                                    <td><input type="checkbox" class="checkbox2"></td>
+                                                                    <td><input type="checkbox" class="checkbox3"></td>
+                                                                    <td></td>
+                                                                </tr>
+                                                        <?php }
+                                                        } ?>
+                                                        <!-- <tr>
+                                                            <td>2</td>
+                                                            <td>Has the SHC conducted a review to ensure
+                                                                suitability of Project OSH Policy Statement?</td>
+                                                            <td><input type="checkbox" class="checkbox1"></td>
+                                                            <td><input type="checkbox" class="checkbox2"></td>
+                                                            <td><input type="checkbox" class="checkbox3"></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>3</td>
+                                                            <td>Whether Project OSH Policy Statement was written
+                                                                in Bahasa Malaysia?</td>
+                                                            <td><input type="checkbox" class="checkbox1"></td>
+                                                            <td><input type="checkbox" class="checkbox2"></td>
+                                                            <td><input type="checkbox" class="checkbox3"></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>4</td>
+                                                            <td>Whether Project OSH Policy Statement was written
+                                                                in English?</td>
+                                                            <td><input type="checkbox" class="checkbox1"></td>
+                                                            <td><input type="checkbox" class="checkbox2"></td>
+                                                            <td><input type="checkbox" class="checkbox3"></td>
+                                                            <td></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td>5</td>
+                                                            <td>Whether Project OSH Policy is signed by the top
+                                                                management?</td>
+                                                            <td><input type="checkbox" class="checkbox1"></td>
+                                                            <td><input type="checkbox" class="checkbox2"></td>
+                                                            <td><input type="checkbox" class="checkbox3"></td>
+                                                            <td></td>
+                                                        </tr> -->
+                                                <?php }
+                                                } ?>
                                             </tbody>
                                         </table>
                                     </div>

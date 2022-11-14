@@ -88,63 +88,74 @@ require_once "controller.php";
                                                                     <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Workplace Inspection</h1>
                                                                 </div>
 
-                                                                <!-- <form class="user" method="POST">
-                                                                    <div class="form-group">
-                                                                        <input type="text" class="form-control form-control-user font-weight-bold" name="assessee_name" id="assessee_name" placeholder="Assessee Name" required>
+                                                                <!-- <form class="user" method="POST"> -->
+                                                                <div class="table-responsive">
+                                                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Item</th>
+                                                                                <th>Checklist</th>
+                                                                                <th>C</th>
+                                                                                <th>NC</th>
+                                                                                <th>NA</th>
+                                                                                <th>Remarks</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tfoot>
+                                                                            <tr>
+                                                                                <th colspan="2">TOTAL SCORE</th>
+                                                                                <th>00</th>
+                                                                                <th>00</th>
+                                                                                <th>00</th>
+                                                                                <th></th>
+                                                                            </tr>
+                                                                        </tfoot>
+                                                                        <tbody>
+                                                                            <?php
+                                                                            $sql = "SELECT * from workplace_inspection_section where id between 1 and 3";
+                                                                            $query = $dbh->prepare($sql);
+                                                                            $query->execute();
+                                                                            $sections = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                            $cnt = 1;
+                                                                            if ($query->rowCount() > 0) {
+                                                                                foreach ($sections as $section) {
+                                                                            ?>
+                                                                                    <tr>
+                                                                                        <th><?php echo htmlentities($section->item_no) ?></th>
+                                                                                        <th colspan="5" class="text-left"><?php echo htmlentities($section->item_name) ?></th>
+                                                                                    </tr>
+                                                                                    <?php
+                                                                                    $sql = "SELECT * from workplace_inspection_checklist where item_id='$section->id'";
+                                                                                    $query = $dbh->prepare($sql);
+                                                                                    $query->execute();
+                                                                                    $checklists = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                    $cnt = 1;
+                                                                                    if ($query->rowCount() > 0) {
+                                                                                        foreach ($checklists as $checklist) {
+                                                                                    ?>
+                                                                                            <tr>
+                                                                                                <td><?php echo htmlentities($cnt++) ?></td>
+                                                                                                <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
+                                                                                                <td><?php echo htmlentities($checklist->c_status) ?></td>
+                                                                                                <td><?php echo htmlentities($checklist->nc_status) ?></td>
+                                                                                                <td><?php echo htmlentities($checklist->na_status) ?></td>
+                                                                                                <td></td>
+                                                                                            </tr>
+                                                                                    <?php }
+                                                                                    } ?>
+                                                                            <?php }
+                                                                            } ?>
+                                                                        </tbody>
+                                                                    </table>
+                                                                </div>
+                                                                <div class="form-group" id="row">
+                                                                    <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                    <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                        <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="add">Save</button>
                                                                     </div>
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                            <input type="text" class="form-control form-control-user font-weight-bold" name="project_name" id="project_name" placeholder="Project Name" required>
-                                                                        </div>
-                                                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                            <input type="text" onfocus="(this.type='date')" onchange="(this.type='date')" class="form-control form-control-user font-weight-bold" name="project_date" id="project_date" required placeholder="Project Date" date_format='dd/mm/yyyy'>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                            <input type="text" class="form-control form-control-user font-weight-bold" name="project_location" id="project_location" placeholder="Project Location" required>
-                                                                        </div>
-                                                                        <div class="col-sm-6">
-                                                                            <input type="text" onfocus="(this.type='file')" class="form-control form-control-user font-weight-bold" name="project_picture" id="project_picture" required placeholder="Project Picture" accept="image/*" onchange="document.getElementById('project_picture').src = window.URL.createObjectURL(this.files[0])" />
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="document-check.php">
-                                                                                <div class="card mb-4">
-                                                                                    <div class="card-body card-hover py-3">
-                                                                                        <h6 class="m-0 font-weight-bold">Document Check</h6>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="#">
-                                                                                <div class="card mb-4">
-                                                                                    <div class="card-body card-hover py-3">
-                                                                                        <h6 class="m-0 font-weight-bold">Workplace Inspection</h6>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="#">
-                                                                                <div class="card mb-4">
-                                                                                    <div class="card-body card-hover py-3">
-                                                                                        <h6 class="m-0 font-weight-bold">Personnel Interview</h6>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="add">Save</button>
-                                                                        </div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
-                                                                    </div>
-                                                                </form> -->
+                                                                    <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                </div>
+                                                                <!-- </form> -->
                                                             </div>
                                                         </div>
                                                     </div>
