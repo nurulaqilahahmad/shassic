@@ -61,7 +61,6 @@ require_once "controller.php";
                         <!-- Content Wrapper -->
                         <div id="content-wrapper" class="d-flex flex-column">
 
-
                             <!-- Main Content -->
                             <div id="content">
 
@@ -70,8 +69,6 @@ require_once "controller.php";
 
                                     <!-- Outer Row -->
                                     <div class="row justify-content-center">
-
-
                                         <div class="col-xl-12 col-lg-12 col-md-9">
                                             <div class="card o-hidden border-0 shadow-lg my-5">
                                                 <div class="p-0" id="card-body">
@@ -86,21 +83,6 @@ require_once "controller.php";
 
                                                                     <!-- Page Heading -->
                                                                     <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Add New Assessment</h1>
-                                                                    <?php
-                                                                    if (count($errors) > 0) {
-                                                                    ?>
-                                                                        <div class="col-lg-12 mb-4">
-                                                                            <div class="card bg-danger text-white shadow">
-                                                                                <div class="card-body text-center" style="font-weight: bold;">
-                                                                                    <?php foreach ($errors as $error) {
-                                                                                        echo $error;
-                                                                                    } ?>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    <?php
-                                                                    }
-                                                                    ?>
                                                                 </div>
 
                                                                 <form class="user" method="POST">
@@ -126,7 +108,7 @@ require_once "controller.php";
                                                                             <input type="text" class="form-control form-control-user font-weight-bold" name="project_location" id="project_location" placeholder="Project Location" required>
                                                                         </div>
                                                                         <div class="col-sm-6">
-                                                                            <input type="text" onfocus="(this.type='file')" class="form-control form-control-user font-weight-bold" name="project_picture" id="project_picture" required placeholder="Project Picture" accept="image/*" onchange="document.getElementById('project_picture').src = window.URL.createObjectURL(this.files[0])" />
+                                                                            <input placeholder="Project Date" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="form-control form-control-user font-weight-bold" name="project_date" id="project_date"  required>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group" id="row">
