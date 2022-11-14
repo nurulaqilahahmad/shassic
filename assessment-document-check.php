@@ -46,128 +46,114 @@ require_once "controller.php";
             <!-- Page Wrapper -->
             <div id="wrapper">
 
-                <?php
-                $email = $_SESSION['login'];
-                $sql = "SELECT * from user where email=:email";
-                $query = $dbh->prepare($sql);
-                $query->bindParam(':email', $email, PDO::PARAM_STR);
-                $query->execute();
-                $results = $query->fetchAll(PDO::FETCH_OBJ);
-                $cnt = 1;
-                if ($query->rowCount() > 0) {
-                    foreach ($results as $result) {
-                ?>
+                <!-- Content Wrapper -->
+                <div id="content-wrapper" class="d-flex flex-column">
 
-                        <!-- Content Wrapper -->
-                        <div id="content-wrapper" class="d-flex flex-column">
+                    <!-- Main Content -->
+                    <div id="content">
 
+                        <!-- Begin Page Content -->
+                        <div class="container-fluid">
 
-                            <!-- Main Content -->
-                            <div id="content">
+                            <!-- Document Check Data Table -->
+                            <div class="card shadow mb-4">
+                                <div class="card-header py-3">
+                                    <div class="text-center" style="display:flex; width:auto; justify-content: start;">
+                                        <a class="font-weight-bold" href="index.php">
+                                            &larr; Back</a>
+                                    </div>
+                                    <h6 class="h3 mb-4 text-gray-800 font-weight-bold">Document Check</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                            <thead>
+                                                <tr>
+                                                    <th>ITEM</th>
+                                                    <th>CHECKLIST</th>
+                                                    <th>C</th>
+                                                    <th>NC</th>
+                                                    <th>NA</th>
+                                                    <th>REMARKS</th>
+                                                </tr>
+                                            </thead>
+                                            <tfoot>
+                                                <tr>
+                                                    <th colspan="2">TOTAL SCORE</th>
+                                                    <th id="selected">00</th>
+                                                    <th>00</th>
+                                                    <th>00</th>
+                                                    <th>NO REMARKS</th>
+                                                </tr>
+                                            </tfoot>
+                                            <tbody>
+                                                <tr>
+                                                    <td><b>A</b></td>
+                                                    <td colspan="5"><b>PROJECT OSH POLICY</b><br>(NOTE: Project OSH Policy is only applicable to organisations with more than five (5)
+                                                        employees)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>1</td>
+                                                    <td>Whether there is a written Project OSH Policy
+                                                        Statement?</td>
+                                                    <td><input type="checkbox" class="checkbox1"></td>
+                                                    <td><input type="checkbox" class="checkbox"></td>
+                                                    <td><input type="checkbox" class="checkbox"></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>Has the SHC conducted a review to ensure
+                                                        suitability of Project OSH Policy Statement?</td>
+                                                    <td><input type="checkbox" class="checkbox1"></td>
+                                                    <td><input type="checkbox" class="checkbox"></td>
+                                                    <td><input type="checkbox" class="checkbox"></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>Whether Project OSH Policy Statement was written
+                                                        in Bahasa Malaysia?</td>
+                                                    <td><input type="checkbox" class="checkbox1"></td>
+                                                    <td><input type="checkbox" class="checkbox"></td>
+                                                    <td><input type="checkbox" class="checkbox"></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td>Whether Project OSH Policy Statement was written
+                                                        in English?</td>
+                                                    <td><input type="checkbox" class="checkbox1"></td>
+                                                    <td><input type="checkbox" class="checkbox"></td>
+                                                    <td><input type="checkbox" class="checkbox"></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>5</td>
+                                                    <td>Whether Project OSH Policy is signed by the top
+                                                        management?</td>
+                                                    <td><input type="checkbox" class="checkbox1"></td>
+                                                    <td><input type="checkbox" class="checkbox"></td>
+                                                    <td><input type="checkbox" class="checkbox"></td>
+                                                    <td></td>
+                                                </tr>
 
-                                <!-- Begin Page Content -->
-                                <div class="container-fluid">
-
-                                    <!-- Outer Row -->
-                                    <div class="row justify-content-center">
-
-
-                                        <div class="col-xl-12 col-lg-12 col-md-9">
-                                            <div class="card o-hidden border-0 shadow-lg my-5">
-                                                <div class="p-0" id="card-body">
-                                                    <div id="row">
-                                                        <div class="col-lg-12">
-                                                            <div class="p-5">
-                                                                <div class="text-center">
-                                                                    <div class="text-center" style="display:flex; width:auto; justify-content: start;">
-                                                                        <a class="font-weight-bold" href="add-assessment.php">
-                                                                            &larr; Back</a>
-                                                                    </div>
-
-                                                                    <!-- Page Heading -->
-                                                                    <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Document Check</h1>
-                                                                </div>
-
-                                                                <!-- <form class="user" method="POST">
-                                                                    <div class="form-group">
-                                                                        <input type="text" class="form-control form-control-user font-weight-bold" name="assessee_name" id="assessee_name" placeholder="Assessee Name" required>
-                                                                    </div>
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                            <input type="text" class="form-control form-control-user font-weight-bold" name="project_name" id="project_name" placeholder="Project Name" required>
-                                                                        </div>
-                                                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                            <input type="text" onfocus="(this.type='date')" onchange="(this.type='date')" class="form-control form-control-user font-weight-bold" name="project_date" id="project_date" required placeholder="Project Date" date_format='dd/mm/yyyy'>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                            <input type="text" class="form-control form-control-user font-weight-bold" name="project_location" id="project_location" placeholder="Project Location" required>
-                                                                        </div>
-                                                                        <div class="col-sm-6">
-                                                                            <input type="text" onfocus="(this.type='file')" class="form-control form-control-user font-weight-bold" name="project_picture" id="project_picture" required placeholder="Project Picture" accept="image/*" onchange="document.getElementById('project_picture').src = window.URL.createObjectURL(this.files[0])" />
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="document-check.php">
-                                                                                <div class="card mb-4">
-                                                                                    <div class="card-body card-hover py-3">
-                                                                                        <h6 class="m-0 font-weight-bold">Document Check</h6>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="#">
-                                                                                <div class="card mb-4">
-                                                                                    <div class="card-body card-hover py-3">
-                                                                                        <h6 class="m-0 font-weight-bold">Workplace Inspection</h6>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="#">
-                                                                                <div class="card mb-4">
-                                                                                    <div class="card-body card-hover py-3">
-                                                                                        <h6 class="m-0 font-weight-bold">Personnel Interview</h6>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="add">Save</button>
-                                                                        </div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
-                                                                    </div>
-                                                                </form> -->
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-
+                                            </tbody>
+                                        </table>
                                     </div>
 
                                 </div>
-                                <!-- /.container-fluid -->
-
                             </div>
-                            <!-- End of Main Content -->
 
                         </div>
-                        <!-- End of Content Wrapper -->
+                        <!-- /.container-fluid -->
 
+                    </div>
+                    <!-- End of Main Content -->
 
-                <?php }
-                } ?>
+                </div>
+                <!-- End of Content Wrapper -->
+
             </div>
             <!-- End of Page Wrapper -->
 
@@ -200,6 +186,37 @@ require_once "controller.php";
     <?php } else {
         header("location: login.php");
     } ?>
+
+    <script>
+        var checkboxes = document.querySelectorAll('.checkbox1');
+        //console.log(checkboxes);
+        var count = 0;
+            //SELECT ALL CHECKBOX AND RETURN OF ALL CHECKBOX
+            for (var checkbox of checkboxes) {
+                checkbox.checkbox = this.checkbox;
+                if(checkbox.checkbox == true) {
+                    count++;
+                    document.getElementById('selected').innerHTML = count;
+                }else {
+                    count = 0;
+                    document.getElementById('selected').innerHTML = count;
+                }
+            }
+            //FOR INDIVIDUALS CHECKBOX COUNT
+            for(var i = 0; i < checkboxes.length; i++){
+                checkboxes[i].addEventListener('click', function(){
+                    // make sure if checkbox is checked or not
+                    if(this.checked == true){
+                        count++;
+                    }else {
+                        count--;
+                    }
+                    document.getElementById('selected').innerHTML = count;
+                })
+
+            }
+    </script>
+
 </body>
 
 </html>
