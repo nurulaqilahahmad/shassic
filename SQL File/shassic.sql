@@ -38,8 +38,6 @@ CREATE TABLE `user` (
   `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `user` (`id`, `username`, `email`, `password`, `code`, `fullname`) VALUES
-(1, 'Irma Zafirah', 'irmazafirah@gmail.com', 'irma123', '123456', 'Irma Zafirah binti Mohd Ikram');
 
 CREATE TABLE `assessment` (
   `assessor_id` int(11) NOT NULL,
