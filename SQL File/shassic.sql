@@ -101,8 +101,6 @@ CREATE TABLE `document_check_checklist` (
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `assessment` (`assessee_id`, `assessee_name`,`project_name`, `project_date`, `project_location`, `project_picture`) VALUES
-('1', 'Nurul Aqilah', 'shassic', '2022-10-17', 'Sungai Buloh', 'image1.jpg');
 --
 -- Indexes for dumped tables
 

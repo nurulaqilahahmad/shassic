@@ -88,13 +88,13 @@ require_once "controller.php";
                                                                     <!-- Page Heading -->
                                                                     <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Workplace Inspection</h1>
                                                                     <div class="tab">
-                                                                        <button class="tablinks" onclick="openSection(event, 'London')">General</button>
-                                                                        <button class="tablinks" onclick="openSection(event, 'Paris')">Construction Work</button>
+                                                                        <button class="tablinks" onclick="openSection(event, 'general')">General</button>
+                                                                        <button class="tablinks" onclick="openSection(event, 'construction-work')">Construction Work</button>
                                                                     </div>
                                                                 </div>
 
                                                                 <!-- <form class="user" method="POST"> -->
-                                                                <div class="table-responsive" id="general-section">
+                                                                <div class="table-responsive" id="general-section"  class="tabcontent">
                                                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                                         <thead>
                                                                             <tr>
@@ -164,7 +164,7 @@ require_once "controller.php";
                                                                 <!-- </form> -->
 
                                                                 <!-- <form class="user" method="POST"> -->
-                                                                <div class="table-responsive" id="construction-work-section">
+                                                                <div class="table-responsive" id="construction-work-section" class="tabcontent">
                                                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                                         <thead>
                                                                             <tr>
@@ -288,7 +288,19 @@ require_once "controller.php";
         header("location: login.php");
     } ?>
     <script>
-
+        function openSection(evt, sectionName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(sectionName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
     </script>
 </body>
 
