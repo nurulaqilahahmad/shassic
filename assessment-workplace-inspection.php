@@ -87,10 +87,14 @@ require_once "controller.php";
 
                                                                     <!-- Page Heading -->
                                                                     <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Workplace Inspection</h1>
+                                                                    <div class="tab">
+                                                                        <button class="tablinks" onclick="openSection(event, 'London')">General</button>
+                                                                        <button class="tablinks" onclick="openSection(event, 'Paris')">Construction Work</button>
+                                                                    </div>
                                                                 </div>
 
                                                                 <!-- <form class="user" method="POST"> -->
-                                                                <div class="table-responsive">
+                                                                <div class="table-responsive" id="general-section">
                                                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                                         <thead>
                                                                             <tr>
@@ -148,14 +152,85 @@ require_once "controller.php";
                                                                             } ?>
                                                                         </tbody>
                                                                     </table>
-                                                                </div>
-                                                                <div class="form-group" id="row">
-                                                                    <div class="col-sm-4 mb-3 mb-sm-0"></div>
-                                                                    <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                        <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="add">Save</button>
+                                                                    <div class="form-group" id="row">
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection">Save</button>
+                                                                        </div>
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                     </div>
-                                                                    <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                 </div>
+
+                                                                <!-- </form> -->
+
+                                                                <!-- <form class="user" method="POST"> -->
+                                                                <div class="table-responsive" id="construction-work-section">
+                                                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <!-- <th>Item</th>
+                                                                                <th>Checklist</th>
+                                                                                <th>C</th>
+                                                                                <th>NC</th>
+                                                                                <th>NA</th>
+                                                                                <th>Remarks</th> -->
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tfoot>
+                                                                            <tr>
+                                                                                <th colspan="2">TOTAL SCORE</th>
+                                                                                <th>00</th>
+                                                                                <th>00</th>
+                                                                                <th>00</th>
+                                                                                <th></th>
+                                                                            </tr>
+                                                                        </tfoot>
+                                                                        <tbody>
+                                                                            <?php
+                                                                            $sql = "SELECT * from workplace_inspection_section where id between 1 and 3";
+                                                                            $query = $dbh->prepare($sql);
+                                                                            $query->execute();
+                                                                            $sections = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                            $cnt = 1;
+                                                                            if ($query->rowCount() > 0) {
+                                                                                foreach ($sections as $section) {
+                                                                            ?>
+                                                                                    <tr>
+                                                                                        <th><?php echo htmlentities($section->item_no) ?></th>
+                                                                                        <th colspan="5" class="text-left"><?php echo htmlentities($section->item_name) ?></th>
+                                                                                    </tr>
+                                                                                    <?php
+                                                                                    $sql = "SELECT * from workplace_inspection_checklist where item_id='$section->id'";
+                                                                                    $query = $dbh->prepare($sql);
+                                                                                    $query->execute();
+                                                                                    $checklists = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                    $cnt = 1;
+                                                                                    if ($query->rowCount() > 0) {
+                                                                                        foreach ($checklists as $checklist) {
+                                                                                    ?>
+                                                                                            <tr>
+                                                                                                <td><?php echo htmlentities($cnt++) ?></td>
+                                                                                                <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
+                                                                                                <td><?php echo htmlentities($checklist->c_status) ?></td>
+                                                                                                <td><?php echo htmlentities($checklist->nc_status) ?></td>
+                                                                                                <td><?php echo htmlentities($checklist->na_status) ?></td>
+                                                                                                <td></td>
+                                                                                            </tr>
+                                                                                    <?php }
+                                                                                    } ?>
+                                                                            <?php }
+                                                                            } ?>
+                                                                        </tbody>
+                                                                    </table>
+                                                                    <div class="form-group" id="row">
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection">Save</button>
+                                                                        </div>
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                    </div>
+                                                                </div>
+
                                                                 <!-- </form> -->
                                                             </div>
                                                         </div>
@@ -212,6 +287,9 @@ require_once "controller.php";
     <?php } else {
         header("location: login.php");
     } ?>
+    <script>
+
+    </script>
 </body>
 
 </html>
