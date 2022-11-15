@@ -80,7 +80,7 @@ require_once "controller.php";
                                             <tfoot>
                                                 <tr>
                                                     <th colspan="2">TOTAL SCORE</th>
-                                                    <th id="selectedC">0</th>
+                                                    <th id="selectedC">00</th>
                                                     <th id="selectedNC">0</th>
                                                     <th id="selectedNA">0</th>
                                                     <th id="totalScore" onchange="
