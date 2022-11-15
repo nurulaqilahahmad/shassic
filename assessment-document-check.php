@@ -26,6 +26,23 @@ require_once "controller.php";
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/landing.css">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function()
+        {
+            $('tr').each(function(){
+                var totmarks = 0;
+                $(this).find('#selectedC').each(function(){
+                    var marks=$(this).text();
+                    if(marks.length!==0){
+                        totmarks+=parseInt(marks);
+                    }
+                });
+                console.log(totmarks);
+            })
+        });
+    </script>
+
 </head>
 
 <body id="page-top">
@@ -80,38 +97,34 @@ require_once "controller.php";
                                             <tfoot>
                                                 <tr>
                                                     <th colspan="2">TOTAL SCORE</th>
-                                                    <th id="selectedC">00</th>
+                                                    <th id="selectedC">0</th>
                                                     <th id="selectedNC">0</th>
                                                     <th id="selectedNA">0</th>
-                                                    <th id="totalScore" onchange="
-                                                    document.getElementById('totalScore').innerHTML = 
-                                                    document.getElementById('selectedC').value +
-                                                    document.getElementById('selectedNC').value +
-                                                    document.getElementById('selectedNA').value">0</th>
+                                                    <th id="totalScore">0</th>
                                                 </tr>
                                             </tfoot>
                                             <tbody>
-                                                <?php
-                                                $sql = "SELECT * from document_check_section";
-                                                $query = $dbh->prepare($sql);
-                                                $query->execute();
-                                                $sections = $query->fetchAll(PDO::FETCH_OBJ);
-                                                $cnt = 1;
-                                                if ($query->rowCount() > 0) {
-                                                    foreach ($sections as $section) {
-                                                ?>
+                                                <!-- <?php
+                                                        $sql = "SELECT * from document_check_section";
+                                                        $query = $dbh->prepare($sql);
+                                                        $query->execute();
+                                                        $sections = $query->fetchAll(PDO::FETCH_OBJ);
+                                                        $cnt = 1;
+                                                        if ($query->rowCount() > 0) {
+                                                            foreach ($sections as $section) {
+                                                        ?>
                                                         <tr>
                                                             <th><?php echo htmlentities($section->item_no) ?></th>
                                                             <th colspan="5" class="text-left"><?php echo htmlentities($section->item_name) ?></th>
                                                         </tr>
                                                         <?php
-                                                        $sql = "SELECT * from document_check_checklist where item_id='$section->id'";
-                                                        $query = $dbh->prepare($sql);
-                                                        $query->execute();
-                                                        $checklists = $query->fetchAll(PDO::FETCH_OBJ);
-                                                        $cnt = 1;
-                                                        if ($query->rowCount() > 0) {
-                                                            foreach ($checklists as $checklist) {
+                                                                $sql = "SELECT * from document_check_checklist where item_id='$section->id'";
+                                                                $query = $dbh->prepare($sql);
+                                                                $query->execute();
+                                                                $checklists = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                $cnt = 1;
+                                                                if ($query->rowCount() > 0) {
+                                                                    foreach ($checklists as $checklist) {
                                                         ?>
                                                                 <tr>
                                                                     <td><?php echo htmlentities($cnt++) ?></td>
@@ -122,45 +135,46 @@ require_once "controller.php";
                                                                     <td></td>
                                                                 </tr>
                                                         <?php }
-                                                        } ?>
-                                                        <!-- <tr>
-                                                            <td>2</td>
-                                                            <td>Has the SHC conducted a review to ensure
-                                                                suitability of Project OSH Policy Statement?</td>
-                                                            <td><input type="checkbox" class="checkbox1"></td>
-                                                            <td><input type="checkbox" class="checkbox2"></td>
-                                                            <td><input type="checkbox" class="checkbox3"></td>
-                                                            <td></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>3</td>
-                                                            <td>Whether Project OSH Policy Statement was written
-                                                                in Bahasa Malaysia?</td>
-                                                            <td><input type="checkbox" class="checkbox1"></td>
-                                                            <td><input type="checkbox" class="checkbox2"></td>
-                                                            <td><input type="checkbox" class="checkbox3"></td>
-                                                            <td></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>4</td>
-                                                            <td>Whether Project OSH Policy Statement was written
-                                                                in English?</td>
-                                                            <td><input type="checkbox" class="checkbox1"></td>
-                                                            <td><input type="checkbox" class="checkbox2"></td>
-                                                            <td><input type="checkbox" class="checkbox3"></td>
-                                                            <td></td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td>5</td>
-                                                            <td>Whether Project OSH Policy is signed by the top
-                                                                management?</td>
-                                                            <td><input type="checkbox" class="checkbox1"></td>
-                                                            <td><input type="checkbox" class="checkbox2"></td>
-                                                            <td><input type="checkbox" class="checkbox3"></td>
-                                                            <td></td>
-                                                        </tr> -->
+                                                                } ?>
                                                 <?php }
-                                                } ?>
+                                                        } ?> -->
+
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>Has the SHC conducted a review to ensure
+                                                        suitability of Project OSH Policy Statement?</td>
+                                                    <td><input type="checkbox" class="checkbox1"></td>
+                                                    <td><input type="checkbox" class="checkbox2"></td>
+                                                    <td><input type="checkbox" class="checkbox3"></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>3</td>
+                                                    <td>Whether Project OSH Policy Statement was written
+                                                        in Bahasa Malaysia?</td>
+                                                    <td><input type="checkbox" class="checkbox1"></td>
+                                                    <td><input type="checkbox" class="checkbox2"></td>
+                                                    <td><input type="checkbox" class="checkbox3"></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>4</td>
+                                                    <td>Whether Project OSH Policy Statement was written
+                                                        in English?</td>
+                                                    <td><input type="checkbox" class="checkbox1"></td>
+                                                    <td><input type="checkbox" class="checkbox2"></td>
+                                                    <td><input type="checkbox" class="checkbox3"></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>5</td>
+                                                    <td>Whether Project OSH Policy is signed by the top
+                                                        management?</td>
+                                                    <td><input type="checkbox" class="checkbox1"></td>
+                                                    <td><input type="checkbox" class="checkbox2"></td>
+                                                    <td><input type="checkbox" class="checkbox3"></td>
+                                                    <td></td>
+                                                </tr>
                                             </tbody>
                                         </table>
                                     </div>
@@ -215,23 +229,9 @@ require_once "controller.php";
         var checkboxes = document.querySelectorAll('.checkbox1');
         var checkboxes2 = document.querySelectorAll('.checkbox2');
         var checkboxes3 = document.querySelectorAll('.checkbox3');
-        //console.log(checkboxes);
-        var totalScore = 0;
         var countC = 0;
         var countNC = 0;
         var countNA = 0;
-        //SELECT ALL CHECKBOX AND RETURN OF ALL CHECKBOX
-        // for (var checkbox of checkboxes) {
-        //    countC = 0;
-        //     checkbox.checkbox = this.checkbox;
-        //     if (checkbox.checkbox == true) {
-        //         countC++;
-        //         document.getElementById('selectedC').innerHTML = countC;
-        //     } else {
-        //         countC = 0;
-        //         document.getElementById('selectedC').innerHTML = countC;
-        //     }
-        // }
 
         //FOR INDIVIDUALS CHECKBOX  C COUNT
         for (var i = 0; i < checkboxes.length; i++) {
@@ -243,11 +243,8 @@ require_once "controller.php";
                     countC--;
                 }
                 document.getElementById('selectedC').innerHTML = countC;
-                // totalScore(countC);
             });
-            
         }
-        
 
         //FOR INDIVIDUALS CHECKBOX  NC COUNT
         for (var i = 0; i < checkboxes2.length; i++) {
@@ -275,17 +272,7 @@ require_once "controller.php";
             })
         }
 
-        // totalScore.addEventListener('change', function() {
-        //     document.getElementById('totalScore').innerHTML = countC + countNC + countNA;
-        // })
 
-        // document.getElementById('totalScore').innerHTML = countC + countNC + countNA;
-
-        // function DocumentCheck() {
-        //     C = document.getElementById('selectedC').value;
-        //     NA = document.getElementById('selectedNA').value;
-        //     document.getElementById("totalScore").innerHTML = C * NA;
-        // }
     </script>
 
 </body>
