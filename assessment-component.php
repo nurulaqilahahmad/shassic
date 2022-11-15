@@ -126,7 +126,7 @@ require_once "controller.php";
                                                                 <form class="user" method="POST">
                                                                     <div class="form-group" id="row">
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="assessment-document-check.php">
+                                                                            <a href="assessment-document-check.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
                                                                                 <div class="card mb-4">
                                                                                     <div class="card-body card-hover py-3">
                                                                                         <h6 class="m-0 font-weight-bold">Document Check</h6>
@@ -135,7 +135,7 @@ require_once "controller.php";
                                                                             </a>
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="assessment-workplace-inspection.php">
+                                                                            <a href="assessment-workplace-inspection.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
                                                                                 <div class="card mb-4">
                                                                                     <div class="card-body card-hover py-3">
                                                                                         <h6 class="m-0 font-weight-bold">Workplace Inspection</h6>
@@ -144,7 +144,7 @@ require_once "controller.php";
                                                                             </a>
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="assessment-personnel-interview.php">
+                                                                            <a href="assessment-personnel-interview.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
                                                                                 <div class="card mb-4">
                                                                                     <div class="card-body card-hover py-3">
                                                                                         <h6 class="m-0 font-weight-bold">Personnel Interview</h6>

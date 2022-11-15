@@ -80,10 +80,14 @@ require_once "controller.php";
                                             <tfoot>
                                                 <tr>
                                                     <th colspan="2">TOTAL SCORE</th>
-                                                    <th id="selectedC" value="">00</th>
-                                                    <th id="selectedNC">00</th>
-                                                    <th id="selectedNA">00</th>
-                                                    <th id="totalScore"></th>
+                                                    <th id="selectedC">0</th>
+                                                    <th id="selectedNC">0</th>
+                                                    <th id="selectedNA">0</th>
+                                                    <th id="totalScore" onchange="
+                                                    document.getElementById('totalScore').innerHTML = 
+                                                    document.getElementById('selectedC').value +
+                                                    document.getElementById('selectedNC').value +
+                                                    document.getElementById('selectedNA').value">0</th>
                                                 </tr>
                                             </tfoot>
                                             <tbody>
@@ -239,10 +243,11 @@ require_once "controller.php";
                     countC--;
                 }
                 document.getElementById('selectedC').innerHTML = countC;
-                totalScore += countC;
-                document.getElementById('totalScore').innerHTML = totalScore;
-            })
+                // totalScore(countC);
+            });
+            
         }
+        
 
         //FOR INDIVIDUALS CHECKBOX  NC COUNT
         for (var i = 0; i < checkboxes2.length; i++) {
@@ -254,8 +259,6 @@ require_once "controller.php";
                     countNC--;
                 }
                 document.getElementById('selectedNC').innerHTML = countNC;
-                totalScore += countNC;
-                document.getElementById('totalScore').innerHTML = totalScore;
             })
         }
 
@@ -269,13 +272,14 @@ require_once "controller.php";
                     countNA--;
                 }
                 document.getElementById('selectedNA').innerHTML = countNA;
-                totalScore += countNA;
-                document.getElementById('totalScore').innerHTML = totalScore;
             })
         }
 
-        // totalScore = countC + countNA;
-        // document.getElementById('totalScore').innerHTML = totalScore;
+        // totalScore.addEventListener('change', function() {
+        //     document.getElementById('totalScore').innerHTML = countC + countNC + countNA;
+        // })
+
+        // document.getElementById('totalScore').innerHTML = countC + countNC + countNA;
 
         // function DocumentCheck() {
         //     C = document.getElementById('selectedC').value;
