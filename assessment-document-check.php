@@ -28,14 +28,13 @@ require_once "controller.php";
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function()
-        {
-            $('tr').each(function(){
+        $(document).ready(function() {
+            $('tr').each(function() {
                 var totmarks = 0;
-                $(this).find('#selectedC').each(function(){
-                    var marks=$(this).text();
-                    if(marks.length!==0){
-                        totmarks+=parseInt(marks);
+                $(this).find('#selectedC').each(function() {
+                    var marks = $(this).text();
+                    if (marks.length !== 0) {
+                        totmarks += parseInt(marks);
                     }
                 });
                 console.log(totmarks);
@@ -100,7 +99,8 @@ require_once "controller.php";
                                                     <th id="selectedC">0</th>
                                                     <th id="selectedNC">0</th>
                                                     <th id="selectedNA">0</th>
-                                                    <th id="totalScore">0</th>
+                                                    <!-- <th id="selectedTotal">0</th> -->
+                                                    <th id="selectedtotal" style="display:none">H</th>
                                                 </tr>
                                             </tfoot>
                                             <tbody>
@@ -140,10 +140,19 @@ require_once "controller.php";
                                                         } ?> -->
 
                                                 <tr>
-                                                    <td>2</td>
+                                                    <td>1</td>
                                                     <td>Has the SHC conducted a review to ensure
                                                         suitability of Project OSH Policy Statement?</td>
-                                                    <td><input type="checkbox" class="checkbox1"></td>
+                                                    <td><input type="checkbox" class="checkbox1" onclick="checkboxesTotal()"></td>
+                                                    <td><input type="checkbox" class="checkbox2"></td>
+                                                    <td><input type="checkbox" class="checkbox3"></td>
+                                                    <td></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>2</td>
+                                                    <td>Whether Project OSH Policy Statement was written
+                                                        in Bahasa Malaysia?</td>
+                                                    <td><input type="checkbox" class="checkbox1" onclick="checkboxesTotal()"></td>
                                                     <td><input type="checkbox" class="checkbox2"></td>
                                                     <td><input type="checkbox" class="checkbox3"></td>
                                                     <td></td>
@@ -151,26 +160,17 @@ require_once "controller.php";
                                                 <tr>
                                                     <td>3</td>
                                                     <td>Whether Project OSH Policy Statement was written
-                                                        in Bahasa Malaysia?</td>
-                                                    <td><input type="checkbox" class="checkbox1"></td>
+                                                        in English?</td>
+                                                    <td><input type="checkbox" class="checkbox1" onclick="checkboxesTotal()"></td>
                                                     <td><input type="checkbox" class="checkbox2"></td>
                                                     <td><input type="checkbox" class="checkbox3"></td>
                                                     <td></td>
                                                 </tr>
                                                 <tr>
                                                     <td>4</td>
-                                                    <td>Whether Project OSH Policy Statement was written
-                                                        in English?</td>
-                                                    <td><input type="checkbox" class="checkbox1"></td>
-                                                    <td><input type="checkbox" class="checkbox2"></td>
-                                                    <td><input type="checkbox" class="checkbox3"></td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>5</td>
                                                     <td>Whether Project OSH Policy is signed by the top
                                                         management?</td>
-                                                    <td><input type="checkbox" class="checkbox1"></td>
+                                                    <td><input type="checkbox" class="checkbox1" onclick="checkboxesTotal()"></td>
                                                     <td><input type="checkbox" class="checkbox2"></td>
                                                     <td><input type="checkbox" class="checkbox3"></td>
                                                     <td></td>
@@ -226,16 +226,17 @@ require_once "controller.php";
     } ?>
 
     <script>
-        var checkboxes = document.querySelectorAll('.checkbox1');
+        var checkboxes1 = document.querySelectorAll('.checkbox1');
         var checkboxes2 = document.querySelectorAll('.checkbox2');
         var checkboxes3 = document.querySelectorAll('.checkbox3');
         var countC = 0;
         var countNC = 0;
         var countNA = 0;
+        var total = 0;
 
         //FOR INDIVIDUALS CHECKBOX  C COUNT
-        for (var i = 0; i < checkboxes.length; i++) {
-            checkboxes[i].addEventListener('click', function() {
+        for (var i = 0; i < checkboxes1.length; i++) {
+            checkboxes1[i].addEventListener('click', function() {
                 // make sure if checkbox is checked or not
                 if (this.checked == true) {
                     countC++;
@@ -270,9 +271,20 @@ require_once "controller.php";
                 }
                 document.getElementById('selectedNA').innerHTML = countNA;
             })
+
         }
 
-
+        function checkboxesTotal() {
+            var checkBox = document.getElementsByClassName("checkbox1");
+            var text = document.getElementById("selectedTotal");
+            if(this.checked == true){
+                // total++;
+            }else {
+                text.style.display = "none";
+                // total--;
+            }
+            //  document.getElementById('selectedTotal').innerHTML = total;
+        }
     </script>
 
 </body>
