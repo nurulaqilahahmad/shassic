@@ -1849,7 +1849,7 @@ pre code {
 /* Style the buttons inside the tab */
 .tab button {
     background-color: inherit;
-    float: left;
+    float: center;
     border: none;
     outline: none;
     cursor: pointer;
@@ -1872,8 +1872,7 @@ pre code {
 .tabcontent {
     display: none;
     padding: 6px 12px;
-    border: 1px solid #ccc;
-    border-top: none;
+    border: none;
 }
 
 .table {

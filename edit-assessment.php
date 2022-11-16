@@ -79,11 +79,16 @@ require_once "controller.php";
                                                     <div id="row">
                                                         <div class="col-lg-12">
                                                             <div class="p-5">
-                                                                <div class="text-center">
-                                                                    <div class="text-center" style="display:flex; width:auto; justify-content: start;">
+                                                                <div class="text-center" id="row">
+                                                                    <div class="col-sm-6" style="display:flex; width:auto; justify-content: start;">
                                                                         <a class="font-weight-bold" href="index.php">
                                                                             &larr; Back</a>
                                                                     </div>
+                                                                    <div class="col-sm-6" style="display:flex; width:auto; justify-content: end;">
+                                                                        <a class="font-weight-bold" href="assessment-component.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>&info=">
+                                                                            Next &rarr;</a>
+                                                                    </div>
+                                                                </div>
 
                                                                     <!-- Page Heading -->
                                                                     <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Edit Assessment</h1>

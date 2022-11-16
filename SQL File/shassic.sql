@@ -102,6 +102,26 @@ CREATE TABLE `document_check_checklist` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
+-- Table structure for table `personnel_interview_category`
+--
+
+CREATE TABLE `personnel_interview_category` (
+  `id` int(11) NOT NULL,
+  `category_no` varchar(200) NOT NULL,
+  `category_name` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Table structure for table `personnel_interview_checklist`
+--
+
+CREATE TABLE `personnel_interview_checklist` (
+  `id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `checklist` varchar(200) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
 -- Indexes for dumped tables
 
 --

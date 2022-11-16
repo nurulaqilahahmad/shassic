@@ -48,9 +48,10 @@ require_once "controller.php";
 
                 <?php
                 $email = $_SESSION['login'];
-                $sql = "SELECT * from user where email=:email";
+                $assessee_id = $_GET['assessee_id'];
+                $sql = "SELECT * from assessment where assessee_id=:assessee_id";
                 $query = $dbh->prepare($sql);
-                $query->bindParam(':email', $email, PDO::PARAM_STR);
+                $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
                 $query->execute();
                 $results = $query->fetchAll(PDO::FETCH_OBJ);
                 $cnt = 1;
@@ -80,71 +81,222 @@ require_once "controller.php";
                                                             <div class="p-5">
                                                                 <div class="text-center">
                                                                     <div class="text-center" style="display:flex; width:auto; justify-content: start;">
-                                                                        <a class="font-weight-bold" href="add-assessment.php">
+                                                                        <a class="font-weight-bold" href="assessment-component.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
                                                                             &larr; Back</a>
                                                                     </div>
 
                                                                     <!-- Page Heading -->
                                                                     <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Personnel Interview</h1>
+                                                                    <div class="tab form-group">
+                                                                        <button class="tablinks font-weight-bold" style="width: 33%;" onclick="openSection(event, 'managerial')">Managerial</button>
+                                                                        <button class="tablinks font-weight-bold" style="width: 33%;" onclick="openSection(event, 'supervisory')">Supervisory</button>
+                                                                        <button class="tablinks font-weight-bold" style="width: 33%;" onclick="openSection(event, 'workers')">Workers</button>
+                                                                    </div>
                                                                 </div>
 
-                                                                <!-- <form class="user" method="POST">
-                                                                    <div class="form-group">
-                                                                        <input type="text" class="form-control form-control-user font-weight-bold" name="assessee_name" id="assessee_name" placeholder="Assessee Name" required>
-                                                                    </div>
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                            <input type="text" class="form-control form-control-user font-weight-bold" name="project_name" id="project_name" placeholder="Project Name" required>
-                                                                        </div>
-                                                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                            <input type="text" onfocus="(this.type='date')" onchange="(this.type='date')" class="form-control form-control-user font-weight-bold" name="project_date" id="project_date" required placeholder="Project Date" date_format='dd/mm/yyyy'>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                            <input type="text" class="form-control form-control-user font-weight-bold" name="project_location" id="project_location" placeholder="Project Location" required>
-                                                                        </div>
-                                                                        <div class="col-sm-6">
-                                                                            <input type="text" onfocus="(this.type='file')" class="form-control form-control-user font-weight-bold" name="project_picture" id="project_picture" required placeholder="Project Picture" accept="image/*" onchange="document.getElementById('project_picture').src = window.URL.createObjectURL(this.files[0])" />
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="document-check.php">
-                                                                                <div class="card mb-4">
-                                                                                    <div class="card-body card-hover py-3">
-                                                                                        <h6 class="m-0 font-weight-bold">Document Check</h6>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="#">
-                                                                                <div class="card mb-4">
-                                                                                    <div class="card-body card-hover py-3">
-                                                                                        <h6 class="m-0 font-weight-bold">Workplace Inspection</h6>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="#">
-                                                                                <div class="card mb-4">
-                                                                                    <div class="card-body card-hover py-3">
-                                                                                        <h6 class="m-0 font-weight-bold">Personnel Interview</h6>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                        </div>
+                                                                <!-- <form class="user" method="POST"> -->
+                                                                <div id="managerial" class="tabcontent">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Item</th>
+                                                                                    <th>Checklist</th>
+                                                                                    <th>C</th>
+                                                                                    <th>NC</th>
+                                                                                    <th>NA</th>
+                                                                                    <th>Remarks</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tfoot>
+                                                                                <tr>
+                                                                                    <th colspan="2">SUB SCORE</th>
+                                                                                    <th>0</th>
+                                                                                    <th>0</th>
+                                                                                    <th>0</th>
+                                                                                    <th></th>
+                                                                                </tr>
+                                                                            </tfoot>
+                                                                            <tbody>
+                                                                                <?php
+                                                                                $sql = "SELECT * from personnel_interview_category where id=1";
+                                                                                $query = $dbh->prepare($sql);
+                                                                                $query->execute();
+                                                                                $categories = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                $cnt = 1;
+                                                                                if ($query->rowCount() > 0) {
+                                                                                    foreach ($categories as $category) {
+                                                                                ?>
+                                                                                        <?php
+                                                                                        $sql = "SELECT * from personnel_interview_checklist where category_id='$category->id'";
+                                                                                        $query = $dbh->prepare($sql);
+                                                                                        $query->execute();
+                                                                                        $checklists = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                        $cnt = 1;
+                                                                                        if ($query->rowCount() > 0) {
+                                                                                            foreach ($checklists as $checklist) {
+                                                                                        ?>
+                                                                                                <tr>
+                                                                                                    <td><?php echo htmlentities($cnt++) ?></td>
+                                                                                                    <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                </tr>
+                                                                                        <?php }
+                                                                                        } ?>
+                                                                                <?php }
+                                                                                } ?>
+                                                                            </tbody>
+                                                                        </table>
                                                                     </div>
                                                                     <div class="form-group" id="row">
                                                                         <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="add">Save</button>
+                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection">Save</button>
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                     </div>
-                                                                </form> -->
+                                                                </div>
+
+                                                                <!-- </form> -->
+
+                                                                <!-- <form class="user" method="POST"> -->
+                                                                <div id="supervisory" class="tabcontent">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Item</th>
+                                                                                    <th>Checklist</th>
+                                                                                    <th>C</th>
+                                                                                    <th>NC</th>
+                                                                                    <th>NA</th>
+                                                                                    <th>Remarks</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tfoot>
+                                                                                <tr>
+                                                                                    <th colspan="2">SUB SCORE</th>
+                                                                                    <th>0</th>
+                                                                                    <th>0</th>
+                                                                                    <th>0</th>
+                                                                                    <th></th>
+                                                                                </tr>
+                                                                            </tfoot>
+                                                                            <tbody>
+                                                                                <?php
+                                                                                $sql = "SELECT * from personnel_interview_category where id=2";
+                                                                                $query = $dbh->prepare($sql);
+                                                                                $query->execute();
+                                                                                $categories = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                $cnt = 1;
+                                                                                if ($query->rowCount() > 0) {
+                                                                                    foreach ($categories as $category) {
+                                                                                ?>
+                                                                                        <?php
+                                                                                        $sql = "SELECT * from personnel_interview_checklist where category_id='$category->id'";
+                                                                                        $query = $dbh->prepare($sql);
+                                                                                        $query->execute();
+                                                                                        $checklists = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                        $cnt = 1;
+                                                                                        if ($query->rowCount() > 0) {
+                                                                                            foreach ($checklists as $checklist) {
+                                                                                        ?>
+                                                                                                <tr>
+                                                                                                    <td><?php echo htmlentities($cnt++) ?></td>
+                                                                                                    <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                </tr>
+                                                                                        <?php }
+                                                                                        } ?>
+                                                                                <?php }
+                                                                                } ?>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="form-group" id="row">
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection">Save</button>
+                                                                        </div>
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- </form> -->
+
+                                                                <!-- <form class="user" method="POST"> -->
+                                                                <div id="workers" class="tabcontent">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Item</th>
+                                                                                    <th>Checklist</th>
+                                                                                    <th>C</th>
+                                                                                    <th>NC</th>
+                                                                                    <th>NA</th>
+                                                                                    <th>Remarks</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tfoot>
+                                                                                <tr>
+                                                                                    <th colspan="2">SUB SCORE</th>
+                                                                                    <th>0</th>
+                                                                                    <th>0</th>
+                                                                                    <th>0</th>
+                                                                                    <th></th>
+                                                                                </tr>
+                                                                            </tfoot>
+                                                                            <tbody>
+                                                                                <?php
+                                                                                $sql = "SELECT * from personnel_interview_category where id=3";
+                                                                                $query = $dbh->prepare($sql);
+                                                                                $query->execute();
+                                                                                $categories = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                $cnt = 1;
+                                                                                if ($query->rowCount() > 0) {
+                                                                                    foreach ($categories as $category) {
+                                                                                ?>
+                                                                                        <?php
+                                                                                        $sql = "SELECT * from personnel_interview_checklist where category_id='$category->id'";
+                                                                                        $query = $dbh->prepare($sql);
+                                                                                        $query->execute();
+                                                                                        $checklists = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                        $cnt = 1;
+                                                                                        if ($query->rowCount() > 0) {
+                                                                                            foreach ($checklists as $checklist) {
+                                                                                        ?>
+                                                                                                <tr>
+                                                                                                    <td><?php echo htmlentities($cnt++) ?></td>
+                                                                                                    <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                </tr>
+                                                                                        <?php }
+                                                                                        } ?>
+                                                                                <?php }
+                                                                                } ?>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="form-group" id="row">
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection">Save</button>
+                                                                        </div>
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- </form> -->
                                                             </div>
                                                         </div>
                                                     </div>
@@ -200,6 +352,21 @@ require_once "controller.php";
     <?php } else {
         header("location: login.php");
     } ?>
+    <script>
+        function openSection(evt, sectionName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(sectionName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
 </body>
 
 </html>

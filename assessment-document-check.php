@@ -26,22 +26,6 @@ require_once "controller.php";
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/landing.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('tr').each(function() {
-                var totmarks = 0;
-                $(this).find('#selectedC').each(function() {
-                    var marks = $(this).text();
-                    if (marks.length !== 0) {
-                        totmarks += parseInt(marks);
-                    }
-                });
-                console.log(totmarks);
-            })
-        });
-    </script>
-
 </head>
 
 <body id="page-top">
@@ -62,135 +46,143 @@ require_once "controller.php";
             <!-- Page Wrapper -->
             <div id="wrapper">
 
-                <!-- Content Wrapper -->
-                <div id="content-wrapper" class="d-flex flex-column">
+                <?php
+                $email = $_SESSION['login'];
+                $assessee_id = $_GET['assessee_id'];
+                $sql = "SELECT * from assessment where assessee_id=:assessee_id";
+                $query = $dbh->prepare($sql);
+                $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                $query->execute();
+                $results = $query->fetchAll(PDO::FETCH_OBJ);
+                $cnt = 1;
+                if ($query->rowCount() > 0) {
+                    foreach ($results as $result) {
+                ?>
 
-                    <!-- Main Content -->
-                    <div id="content">
+                        <!-- Content Wrapper -->
+                        <div id="content-wrapper" class="d-flex flex-column">
 
-                        <!-- Begin Page Content -->
-                        <div class="container-fluid">
 
-                            <!-- Document Check Data Table -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <div class="text-center" style="display:flex; width:auto; justify-content: start;">
-                                        <a class="font-weight-bold" href="index.php">
-                                            &larr; Back</a>
+                            <!-- Main Content -->
+                            <div id="content">
+
+                                <!-- Begin Page Content -->
+                                <div class="container-fluid">
+
+                                    <!-- Outer Row -->
+                                    <div class="row justify-content-center">
+
+
+                                        <div class="col-xl-12 col-lg-12 col-md-9">
+                                            <div class="card o-hidden border-0 shadow-lg my-5">
+                                                <div class="p-0" id="card-body">
+                                                    <div id="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="p-5">
+                                                                <div class="text-center">
+                                                                    <div class="text-center" style="display:flex; width:auto; justify-content: start;">
+                                                                        <a class="font-weight-bold" href="assessment-component.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
+                                                                            &larr; Back</a>
+                                                                    </div>
+
+                                                                    <!-- Page Heading -->
+                                                                    <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Document Check</h1>
+                                                                </div>
+
+                                                                <!-- <form class="user" method="POST"> -->
+                                                                <div class="card-body">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Item</th>
+                                                                                    <th>Checklist</th>
+                                                                                    <th>C</th>
+                                                                                    <th>NC</th>
+                                                                                    <th>NA</th>
+                                                                                    <th>Remarks</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tfoot>
+                                                                                <tr>
+                                                                                    <th colspan="2">SUB SCORE</th>
+                                                                                    <th id="selectedC">0</th>
+                                                                                    <th id="selectedNC">0</th>
+                                                                                    <th id="selectedNA">0</th>
+                                                                                    <th id="selectedTotal">0</th>
+                                                                                </tr>
+                                                                            </tfoot>
+                                                                            <tbody>
+                                                                                <?php
+                                                                                $sql = "SELECT * from document_check_section";
+                                                                                $query = $dbh->prepare($sql);
+                                                                                $query->execute();
+                                                                                $sections = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                $cnt = 1;
+                                                                                if ($query->rowCount() > 0) {
+                                                                                    foreach ($sections as $section) {
+                                                                                ?>
+                                                                                        <tr>
+                                                                                            <th><?php echo htmlentities($section->item_no) ?></th>
+                                                                                            <th colspan="5" class="text-left"><?php echo htmlentities($section->item_name) ?></th>
+                                                                                        </tr>
+                                                                                        <?php
+                                                                                        $sql = "SELECT * from document_check_checklist where item_id='$section->id'";
+                                                                                        $query = $dbh->prepare($sql);
+                                                                                        $query->execute();
+                                                                                        $checklists = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                        $cnt = 1;
+                                                                                        if ($query->rowCount() > 0) {
+                                                                                            foreach ($checklists as $checklist) {
+                                                                                        ?>
+                                                                                                <tr>
+                                                                                                    <td><?php echo htmlentities($cnt++) ?></td>
+                                                                                                    <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
+                                                                                                    <td><input type="checkbox" class="checkbox1" onclick="countSelected()"></td>
+                                                                                                    <td><input type="checkbox" class="checkbox2" onclick="countSelected()"></td>
+                                                                                                    <td><input type="checkbox" class="checkbox3" onclick="countSelected()"></td>
+                                                                                                    <td></td>
+                                                                                                </tr>
+                                                                                        <?php }
+                                                                                        } ?>
+                                                                                <?php }
+                                                                                } ?>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
+                                                                    <div class="form-group" id="row">
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection">Save</button>
+                                                                        </div>
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                    </div>
+                                                                </div>
+
+                                                                <!-- </form> -->
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
                                     </div>
-                                    <h6 class="h3 mb-4 text-gray-800 font-weight-bold">Document Check</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th>ITEM</th>
-                                                    <th>CHECKLIST</th>
-                                                    <th>C</th>
-                                                    <th>NC</th>
-                                                    <th>NA</th>
-                                                    <th>REMARKS</th>
-                                                </tr>
-                                            </thead>
-                                            <tfoot>
-                                                <tr>
-                                                    <th colspan="2">TOTAL SCORE</th>
-                                                    <th id="selectedC">0</th>
-                                                    <th id="selectedNC">0</th>
-                                                    <th id="selectedNA">0</th>
-                                                    <!-- <th id="selectedTotal">0</th> -->
-                                                    <th id="selectedtotal" style="display:none">H</th>
-                                                </tr>
-                                            </tfoot>
-                                            <tbody>
-                                                <!-- <?php
-                                                        $sql = "SELECT * from document_check_section";
-                                                        $query = $dbh->prepare($sql);
-                                                        $query->execute();
-                                                        $sections = $query->fetchAll(PDO::FETCH_OBJ);
-                                                        $cnt = 1;
-                                                        if ($query->rowCount() > 0) {
-                                                            foreach ($sections as $section) {
-                                                        ?>
-                                                        <tr>
-                                                            <th><?php echo htmlentities($section->item_no) ?></th>
-                                                            <th colspan="5" class="text-left"><?php echo htmlentities($section->item_name) ?></th>
-                                                        </tr>
-                                                        <?php
-                                                                $sql = "SELECT * from document_check_checklist where item_id='$section->id'";
-                                                                $query = $dbh->prepare($sql);
-                                                                $query->execute();
-                                                                $checklists = $query->fetchAll(PDO::FETCH_OBJ);
-                                                                $cnt = 1;
-                                                                if ($query->rowCount() > 0) {
-                                                                    foreach ($checklists as $checklist) {
-                                                        ?>
-                                                                <tr>
-                                                                    <td><?php echo htmlentities($cnt++) ?></td>
-                                                                    <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
-                                                                    <td><input type="checkbox" class="checkbox1"></td>
-                                                                    <td><input type="checkbox" class="checkbox2"></td>
-                                                                    <td><input type="checkbox" class="checkbox3"></td>
-                                                                    <td></td>
-                                                                </tr>
-                                                        <?php }
-                                                                } ?>
-                                                <?php }
-                                                        } ?> -->
-
-                                                <tr>
-                                                    <td>1</td>
-                                                    <td>Has the SHC conducted a review to ensure
-                                                        suitability of Project OSH Policy Statement?</td>
-                                                    <td><input type="checkbox" class="checkbox1" onclick="checkboxesTotal()"></td>
-                                                    <td><input type="checkbox" class="checkbox2"></td>
-                                                    <td><input type="checkbox" class="checkbox3"></td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>2</td>
-                                                    <td>Whether Project OSH Policy Statement was written
-                                                        in Bahasa Malaysia?</td>
-                                                    <td><input type="checkbox" class="checkbox1" onclick="checkboxesTotal()"></td>
-                                                    <td><input type="checkbox" class="checkbox2"></td>
-                                                    <td><input type="checkbox" class="checkbox3"></td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>3</td>
-                                                    <td>Whether Project OSH Policy Statement was written
-                                                        in English?</td>
-                                                    <td><input type="checkbox" class="checkbox1" onclick="checkboxesTotal()"></td>
-                                                    <td><input type="checkbox" class="checkbox2"></td>
-                                                    <td><input type="checkbox" class="checkbox3"></td>
-                                                    <td></td>
-                                                </tr>
-                                                <tr>
-                                                    <td>4</td>
-                                                    <td>Whether Project OSH Policy is signed by the top
-                                                        management?</td>
-                                                    <td><input type="checkbox" class="checkbox1" onclick="checkboxesTotal()"></td>
-                                                    <td><input type="checkbox" class="checkbox2"></td>
-                                                    <td><input type="checkbox" class="checkbox3"></td>
-                                                    <td></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
 
                                 </div>
+                                <!-- /.container-fluid -->
+
                             </div>
+                            <!-- End of Main Content -->
 
                         </div>
-                        <!-- /.container-fluid -->
+                        <!-- End of Content Wrapper -->
 
-                    </div>
-                    <!-- End of Main Content -->
 
-                </div>
-                <!-- End of Content Wrapper -->
-
+                <?php }
+                } ?>
             </div>
             <!-- End of Page Wrapper -->
 
@@ -220,73 +212,80 @@ require_once "controller.php";
             <!-- Custom scripts for all pages-->
             <script src="js/sb-admin-2.min.js"></script>
         </div>
-
     <?php } else {
         header("location: login.php");
     } ?>
-
     <script>
-        var checkboxes1 = document.querySelectorAll('.checkbox1');
-        var checkboxes2 = document.querySelectorAll('.checkbox2');
-        var checkboxes3 = document.querySelectorAll('.checkbox3');
-        var countC = 0;
-        var countNC = 0;
-        var countNA = 0;
-        var total = 0;
+        // var checkboxes = document.querySelectorAll('.checkbox1');
+        // var checkboxes2 = document.querySelectorAll('.checkbox2');
+        // var checkboxes3 = document.querySelectorAll('.checkbox3');
 
-        //FOR INDIVIDUALS CHECKBOX  C COUNT
-        for (var i = 0; i < checkboxes1.length; i++) {
-            checkboxes1[i].addEventListener('click', function() {
-                // make sure if checkbox is checked or not
-                if (this.checked == true) {
+        // var totalScore = 0;
+        // var countC = 0;
+        // var countNC = 0;
+        // var countNA = 0;
+
+        function countSelected() {
+            var checkboxes = document.querySelectorAll('.checkbox1');
+            var checkboxes2 = document.querySelectorAll('.checkbox2');
+            var checkboxes3 = document.querySelectorAll('.checkbox3');
+
+            var totalScore = 0;
+            var countC = 0;
+            var countNC = 0;
+            var countNA = 0;
+
+            checkboxes.forEach(item => {
+                if (item.checked == true) {
                     countC++;
-                } else {
-                    countC--;
                 }
-                document.getElementById('selectedC').innerHTML = countC;
-            });
-        }
+            })
 
-        //FOR INDIVIDUALS CHECKBOX  NC COUNT
-        for (var i = 0; i < checkboxes2.length; i++) {
-            checkboxes2[i].addEventListener('click', function() {
-                // make sure if checkbox is checked or not
-                if (this.checked == true) {
+            checkboxes2.forEach(item => {
+                if (item.checked == true) {
                     countNC++;
-                } else {
-                    countNC--;
                 }
-                document.getElementById('selectedNC').innerHTML = countNC;
             })
-        }
 
-        //FOR INDIVIDUALS CHECKBOX  NA COUNT
-        for (var i = 0; i < checkboxes3.length; i++) {
-            checkboxes3[i].addEventListener('click', function() {
-                // make sure if checkbox is checked or not
-                if (this.checked == true) {
+            checkboxes3.forEach(item => {
+                if (item.checked == true) {
                     countNA++;
-                } else {
-                    countNA--;
                 }
-                document.getElementById('selectedNA').innerHTML = countNA;
             })
 
-        }
+            document.getElementById('selectedC').innerHTML = countC;
+            document.getElementById('selectedNC').innerHTML = countNC;
+            document.getElementById('selectedNA').innerHTML = countNA;
 
-        function checkboxesTotal() {
-            var checkBox = document.getElementsByClassName("checkbox1");
-            var text = document.getElementById("selectedTotal");
-            if(this.checked == true){
-                // total++;
-            }else {
-                text.style.display = "none";
-                // total--;
-            }
-            //  document.getElementById('selectedTotal').innerHTML = total;
+            // for (var i = 0; i < checkboxName.length; i++) {
+            //     if (checkboxName.checked == true) {
+            //         if (document.getElementById(checkboxName) == 'checkbox1') {
+            //             countC++;
+            //             document.getElementById('selectedC').innerHTML = countC;
+            //         } else if (document.getElementById(checkboxName) == 'checkbox2') {
+            //             countNC++;
+            //             document.getElementById('selectedNC').innerHTML = countNC;
+            //         } else if (document.getElementById(checkboxName) == 'checkbox3') {
+            //             countNA++;
+            //             document.getElementById('selectedNA').innerHTML = countNA;
+            //         }
+            //     } else {
+            //         if (document.getElementById(checkboxName) == 'checkbox1') {
+            //             countC--;
+            //             document.getElementById('selectedC').innerHTML = countC;
+            //         } else if (document.getElementById(checkboxName) == 'checkbox2') {
+            //             countNC--;
+            //             document.getElementById('selectedNC').innerHTML = countNC;
+            //         } else if (document.getElementById(checkboxName) == 'checkbox3') {
+            //             countNA--;
+            //             document.getElementById('selectedNA').innerHTML = countNA;
+            //         }
+            //     }
+            // }
+            totalScore = countC + countNC + countNA;
+            document.getElementById('selectedTotal').innerHTML = totalScore;
         }
     </script>
-
 </body>
 
 </html>
