@@ -1875,6 +1875,12 @@ pre code {
     border: none;
 }
 
+.tabcontent2 {
+    display: none;
+    padding: 6px 12px;
+    border: none;
+}
+
 .table {
     width: 100%;
     margin-bottom: 1rem;
@@ -2215,7 +2221,7 @@ pre code {
     display: block;
     width: 100%;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch
+    -webkit-overflow-scrolling: touch;
 }
 
 .table-responsive>.table-bordered {

@@ -99,12 +99,12 @@ require_once "controller.php";
                                                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                                             <thead>
                                                                                 <tr>
-                                                                                    <th>Item</th>
-                                                                                    <th>Checklist</th>
+                                                                                    <th>ITEM</th>
+                                                                                    <th>CHECKLIST</th>
                                                                                     <th>C</th>
                                                                                     <th>NC</th>
                                                                                     <th>NA</th>
-                                                                                    <th>Remarks</th>
+                                                                                    <th>REMARKS</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tfoot>
@@ -171,17 +171,47 @@ require_once "controller.php";
                                                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                                             <thead>
                                                                                 <tr>
-                                                                                    <th>Item</th>
-                                                                                    <th>Checklist</th>
+                                                                                    <th rowspan="2" class="align-middle">ITEM</th>
+                                                                                    <th rowspan="2" class="align-middle">CHECKLIST</th>
+                                                                                    <th colspan="3">HIGH RISK 1</th>
+                                                                                    <th colspan="3">HIGH RISK 2</th>
+                                                                                    <th colspan="3">HIGH RISK 3</th>
+                                                                                    <!-- <?php
+                                                                                            $assessment_id = '$result->assessee_id';
+                                                                                            $sql = "SELECT * from workplace_inspection_high_risk_work_assessment where assessment_id=:assessment_id";
+                                                                                            $query = $dbh->prepare($sql);
+                                                                                            $query->execute();
+                                                                                            $high_risks = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                            $cnt = 1;
+                                                                                            if ($query->rowCount() > 0) {
+                                                                                                foreach ($high_risks as $high_risk) {
+                                                                                            ?> -->
+
+                                                                                    <!-- <?php }
+                                                                                            } ?> -->
+                                                                                    <th rowspan="2" class="align-middle">REMARKS</th>
+                                                                                </tr>
+                                                                                <tr>
                                                                                     <th>C</th>
                                                                                     <th>NC</th>
                                                                                     <th>NA</th>
-                                                                                    <th>Remarks</th>
+                                                                                    <th>C</th>
+                                                                                    <th>NC</th>
+                                                                                    <th>NA</th>
+                                                                                    <th>C</th>
+                                                                                    <th>NC</th>
+                                                                                    <th>NA</th>
                                                                                 </tr>
                                                                             </thead>
                                                                             <tfoot>
                                                                                 <tr>
                                                                                     <th colspan="2">SUB SCORE</th>
+                                                                                    <th>0</th>
+                                                                                    <th>0</th>
+                                                                                    <th>0</th>
+                                                                                    <th>0</th>
+                                                                                    <th>0</th>
+                                                                                    <th>0</th>
                                                                                     <th>0</th>
                                                                                     <th>0</th>
                                                                                     <th>0</th>
@@ -200,7 +230,7 @@ require_once "controller.php";
                                                                                 ?>
                                                                                         <tr>
                                                                                             <th><?php echo htmlentities($section->item_no) ?></th>
-                                                                                            <th colspan="5" class="text-left"><?php echo htmlentities($section->item_name) ?></th>
+                                                                                            <th colspan="11" class="text-left"><?php echo htmlentities($section->item_name) ?></th>
                                                                                         </tr>
                                                                                         <?php
                                                                                         $sql = "SELECT * from workplace_inspection_checklist where item_id='$section->id'";
@@ -214,6 +244,12 @@ require_once "controller.php";
                                                                                                 <tr>
                                                                                                     <td><?php echo htmlentities($cnt++) ?></td>
                                                                                                     <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                    <td></td>
                                                                                                     <td></td>
                                                                                                     <td></td>
                                                                                                     <td></td>
