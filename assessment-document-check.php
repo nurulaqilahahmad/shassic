@@ -46,84 +46,93 @@ require_once "controller.php";
             <!-- Page Wrapper -->
             <div id="wrapper">
 
-                <!-- Content Wrapper -->
-                <div id="content-wrapper" class="d-flex flex-column">
+                <?php
+                $email = $_SESSION['login'];
+                $assessee_id = $_GET['assessee_id'];
+                $sql = "SELECT * from assessment where assessee_id=:assessee_id";
+                $query = $dbh->prepare($sql);
+                $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                $query->execute();
+                $results = $query->fetchAll(PDO::FETCH_OBJ);
+                $cnt = 1;
+                if ($query->rowCount() > 0) {
+                    foreach ($results as $result) {
+                ?>
 
-                    <!-- Main Content -->
-                    <div id="content">
+                        <!-- Content Wrapper -->
+                        <div id="content-wrapper" class="d-flex flex-column">
 
-                        <!-- Begin Page Content -->
-                        <div class="container-fluid">
+                            <!-- Main Content -->
+                            <div id="content">
 
-                            <!-- Document Check Data Table -->
-                            <div class="card shadow mb-4">
-                                <div class="card-header py-3">
-                                    <div class="text-center" style="display:flex; width:auto; justify-content: start;">
-                                        <a class="font-weight-bold" href="index.php">
-                                            &larr; Back</a>
-                                    </div>
-                                    <h6 class="h3 mb-4 text-gray-800 font-weight-bold">Document Check</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="table-responsive">
-                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                            <thead>
-                                                <tr>
-                                                    <th>ITEM</th>
-                                                    <th>CHECKLIST</th>
-                                                    <th>C</th>
-                                                    <th>NC</th>
-                                                    <th>NA</th>
-                                                    <th>REMARKS</th>
-                                                </tr>
-                                            </thead>
-                                            <tfoot>
-                                                <tr>
-                                                    <th colspan="2">TOTAL SCORE</th>
-                                                    <th id="selectedC">0</th>
-                                                    <th id="selectedNC">0</th>
-                                                    <th id="selectedNA">0</th>
-                                                    <th id="totalScore" onchange="
-                                                    document.getElementById('totalScore').innerHTML = 
-                                                    document.getElementById('selectedC').value +
-                                                    document.getElementById('selectedNC').value +
-                                                    document.getElementById('selectedNA').value">0</th>
-                                                </tr>
-                                            </tfoot>
-                                            <tbody>
-                                                <?php
-                                                $sql = "SELECT * from document_check_section";
-                                                $query = $dbh->prepare($sql);
-                                                $query->execute();
-                                                $sections = $query->fetchAll(PDO::FETCH_OBJ);
-                                                $cnt = 1;
-                                                if ($query->rowCount() > 0) {
-                                                    foreach ($sections as $section) {
-                                                ?>
+                                <!-- Begin Page Content -->
+                                <div class="container-fluid">
+
+                                    <!-- Document Check Data Table -->
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <div class="text-center" style="display:flex; width:auto; justify-content: start;">
+                                                <a class="font-weight-bold" href="assessment-component.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
+                                                    &larr; Back</a>
+                                            </div>
+                                            <h6 class="h3 mb-4 text-gray-800 font-weight-bold">Document Check</h6>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                    <thead>
                                                         <tr>
-                                                            <th><?php echo htmlentities($section->item_no) ?></th>
-                                                            <th colspan="5" class="text-left"><?php echo htmlentities($section->item_name) ?></th>
+                                                            <th>ITEM</th>
+                                                            <th>CHECKLIST</th>
+                                                            <th>C</th>
+                                                            <th>NC</th>
+                                                            <th>NA</th>
+                                                            <th>REMARKS</th>
                                                         </tr>
+                                                    </thead>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th colspan="2">TOTAL SCORE</th>
+                                                            <th id="selectedC">0</th>
+                                                            <th id="selectedNC">0</th>
+                                                            <th id="selectedNA">0</th>
+                                                            <th id="totalScore">0</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                    <tbody>
                                                         <?php
-                                                        $sql = "SELECT * from document_check_checklist where item_id='$section->id'";
+                                                        $sql = "SELECT * from document_check_section";
                                                         $query = $dbh->prepare($sql);
                                                         $query->execute();
-                                                        $checklists = $query->fetchAll(PDO::FETCH_OBJ);
+                                                        $sections = $query->fetchAll(PDO::FETCH_OBJ);
                                                         $cnt = 1;
                                                         if ($query->rowCount() > 0) {
-                                                            foreach ($checklists as $checklist) {
+                                                            foreach ($sections as $section) {
                                                         ?>
                                                                 <tr>
-                                                                    <td><?php echo htmlentities($cnt++) ?></td>
-                                                                    <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
-                                                                    <td><input type="checkbox" class="checkbox1"></td>
-                                                                    <td><input type="checkbox" class="checkbox2"></td>
-                                                                    <td><input type="checkbox" class="checkbox3"></td>
-                                                                    <td></td>
+                                                                    <th><?php echo htmlentities($section->item_no) ?></th>
+                                                                    <th colspan="5" class="text-left"><?php echo htmlentities($section->item_name) ?></th>
                                                                 </tr>
-                                                        <?php }
-                                                        } ?>
-                                                        <!-- <tr>
+                                                                <?php
+                                                                $sql = "SELECT * from document_check_checklist where item_id='$section->id'";
+                                                                $query = $dbh->prepare($sql);
+                                                                $query->execute();
+                                                                $checklists = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                $cnt = 1;
+                                                                if ($query->rowCount() > 0) {
+                                                                    foreach ($checklists as $checklist) {
+                                                                ?>
+                                                                        <tr>
+                                                                            <td><?php echo htmlentities($cnt++) ?></td>
+                                                                            <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
+                                                                            <td><input type="checkbox" class="checkbox1"></td>
+                                                                            <td><input type="checkbox" class="checkbox2"></td>
+                                                                            <td><input type="checkbox" class="checkbox3"></td>
+                                                                            <td></td>
+                                                                        </tr>
+                                                                <?php }
+                                                                } ?>
+                                                                <!-- <tr>
                                                             <td>2</td>
                                                             <td>Has the SHC conducted a review to ensure
                                                                 suitability of Project OSH Policy Statement?</td>
@@ -159,24 +168,26 @@ require_once "controller.php";
                                                             <td><input type="checkbox" class="checkbox3"></td>
                                                             <td></td>
                                                         </tr> -->
-                                                <?php }
-                                                } ?>
-                                            </tbody>
-                                        </table>
+                                                        <?php }
+                                                        } ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
                                     </div>
 
                                 </div>
+                                <!-- /.container-fluid -->
+
                             </div>
+                            <!-- End of Main Content -->
 
                         </div>
-                        <!-- /.container-fluid -->
+                        <!-- End of Content Wrapper -->
 
-                    </div>
-                    <!-- End of Main Content -->
-
-                </div>
-                <!-- End of Content Wrapper -->
-
+                <?php }
+                } ?>
             </div>
             <!-- End of Page Wrapper -->
 
@@ -245,9 +256,9 @@ require_once "controller.php";
                 document.getElementById('selectedC').innerHTML = countC;
                 // totalScore(countC);
             });
-            
+
         }
-        
+
 
         //FOR INDIVIDUALS CHECKBOX  NC COUNT
         for (var i = 0; i < checkboxes2.length; i++) {

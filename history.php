@@ -66,74 +66,74 @@ include('includes/config.php');
                             <div id="content">
 
                                 <!-- Begin Page Content -->
+                                <!-- <div class="container-fluid"> -->
+
+                                <!-- Begin Page Content -->
                                 <div class="container-fluid">
 
-                                    <!-- Begin Page Content -->
-                                    <div class="container-fluid">
-
-                                        <!-- History Data Table -->
-                                        <div class="card shadow mb-4">
-                                            <div class="card-header py-3">
-                                                <div class="text-center" style="display:flex; width:auto; justify-content: start;">
-                                                    <a class="font-weight-bold" href="index.php">
-                                                        &larr; Back</a>
-                                                </div>
-                                                <h6 class="h3 mb-4 text-gray-800 font-weight-bold">Assessment History</h6>
+                                    <!-- History Data Table -->
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <div class="text-center" style="display:flex; width:auto; justify-content: start;">
+                                                <a class="font-weight-bold" href="index.php">
+                                                    &larr; Back</a>
                                             </div>
-                                            <div class="card-body">
-                                                <div class="table-responsive">
-                                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th>Project Image</th>
-                                                                <th>Assessee</th>
-                                                                <th>Project Name</th>
-                                                                <th>Progress</th>
-                                                                <th>Edit</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tfoot>
-                                                            <tr>
-                                                                <th>Project Image</th>
-                                                                <th>Assessee</th>
-                                                                <th>Project Name</th>
-                                                                <th>Progress</th>
-                                                                <th>Edit</th>
-                                                            </tr>
-                                                        </tfoot>
-                                                        <tbody>
-                                                            <?php
-                                                            $assessor_id = $result->id;
-                                                            $sql = "SELECT * FROM `assessment` WHERE `assessor_id`=:assessor_id";
-                                                            $query = $dbh->prepare($sql);
-                                                            $query->bindParam(':assessor_id', $assessor_id, PDO::PARAM_STR);
-                                                            $query->execute();
-                                                            $histories = $query->fetchAll(PDO::FETCH_OBJ);
-                                                            if ($query->rowCount() > 0) {
-                                                                foreach ($histories as $history) { ?>
-                                                                    <tr>
-                                                                        <td class="project_image"> <img class="img-thumbnail" width="100" src="img/history/<?php echo htmlentities($history->project_picture); ?>" alt="project image" /></td>
-                                                                        <td class="assessee_name"><?php echo htmlentities($history->assessee_name); ?></td>
-                                                                        <td class="project_name"><?php echo htmlentities($history->project_name); ?></td>
-                                                                        <td class="assessement_progress"><?php echo htmlentities($history->project_percentage); ?></td>
-                                                                        <td>
-                                                                            <button onclick="window.location='edit-assessment-from-history.php?assessee_id=<?php echo htmlentities($history->assessee_id); ?>';">Edit</button>
-                                                                            <button onclick="window.location='tables.html';">Print</button>
-                                                                        </td>
-                                                                    </tr>
-                                                            <?php }
-                                                            } ?>
-                                                        </tbody>
-                                                    </table>
-                                                </div>
-
-                                            </div>
+                                            <h6 class="h3 mb-4 text-gray-800 font-weight-bold">Assessment History</h6>
                                         </div>
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Project Image</th>
+                                                            <th>Assessee</th>
+                                                            <th>Project Name</th>
+                                                            <th>Progress</th>
+                                                            <th>Edit</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tfoot>
+                                                        <tr>
+                                                            <th>Project Image</th>
+                                                            <th>Assessee</th>
+                                                            <th>Project Name</th>
+                                                            <th>Progress</th>
+                                                            <th>Edit</th>
+                                                        </tr>
+                                                    </tfoot>
+                                                    <tbody>
+                                                        <?php
+                                                        $assessor_id = $result->id;
+                                                        $sql = "SELECT * FROM `assessment` WHERE `assessor_id`=:assessor_id";
+                                                        $query = $dbh->prepare($sql);
+                                                        $query->bindParam(':assessor_id', $assessor_id, PDO::PARAM_STR);
+                                                        $query->execute();
+                                                        $histories = $query->fetchAll(PDO::FETCH_OBJ);
+                                                        if ($query->rowCount() > 0) {
+                                                            foreach ($histories as $history) { ?>
+                                                                <tr>
+                                                                    <td class="project_image"> <img class="img-thumbnail" width="100" src="img/history/<?php echo htmlentities($history->project_picture); ?>" alt="project image" /></td>
+                                                                    <td class="assessee_name"><?php echo htmlentities($history->assessee_name); ?></td>
+                                                                    <td class="project_name"><?php echo htmlentities($history->project_name); ?></td>
+                                                                    <td class="assessement_progress"><?php echo htmlentities($history->project_percentage); ?></td>
+                                                                    <td>
+                                                                        <button class="btn btn-primary btn-user btn-block font-weight-bold" onclick="window.location='edit-assessment-from-history.php?assessee_id=<?php echo htmlentities($history->assessee_id); ?>';">Edit</button>
+                                                                        <button class="btn btn-primary btn-user btn-block font-weight-bold" onclick="window.location='tables.html';">Print</button>
+                                                                    </td>
+                                                                </tr>
+                                                        <?php }
+                                                        } ?>
+                                                    </tbody>
+                                                </table>
+                                            </div>
 
+                                        </div>
                                     </div>
-                                    <!-- /.container-fluid -->
 
                                 </div>
+                                <!-- /.container-fluid -->
+
+                                <!-- </div> -->
                                 <!-- End of Content Wrapper -->
 
                         <?php }

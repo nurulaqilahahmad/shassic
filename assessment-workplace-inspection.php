@@ -87,71 +87,73 @@ require_once "controller.php";
 
                                                                     <!-- Page Heading -->
                                                                     <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Workplace Inspection</h1>
-                                                                    <div class="tab">
-                                                                        <button class="tablinks" onclick="openSection(event, 'general')">General</button>
-                                                                        <button class="tablinks" onclick="openSection(event, 'construction-work')">Construction Work</button>
+                                                                    <div class="tab form-group">
+                                                                        <button class="tablinks font-weight-bold" style="width: 49%;" onclick="openSection(event, 'general')">General</button>
+                                                                        <button class="tablinks font-weight-bold" style="width: 49%;" onclick="openSection(event, 'construction-work')">Construction Work</button>
                                                                     </div>
                                                                 </div>
 
                                                                 <!-- <form class="user" method="POST"> -->
-                                                                <div class="table-responsive" id="general-section"  class="tabcontent">
-                                                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <th>Item</th>
-                                                                                <th>Checklist</th>
-                                                                                <th>C</th>
-                                                                                <th>NC</th>
-                                                                                <th>NA</th>
-                                                                                <th>Remarks</th>
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tfoot>
-                                                                            <tr>
-                                                                                <th colspan="2">TOTAL SCORE</th>
-                                                                                <th>00</th>
-                                                                                <th>00</th>
-                                                                                <th>00</th>
-                                                                                <th></th>
-                                                                            </tr>
-                                                                        </tfoot>
-                                                                        <tbody>
-                                                                            <?php
-                                                                            $sql = "SELECT * from workplace_inspection_section where id between 1 and 3";
-                                                                            $query = $dbh->prepare($sql);
-                                                                            $query->execute();
-                                                                            $sections = $query->fetchAll(PDO::FETCH_OBJ);
-                                                                            $cnt = 1;
-                                                                            if ($query->rowCount() > 0) {
-                                                                                foreach ($sections as $section) {
-                                                                            ?>
-                                                                                    <tr>
-                                                                                        <th><?php echo htmlentities($section->item_no) ?></th>
-                                                                                        <th colspan="5" class="text-left"><?php echo htmlentities($section->item_name) ?></th>
-                                                                                    </tr>
-                                                                                    <?php
-                                                                                    $sql = "SELECT * from workplace_inspection_checklist where item_id='$section->id'";
-                                                                                    $query = $dbh->prepare($sql);
-                                                                                    $query->execute();
-                                                                                    $checklists = $query->fetchAll(PDO::FETCH_OBJ);
-                                                                                    $cnt = 1;
-                                                                                    if ($query->rowCount() > 0) {
-                                                                                        foreach ($checklists as $checklist) {
-                                                                                    ?>
-                                                                                            <tr>
-                                                                                                <td><?php echo htmlentities($cnt++) ?></td>
-                                                                                                <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
-                                                                                                <td><?php echo htmlentities($checklist->c_status) ?></td>
-                                                                                                <td><?php echo htmlentities($checklist->nc_status) ?></td>
-                                                                                                <td><?php echo htmlentities($checklist->na_status) ?></td>
-                                                                                                <td></td>
-                                                                                            </tr>
-                                                                                    <?php }
-                                                                                    } ?>
-                                                                            <?php }
-                                                                            } ?>
-                                                                        </tbody>
-                                                                    </table>
+                                                                <div id="general" class="tabcontent">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Item</th>
+                                                                                    <th>Checklist</th>
+                                                                                    <th>C</th>
+                                                                                    <th>NC</th>
+                                                                                    <th>NA</th>
+                                                                                    <th>Remarks</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tfoot>
+                                                                                <tr>
+                                                                                    <th colspan="2">SUB SCORE</th>
+                                                                                    <th id="selectedC">0</th>
+                                                                                    <th id="selectedNC">0</th>
+                                                                                    <th id="selectedNA">0</th>
+                                                                                    <th id="selectedTotal">0</th>
+                                                                                </tr>
+                                                                            </tfoot>
+                                                                            <tbody>
+                                                                                <?php
+                                                                                $sql = "SELECT * from workplace_inspection_section where id between 1 and 3";
+                                                                                $query = $dbh->prepare($sql);
+                                                                                $query->execute();
+                                                                                $sections = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                $cnt = 1;
+                                                                                if ($query->rowCount() > 0) {
+                                                                                    foreach ($sections as $section) {
+                                                                                ?>
+                                                                                        <tr>
+                                                                                            <th><?php echo htmlentities($section->item_no) ?></th>
+                                                                                            <th colspan="5" class="text-left"><?php echo htmlentities($section->item_name) ?></th>
+                                                                                        </tr>
+                                                                                        <?php
+                                                                                        $sql = "SELECT * from workplace_inspection_checklist where item_id='$section->id'";
+                                                                                        $query = $dbh->prepare($sql);
+                                                                                        $query->execute();
+                                                                                        $checklists = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                        $cnt = 1;
+                                                                                        if ($query->rowCount() > 0) {
+                                                                                            foreach ($checklists as $checklist) {
+                                                                                        ?>
+                                                                                                <tr>
+                                                                                                    <td><?php echo htmlentities($cnt++) ?></td>
+                                                                                                    <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
+                                                                                                    <td><input type="checkbox" class="checkbox1" onclick="countSelected()"></td>
+                                                                                                    <td><input type="checkbox" class="checkbox2" onclick="countSelected()"></td>
+                                                                                                    <td><input type="checkbox" class="checkbox3" onclick="countSelected()"></td>
+                                                                                                    <td></td>
+                                                                                                </tr>
+                                                                                        <?php }
+                                                                                        } ?>
+                                                                                <?php }
+                                                                                } ?>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
                                                                     <div class="form-group" id="row">
                                                                         <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
@@ -164,64 +166,66 @@ require_once "controller.php";
                                                                 <!-- </form> -->
 
                                                                 <!-- <form class="user" method="POST"> -->
-                                                                <div class="table-responsive" id="construction-work-section" class="tabcontent">
-                                                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                                                        <thead>
-                                                                            <tr>
-                                                                                <!-- <th>Item</th>
-                                                                                <th>Checklist</th>
-                                                                                <th>C</th>
-                                                                                <th>NC</th>
-                                                                                <th>NA</th>
-                                                                                <th>Remarks</th> -->
-                                                                            </tr>
-                                                                        </thead>
-                                                                        <tfoot>
-                                                                            <tr>
-                                                                                <th colspan="2">TOTAL SCORE</th>
-                                                                                <th>00</th>
-                                                                                <th>00</th>
-                                                                                <th>00</th>
-                                                                                <th></th>
-                                                                            </tr>
-                                                                        </tfoot>
-                                                                        <tbody>
-                                                                            <?php
-                                                                            $sql = "SELECT * from workplace_inspection_section where id between 1 and 3";
-                                                                            $query = $dbh->prepare($sql);
-                                                                            $query->execute();
-                                                                            $sections = $query->fetchAll(PDO::FETCH_OBJ);
-                                                                            $cnt = 1;
-                                                                            if ($query->rowCount() > 0) {
-                                                                                foreach ($sections as $section) {
-                                                                            ?>
-                                                                                    <tr>
-                                                                                        <th><?php echo htmlentities($section->item_no) ?></th>
-                                                                                        <th colspan="5" class="text-left"><?php echo htmlentities($section->item_name) ?></th>
-                                                                                    </tr>
-                                                                                    <?php
-                                                                                    $sql = "SELECT * from workplace_inspection_checklist where item_id='$section->id'";
-                                                                                    $query = $dbh->prepare($sql);
-                                                                                    $query->execute();
-                                                                                    $checklists = $query->fetchAll(PDO::FETCH_OBJ);
-                                                                                    $cnt = 1;
-                                                                                    if ($query->rowCount() > 0) {
-                                                                                        foreach ($checklists as $checklist) {
-                                                                                    ?>
-                                                                                            <tr>
-                                                                                                <td><?php echo htmlentities($cnt++) ?></td>
-                                                                                                <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
-                                                                                                <td><?php echo htmlentities($checklist->c_status) ?></td>
-                                                                                                <td><?php echo htmlentities($checklist->nc_status) ?></td>
-                                                                                                <td><?php echo htmlentities($checklist->na_status) ?></td>
-                                                                                                <td></td>
-                                                                                            </tr>
-                                                                                    <?php }
-                                                                                    } ?>
-                                                                            <?php }
-                                                                            } ?>
-                                                                        </tbody>
-                                                                    </table>
+                                                                <div id="construction-work" class="tabcontent">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Item</th>
+                                                                                    <th>Checklist</th>
+                                                                                    <th>C</th>
+                                                                                    <th>NC</th>
+                                                                                    <th>NA</th>
+                                                                                    <th>Remarks</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tfoot>
+                                                                                <tr>
+                                                                                    <th colspan="2">SUB SCORE</th>
+                                                                                    <th>0</th>
+                                                                                    <th>0</th>
+                                                                                    <th>0</th>
+                                                                                    <th></th>
+                                                                                </tr>
+                                                                            </tfoot>
+                                                                            <tbody>
+                                                                                <?php
+                                                                                $sql = "SELECT * from workplace_inspection_section where id between 4 and 7";
+                                                                                $query = $dbh->prepare($sql);
+                                                                                $query->execute();
+                                                                                $sections = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                $cnt = 1;
+                                                                                if ($query->rowCount() > 0) {
+                                                                                    foreach ($sections as $section) {
+                                                                                ?>
+                                                                                        <tr>
+                                                                                            <th><?php echo htmlentities($section->item_no) ?></th>
+                                                                                            <th colspan="5" class="text-left"><?php echo htmlentities($section->item_name) ?></th>
+                                                                                        </tr>
+                                                                                        <?php
+                                                                                        $sql = "SELECT * from workplace_inspection_checklist where item_id='$section->id'";
+                                                                                        $query = $dbh->prepare($sql);
+                                                                                        $query->execute();
+                                                                                        $checklists = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                        $cnt = 1;
+                                                                                        if ($query->rowCount() > 0) {
+                                                                                            foreach ($checklists as $checklist) {
+                                                                                        ?>
+                                                                                                <tr>
+                                                                                                    <td><?php echo htmlentities($cnt++) ?></td>
+                                                                                                    <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                    <td></td>
+                                                                                                </tr>
+                                                                                        <?php }
+                                                                                        } ?>
+                                                                                <?php }
+                                                                                } ?>
+                                                                            </tbody>
+                                                                        </table>
+                                                                    </div>
                                                                     <div class="form-group" id="row">
                                                                         <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
@@ -288,6 +292,15 @@ require_once "controller.php";
         header("location: login.php");
     } ?>
     <script>
+        // var checkboxes = document.querySelectorAll('.checkbox1');
+        // var checkboxes2 = document.querySelectorAll('.checkbox2');
+        // var checkboxes3 = document.querySelectorAll('.checkbox3');
+
+        // var totalScore = 0;
+        // var countC = 0;
+        // var countNC = 0;
+        // var countNA = 0;
+
         function openSection(evt, sectionName) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tabcontent");
@@ -300,6 +313,67 @@ require_once "controller.php";
             }
             document.getElementById(sectionName).style.display = "block";
             evt.currentTarget.className += " active";
+        }
+
+        function countSelected() {
+            var checkboxes = document.querySelectorAll('.checkbox1');
+            var checkboxes2 = document.querySelectorAll('.checkbox2');
+            var checkboxes3 = document.querySelectorAll('.checkbox3');
+
+            var totalScore = 0;
+            var countC = 0;
+            var countNC = 0;
+            var countNA = 0;
+
+            checkboxes.forEach(item => {
+                if (item.checked == true) {
+                    countC++;
+                }
+            })
+
+            checkboxes2.forEach(item => {
+                if (item.checked == true) {
+                    countNC++;
+                }
+            })
+
+            checkboxes3.forEach(item => {
+                if (item.checked == true) {
+                    countNA++;
+                }
+            })
+
+            document.getElementById('selectedC').innerHTML = countC;
+            document.getElementById('selectedNC').innerHTML = countNC;
+            document.getElementById('selectedNA').innerHTML = countNA;
+
+            // for (var i = 0; i < checkboxName.length; i++) {
+            //     if (checkboxName.checked == true) {
+            //         if (document.getElementById(checkboxName) == 'checkbox1') {
+            //             countC++;
+            //             document.getElementById('selectedC').innerHTML = countC;
+            //         } else if (document.getElementById(checkboxName) == 'checkbox2') {
+            //             countNC++;
+            //             document.getElementById('selectedNC').innerHTML = countNC;
+            //         } else if (document.getElementById(checkboxName) == 'checkbox3') {
+            //             countNA++;
+            //             document.getElementById('selectedNA').innerHTML = countNA;
+            //         }
+            //     } else {
+            //         if (document.getElementById(checkboxName) == 'checkbox1') {
+            //             countC--;
+            //             document.getElementById('selectedC').innerHTML = countC;
+            //         } else if (document.getElementById(checkboxName) == 'checkbox2') {
+            //             countNC--;
+            //             document.getElementById('selectedNC').innerHTML = countNC;
+            //         } else if (document.getElementById(checkboxName) == 'checkbox3') {
+            //             countNA--;
+            //             document.getElementById('selectedNA').innerHTML = countNA;
+            //         }
+            //     }
+            // }
+            totalScore = countC + countNC + countNA;
+            document.getElementById('selectedTotal').innerHTML = totalScore;
         }
     </script>
 </body>

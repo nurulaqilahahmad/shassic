@@ -85,10 +85,10 @@ require_once "controller.php";
                                                                             <a class="font-weight-bold" href="edit-assessment.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
                                                                                 &larr; Back</a>
                                                                         </div>
-                                                                        <div class="col-sm-6" style="display:flex; width:auto; justify-content: end;">
+                                                                        <!-- <div class="col-sm-6" style="display:flex; width:auto; justify-content: end;">
                                                                             <a class="font-weight-bold" href="#">
                                                                                 Next &rarr;</a>
-                                                                        </div>
+                                                                        </div> -->
                                                                     </div>
 
                                                                     <!-- Page Heading -->
