@@ -89,7 +89,6 @@ require_once "controller.php";
                                                                     <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Document Check</h1>
                                                                 </div>
 
-                                                                <!-- <form class="user" method="POST"> -->
                                                                 <div class="card-body">
                                                                     <div class="table-responsive">
                                                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -150,16 +149,22 @@ require_once "controller.php";
                                                                             </tbody>
                                                                         </table>
                                                                     </div>
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection">Save</button>
-                                                                        </div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
-                                                                    </div>
-                                                                </div>
 
-                                                                <!-- </form> -->
+                                                                    <form class="" action="" method="POST">
+                                                                        <div class="form-group" id="row">
+                                                                            <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                            <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                                <div class="form-group">
+                                                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?php echo htmlentities($result->assessee_id); ?>">
+                                                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" onchange="document.getElementById('selectedNC').value">
+                                                                                </div>
+                                                                                <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-document-check">Save</button>
+                                                                            </div>
+                                                                            <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                        </div>
+                                                                    </form>
+
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -167,7 +172,6 @@ require_once "controller.php";
                                             </div>
 
                                         </div>
-
 
                                     </div>
 
@@ -215,16 +219,8 @@ require_once "controller.php";
     <?php } else {
         header("location: login.php");
     } ?>
+
     <script>
-        // var checkboxes = document.querySelectorAll('.checkbox1');
-        // var checkboxes2 = document.querySelectorAll('.checkbox2');
-        // var checkboxes3 = document.querySelectorAll('.checkbox3');
-
-        // var totalScore = 0;
-        // var countC = 0;
-        // var countNC = 0;
-        // var countNA = 0;
-
         function countSelected() {
             var checkboxes = document.querySelectorAll('.checkbox1');
             var checkboxes2 = document.querySelectorAll('.checkbox2');
@@ -234,6 +230,7 @@ require_once "controller.php";
             var countC = 0;
             var countNC = 0;
             var countNA = 0;
+            var documentCheck = 0;
 
             checkboxes.forEach(item => {
                 if (item.checked == true) {
@@ -257,35 +254,15 @@ require_once "controller.php";
             document.getElementById('selectedNC').innerHTML = countNC;
             document.getElementById('selectedNA').innerHTML = countNA;
 
-            // for (var i = 0; i < checkboxName.length; i++) {
-            //     if (checkboxName.checked == true) {
-            //         if (document.getElementById(checkboxName) == 'checkbox1') {
-            //             countC++;
-            //             document.getElementById('selectedC').innerHTML = countC;
-            //         } else if (document.getElementById(checkboxName) == 'checkbox2') {
-            //             countNC++;
-            //             document.getElementById('selectedNC').innerHTML = countNC;
-            //         } else if (document.getElementById(checkboxName) == 'checkbox3') {
-            //             countNA++;
-            //             document.getElementById('selectedNA').innerHTML = countNA;
-            //         }
-            //     } else {
-            //         if (document.getElementById(checkboxName) == 'checkbox1') {
-            //             countC--;
-            //             document.getElementById('selectedC').innerHTML = countC;
-            //         } else if (document.getElementById(checkboxName) == 'checkbox2') {
-            //             countNC--;
-            //             document.getElementById('selectedNC').innerHTML = countNC;
-            //         } else if (document.getElementById(checkboxName) == 'checkbox3') {
-            //             countNA--;
-            //             document.getElementById('selectedNA').innerHTML = countNA;
-            //         }
-            //     }
-            // }
             totalScore = countC + countNC + countNA;
+            documentCheck = (countC / (57 - countNA) * 20);
+            // console.log(documentCheck);
+
             document.getElementById('selectedTotal').innerHTML = totalScore;
+
         }
     </script>
+
 </body>
 
 </html>
