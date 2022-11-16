@@ -47,17 +47,17 @@ require_once "controller.php";
             <div id="wrapper">
 
                 <?php
-                $email = $_SESSION['login'];
-                $assessee_id = $_GET['assessee_id'];
-                $sql = "SELECT * from assessment where assessee_id=:assessee_id";
-                $query = $dbh->prepare($sql);
-                $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $query->execute();
-                $results = $query->fetchAll(PDO::FETCH_OBJ);
-                $cnt = 1;
-                if ($query->rowCount() > 0) {
-                    foreach ($results as $result) {
-                ?>
+                    $email = $_SESSION['login'];
+                    $assessee_id = $_GET['assessee_id'];
+                    $sql = "SELECT * from assessment where assessee_id=:assessee_id";
+                    $query = $dbh->prepare($sql);
+                    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $query->execute();
+                    $results = $query->fetchAll(PDO::FETCH_OBJ);
+                    $cnt = 1;
+                    if ($query->rowCount() > 0) {
+                        foreach ($results as $result) {
+                    ?>
 
                         <!-- Content Wrapper -->
                         <div id="content-wrapper" class="d-flex flex-column">
@@ -71,8 +71,6 @@ require_once "controller.php";
 
                                     <!-- Outer Row -->
                                     <div class="row justify-content-center">
-
-
                                         <div class="col-xl-12 col-lg-12 col-md-9">
                                             <div class="card o-hidden border-0 shadow-lg my-5">
                                                 <div class="p-0" id="card-body">
@@ -90,9 +88,9 @@ require_once "controller.php";
                                                                     </div>
                                                                 </div>
 
-                                                                    <!-- Page Heading -->
-                                                                    <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Edit Assessment</h1>
-                                                                    <?php
+                                                                <!-- Page Heading -->
+                                                                <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Edit Assessment</h1>
+                                                                <?php
                                                                     if (count($errors) > 0) {
                                                                     ?>
                                                                         <div class="col-lg-12 mb-4">
@@ -105,98 +103,94 @@ require_once "controller.php";
                                                                             </div>
                                                                         </div>
                                                                     <?php
-                                                                    }
-                                                                    ?>
-                                                                </div>
-
-                                                                <form class="user" method="POST">
-                                                                    <div class="form-group">
-                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessor_id" id="assessor_id" value="<?php echo htmlentities($result->assessor_id); ?>">
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessor_name" id="assessor_name" value="<?php echo htmlentities($result->assessor_name); ?>">
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?php echo htmlentities($result->assessee_id); ?>">
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <input type="text" class="form-control form-control-user font-weight-bold" name="assessee_name" id="assessee_name" placeholder="Assessee Name" required value="<?php echo htmlentities($result->assessee_name); ?>">
-                                                                    </div>
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                            <input type="text" class="form-control form-control-user font-weight-bold" name="project_name" id="project_name" placeholder="Project Name" required value="<?php echo htmlentities($result->project_name); ?>">
-                                                                        </div>
-                                                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                            <input type="text" onfocus="(this.type='date')" onchange="(this.type='date')" class="form-control form-control-user font-weight-bold" name="project_date" id="project_date" required placeholder="Project Date" date_format='dd/mm/yyyy' value="<?php echo date_format(new DateTime($result->project_date), 'd/m/Y'); ?>">
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-6 mb-3 mb-sm-0">
-                                                                            <input type="text" class="form-control form-control-user font-weight-bold" name="project_location" id="project_location" placeholder="Project Location" required value="<?php echo htmlentities($result->project_location); ?>">
-                                                                        </div>
-                                                                        <div class="col-sm-6">
-                                                                            <input type="text" onfocus="(this.type='file')" class="form-control form-control-user font-weight-bold" name="project_picture" id="project_picture" required placeholder="Project Picture" accept="image/*" onchange="document.getElementById('project_picture').src = window.URL.createObjectURL(this.files[0])" value="<?php echo htmlentities($result->project_picture); ?>" />
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="update">Update</button>
-                                                                        </div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
-                                                                    </div>
-                                                                </form>
+                                                                }?>
                                                             </div>
+
+                                                            <form class="user" method="POST">
+                                                                <div class="form-group">
+                                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessor_id" id="assessor_id" value="<?php echo htmlentities($result->assessor_id); ?>">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessor_name" id="assessor_name" value="<?php echo htmlentities($result->assessor_name); ?>">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?php echo htmlentities($result->assessee_id); ?>">
+                                                                </div>
+                                                                <div class="form-group">
+                                                                    <input type="text" class="form-control form-control-user font-weight-bold" name="assessee_name" id="assessee_name" placeholder="Assessee Name" required value="<?php echo htmlentities($result->assessee_name); ?>">
+                                                                </div>
+                                                                <div class="form-group" id="row">
+                                                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                                                        <input type="text" class="form-control form-control-user font-weight-bold" name="project_name" id="project_name" placeholder="Project Name" required value="<?php echo htmlentities($result->project_name); ?>">
+                                                                    </div>
+                                                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                                                        <input type="text" onfocus="(this.type='date')" onchange="(this.type='date')" class="form-control form-control-user font-weight-bold" name="project_date" id="project_date" required placeholder="Project Date" date_format='dd/mm/yyyy' value="<?php echo date_format(new DateTime($result->project_date), 'd/m/Y'); ?>">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" id="row">
+                                                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                                                        <input type="text" class="form-control form-control-user font-weight-bold" name="project_location" id="project_location" placeholder="Project Location" required value="<?php echo htmlentities($result->project_location); ?>">
+                                                                    </div>
+                                                                    <div class="col-sm-6">
+                                                                        <input type="text" onfocus="(this.type='file')" class="form-control form-control-user font-weight-bold" name="project_picture" id="project_picture" required placeholder="Project Picture" accept="image/*" onchange="document.getElementById('project_picture').src = window.URL.createObjectURL(this.files[0])" value="<?php echo htmlentities($result->project_picture); ?>" />
+                                                                    </div>
+                                                                </div>
+                                                                <div class="form-group" id="row">
+                                                                    <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                    <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                        <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="update">Update</button>
+                                                                    </div>
+                                                                    <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                </div>
+                                                            </form>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
                                         </div>
-
 
                                     </div>
 
+
                                 </div>
-                                <!-- /.container-fluid -->
 
                             </div>
-                            <!-- End of Main Content -->
+                            <!-- /.container-fluid -->
 
                         </div>
-                        <!-- End of Content Wrapper -->
-
-
-                <?php }
-                } ?>
-            </div>
-            <!-- End of Page Wrapper -->
-
-            <!-- Footer -->
-            <footer class="small">
-                <div class="container my-auto justify-content-center">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; SHASSIC 2022</span>
+                        <!-- End of Main Content -->
                     </div>
+                    <!-- End of Content Wrapper -->
+                    <?php }
+                } ?>
+        </div>
+        <!-- End of Page Wrapper -->
+
+        <!-- Footer -->
+        <footer class="small">
+            <div class="container my-auto justify-content-center">
+                <div class="copyright text-center my-auto">
+                    <span>Copyright &copy; SHASSIC 2022</span>
                 </div>
-            </footer>
-            <!-- End of Footer -->
+            </div>
+        </footer>
+        <!-- End of Footer -->
 
-            <!-- Scroll to Top Button-->
-            <a class="scroll-to-top rounded" href="#page-top">
-                <!-- <i class="fas fa-angle-up"></i> -->
-                &uarr;
-            </a>
+        <!-- Scroll to Top Button-->
+        <a class="scroll-to-top rounded" href="#page-top">
+            <!-- <i class="fas fa-angle-up"></i> -->
+            &uarr;
+        </a>
 
-            <!-- Bootstrap core JavaScript-->
-            <script src="vendor/jquery/jquery.min.js"></script>
-            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Bootstrap core JavaScript-->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-            <!-- Core plugin JavaScript-->
-            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <!-- Core plugin JavaScript-->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-            <!-- Custom scripts for all pages-->
-            <script src="js/sb-admin-2.min.js"></script>
+        <!-- Custom scripts for all pages-->
+        <script src="js/sb-admin-2.min.js"></script>
         </div>
     <?php } else {
         header("location: login.php");
