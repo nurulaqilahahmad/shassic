@@ -528,18 +528,18 @@ require_once "controller.php";
             evt.currentTarget.className += " active";
         }
 
-        function openWorker(evt, workerName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent2");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
+        function openWorker(event, workerName) {
+            var i, tabcontent2, tablinks2;
+            tabcontent2 = document.getElementsByClassName("tabcontent2");
+            for (i = 0; i < tabcontent2.length; i++) {
+                tabcontent2[i].style.display = "none";
             }
-            tablinks = document.getElementsByClassName("tablinks2");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].workerName = tablinks[i].workerName.replace(" active", "");
+            tablinks2 = document.getElementsByClassName("tablinks2");
+            for (i = 0; i < tablinks2.length; i++) {
+                tablinks2[i].className = tablinks2[i].className.replace(" active", "");
             }
             document.getElementById(workerName).style.display = "block";
-            evt.currentTarget.workerName += " active";
+            event.currentTarget.className += " active";
         }
     </script>
 </body>

@@ -206,16 +206,16 @@ require_once "controller.php";
                                                                             <tfoot>
                                                                                 <tr>
                                                                                     <th colspan="2">SUB SCORE</th>
-                                                                                    <th>0</th>
-                                                                                    <th>0</th>
-                                                                                    <th>0</th>
-                                                                                    <th>0</th>
-                                                                                    <th>0</th>
-                                                                                    <th>0</th>
-                                                                                    <th>0</th>
-                                                                                    <th>0</th>
-                                                                                    <th>0</th>
-                                                                                    <th></th>
+                                                                                    <th id="selectedC2">0</th>
+                                                                                    <th id="selectedNC2">0</th>
+                                                                                    <th id="selectedNA2">0</th>
+                                                                                    <th id="selectedC3">0</th>
+                                                                                    <th id="selectedNC3">0</th>
+                                                                                    <th id="selectedNA3">0</th>
+                                                                                    <th id="selectedC4">0</th>
+                                                                                    <th id="selectedNC4">0</th>
+                                                                                    <th id="selectedNA4">0</th>
+                                                                                    <th id="selectedTotal2">0</th>
                                                                                 </tr>
                                                                             </tfoot>
                                                                             <tbody>
@@ -244,15 +244,15 @@ require_once "controller.php";
                                                                                                 <tr>
                                                                                                     <td><?php echo htmlentities($cnt++) ?></td>
                                                                                                     <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
-                                                                                                    <td></td>
+                                                                                                    <td><input type="checkbox" class="checkbox4" onclick="countSelected()"></td>
+                                                                                                    <td><input type="checkbox" class="checkbox5" onclick="countSelected()"></td>
+                                                                                                    <td><input type="checkbox" class="checkbox6" onclick="countSelected()"></td>
+                                                                                                    <td><input type="checkbox" class="checkbox7" onclick="countSelected()"></td>
+                                                                                                    <td><input type="checkbox" class="checkbox8" onclick="countSelected()"></td>
+                                                                                                    <td><input type="checkbox" class="checkbox9" onclick="countSelected()"></td>
+                                                                                                    <td><input type="checkbox" class="checkbox10" onclick="countSelected()"></td>
+                                                                                                    <td><input type="checkbox" class="checkbox11" onclick="countSelected()"></td>
+                                                                                                    <td><input type="checkbox" class="checkbox12" onclick="countSelected()"></td>
                                                                                                     <td></td>
                                                                                                 </tr>
                                                                                         <?php }
@@ -328,15 +328,6 @@ require_once "controller.php";
         header("location: login.php");
     } ?>
     <script>
-        // var checkboxes = document.querySelectorAll('.checkbox1');
-        // var checkboxes2 = document.querySelectorAll('.checkbox2');
-        // var checkboxes3 = document.querySelectorAll('.checkbox3');
-
-        // var totalScore = 0;
-        // var countC = 0;
-        // var countNC = 0;
-        // var countNA = 0;
-
         function openSection(evt, sectionName) {
             var i, tabcontent, tablinks;
             tabcontent = document.getElementsByClassName("tabcontent");
@@ -356,10 +347,35 @@ require_once "controller.php";
             var checkboxes2 = document.querySelectorAll('.checkbox2');
             var checkboxes3 = document.querySelectorAll('.checkbox3');
 
+            var checkboxes4 = document.querySelectorAll('.checkbox4');
+            var checkboxes5 = document.querySelectorAll('.checkbox5');
+            var checkboxes6 = document.querySelectorAll('.checkbox6');
+
+            var checkboxes7 = document.querySelectorAll('.checkbox7');
+            var checkboxes8 = document.querySelectorAll('.checkbox8');
+            var checkboxes9 = document.querySelectorAll('.checkbox9');
+
+            var checkboxes10 = document.querySelectorAll('.checkbox10');
+            var checkboxes11 = document.querySelectorAll('.checkbox11');
+            var checkboxes12 = document.querySelectorAll('.checkbox12');
+
             var totalScore = 0;
             var countC = 0;
             var countNC = 0;
             var countNA = 0;
+
+            var totalScore2 = 0;
+            var countC2 = 0;
+            var countNC2 = 0;
+            var countNA2 = 0;
+
+            var countC3 = 0;
+            var countNC3 = 0;
+            var countNA3 = 0;
+
+            var countC4 = 0;
+            var countNC4 = 0;
+            var countNA4 = 0;
 
             checkboxes.forEach(item => {
                 if (item.checked == true) {
@@ -379,37 +395,81 @@ require_once "controller.php";
                 }
             })
 
+            checkboxes4.forEach(item => {
+                if (item.checked == true) {
+                    countC2++;
+                }
+            })
+
+            checkboxes5.forEach(item => {
+                if (item.checked == true) {
+                    countNC2++;
+                }
+            })
+
+            checkboxes6.forEach(item => {
+                if (item.checked == true) {
+                    countNA2++;
+                }
+            })
+
+            checkboxes7.forEach(item => {
+                if (item.checked == true) {
+                    countC3++;
+                }
+            })
+
+            checkboxes8.forEach(item => {
+                if (item.checked == true) {
+                    countNC3++;
+                }
+            })
+
+            checkboxes9.forEach(item => {
+                if (item.checked == true) {
+                    countNA3++;
+                }
+            })
+
+            checkboxes10.forEach(item => {
+                if (item.checked == true) {
+                    countC4++;
+                }
+            })
+
+            checkboxes11.forEach(item => {
+                if (item.checked == true) {
+                    countNC4++;
+                }
+            })
+
+            checkboxes12.forEach(item => {
+                if (item.checked == true) {
+                    countNA4++;
+                }
+            })
+
             document.getElementById('selectedC').innerHTML = countC;
             document.getElementById('selectedNC').innerHTML = countNC;
             document.getElementById('selectedNA').innerHTML = countNA;
 
-            // for (var i = 0; i < checkboxName.length; i++) {
-            //     if (checkboxName.checked == true) {
-            //         if (document.getElementById(checkboxName) == 'checkbox1') {
-            //             countC++;
-            //             document.getElementById('selectedC').innerHTML = countC;
-            //         } else if (document.getElementById(checkboxName) == 'checkbox2') {
-            //             countNC++;
-            //             document.getElementById('selectedNC').innerHTML = countNC;
-            //         } else if (document.getElementById(checkboxName) == 'checkbox3') {
-            //             countNA++;
-            //             document.getElementById('selectedNA').innerHTML = countNA;
-            //         }
-            //     } else {
-            //         if (document.getElementById(checkboxName) == 'checkbox1') {
-            //             countC--;
-            //             document.getElementById('selectedC').innerHTML = countC;
-            //         } else if (document.getElementById(checkboxName) == 'checkbox2') {
-            //             countNC--;
-            //             document.getElementById('selectedNC').innerHTML = countNC;
-            //         } else if (document.getElementById(checkboxName) == 'checkbox3') {
-            //             countNA--;
-            //             document.getElementById('selectedNA').innerHTML = countNA;
-            //         }
-            //     }
-            // }
+            document.getElementById('selectedC2').innerHTML = countC2;
+            document.getElementById('selectedNC2').innerHTML = countNC2;
+            document.getElementById('selectedNA2').innerHTML = countNA2;
+
+            document.getElementById('selectedC3').innerHTML = countC3;
+            document.getElementById('selectedNC3').innerHTML = countNC3;
+            document.getElementById('selectedNA3').innerHTML = countNA3;
+
+            document.getElementById('selectedC4').innerHTML = countC4;
+            document.getElementById('selectedNC4').innerHTML = countNC4;
+            document.getElementById('selectedNA4').innerHTML = countNA4;
+
             totalScore = countC + countNC + countNA;
             document.getElementById('selectedTotal').innerHTML = totalScore;
+
+            totalScore2 = countC2 + countNC2 + countNA2 + countC3 + countNC3 + countNA3 + countC4 + countNC4 + countNA4;
+            document.getElementById('selectedTotal2').innerHTML = totalScore2;
         }
     </script>
 </body>
