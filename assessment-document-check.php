@@ -109,7 +109,7 @@ require_once "controller.php";
                                                                                     <th id="selectedC">0</th>
                                                                                     <th id="selectedNC">0</th>
                                                                                     <th id="selectedNA">0</th>
-                                                                                    <th id="selectedTotal">0</th>
+                                                                                    <th id="selectedTotal"></th>
                                                                                 </tr>
                                                                             </tfoot>
                                                                             <tbody>
@@ -157,7 +157,8 @@ require_once "controller.php";
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
                                                                                 <div class="form-group">
                                                                                     <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?php echo htmlentities($result->assessee_id); ?>">
-                                                                                    <input type="text" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" value="<?php echo htmlentities($result->assessee_id); ?>">
+                                                                                    <!-- <input type="text" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" value="<?php echo htmlentities($result->assessee_id); ?>"> -->
+                                                                                    <input type="number" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" hidden value="document.getElementById('selectedTotal').value">
                                                                                 </div>
                                                                                 <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-document-check">Save</button>
                                                                             </div>
