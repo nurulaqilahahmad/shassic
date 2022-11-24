@@ -157,7 +157,7 @@ require_once "controller.php";
                                                                     <div class="form-group" id="row">
                                                                         <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection">Save</button>
+                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview">Save</button>
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                     </div>
@@ -247,7 +247,7 @@ require_once "controller.php";
                                                                     <div class="form-group" id="row">
                                                                         <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection">Save</button>
+                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview">Save</button>
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                     </div>
@@ -450,7 +450,7 @@ require_once "controller.php";
                                                                         <div class="form-group" id="row">
                                                                             <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                                <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection">Save</button>
+                                                                                <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview">Save</button>
                                                                             </div>
                                                                             <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                         </div>

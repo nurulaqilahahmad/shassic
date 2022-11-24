@@ -142,9 +142,9 @@ require_once "controller.php";
                                                                                                 <tr>
                                                                                                     <td><?php echo htmlentities($cnt++) ?></td>
                                                                                                     <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
-                                                                                                    <td><input type="checkbox" class="checkbox1" onclick="countSelected()"></td>
-                                                                                                    <td><input type="checkbox" class="checkbox2" onclick="countSelected()"></td>
-                                                                                                    <td><input type="checkbox" class="checkbox3" onclick="countSelected()"></td>
+                                                                                                    <td><input type="checkbox" class="checkbox1" onclick="countSelected()" value="1"></td>
+                                                                                                    <td><input type="checkbox" class="checkbox2" onclick="countSelected()" value="1"></td>
+                                                                                                    <td><input type="checkbox" class="checkbox3" onclick="countSelected()" value="1"></td>
                                                                                                     <td></td>
                                                                                                 </tr>
                                                                                         <?php }
@@ -157,7 +157,7 @@ require_once "controller.php";
                                                                     <div class="form-group" id="row">
                                                                         <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection">Save</button>
+                                                                            <!-- <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection">Save</button> -->
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                     </div>
@@ -215,7 +215,7 @@ require_once "controller.php";
                                                                                     <th id="selectedC4">0</th>
                                                                                     <th id="selectedNC4">0</th>
                                                                                     <th id="selectedNA4">0</th>
-                                                                                    <th id="selectedTotal2">0</th>
+                                                                                    <th id="selectedTotal2"></th>
                                                                                 </tr>
                                                                             </tfoot>
                                                                             <tbody>
@@ -262,16 +262,22 @@ require_once "controller.php";
                                                                             </tbody>
                                                                         </table>
                                                                     </div>
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection">Save</button>
+                                                                    <form class="user" method="POST">
+                                                                        <div class="form-group">
+                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?php echo htmlentities($result->assessee_id); ?>">
                                                                         </div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
-                                                                    </div>
+                                                                        <div class="form-group">
+                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="workplace_inspection_percentage" id="workplace_inspection_percentage" onchange="countSelected()">
+                                                                        </div>
+                                                                        <div class="form-group" id="row">
+                                                                            <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                            <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                                <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection">Save</button>
+                                                                            </div>
+                                                                            <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                        </div>
+                                                                    </form>
                                                                 </div>
-
-                                                                <!-- </form> -->
                                                             </div>
                                                         </div>
                                                     </div>
@@ -470,7 +476,13 @@ require_once "controller.php";
 
             totalScore2 = countC2 + countNC2 + countNA2 + countC3 + countNC3 + countNA3 + countC4 + countNC4 + countNA4;
             document.getElementById('selectedTotal2').innerHTML = totalScore2;
+            document.getElementById('workplace_inspection_percentage').value = totalScore2;
         }
+
+        // function getValue(idElement) {
+        //     var x = parseInt(document.getElementById(idElement).value);
+        //     return x;
+        // }
     </script>
 </body>
 

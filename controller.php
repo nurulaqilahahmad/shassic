@@ -344,3 +344,29 @@ if (isset($_POST['save-document-check'])) {
         header("location: assessment-component.php?assessee_id=" . $assessee_id);
     }
 }
+
+//if user click save-workplace-inspection button in assessment workplace inspection page
+if (isset($_POST['save-workplace-inspection'])) {
+    //getting the post values
+    $assessee_id = $_POST['assessee_id'];
+    $workplace_inspection_percentage = $_POST['workplace_inspection_percentage'];
+
+    // query for data selection
+    $sql = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+    $query->execute();
+    $result = $query->fetchAll(PDO::FETCH_OBJ);
+
+    if ($query->rowCount() > 0) {
+        //query for updation
+        $con = "UPDATE assessment SET workplace_inspection_percentage=:workplace_inspection_percentage WHERE assessee_id=:assessee_id";
+        $update = $dbh->prepare($con);
+        $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+        $update->bindParam(':workplace_inspection_percentage', $workplace_inspection_percentage, PDO::PARAM_STR);
+        $update->execute();
+
+        $_SESSION['info'] = "Updated successfully";
+        header("location: assessment-component.php?assessee_id=" . $assessee_id);
+    }
+}
