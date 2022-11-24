@@ -233,13 +233,14 @@ if (isset($_POST['add'])) {
     $lastInsertId = $dbh->lastInsertId();
     if ($lastInsertId) {
         $assessee_id = $lastInsertId;
+        $con = "INSERT INTO workplace_inspection_subscore(assessment_id) VALUES(:assessee_id)";
+        $insert_subscore = $dbh->prepare($con);
+        $insert_subscore->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+        $insert_subscore->execute();
         $_SESSION['info'] = "You have successfully added a new assessment";
         header("location: assessment-component.php?assessee_id=" . $assessee_id);
-        // echo "<script>alert('You have successfully signed up');</script>";
-        // echo "<script type='text/javascript'> document.location ='login.php'; </script>";
     } else {
         $errors['db-error'] = 'Something Went Wrong. Please try again';
-        // echo "<script>alert('Something Went Wrong. Please try again');</script>";
     }
 }
 
@@ -348,13 +349,13 @@ if (isset($_POST['save-document-check'])) {
 }
 
 //if user click save-workplace-inspection button in assessment workplace inspection page
-if (isset($_POST['save-workplace-inspection'])) {
+if (isset($_POST['save-workplace-inspection-high-risk'])) {
     //getting the post values
     $assessee_id = $_POST['assessee_id'];
-    $workplace_inspection_percentage = $_POST['workplace_inspection_percentage'];
+    $high_risk_score = $_POST['high_risk_score'];
 
     // query for data selection
-    $sql = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
+    $sql = "SELECT * FROM workplace_inspection_subscore WHERE assessment_id=:assessee_id";
     $query = $dbh->prepare($sql);
     $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
     $query->execute();
@@ -362,13 +363,17 @@ if (isset($_POST['save-workplace-inspection'])) {
 
     if ($query->rowCount() > 0) {
         //query for updation
-        $con = "UPDATE assessment SET workplace_inspection_percentage=:workplace_inspection_percentage WHERE assessee_id=:assessee_id";
+        $con = "UPDATE workplace_inspection_subscore SET high_risk_score=:high_risk_score WHERE assessment_id=:assessee_id";
         $update = $dbh->prepare($con);
         $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        $update->bindParam(':workplace_inspection_percentage', $workplace_inspection_percentage, PDO::PARAM_STR);
+        $update->bindParam(':high_risk_score', $high_risk_score, PDO::PARAM_STR);
         $update->execute();
 
-        $_SESSION['info'] = "Updated successfully";
-        header("location: assessment-component.php?assessee_id=" . $assessee_id);
+        // if ($update) {
+        //     $conn = "UPDATE"
+        // }
+
+        $info = "Updated successfully";
+        header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
     }
 }

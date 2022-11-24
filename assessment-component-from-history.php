@@ -105,6 +105,9 @@ require_once "controller.php";
                                                                         </div>
                                                                     <?php
                                                                     }
+                                                                    else{
+                                                                        $_SESSION['info'] = "";
+                                                                    }
                                                                     ?>
                                                                     <?php
                                                                     if (count($errors) > 0) {

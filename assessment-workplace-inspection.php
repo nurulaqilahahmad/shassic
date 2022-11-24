@@ -87,6 +87,34 @@ require_once "controller.php";
 
                                                                     <!-- Page Heading -->
                                                                     <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Workplace Inspection</h1>
+                                                                    <?php
+                                                                    if ($_GET['info'] != "") {
+                                                                    ?>
+                                                                        <div class="col-lg-12 mb-4">
+                                                                            <div class="card bg-success text-white shadow">
+                                                                                <div class="card-body text-center font-weight-bold">
+                                                                                    <?php echo $_SESSION['info']; ?>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    <?php
+                                                                    }
+                                                                    ?>
+                                                                    <?php
+                                                                    if (count($errors) > 0) {
+                                                                    ?>
+                                                                        <div class="col-lg-12 mb-4">
+                                                                            <div class="card bg-danger text-white shadow">
+                                                                                <div class="card-body text-center" style="font-weight: bold;">
+                                                                                    <?php foreach ($errors as $error) {
+                                                                                        echo $error;
+                                                                                    } ?>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    <?php
+                                                                    }
+                                                                    ?>
                                                                     <div class="tab form-group">
                                                                         <button class="tablinks font-weight-bold" style="width: 49%;" onclick="openSection(event, 'general')">General</button>
                                                                         <button class="tablinks font-weight-bold" style="width: 49%;" onclick="openSection(event, 'construction-work')">Construction Work</button>
@@ -267,12 +295,12 @@ require_once "controller.php";
                                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?php echo htmlentities($result->assessee_id); ?>">
                                                                         </div>
                                                                         <div class="form-group">
-                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="workplace_inspection_percentage" id="workplace_inspection_percentage" onchange="countSelected()">
+                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="high_risk_score" id="high_risk_score" onchange="countSelected()">
                                                                         </div>
                                                                         <div class="form-group" id="row">
                                                                             <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                                <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection">Save</button>
+                                                                                <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection-high-risk">Save</button>
                                                                             </div>
                                                                             <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                         </div>
@@ -473,10 +501,11 @@ require_once "controller.php";
 
             totalScore = countC + countNC + countNA;
             document.getElementById('selectedTotal').innerHTML = totalScore;
+            // document.getElementById('workplace_inspection_percentage').value = totalScore;
 
             totalScore2 = countC2 + countNC2 + countNA2 + countC3 + countNC3 + countNA3 + countC4 + countNC4 + countNA4;
-            document.getElementById('selectedTotal2').innerHTML = totalScore2;
-            document.getElementById('workplace_inspection_percentage').value = totalScore2;
+            // document.getElementById('selectedTotal2').innerHTML = totalScore2;
+            document.getElementById('high_risk_score').value = totalScore2;
         }
 
         // function getValue(idElement) {
