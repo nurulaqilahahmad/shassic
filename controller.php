@@ -325,7 +325,6 @@ if (isset($_POST['save-document-check'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $document_check_percentage = $_POST['document_check_percentage'];
-    // $value = (7+7);
 
     // query for data selection
     $sql = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
@@ -339,7 +338,6 @@ if (isset($_POST['save-document-check'])) {
         $con = "UPDATE assessment SET assessee_id=:assessee_id, document_check_percentage=:document_check_percentage WHERE assessee_id=:assessee_id";
         $update = $dbh->prepare($con);
         $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        // $update->bindParam(':document_check_percentage', $document_check_percentage, PDO::PARAM_STR);
         $update->bindParam(':document_check_percentage', $document_check_percentage, PDO::PARAM_STR);
         $update->execute();
 
