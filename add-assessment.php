@@ -85,7 +85,7 @@ require_once "controller.php";
                                                                     <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Add New Assessment</h1>
                                                                 </div>
 
-                                                                <form class="user" method="POST">
+                                                                <form class="user" method="POST" enctype="multipart/form-data">
                                                                     <div class="form-group">
                                                                         <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessor_id" id="assessor_id" value="<?php echo htmlentities($result->id); ?>">
                                                                     </div>
@@ -108,7 +108,7 @@ require_once "controller.php";
                                                                             <input type="text" class="form-control form-control-user font-weight-bold" name="project_location" id="project_location" placeholder="Project Location" required>
                                                                         </div>
                                                                         <div class="col-sm-6">
-                                                                            <input placeholder="Project Image" type="text" onfocus="(this.type='file')" class="form-control form-control-user font-weight-bold" name="project_image" id="project_image" accept="image/*" onchange="document.getElementById('project_picture').src = window.URL.createObjectURL(this.files[0])" required>
+                                                                            <input placeholder="Project Image" type="text" onfocus="(this.type='file')" class="form-control form-control-user font-weight-bold" name="project_picture" id="project_picture" accept="image/*" onchange="document.getElementById('project_picture').src = window.URL.createObjectURL(this.files[0])" required>
                                                                         </div>
                                                                     </div>
                                                                     <div class="form-group" id="row">
@@ -138,8 +138,6 @@ require_once "controller.php";
 
                         </div>
                         <!-- End of Content Wrapper -->
-
-
                 <?php }
                 } ?>
             </div>

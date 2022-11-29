@@ -109,7 +109,8 @@ require_once "controller.php";
                                                                                         <th id="selectedNC">0</th>
                                                                                         <th id="selectedNA">0</th>
                                                                                         <th id="selectedTotal"></th>
-                                                                                        <input type="number" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="selected" value hidden="7">
+                                                                                        <!-- <input type="number" class="form-control form-control-user font-weight-bold" 
+                                                                                        name="document_check_percentage" id="selected" value hidden="7"> -->
                                                                                     </tr>
                                                                                 </tfoot>
                                                                                 <tbody>
@@ -157,8 +158,7 @@ require_once "controller.php";
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
                                                                                 <div class="form-group">
                                                                                     <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?php echo htmlentities($result->assessee_id); ?>">
-                                                                                    <!-- <input type="text" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" value="<?php echo htmlentities($result->assessee_id); ?>"> -->
-                                                                                    <!-- <input type="number" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" hidden value="6"> -->
+                                                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" onchange="countSelected()">
                                                                                 </div>
                                                                                 <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-document-check">Save</button>
                                                                             </div>
@@ -230,7 +230,6 @@ require_once "controller.php";
 
             var totalScore = 0;
             var countC = 0;
-            var count = 0;
             var countNC = 0;
             var countNA = 0;
             var documentCheck = 0;
@@ -238,7 +237,6 @@ require_once "controller.php";
             checkboxes.forEach(item => {
                 if (item.checked == true) {
                     countC++;
-                    count++;
                 }
             })
 
@@ -255,15 +253,15 @@ require_once "controller.php";
             })
 
             document.getElementById('selectedC').innerHTML = countC;
-            document.getElementById('selected').innerHTML = count;
             document.getElementById('selectedNC').innerHTML = countNC;
             document.getElementById('selectedNA').innerHTML = countNA;
 
             totalScore = countC + countNC + countNA;
             documentCheck = (countC / (57 - countNA) * 20);
-            // console.log(documentCheck);
+            let d = documentCheck.toFixed(2);
 
             document.getElementById('selectedTotal').innerHTML = totalScore;
+            document.getElementById('document_check_percentage').value = d;
 
         }
     </script>

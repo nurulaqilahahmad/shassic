@@ -216,32 +216,45 @@ if (isset($_POST['add'])) {
     $project_name = $_POST['project_name'];
     $project_date = $_POST['project_date'];
     $project_location = $_POST['project_location'];
-    $project_picture = $_POST['project_picture'];
+    $project_picture = $_FILES['project_picture']['name'];
 
-    //Query for data insertion
-    $sql = "INSERT INTO assessment(assessor_id, assessor_name, assessee_name, project_name, project_date, project_location, project_picture) VALUES(:assessor_id, :assessor_name, :assessee_name, :project_name, :project_date, :project_location, :project_picture)";
-
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':assessor_id', $assessor_id, PDO::PARAM_STR);
-    $query->bindParam(':assessor_name', $assessor_name, PDO::PARAM_STR);
-    $query->bindParam(':assessee_name', $assessee_name, PDO::PARAM_STR);
-    $query->bindParam(':project_name', $project_name, PDO::PARAM_STR);
-    $query->bindParam(':project_date', $project_date, PDO::PARAM_STR);
-    $query->bindParam(':project_location', $project_location, PDO::PARAM_STR);
-    $query->bindParam(':project_picture', $project_picture, PDO::PARAM_STR);
-    $query->execute();
-
-    $lastInsertId = $dbh->lastInsertId();
-    if ($lastInsertId) {
-        $assessee_id = $lastInsertId;
-        $con = "INSERT INTO workplace_inspection_subscore(assessment_id) VALUES(:assessee_id)";
-        $insert_subscore = $dbh->prepare($con);
-        $insert_subscore->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        $insert_subscore->execute();
-        $_SESSION['info'] = "You have successfully added a new assessment";
-        header("location: assessment-component.php?assessee_id=" . $assessee_id);
+    // get the image extension
+    $extension = substr($project_picture, strlen($project_picture) - 4, strlen($project_picture));
+    // allowed extensions
+    $allowed_extensions = array(".jpg", "jpeg", ".png", ".gif");
+    // Validation for allowed extensions .in_array() function searches an array for a specific value.
+    if (!in_array($extension, $allowed_extensions)) {
+        echo "<script>alert('Invalid format. Only jpg / jpeg/ png /gif format allowed');</script>";
     } else {
-        $errors['db-error'] = 'Something Went Wrong. Please try again';
+        //rename the image file
+        $imgnewfile = md5($imgfile) . time() . $extension;
+        // Code for move image into directory
+        move_uploaded_file($_FILES["project_picture"]["tmp_name"], "img/project-image/" . $imgnewfile);
+
+        //Query for data insertion
+        $sql = "INSERT INTO assessment(assessor_id, assessor_name, assessee_name, project_name, project_date, project_location, project_picture) VALUES 
+                    (:assessor_id, :assessor_name, :assessee_name, :project_name, :project_date, :project_location, :imgnewfile)";
+
+        $query = $dbh->prepare($sql);
+        $query->bindParam(':assessor_id', $assessor_id, PDO::PARAM_STR);
+        $query->bindParam(':assessor_name', $assessor_name, PDO::PARAM_STR);
+        $query->bindParam(':assessee_name', $assessee_name, PDO::PARAM_STR);
+        $query->bindParam(':project_name', $project_name, PDO::PARAM_STR);
+        $query->bindParam(':project_date', $project_date, PDO::PARAM_STR);
+        $query->bindParam(':project_location', $project_location, PDO::PARAM_STR);
+        $query->bindParam(':imgnewfile', $imgnewfile, PDO::PARAM_STR);
+        $query->execute();
+
+        $lastInsertId = $dbh->lastInsertId();
+        if ($lastInsertId) {
+            $assessee_id = $lastInsertId;
+            $con = "INSERT INTO workplace_inspection_subscore(assessment_id) VALUES(:assessee_id)";
+            $insert_subscore = $dbh->prepare($con);
+            $insert_subscore->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $insert_subscore->execute();
+            $_SESSION['info'] = "You have successfully added a new assessment";
+            header("location: assessment-component.php?assessee_id=" . $assessee_id);
+        }
     }
 }
 
@@ -255,7 +268,7 @@ if (isset($_POST['update'])) {
     $project_name = $_POST['project_name'];
     $project_date = $_POST['project_date'];
     $project_location = $_POST['project_location'];
-    $project_picture = $_POST['project_picture'];
+    $project_picture = $_POST['project_image'];
 
     // query for data selection
     $sql = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
@@ -326,7 +339,6 @@ if (isset($_POST['save-document-check'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $document_check_percentage = $_POST['document_check_percentage'];
-    // $value = (7+7);
 
     // query for data selection
     $sql = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
@@ -340,7 +352,6 @@ if (isset($_POST['save-document-check'])) {
         $con = "UPDATE assessment SET assessee_id=:assessee_id, document_check_percentage=:document_check_percentage WHERE assessee_id=:assessee_id";
         $update = $dbh->prepare($con);
         $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        // $update->bindParam(':document_check_percentage', $document_check_percentage, PDO::PARAM_STR);
         $update->bindParam(':document_check_percentage', $document_check_percentage, PDO::PARAM_STR);
         $update->execute();
 
@@ -396,3 +407,4 @@ if (isset($_POST['save-workplace-inspection-high-risk'])) {
 }
 
 //the workplace inspection total score is changed every time the sub score is updated
+
