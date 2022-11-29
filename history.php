@@ -29,6 +29,7 @@ include('includes/config.php');
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/landing.css">
+    <link rel="stylesheet" type="text/css" href="css/progress-bar.css">
 
 </head>
 
@@ -115,8 +116,17 @@ include('includes/config.php');
                                                                     <td class="project_image"> <img class="img-thumbnail" width="100" src="img/project-image/<?php echo htmlentities($history->project_picture); ?>" alt="project image" /></td>
                                                                     <td class="assessee_name"><?php echo htmlentities($history->assessee_name); ?></td>
                                                                     <td class="project_name"><?php echo htmlentities($history->project_name); ?></td>
-                                                                    <td class="assessement_progress">
-                                                                        <?php echo htmlentities($history->document_check_percentage); ?></td>
+                                                                    <td class="assessement_progress" align="center">
+                                                                        <div class="outer-container">
+                                                                            <div class="circular-progress">
+                                                                                <div id="progress-num">
+                                                                                    <!-- <?php echo htmlentities($history->document_check_percentage); ?> -->
+                                                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="input-percentage" id="input-percentage" value="<?php echo htmlentities($history->document_check_percentage); ?>">
+                                                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="max-percentage" id="max-percentage" value="100">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </td>
                                                                     <td>
                                                                         <button class="btn btn-primary btn-user btn-block font-weight-bold" onclick="window.location='edit-assessment-from-history.php?assessee_id=<?php echo htmlentities($history->assessee_id); ?>';">Edit</button>
                                                                         <button class="btn btn-primary btn-user btn-block font-weight-bold" onclick="window.location='tables.html';">Print</button>
@@ -182,6 +192,28 @@ include('includes/config.php');
     <?php } else {
         header("location: login.php");
     } ?>
+
+    <script>
+        let progressBar = document.querySelector(".circular-progress");
+        let valueContainer = document.querySelector("#progress-num");
+
+        let progressValue = 0;
+        let progressEndValue = document.getElementById("input-percentage").value;
+        let speed = 200;
+
+        let progress = setInterval(() => {
+            progressValue++;
+            valueContainer.textContent = `${progressValue}%`;
+            progressBar.style.background = `conic-gradient(
+                #4d5bf9 ${progressValue * 3.6}deg,
+                #cadcff ${progressValue * 3.6}deg
+            )`;
+            if (progressValue == progressEndValue) {
+                clearInterval(progress);
+            }
+        }, speed);
+    </script>
+
 </body>
 
 </html>
