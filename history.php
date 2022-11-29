@@ -112,10 +112,11 @@ include('includes/config.php');
                                                         if ($query->rowCount() > 0) {
                                                             foreach ($histories as $history) { ?>
                                                                 <tr>
-                                                                    <td class="project_image"> <img class="img-thumbnail" width="100" src="img/history/<?php echo htmlentities($history->project_picture); ?>" alt="project image" /></td>
+                                                                    <td class="project_image"> <img class="img-thumbnail" width="100" src="img/project-image/<?php echo htmlentities($history->project_picture); ?>" alt="project image" /></td>
                                                                     <td class="assessee_name"><?php echo htmlentities($history->assessee_name); ?></td>
                                                                     <td class="project_name"><?php echo htmlentities($history->project_name); ?></td>
-                                                                    <td class="assessement_progress"><?php echo htmlentities($history->project_percentage); ?></td>
+                                                                    <td class="assessement_progress">
+                                                                        <?php echo htmlentities($history->document_check_percentage); ?></td>
                                                                     <td>
                                                                         <button class="btn btn-primary btn-user btn-block font-weight-bold" onclick="window.location='edit-assessment-from-history.php?assessee_id=<?php echo htmlentities($history->assessee_id); ?>';">Edit</button>
                                                                         <button class="btn btn-primary btn-user btn-block font-weight-bold" onclick="window.location='tables.html';">Print</button>
