@@ -4,6 +4,7 @@ include('includes/config.php');
 
 $email = "";
 $name = "";
+$infos = array();
 $errors = array();
 
 use PHPMailer\PHPMailer\PHPMailer;
@@ -348,7 +349,7 @@ if (isset($_POST['save-document-check'])) {
     }
 }
 
-//if user click save-workplace-inspection button in assessment workplace inspection page
+//if user click save-workplace-inspection-high-risk button in assessment workplace inspection page
 if (isset($_POST['save-workplace-inspection-high-risk'])) {
     //getting the post values
     $assessee_id = $_POST['assessee_id'];
@@ -359,21 +360,39 @@ if (isset($_POST['save-workplace-inspection-high-risk'])) {
     $query = $dbh->prepare($sql);
     $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
     $query->execute();
-    $result = $query->fetchAll(PDO::FETCH_OBJ);
+    $results = $query->fetchAll(PDO::FETCH_OBJ);
 
     if ($query->rowCount() > 0) {
-        //query for updation
-        $con = "UPDATE workplace_inspection_subscore SET high_risk_score=:high_risk_score WHERE assessment_id=:assessee_id";
-        $update = $dbh->prepare($con);
-        $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        $update->bindParam(':high_risk_score', $high_risk_score, PDO::PARAM_STR);
-        $update->execute();
+        foreach ($results as $result) {
+            //query for updation
+            $con = "UPDATE workplace_inspection_subscore SET high_risk_score=:high_risk_score WHERE assessment_id=:assessee_id";
+            $update = $dbh->prepare($con);
+            $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $update->bindParam(':high_risk_score', $high_risk_score, PDO::PARAM_STR);
+            $update->execute();
 
-        // if ($update) {
-        //     $conn = "UPDATE"
-        // }
+            if ($update) {
+                //query for data selection
+                $conn = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
+                $query1 = $dbh->prepare($conn);
+                $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                $query1->execute();
+                $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
 
-        $info = "Updated successfully";
-        header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
+                if ($query1->rowCount() > 0) {
+                    $conn1 = "UPDATE assessment SET workplace_inspection_percentage=:high_risk_score+'$result->general_score' WHERE assessee_id=:assessee_id";
+                    $update1 = $dbh->prepare($conn1);
+                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update1->bindParam(':high_risk_score', $high_risk_score, PDO::PARAM_STR);
+                    $update1->execute();
+                }
+            }
+        }
+
+
+        $infos['high-risk-update-success'] = "Updated successfully";
+        // header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
     }
 }
+
+//the workplace inspection total score is changed every time the sub score is updated
