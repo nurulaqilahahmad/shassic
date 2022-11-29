@@ -9,3 +9,4 @@
 6. Add new assessment - insert query
 7. Visible or invisible password
 8. Create assessment page that is from history
+9. Info
