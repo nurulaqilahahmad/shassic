@@ -25,6 +25,73 @@ require_once "controller.php";
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/landing.css">
+    <link rel="stylesheet" type="text/css" href="css/progress-bar.css">
+
+    <script type=text/javascript>
+        function documentCheck() {
+            let progressBar = document.querySelector(".circular-progress-each");
+            let valueContainer = document.querySelector("#progress-document-check");
+
+            let progressValue = 0;
+            let progressEndValue = document.getElementById("input-percentage").value;
+            let speed = 200;
+
+            let progress = setInterval(() => {
+                progressValue++;
+                valueContainer.textContent = `${progressValue}%`;
+                progressBar.style.background = `conic-gradient(
+                #4d5bf9 ${progressValue * 3.6}deg,
+                #cadcff ${progressValue * 3.6}deg
+            )`;
+                if (progressValue == progressEndValue) {
+                    clearInterval(progress);
+                }
+            }, speed);
+        }
+
+        function workplaceInspection() {
+            let progressBar = document.querySelector(".circular-progress-each-1");
+            let valueContainer = document.querySelector("#progress-document-workplace");
+
+            let progressValue = 0;
+            let progressEndValue = document.getElementById("workplace-inspection").value;
+            let speed = 200;
+
+            let progress = setInterval(() => {
+                progressValue++;
+                valueContainer.textContent = `${progressValue}%`;
+                progressBar.style.background = `conic-gradient(
+                #4d5bf9 ${progressValue * 3.6}deg,
+                #cadcff ${progressValue * 3.6}deg
+            )`;
+                if (progressValue == progressEndValue) {
+                    clearInterval(progress);
+                }
+            }, speed);
+        }
+
+        function personnelInterview() {
+            let progressBar = document.querySelector(".circular-progress-each-2");
+            let valueContainer = document.querySelector("#progress-document-personnel");
+
+            let progressValue = 0;
+            let progressEndValue = document.getElementById("personnel-interview").value;
+            let speed = 200;
+
+            let progress = setInterval(() => {
+                progressValue++;
+                valueContainer.textContent = `${progressValue}%`;
+                progressBar.style.background = `conic-gradient(
+                #4d5bf9 ${progressValue * 3.6}deg,
+                #cadcff ${progressValue * 3.6}deg
+            )`;
+                if (progressValue == progressEndValue) {
+                    clearInterval(progress);
+                }
+            }, speed);
+        }
+    </script>
+
 
 </head>
 
@@ -80,10 +147,10 @@ require_once "controller.php";
                                                                 <!-- Page Heading -->
                                                                 <div class="text-center">
                                                                     <div class="text-center" style="display:flex; width:auto; justify-content: start;">
-                                                                        <a class="font-weight-bold" href="assessment-component.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
+                                                                        <a class="font-weight-bold" href="history.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
                                                                             &larr; Back</a>
                                                                     </div>
-                                                                    <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Document Check</h1>
+                                                                    <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Assessment Result</h1>
                                                                 </div>
 
                                                                 <div class="card-body">
@@ -92,58 +159,50 @@ require_once "controller.php";
                                                                             <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                                                 <thead>
                                                                                     <tr>
-                                                                                        <th>Item</th>
-                                                                                        <th>Checklist</th>
-                                                                                        <th>C</th>
-                                                                                        <th>NC</th>
-                                                                                        <th>NA</th>
-                                                                                        <th>Remarks</th>
+                                                                                        <th>Document Check</th>
+                                                                                        <th>Workplace Inspection</th>
+                                                                                        <th>Personnel Interview</th>
                                                                                     </tr>
                                                                                 </thead>
-                                                                                <tfoot>
-                                                                                    <tr>
-                                                                                        <th colspan="2">TOTAL SCORE</th>
-                                                                                        <th id="selectedC">0</th>
-                                                                                        <th id="selectedNC">0</th>
-                                                                                        <th id="selectedNA">0</th>
-                                                                                        <th id="selectedTotal"></th>
-                                                                                    </tr>
-                                                                                </tfoot>
                                                                                 <tbody>
-                                                                                    <?php
-                                                                                    $sql = "SELECT * from document_check_section";
-                                                                                    $query = $dbh->prepare($sql);
-                                                                                    $query->execute();
-                                                                                    $sections = $query->fetchAll(PDO::FETCH_OBJ);
-                                                                                    $cnt = 1;
-                                                                                    if ($query->rowCount() > 0) {
-                                                                                        foreach ($sections as $section) {
-                                                                                    ?>
-                                                                                            <tr>
-                                                                                                <th><?php echo htmlentities($section->item_no) ?></th>
-                                                                                                <th colspan="5" class="text-left"><?php echo htmlentities($section->item_name) ?></th>
-                                                                                            </tr>
-                                                                                            <?php
-                                                                                            $sql = "SELECT * from document_check_checklist where item_id='$section->id'";
-                                                                                            $query = $dbh->prepare($sql);
-                                                                                            $query->execute();
-                                                                                            $checklists = $query->fetchAll(PDO::FETCH_OBJ);
-                                                                                            $cnt = 1;
-                                                                                            if ($query->rowCount() > 0) {
-                                                                                                foreach ($checklists as $checklist) {
-                                                                                            ?>
-                                                                                                    <tr>
-                                                                                                        <td><?php echo htmlentities($cnt++) ?></td>
-                                                                                                        <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
-                                                                                                        <td><input type="checkbox" class="checkbox1" onclick="countSelected()"></td>
-                                                                                                        <td><input type="checkbox" class="checkbox2" onclick="countSelected()"></td>
-                                                                                                        <td><input type="checkbox" class="checkbox3" onclick="countSelected()"></td>
-                                                                                                        <td></td>
-                                                                                                    </tr>
-                                                                                            <?php }
-                                                                                            } ?>
-                                                                                    <?php }
-                                                                                    } ?>
+                                                                                    <tr>
+                                                                                        <td>
+                                                                                            <div class="outer-container" align="center">
+                                                                                                <div class="circular-progress-each">
+                                                                                                    <div id="progress-document-check">
+                                                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="input-percentage" id="input-percentage" value="<?php echo htmlentities($result->document_check_percentage); ?>">
+                                                                                                        <?php
+                                                                                                        echo '<script type="text/javascript"> documentCheck(); </script>';
+                                                                                                        ?>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <div class="outer-container" align="center">
+                                                                                                <div class="circular-progress-each-1">
+                                                                                                    <div id="progress-document-workplace">
+                                                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="workplace-inspection" id="workplace-inspection" value="<?php echo htmlentities($result->workplace_inspection_percentage); ?>">
+                                                                                                        <?php
+                                                                                                        echo '<script type="text/javascript"> workplaceInspection(); </script>';
+                                                                                                        ?>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                        <td>
+                                                                                            <div class="outer-container" align="center">
+                                                                                                <div class="circular-progress-each-2">
+                                                                                                    <div id="progress-document-personnel">
+                                                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="personnel-interview" id="personnel-interview" value="<?php echo htmlentities($result->personnel_interview_percentage); ?>">
+                                                                                                        <?php
+                                                                                                        echo '<script type="text/javascript"> personnelInterview(); </script>';
+                                                                                                        ?>
+                                                                                                    </div>
+                                                                                                </div>
+                                                                                            </div>
+                                                                                        </td>
+                                                                                    </tr>
                                                                                 </tbody>
                                                                             </table>
                                                                         </div>
@@ -156,7 +215,7 @@ require_once "controller.php";
                                                                                     <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?php echo htmlentities($result->assessee_id); ?>">
                                                                                     <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" onchange="countSelected()">
                                                                                 </div>
-                                                                                <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-document-check">Save</button>
+                                                                                <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-document-check">Print</button>
                                                                             </div>
                                                                             <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                         </div>
@@ -218,49 +277,6 @@ require_once "controller.php";
         header("location: login.php");
     } ?>
 
-    <script>
-        function countSelected() {
-            var checkboxes = document.querySelectorAll('.checkbox1');
-            var checkboxes2 = document.querySelectorAll('.checkbox2');
-            var checkboxes3 = document.querySelectorAll('.checkbox3');
-
-            var totalScore = 0;
-            var countC = 0;
-            var countNC = 0;
-            var countNA = 0;
-            var documentCheck = 0;
-
-            checkboxes.forEach(item => {
-                if (item.checked == true) {
-                    countC++;
-                }
-            })
-
-            checkboxes2.forEach(item => {
-                if (item.checked == true) {
-                    countNC++;
-                }
-            })
-
-            checkboxes3.forEach(item => {
-                if (item.checked == true) {
-                    countNA++;
-                }
-            })
-
-            document.getElementById('selectedC').innerHTML = countC;
-            document.getElementById('selectedNC').innerHTML = countNC;
-            document.getElementById('selectedNA').innerHTML = countNA;
-
-            totalScore = countC + countNC + countNA;
-            documentCheck = (countC / (57 - countNA) * 20);
-            let d = documentCheck.toFixed(2);
-
-            document.getElementById('selectedTotal').innerHTML = totalScore;
-            document.getElementById('document_check_percentage').value = d;
-
-        }
-    </script>
 
 </body>
 

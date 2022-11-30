@@ -129,7 +129,7 @@ include('includes/config.php');
                                                                     </td>
                                                                     <td>
                                                                         <button class="btn btn-primary btn-user btn-block font-weight-bold" onclick="window.location='edit-assessment-from-history.php?assessee_id=<?php echo htmlentities($history->assessee_id); ?>';">Edit</button>
-                                                                        <button class="btn btn-primary btn-user btn-block font-weight-bold" onclick="window.location='tables.html';">Print</button>
+                                                                        <button class="btn btn-primary btn-user btn-block font-weight-bold" onclick="window.location='print.php?assessee_id=<?php echo htmlentities($history->assessee_id); ?>';">Print</button>
                                                                     </td>
                                                                 </tr>
                                                         <?php }
