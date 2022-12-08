@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Nov 16, 2022 at 05:02 AM
+-- Generation Time: Dec 04, 2022 at 10:32 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -46,14 +46,6 @@ CREATE TABLE `assessment` (
   `star_ranking` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `assessment`
---
-
-INSERT INTO `assessment` (`assessor_id`, `assessor_name`, `assessee_id`, `assessee_name`, `project_name`, `project_date`, `project_location`, `project_picture`, `assessment_progress`, `calculation_id`, `creation_date`, `updation_date`, `document_check_percentage`, `workplace_inspection_percentage`, `personnel_interview_percentage`, `star_ranking`) VALUES
-(4, 'Irma Zafirah Mohd Ikram', 26, 'Muhammad Aiman', 'La Vista', '2022-11-17', 'Selangor, Malaysia', '02-11-2022 1.jpg', 0, 0, '2022-11-11 03:01:29', '2022-11-11 08:26:53', NULL, NULL, NULL, NULL),
-(6, 'Nurul Aqilah Ahmad', 27, 'Nurul Syamira Amat Jifri', 'M Sentral', '2022-11-16', 'Shah Alam, Selangor', NULL, 0, 0, '2022-11-14 00:37:50', NULL, NULL, NULL, NULL, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -64,9 +56,7 @@ CREATE TABLE `document_check_assessment` (
   `id` int(11) NOT NULL,
   `assessment_id` int(11) NOT NULL,
   `document_check_checklist_id` int(11) NOT NULL,
-  `c_status` int(1) NOT NULL COMMENT '0=unticked, 1=ticked',
-  `nc_status` int(1) NOT NULL COMMENT '0=unticked, 1=ticked',
-  `na_status` int(1) NOT NULL COMMENT '0=unticked, 1=ticked',
+  `status` varchar(200) NOT NULL,
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -253,6 +243,188 @@ INSERT INTO `personnel_interview_checklist` (`id`, `category_id`, `checklist`) V
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `personnel_interview_managerial`
+--
+
+CREATE TABLE `personnel_interview_managerial` (
+  `id` int(11) NOT NULL,
+  `assessment_id` int(11) NOT NULL,
+  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
+  `remarks` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personnel_interview_supervisory_1`
+--
+
+CREATE TABLE `personnel_interview_supervisory_1` (
+  `id` int(11) NOT NULL,
+  `assessment_id` int(11) NOT NULL,
+  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
+  `remarks` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personnel_interview_supervisory_2`
+--
+
+CREATE TABLE `personnel_interview_supervisory_2` (
+  `id` int(11) NOT NULL,
+  `assessment_id` int(11) NOT NULL,
+  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
+  `remarks` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personnel_interview_supervisory_3`
+--
+
+CREATE TABLE `personnel_interview_supervisory_3` (
+  `id` int(11) NOT NULL,
+  `assessment_id` int(11) NOT NULL,
+  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
+  `remarks` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personnel_interview_worker_1`
+--
+
+CREATE TABLE `personnel_interview_worker_1` (
+  `id` int(11) NOT NULL,
+  `assessment_id` int(11) NOT NULL,
+  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
+  `remarks` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personnel_interview_worker_2`
+--
+
+CREATE TABLE `personnel_interview_worker_2` (
+  `id` int(11) NOT NULL,
+  `assessment_id` int(11) NOT NULL,
+  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
+  `remarks` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personnel_interview_worker_3`
+--
+
+CREATE TABLE `personnel_interview_worker_3` (
+  `id` int(11) NOT NULL,
+  `assessment_id` int(11) NOT NULL,
+  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
+  `remarks` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personnel_interview_worker_4`
+--
+
+CREATE TABLE `personnel_interview_worker_4` (
+  `id` int(11) NOT NULL,
+  `assessment_id` int(11) NOT NULL,
+  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
+  `remarks` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personnel_interview_worker_5`
+--
+
+CREATE TABLE `personnel_interview_worker_5` (
+  `id` int(11) NOT NULL,
+  `assessment_id` int(11) NOT NULL,
+  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
+  `remarks` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personnel_interview_worker_6`
+--
+
+CREATE TABLE `personnel_interview_worker_6` (
+  `id` int(11) NOT NULL,
+  `assessment_id` int(11) NOT NULL,
+  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
+  `remarks` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personnel_interview_worker_7`
+--
+
+CREATE TABLE `personnel_interview_worker_7` (
+  `id` int(11) NOT NULL,
+  `assessment_id` int(11) NOT NULL,
+  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
+  `remarks` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personnel_interview_worker_8`
+--
+
+CREATE TABLE `personnel_interview_worker_8` (
+  `id` int(11) NOT NULL,
+  `assessment_id` int(11) NOT NULL,
+  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
+  `remarks` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personnel_interview_worker_9`
+--
+
+CREATE TABLE `personnel_interview_worker_9` (
+  `id` int(11) NOT NULL,
+  `assessment_id` int(11) NOT NULL,
+  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
+  `remarks` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `user`
 --
 
@@ -272,11 +444,11 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `username`, `email`, `password`, `code`, `fullname`, `password_code`, `creation_date`) VALUES
-(4, 'irmazafirah', 'irmazafirah@graduate.utm.my', '$2y$10$n81EAVqUxBmB6tVB1d5Qme7tpZ1ezWEs.cAWrpKubqIxXf0vw1Qmq', '1234', 'Irma Zafirah Mohd Ikram', 0, '2022-11-08 01:27:04'),
-(5, 'syahidatul', 'nursyahidatulasyiqin@graduate.utm.my', '$2y$10$pqqxZ84JgZAUmzkkoYwrpeQxLzQgnAS0hbV.N1OsenbdVq2x8NkjO', '1235', 'Nursyahidatul Asyiqin', 0, '2022-11-10 01:10:51'),
-(6, 'aqilah', 'nrlaqilahahmd@gmail.com', '$2y$10$lKdwOzZ2NwyN0OYyGmbgAei4YVKW2p0ikNyd/JxHIILYKHvNrNDpa', '1236', 'Nurul Aqilah Ahmad', 0, '2022-11-10 01:12:31'),
-(7, 'nuraqilah.a', 'nurulaqilah.a@graduate.utm.my', '$2y$10$NavI8gq178qMROS5iQuOJ.GQVk8bX0Swzod2kICUYyULBlpsGizSG', '1118', 'Nur Aqilah', 0, '2022-11-10 01:20:13'),
-(8, 'arinie', 'arinie@gmail.com', '$2y$10$YmjJe.ABktcpRrVceoAQfezehxgzaEHRYcDHXwkcYseu7F.F40zLe', '1111', 'Noor Arinie Norhalil', 0, '2022-11-10 08:08:30');
+(1, 'irmazafirah', 'irmazafirah@graduate.utm.my', '$2y$10$n81EAVqUxBmB6tVB1d5Qme7tpZ1ezWEs.cAWrpKubqIxXf0vw1Qmq', '1234', 'Irma Zafirah Mohd Ikram', 0, '2022-11-08 01:27:04'),
+(2, 'syahidatul', 'nursyahidatulasyiqin@graduate.utm.my', '$2y$10$pqqxZ84JgZAUmzkkoYwrpeQxLzQgnAS0hbV.N1OsenbdVq2x8NkjO', '1235', 'Nursyahidatul Asyiqin', 0, '2022-11-10 01:10:51'),
+(3, 'aqilah', 'nrlaqilahahmd@gmail.com', '$2y$10$lKdwOzZ2NwyN0OYyGmbgAei4YVKW2p0ikNyd/JxHIILYKHvNrNDpa', '1236', 'Nurul Aqilah Ahmad', 0, '2022-11-10 01:12:31'),
+(4, 'nuraqilah.a', 'nurulaqilah.a@graduate.utm.my', '$2y$10$NavI8gq178qMROS5iQuOJ.GQVk8bX0Swzod2kICUYyULBlpsGizSG', '1118', 'Nur Aqilah', 0, '2022-11-10 01:20:13'),
+(5, 'arinie', 'arinie@gmail.com', '$2y$10$YmjJe.ABktcpRrVceoAQfezehxgzaEHRYcDHXwkcYseu7F.F40zLe', '1111', 'Noor Arinie Norhalil', 0, '2022-11-10 08:08:30');
 
 -- --------------------------------------------------------
 
@@ -288,9 +460,7 @@ CREATE TABLE `workplace_inspection_assessment` (
   `id` int(11) NOT NULL,
   `assessment_id` int(11) NOT NULL,
   `workplace_inspection_checklist_id` int(11) NOT NULL,
-  `c_status` int(1) NOT NULL COMMENT '0=unticked, 1=ticked',
-  `nc_status` int(1) NOT NULL COMMENT '0=unticked, 1=ticked',
-  `na_status` int(1) NOT NULL COMMENT '0=unticked, 1=ticked',
+  `status` varchar(200) NOT NULL,
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -345,17 +515,42 @@ INSERT INTO `workplace_inspection_checklist` (`id`, `item_id`, `checklist`) VALU
 -- --------------------------------------------------------
 
 --
--- Table structure for table `workplace_inspection_high_risk_work_assessment`
+-- Table structure for table `workplace_inspection_high_risk_1`
 --
 
-CREATE TABLE `workplace_inspection_high_risk_work_assessment` (
+CREATE TABLE `workplace_inspection_high_risk_1` (
   `id` int(11) NOT NULL,
   `assessment_id` int(11) NOT NULL,
-  `high_risk_no` int(1) NOT NULL,
   `workplace_inspection_checklist_id` int(11) NOT NULL,
-  `c_status` int(11) NOT NULL,
-  `nc_status` int(11) NOT NULL,
-  `na_status` int(11) NOT NULL,
+  `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
+  `remarks` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workplace_inspection_high_risk_2`
+--
+
+CREATE TABLE `workplace_inspection_high_risk_2` (
+  `id` int(11) NOT NULL,
+  `assessment_id` int(11) NOT NULL,
+  `workplace_inspection_checklist_id` int(11) NOT NULL,
+  `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
+  `remarks` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workplace_inspection_high_risk_3`
+--
+
+CREATE TABLE `workplace_inspection_high_risk_3` (
+  `id` int(11) NOT NULL,
+  `assessment_id` int(11) NOT NULL,
+  `workplace_inspection_checklist_id` int(11) NOT NULL,
+  `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -383,6 +578,19 @@ INSERT INTO `workplace_inspection_section` (`id`, `item_no`, `item_name`) VALUES
 (5, 'E', 'EQUIPMENT/MACHINERY'),
 (6, 'F', 'MATERIAL'),
 (7, 'G', 'WORKING ENVIRONMENT');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `workplace_inspection_subscore`
+--
+
+CREATE TABLE `workplace_inspection_subscore` (
+  `id` int(11) NOT NULL,
+  `assessment_id` int(11) NOT NULL,
+  `general_score` int(11) NOT NULL,
+  `high_risk_score` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Indexes for dumped tables
@@ -425,6 +633,84 @@ ALTER TABLE `personnel_interview_checklist`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `personnel_interview_managerial`
+--
+ALTER TABLE `personnel_interview_managerial`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `personnel_interview_supervisory_1`
+--
+ALTER TABLE `personnel_interview_supervisory_1`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `personnel_interview_supervisory_2`
+--
+ALTER TABLE `personnel_interview_supervisory_2`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `personnel_interview_supervisory_3`
+--
+ALTER TABLE `personnel_interview_supervisory_3`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `personnel_interview_worker_1`
+--
+ALTER TABLE `personnel_interview_worker_1`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `personnel_interview_worker_2`
+--
+ALTER TABLE `personnel_interview_worker_2`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `personnel_interview_worker_3`
+--
+ALTER TABLE `personnel_interview_worker_3`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `personnel_interview_worker_4`
+--
+ALTER TABLE `personnel_interview_worker_4`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `personnel_interview_worker_5`
+--
+ALTER TABLE `personnel_interview_worker_5`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `personnel_interview_worker_6`
+--
+ALTER TABLE `personnel_interview_worker_6`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `personnel_interview_worker_7`
+--
+ALTER TABLE `personnel_interview_worker_7`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `personnel_interview_worker_8`
+--
+ALTER TABLE `personnel_interview_worker_8`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `personnel_interview_worker_9`
+--
+ALTER TABLE `personnel_interview_worker_9`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
@@ -445,15 +731,21 @@ ALTER TABLE `workplace_inspection_checklist`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `workplace_inspection_high_risk_work_assessment`
+-- Indexes for table `workplace_inspection_high_risk_1`
 --
-ALTER TABLE `workplace_inspection_high_risk_work_assessment`
+ALTER TABLE `workplace_inspection_high_risk_1`
   ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `workplace_inspection_section`
 --
 ALTER TABLE `workplace_inspection_section`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `workplace_inspection_subscore`
+--
+ALTER TABLE `workplace_inspection_subscore`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -464,7 +756,7 @@ ALTER TABLE `workplace_inspection_section`
 -- AUTO_INCREMENT for table `assessment`
 --
 ALTER TABLE `assessment`
-  MODIFY `assessee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `assessee_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `document_check_assessment`
@@ -497,6 +789,84 @@ ALTER TABLE `personnel_interview_checklist`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
+-- AUTO_INCREMENT for table `personnel_interview_managerial`
+--
+ALTER TABLE `personnel_interview_managerial`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `personnel_interview_supervisory_1`
+--
+ALTER TABLE `personnel_interview_supervisory_1`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `personnel_interview_supervisory_2`
+--
+ALTER TABLE `personnel_interview_supervisory_2`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `personnel_interview_supervisory_3`
+--
+ALTER TABLE `personnel_interview_supervisory_3`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `personnel_interview_worker_1`
+--
+ALTER TABLE `personnel_interview_worker_1`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `personnel_interview_worker_2`
+--
+ALTER TABLE `personnel_interview_worker_2`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `personnel_interview_worker_3`
+--
+ALTER TABLE `personnel_interview_worker_3`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `personnel_interview_worker_4`
+--
+ALTER TABLE `personnel_interview_worker_4`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `personnel_interview_worker_5`
+--
+ALTER TABLE `personnel_interview_worker_5`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `personnel_interview_worker_6`
+--
+ALTER TABLE `personnel_interview_worker_6`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `personnel_interview_worker_7`
+--
+ALTER TABLE `personnel_interview_worker_7`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `personnel_interview_worker_8`
+--
+ALTER TABLE `personnel_interview_worker_8`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `personnel_interview_worker_9`
+--
+ALTER TABLE `personnel_interview_worker_9`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
@@ -515,9 +885,9 @@ ALTER TABLE `workplace_inspection_checklist`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
--- AUTO_INCREMENT for table `workplace_inspection_high_risk_work_assessment`
+-- AUTO_INCREMENT for table `workplace_inspection_high_risk_1`
 --
-ALTER TABLE `workplace_inspection_high_risk_work_assessment`
+ALTER TABLE `workplace_inspection_high_risk_1`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
@@ -525,6 +895,12 @@ ALTER TABLE `workplace_inspection_high_risk_work_assessment`
 --
 ALTER TABLE `workplace_inspection_section`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `workplace_inspection_subscore`
+--
+ALTER TABLE `workplace_inspection_subscore`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
