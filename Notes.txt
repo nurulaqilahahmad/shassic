@@ -9,4 +9,4 @@
 6. Add new assessment - insert query
 7. Visible or invisible password
 8. Create assessment page that is from history
-9. Info
+9. Info make it as array same as the error - controller.php

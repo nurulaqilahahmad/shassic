@@ -94,12 +94,14 @@ require_once "controller.php";
                                                                     <!-- Page Heading -->
                                                                     <h1 class="h3 mb-4 text-gray-800 font-weight-bold"><?php echo htmlentities($result->assessee_name); ?> - <?php echo htmlentities($result->project_name); ?></h1>
                                                                     <?php
-                                                                    if ($_SESSION['info'] != "") {
+                                                                    if (count($infos) > 0) {
                                                                     ?>
                                                                         <div class="col-lg-12 mb-4">
                                                                             <div class="card bg-success text-white shadow">
                                                                                 <div class="card-body text-center font-weight-bold">
-                                                                                    <?php echo $_SESSION['info']; ?>
+                                                                                    <?php foreach ($infos as $info) {
+                                                                                        echo $info;
+                                                                                    } ?>
                                                                                 </div>
                                                                             </div>
                                                                         </div>

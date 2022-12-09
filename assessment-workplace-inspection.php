@@ -93,7 +93,7 @@ require_once "controller.php";
                                                                         <div class="col-lg-12 mb-4">
                                                                             <div class="card bg-success text-white shadow">
                                                                                 <div class="card-body text-center font-weight-bold">
-                                                                                <?php foreach ($infos as $info) {
+                                                                                    <?php foreach ($infos as $info) {
                                                                                         echo $info;
                                                                                     } ?>
                                                                                 </div>
@@ -122,6 +122,7 @@ require_once "controller.php";
                                                                         <button class="tablinks font-weight-bold" style="width: 49%;" onclick="openSection(event, 'construction-work')">Construction Work</button>
                                                                     </div>
                                                                 </div>
+                                                                <!-- End of text-center -->
 
                                                                 <!-- <form class="user" method="POST"> -->
                                                                 <div id="general" class="tabcontent">
@@ -192,145 +193,140 @@ require_once "controller.php";
                                                                         <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                     </div>
                                                                 </div>
+                                                                <!-- End of tab-content -->
 
                                                                 <!-- </form> -->
 
-                                                                <!-- <form class="user" method="POST"> -->
+
+
                                                                 <div id="construction-work" class="tabcontent">
-                                                                    <div class="table-responsive">
-                                                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th rowspan="2" class="align-middle">ITEM</th>
-                                                                                    <th rowspan="2" class="align-middle">CHECKLIST</th>
-                                                                                    <th colspan="3">HIGH RISK 1</th>
-                                                                                    <th colspan="3">HIGH RISK 2</th>
-                                                                                    <th colspan="3">HIGH RISK 3</th>
-                                                                                    <!-- <?php
-                                                                                            $assessment_id = '$result->assessee_id';
-                                                                                            $sql = "SELECT * from workplace_inspection_high_risk_work_assessment where assessment_id=:assessment_id";
+                                                                    <form class="user" method="POST">
+                                                                        <div class="table-responsive">
+                                                                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th rowspan="2" class="align-middle">ITEM</th>
+                                                                                        <th rowspan="2" class="align-middle">CHECKLIST</th>
+                                                                                        <th colspan="3">HIGH RISK 1</th>
+                                                                                        <th colspan="3">HIGH RISK 2</th>
+                                                                                        <th colspan="3">HIGH RISK 3</th>
+                                                                                        <th rowspan="2" class="align-middle">REMARKS</th>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <th>C</th>
+                                                                                        <th>NC</th>
+                                                                                        <th>NA</th>
+                                                                                        <th>C</th>
+                                                                                        <th>NC</th>
+                                                                                        <th>NA</th>
+                                                                                        <th>C</th>
+                                                                                        <th>NC</th>
+                                                                                        <th>NA</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tfoot>
+                                                                                    <tr>
+                                                                                        <th colspan="2" class="text-right">SUB SCORE</th>
+                                                                                        <th id="selectedC2">0</th>
+                                                                                        <th id="selectedNC2">0</th>
+                                                                                        <th id="selectedNA2">0</th>
+                                                                                        <th id="selectedC3">0</th>
+                                                                                        <th id="selectedNC3">0</th>
+                                                                                        <th id="selectedNA3">0</th>
+                                                                                        <th id="selectedC4">0</th>
+                                                                                        <th id="selectedNC4">0</th>
+                                                                                        <th id="selectedNA4">0</th>
+                                                                                        <th id="selectedTotal2"></th>
+                                                                                    </tr>
+                                                                                </tfoot>
+
+                                                                                <tbody>
+                                                                                    <?php
+                                                                                    $sql = "SELECT * from workplace_inspection_section where id between 4 and 7";
+                                                                                    $query = $dbh->prepare($sql);
+                                                                                    $query->execute();
+                                                                                    $sections = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                    $cnt = 1;
+                                                                                    if ($query->rowCount() > 0) {
+                                                                                        foreach ($sections as $section) {
+                                                                                    ?>
+                                                                                            <tr>
+                                                                                                <th><?php echo htmlentities($section->item_no) ?></th>
+                                                                                                <th colspan="11" class="text-left"><?php echo htmlentities($section->item_name) ?></th>
+                                                                                            </tr>
+                                                                                            <?php
+                                                                                            $sql = "SELECT * from workplace_inspection_checklist where item_id='$section->id'";
                                                                                             $query = $dbh->prepare($sql);
                                                                                             $query->execute();
-                                                                                            $high_risks = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                            $checklists = $query->fetchAll(PDO::FETCH_OBJ);
                                                                                             $cnt = 1;
                                                                                             if ($query->rowCount() > 0) {
-                                                                                                foreach ($high_risks as $high_risk) {
-                                                                                            ?> -->
+                                                                                                foreach ($checklists as $checklist) {
+                                                                                            ?>
+                                                                                                    <tr>
+                                                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="workplace_inspection_checklist_id" id="workplace_inspection_checklist_id" value="<?php echo htmlentities($checklist->id) ?>">
+                                                                                                        <td><?php echo htmlentities($cnt++) ?></td>
+                                                                                                        <td class="text-left"><?php echo htmlentities($checklist->id) ?></td>
+                                                                                                        <td><input type="checkbox" class="checkbox4" name="highrisk1[]" onclick="countSelected()" value="C"></td>
+                                                                                                        <td><input type="checkbox" class="checkbox5" name="highrisk1[]" onclick="countSelected()" value="NC"></td>
+                                                                                                        <td><input type="checkbox" class="checkbox6" name="highrisk1[]" onclick="countSelected()" value="NA"></td>
+                                                                                                        <td><input type="checkbox" class="checkbox7" name="highrisk2[]" onclick="countSelected()" value="C"></td>
+                                                                                                        <td><input type="checkbox" class="checkbox8" name="highrisk2[]" onclick="countSelected()" value="NC"></td>
+                                                                                                        <td><input type="checkbox" class="checkbox9" name="highrisk2[]" onclick="countSelected()" value="NA"></td>
+                                                                                                        <td><input type="checkbox" class="checkbox10" name="highrisk3[]" onclick="countSelected()" value="C"></td>
+                                                                                                        <td><input type="checkbox" class="checkbox11" name="highrisk3[]" onclick="countSelected()" value="NC"></td>
+                                                                                                        <td><input type="checkbox" class="checkbox12" name="highrisk3[]" onclick="countSelected()" value="NA"></td>
+                                                                                                        <td></td>
+                                                                                                    </tr>
+                                                                                            <?php }
+                                                                                            } ?>
+                                                                                    <?php }
+                                                                                    } ?>
+                                                                                </tbody>
 
-                                                                                    <!-- <?php }
-                                                                                            } ?> -->
-                                                                                    <th rowspan="2" class="align-middle">REMARKS</th>
-                                                                                </tr>
-                                                                                <tr>
-                                                                                    <th>C</th>
-                                                                                    <th>NC</th>
-                                                                                    <th>NA</th>
-                                                                                    <th>C</th>
-                                                                                    <th>NC</th>
-                                                                                    <th>NA</th>
-                                                                                    <th>C</th>
-                                                                                    <th>NC</th>
-                                                                                    <th>NA</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tfoot>
-                                                                                <tr>
-                                                                                    <th colspan="2">SUB SCORE</th>
-                                                                                    <th id="selectedC2">0</th>
-                                                                                    <th id="selectedNC2">0</th>
-                                                                                    <th id="selectedNA2">0</th>
-                                                                                    <th id="selectedC3">0</th>
-                                                                                    <th id="selectedNC3">0</th>
-                                                                                    <th id="selectedNA3">0</th>
-                                                                                    <th id="selectedC4">0</th>
-                                                                                    <th id="selectedNC4">0</th>
-                                                                                    <th id="selectedNA4">0</th>
-                                                                                    <th id="selectedTotal2"></th>
-                                                                                </tr>
-                                                                            </tfoot>
-                                                                            <tbody>
-                                                                                <?php
-                                                                                $sql = "SELECT * from workplace_inspection_section where id between 4 and 7";
-                                                                                $query = $dbh->prepare($sql);
-                                                                                $query->execute();
-                                                                                $sections = $query->fetchAll(PDO::FETCH_OBJ);
-                                                                                $cnt = 1;
-                                                                                if ($query->rowCount() > 0) {
-                                                                                    foreach ($sections as $section) {
-                                                                                ?>
-                                                                                        <tr>
-                                                                                            <th><?php echo htmlentities($section->item_no) ?></th>
-                                                                                            <th colspan="11" class="text-left"><?php echo htmlentities($section->item_name) ?></th>
-                                                                                        </tr>
-                                                                                        <?php
-                                                                                        $sql = "SELECT * from workplace_inspection_checklist where item_id='$section->id'";
-                                                                                        $query = $dbh->prepare($sql);
-                                                                                        $query->execute();
-                                                                                        $checklists = $query->fetchAll(PDO::FETCH_OBJ);
-                                                                                        $cnt = 1;
-                                                                                        if ($query->rowCount() > 0) {
-                                                                                            foreach ($checklists as $checklist) {
-                                                                                        ?>
-                                                                                                <tr>
-                                                                                                    <td><?php echo htmlentities($cnt++) ?></td>
-                                                                                                    <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
-                                                                                                    <td><input type="checkbox" class="checkbox4" onclick="countSelected()"></td>
-                                                                                                    <td><input type="checkbox" class="checkbox5" onclick="countSelected()"></td>
-                                                                                                    <td><input type="checkbox" class="checkbox6" onclick="countSelected()"></td>
-                                                                                                    <td><input type="checkbox" class="checkbox7" onclick="countSelected()"></td>
-                                                                                                    <td><input type="checkbox" class="checkbox8" onclick="countSelected()"></td>
-                                                                                                    <td><input type="checkbox" class="checkbox9" onclick="countSelected()"></td>
-                                                                                                    <td><input type="checkbox" class="checkbox10" onclick="countSelected()"></td>
-                                                                                                    <td><input type="checkbox" class="checkbox11" onclick="countSelected()"></td>
-                                                                                                    <td><input type="checkbox" class="checkbox12" onclick="countSelected()"></td>
-                                                                                                    <td></td>
-                                                                                                </tr>
-                                                                                        <?php }
-                                                                                        } ?>
-                                                                                <?php }
-                                                                                } ?>
-                                                                            </tbody>
-                                                                        </table>
-                                                                    </div>
-                                                                    <form class="user" method="POST">
-                                                                        <div class="form-group">
-                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?php echo htmlentities($result->assessee_id); ?>">
-                                                                        </div>
-                                                                        <div class="form-group">
-                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="high_risk_score" id="high_risk_score" onchange="countSelected()">
-                                                                        </div>
-                                                                        <div class="form-group" id="row">
-                                                                            <div class="col-sm-4 mb-3 mb-sm-0"></div>
-                                                                            <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                                <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection-high-risk">Save</button>
+                                                                            </table>
+                                                                            <div class="form-group">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?php echo htmlentities($result->assessee_id); ?>">
                                                                             </div>
-                                                                            <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                            <div class="form-group">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="high_risk_score" id="high_risk_score" onchange="countSelected()">
+                                                                            </div>
+                                                                            <div class="form-group" id="row">
+                                                                                <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                                    <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection-high-risk">Save</button>
+                                                                                </div>
+                                                                                <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                            </div>
                                                                         </div>
+                                                                        <!-- End of table-responsive -->
                                                                     </form>
                                                                 </div>
+                                                                <!-- End of tab-content -->
                                                             </div>
+                                                            <!-- End of p-5 -->
                                                         </div>
+                                                        <!-- End of col-lg-12 -->
                                                     </div>
+                                                    <!-- End of row -->
                                                 </div>
+                                                <!-- End of card-body -->
                                             </div>
-
+                                            <!-- End of card -->
                                         </div>
-
-
+                                        <!-- End of col-xl-12 -->
                                     </div>
-
+                                    <!-- End of Outer Row -->
                                 </div>
-                                <!-- /.container-fluid -->
-
+                                <!-- End of Page Content -->
                             </div>
                             <!-- End of Main Content -->
-
                         </div>
                         <!-- End of Content Wrapper -->
 
 
                 <?php }
-                } ?>
+                }  ?>
             </div>
             <!-- End of Page Wrapper -->
 
@@ -360,6 +356,8 @@ require_once "controller.php";
             <!-- Custom scripts for all pages-->
             <script src="js/sb-admin-2.min.js"></script>
         </div>
+        <!-- End of Landing Container -->
+
     <?php } else {
         header("location: login.php");
     } ?>
@@ -507,6 +505,7 @@ require_once "controller.php";
 
             totalScore2 = countC2 + countNC2 + countNA2 + countC3 + countNC3 + countNA3 + countC4 + countNC4 + countNA4;
             // document.getElementById('selectedTotal2').innerHTML = totalScore2;
+            // workplaceInspectionHighRisk = (countC / (72 - countNA) * 20);
             document.getElementById('high_risk_score').value = totalScore2;
         }
 
