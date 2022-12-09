@@ -1,5 +1,17 @@
 <?php
 require_once "controller.php";
+
+$assessment_id = $_GET['assessee_id'];
+$i = "SELECT * from document_check_assessment where assessment_id=:assessment_id";
+$query = $dbh->prepare($i);
+$query->bindParam(':assessment_id', $assessment_id, PDO::PARAM_STR);
+$query->execute();
+$results = $query->fetchAll(PDO::FETCH_OBJ);
+if ($query->rowCount() > 0) {
+    foreach ($results as $r) {
+        $o = explode(',', $r->remarks);
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -75,7 +87,7 @@ require_once "controller.php";
                                                                 <!-- Page Heading -->
                                                                 <div class="text-center">
                                                                     <div class="text-center" style="display:flex; width:auto; justify-content: start;">
-                                                                        <a class="font-weight-bold" href="assessment-component.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
+                                                                        <a class="font-weight-bold" href="assessment-component.php?assessee_id=<?php echo htmlentities($result->assessment_id); ?>">
                                                                             &larr; Back</a>
                                                                     </div>
                                                                     <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Document Check</h1>
@@ -133,13 +145,13 @@ require_once "controller.php";
                                                                                             ?>
                                                                                                             <tr>
                                                                                                                 <td><?php echo htmlentities($cnt++) ?></td>
+                                                                                                                <!-- Name of the assessment -->
                                                                                                                 <td class="text-left" name="" value=""><?php echo htmlentities($checklist->checklist) ?></td>
-                                                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" 
-                                                                                                                name="<?php echo $i . 'nm'; ?>"  id="<?php echo $i . 'nm'; ?>"  value="<?php echo htmlentities($checklist->id); ?>">
-                                                                                                                
-                                                                                                                <td><input type="checkbox" class="checkbox1" name="<?php echo $i .'document_list[]'; ?>" value="C" onclick="countSelected()"></td>
-                                                                                                                <td><input type="checkbox" class="checkbox2" name="<?php echo $i .'document_list[]'; ?>" value="NC" onclick="countSelected()"></td>
-                                                                                                                <td><input type="checkbox" class="checkbox3" name="<?php echo $i .'document_list[]'; ?>" value="NA" onclick="countSelected()"></td>
+                                                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="<?php echo $i . 'nm'; ?>" id="<?php echo $i . 'nm'; ?>" value="<?php echo htmlentities($checklist->id); ?>">
+
+                                                                                                                <td><input type="checkbox" class="checkbox1" name="<?php echo $i . 'document_list[]'; ?>" value="C" <?php in_array('C', $o) ? print 'checked' : ' ' ?> onclick="countSelected()"></td>
+                                                                                                                <td><input type="checkbox" class="checkbox2" name="<?php echo $i . 'document_list[]'; ?>" value="NC" <?php in_array('NC', $o) ? print 'checked' : ' ' ?> onclick="countSelected()"></td>
+                                                                                                                <td><input type="checkbox" class="checkbox3" name="<?php echo $i . 'document_list[]'; ?>" value="NA" <?php in_array('NA', $o) ? print 'checked' : ' ' ?> onclick="countSelected()"></td>
                                                                                                                 <td></td>
                                                                                                             </tr>
                                                                                             <?php }
@@ -159,14 +171,14 @@ require_once "controller.php";
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
                                                                                 <div class="form-group">
                                                                                     <!-- For the database [assessment] -->
-                                                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?php echo htmlentities($result->assessee_id); ?>">
+                                                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?php echo htmlentities($result->assessment_id); ?>">
                                                                                     <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" onchange="countSelected()">
 
                                                                                     <!-- For the database [document-check-assessment] -->
-                                                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessment_id" id="assessment_id" value="<?php echo htmlentities($result->assessee_id); ?>">
+                                                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessment_id" id="assessment_id" value="<?php echo htmlentities($result->assessment_id); ?>">
                                                                                     <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_checklist_id" id="document_check_checklist_id" value="<?php echo htmlentities($checklist->id); ?>">
                                                                                 </div>
-                                                                                <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-document-check">Save</button>
+                                                                                <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="edit-document-check">Edit</button>
                                                                             </div>
                                                                             <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                         </div>
