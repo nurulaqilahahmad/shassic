@@ -25,6 +25,72 @@ require_once "controller.php";
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/landing.css">
+    <link rel="stylesheet" type="text/css" href="css/progress-bar.css">
+
+    <script type=text/javascript>
+        function documentCheck() {
+            let progressBar = document.querySelector(".circular-progress-each");
+            let valueContainer = document.querySelector("#progress-document-check");
+
+            let progressValue = 0;
+            let progressEndValue = document.getElementById("input-percentage").value;
+            let speed = 200;
+
+            let progress = setInterval(() => {
+                progressValue++;
+                valueContainer.textContent = `${progressValue}%`;
+                progressBar.style.background = `conic-gradient(
+                #4d5bf9 ${progressValue * 3.6}deg,
+                #cadcff ${progressValue * 3.6}deg
+            )`;
+                if (progressValue == progressEndValue) {
+                    clearInterval(progress);
+                }
+            }, speed);
+        }
+
+        function workplaceInspection() {
+            let progressBar = document.querySelector(".circular-progress-each-1");
+            let valueContainer = document.querySelector("#progress-document-workplace");
+
+            let progressValue = 0;
+            let progressEndValue = document.getElementById("workplace-inspection").value;
+            let speed = 200;
+
+            let progress = setInterval(() => {
+                progressValue++;
+                valueContainer.textContent = `${progressValue}%`;
+                progressBar.style.background = `conic-gradient(
+                #4d5bf9 ${progressValue * 3.6}deg,
+                #cadcff ${progressValue * 3.6}deg
+            )`;
+                if (progressValue == progressEndValue) {
+                    clearInterval(progress);
+                }
+            }, speed);
+        }
+
+        function personnelInterview() {
+            let progressBar = document.querySelector(".circular-progress-each-2");
+            let valueContainer = document.querySelector("#progress-document-personnel");
+
+            let progressValue = 0;
+            let progressEndValue = document.getElementById("personnel-interview").value;
+            let speed = 200;
+
+            let progress = setInterval(() => {
+                progressValue++;
+                valueContainer.textContent = `${progressValue}%`;
+                progressBar.style.background = `conic-gradient(
+                #4d5bf9 ${progressValue * 3.6}deg,
+                #cadcff ${progressValue * 3.6}deg
+            )`;
+                if (progressValue == progressEndValue) {
+                    clearInterval(progress);
+                }
+            }, speed);
+        }
+    </script>
 
 </head>
 
@@ -135,6 +201,16 @@ require_once "controller.php";
                                                                                     </div>
                                                                                 </div>
                                                                             </a>
+                                                                            <div class="outer-container" align="center">
+                                                                                <div class="circular-progress-each">
+                                                                                    <div id="progress-document-check">
+                                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="input-percentage" id="input-percentage" value="<?php echo htmlentities($result->document_check_percentage); ?>">
+                                                                                        <?php
+                                                                                        echo '<script type="text/javascript"> documentCheck(); </script>';
+                                                                                        ?>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                                                             <a href="assessment-workplace-inspection.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
@@ -144,6 +220,16 @@ require_once "controller.php";
                                                                                     </div>
                                                                                 </div>
                                                                             </a>
+                                                                            <div class="outer-container" align="center">
+                                                                                <div class="circular-progress-each-1">
+                                                                                    <div id="progress-document-workplace">
+                                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="workplace-inspection" id="workplace-inspection" value="<?php echo htmlentities($result->workplace_inspection_percentage);?>">
+                                                                                        <?php
+                                                                                        echo '<script type="text/javascript"> workplaceInspection(); </script>';
+                                                                                        ?>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                                                             <a href="assessment-personnel-interview.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
@@ -153,6 +239,16 @@ require_once "controller.php";
                                                                                     </div>
                                                                                 </div>
                                                                             </a>
+                                                                            <div class="outer-container" align="center">
+                                                                                <div class="circular-progress-each-2">
+                                                                                    <div id="progress-document-personnel">
+                                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="personnel-interview" id="personnel-interview" value="<?php echo htmlentities($result->personnel_interview_percentage); ?>">
+                                                                                        <?php
+                                                                                        echo '<script type="text/javascript"> personnelInterview(); </script>';
+                                                                                        ?>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </form>

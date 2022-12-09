@@ -148,7 +148,7 @@ require_once "controller.php";
                                                                 <div class="text-center">
                                                                     <div class="text-center" id="row">
                                                                         <div class="col-sm-6" style="display:flex; width:auto; justify-content: start;">
-                                                                            <a class="font-weight-bold" href="edit-assessment-from-history.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
+                                                                            <a class="font-weight-bold" href="edit-assessment.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
                                                                                 &larr; Back</a>
                                                                         </div>
                                                                         <!-- <div class="col-sm-6" style="display:flex; width:auto; justify-content: end;">
@@ -170,8 +170,6 @@ require_once "controller.php";
                                                                             </div>
                                                                         </div>
                                                                     <?php
-                                                                    } else {
-                                                                        $_SESSION['info'] = "";
                                                                     }
                                                                     ?>
                                                                     <?php
@@ -194,7 +192,7 @@ require_once "controller.php";
                                                                 <form class="user" method="POST">
                                                                     <div class="form-group" id="row">
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="assessment-document-check.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
+                                                                            <a href="edit-assessment-document-check.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
                                                                                 <div class="card mb-4">
                                                                                     <div class="card-body card-hover py-3">
                                                                                         <h6 class="m-0 font-weight-bold">Document Check</h6>
@@ -223,7 +221,7 @@ require_once "controller.php";
                                                                             <div class="outer-container" align="center">
                                                                                 <div class="circular-progress-each-1">
                                                                                     <div id="progress-document-workplace">
-                                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="workplace-inspection" id="workplace-inspection" value="<?php echo htmlentities($result->workplace_inspection_percentage); ?>">
+                                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="workplace-inspection" id="workplace-inspection" value="<?php echo htmlentities($result->workplace_inspection_percentage);?>">
                                                                                         <?php
                                                                                         echo '<script type="text/javascript"> workplaceInspection(); </script>';
                                                                                         ?>

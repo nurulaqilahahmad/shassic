@@ -465,6 +465,10 @@ if (isset($_POST['save-document-check'])) {
     $assessee_id = $_POST['assessee_id'];
     $document_check_percentage = $_POST['document_check_percentage'];
 
+    $assessment_id = $_POST['assessment_id'];
+    // $document_check_checklist_id = $_POST['document_check_checklist_id'];
+    // $remarks = implode(', ', $_POST['document_list']);
+
     // query for data selection
     $sql = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
     $query = $dbh->prepare($sql);
@@ -480,8 +484,73 @@ if (isset($_POST['save-document-check'])) {
         $update->bindParam(':document_check_percentage', $document_check_percentage, PDO::PARAM_STR);
         $update->execute();
 
+        if ($update) {
+            for ($i = 1; $i <= 57; $i++) {
+                
+                $document_check_checklist_id = $_POST[$i."nm"];
+                $remarks = implode(', ', $_POST[$i."document_list"]); //name for each questions
+                //Query for data insertion
+                $conn = "INSERT INTO document_check_assessment(assessment_id, document_check_checklist_id, remarks) VALUES(:assessment_id, :document_check_checklist_id, :remarks)";
+                // $conn = "INSERT INTO document_check_assessment(document_check_checklist_id) VALUES(:document_check_checklist_id)";
+                $query1 = $dbh->prepare($conn);
+                $query1->bindParam(':assessment_id', $assessment_id, PDO::PARAM_STR);
+                $query1->bindParam(':document_check_checklist_id', $document_check_checklist_id, PDO::PARAM_STR);
+                $query1->bindParam(':remarks', $remarks, PDO::PARAM_STR);
+                $query1->execute();
+            }
+        }
+
         $_SESSION['info'] = "Updated successfully";
-        header("location: assessment-component.php?assessee_id=" . $assessee_id);
+        // header("location: assessment-component.php?assessee_id=" . $assessee_id);
+        header("location: edit-assessment-component.php?assessee_id=" . $assessee_id);
+        // header("location: assessment-document-check.php?assessee_id=" . $assessee_id);
+    }
+}
+
+//if user click edit-document-check button in assessment document check page
+if (isset($_POST['edit-document-check'])) {
+    //getting the post value
+    $assessee_id = $_POST['assessee_id'];
+    $document_check_percentage = $_POST['document_check_percentage'];
+
+    $assessment_id = $_POST['assessment_id'];
+    // $document_check_checklist_id = $_POST['document_check_checklist_id'];
+    // $remarks = implode(', ', $_POST['document_list']);
+
+    // query for data selection
+    $sql = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+    $query->execute();
+    $result = $query->fetchAll(PDO::FETCH_OBJ);
+
+    if ($query->rowCount() > 0) {
+        //query for updation
+        $con = "UPDATE assessment SET assessee_id=:assessee_id, document_check_percentage=:document_check_percentage WHERE assessee_id=:assessee_id";
+        $update = $dbh->prepare($con);
+        $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+        $update->bindParam(':document_check_percentage', $document_check_percentage, PDO::PARAM_STR);
+        $update->execute();
+
+        if ($update) {
+            for ($i = 1; $i <= 57; $i++) {
+                
+                $document_check_checklist_id = $_POST[$i."nm"];
+                $remarks = implode(', ', $_POST[$i."document_list"]); //name for each questions
+                //Query for update data insertion
+
+                $conn = "UPDATE document_check_assessment SET remarks=:remarks WHERE assessment_id=:assessment_id";
+                $query1 = $dbh->prepare($conn);
+                $query1->bindParam(':assessment_id', $assessment_id, PDO::PARAM_STR);
+                $query1->bindParam(':document_check_checklist_id', $document_check_checklist_id, PDO::PARAM_STR);
+                $query1->bindParam(':remarks', $remarks, PDO::PARAM_STR);
+                $query1->execute();
+            }
+        }
+        $_SESSION['info'] = "Edit successfully";
+        // header("location: assessment-component.php?assessee_id=" . $assessee_id);
+        header("location: edit-assessment-component.php?assessee_id=" . $assessee_id);
+        // header("location: assessment-document-check.php?assessee_id=" . $assessee_id);
     }
 }
 
