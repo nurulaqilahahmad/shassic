@@ -486,9 +486,9 @@ if (isset($_POST['save-document-check'])) {
 
         if ($update) {
             for ($i = 1; $i <= 57; $i++) {
-                
-                $document_check_checklist_id = $_POST[$i."nm"];
-                $remarks = implode(', ', $_POST[$i."document_list"]); //name for each questions
+
+                $document_check_checklist_id = $_POST[$i . "nm"];
+                $remarks = implode(', ', $_POST[$i . "document_list"]); //name for each questions
                 //Query for data insertion
                 $conn = "INSERT INTO document_check_assessment(assessment_id, document_check_checklist_id, remarks) VALUES(:assessment_id, :document_check_checklist_id, :remarks)";
                 // $conn = "INSERT INTO document_check_assessment(document_check_checklist_id) VALUES(:document_check_checklist_id)";
@@ -534,9 +534,9 @@ if (isset($_POST['edit-document-check'])) {
 
         if ($update) {
             for ($i = 1; $i <= 57; $i++) {
-                
-                $document_check_checklist_id = $_POST[$i."nm"];
-                $remarks = implode(', ', $_POST[$i."document_list"]); //name for each questions
+
+                $document_check_checklist_id = $_POST[$i . "nm"];
+                $remarks = implode(', ', $_POST[$i . "document_list"]); //name for each questions
                 //Query for update data insertion
 
                 $conn = "UPDATE document_check_assessment SET remarks=:remarks WHERE assessment_id=:assessment_id";
@@ -558,16 +558,17 @@ if (isset($_POST['edit-document-check'])) {
 if (isset($_POST['save-workplace-inspection-high-risk'])) {
     //getting the post values
     $assessee_id = $_POST['assessee_id'];
-    $workplace_inspection_checklist_id = $_POST['workplace_inspection_checklist_id'];
+    // $workplace_inspection_checklist_id = $_POST['workplace_inspection_checklist_id'];
+    // echo "<script>console.log($workplace_inspection_checklist_id);</script>";
     // $checklist_count = count($workplace_inspection_checklist_id);
     // echo "<script>console.log($checklist_count);</script>";
     $high_risk_score = $_POST['high_risk_score'];
 
-    if (isset($_POST['highrisk1'])) {
-        // $highrisk1 = $_POST['highrisk1'];
-        $highrisk1 = implode(', ', $_POST['highrisk1']);
-        // echo "<script>console.log($highrisk1);</script>";
-    }
+    // if (isset($_POST['highrisk1'])) {
+    //     // $highrisk1 = $_POST['highrisk1'];
+    //     $highrisk1 = implode(', ', $_POST['highrisk1']);
+    //     // echo "<script>console.log($highrisk1);</script>";
+    // }
 
     // for ($loop = 0; $loop < $checklist_count; $loop++) {
     //     if (isset($_POST['highrisk1'])) {
@@ -627,29 +628,60 @@ if (isset($_POST['save-workplace-inspection-high-risk'])) {
         // header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
     }
 
-    // query for data selection - workplace_inspection_high_risk_1
-    $sql1 = "SELECT * FROM workplace_inspection_high_risk_1 WHERE assessment_id=:assessee_id AND workplace_inspection_checklist_id=:workplace_inspection_checklist_id";
-    $query1 = $dbh->prepare($sql1);
-    $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-    $query1->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
-    $query1->execute();
-    $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
+    foreach ($_POST['workplace_inspection_checklist_id'] as $workplace_inspection_checklist_id) {
+        if (isset($_POST['highrisk1_' . $workplace_inspection_checklist_id])) {
+            $highrisk1 = $_POST['highrisk1_' . $workplace_inspection_checklist_id];
+            $high_risk_1 = implode(', ', $highrisk1);
 
-    if ($query1->rowCount() > 0) {
-        foreach ($results1 as $result1) {
-                //query for updation - workplace_inspection_high_risk_1
-                $con1 = "UPDATE workplace_inspection_high_risk_1 SET status=:highrisk1 WHERE assessment_id=:assessee_id AND workplace_inspection_checklist_id=:workplace_inspection_checklist_id";
-                // $con1 = "UPDATE workplace_inspection_high_risk_1 SET status=? WHERE assessment_id=:assessee_id AND workplace_inspection_checklist_id=?";
-                $update1 = $dbh->prepare($con1);
-                $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $update1->bindParam(':highrisk1', $highrisk1, PDO::PARAM_STR);
-                $update1->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
-                $update1->execute();
-                // $update1->execute([$high_risk_1, $workplace_inspection_checklist_id[$loop]]);
+            // query for data selection - workplace_inspection_high_risk_1
+            $sql1 = "SELECT * FROM workplace_inspection_high_risk_1 WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
+            $query1 = $dbh->prepare($sql1);
+            $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $query1->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
+            $query1->execute();
+            $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
+
+            if ($query1->rowCount() > 0) {
+                foreach ($results1 as $result1) {
+                    //query for updation - workplace_inspection_high_risk_1
+                    $con1 = "UPDATE workplace_inspection_high_risk_1 SET status=:high_risk_1 WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
+                    // $con1 = "UPDATE workplace_inspection_high_risk_1 SET status=? WHERE assessment_id=:assessee_id AND workplace_inspection_checklist_id=?";
+                    $update1 = $dbh->prepare($con1);
+                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update1->bindParam(':high_risk_1', $high_risk_1, PDO::PARAM_STR);
+                    $update1->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
+                    $update1->execute();
+                    // $update1->execute([$high_risk_1, $workplace_inspection_checklist_id[$loop]]);
+                }
+                $infos['high-risk-update-success'] = "Updated successfully";
+                // header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
+            }
         }
-        $infos['high-risk-update-success'] = "Updated successfully";
-        // header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
     }
+
+    // // query for data selection - workplace_inspection_high_risk_1
+    // $sql1 = "SELECT * FROM workplace_inspection_high_risk_1 WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
+    // $query1 = $dbh->prepare($sql1);
+    // $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+    // $query1->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
+    // $query1->execute();
+    // $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
+
+    // if ($query1->rowCount() > 0) {
+    //     foreach ($results1 as $result1) {
+    //             //query for updation - workplace_inspection_high_risk_1
+    //             $con1 = "UPDATE workplace_inspection_high_risk_1 SET status=:highrisk1 WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
+    //             // $con1 = "UPDATE workplace_inspection_high_risk_1 SET status=? WHERE assessment_id=:assessee_id AND workplace_inspection_checklist_id=?";
+    //             $update1 = $dbh->prepare($con1);
+    //             $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+    //             $update1->bindParam(':highrisk1', $highrisk1, PDO::PARAM_STR);
+    //             $update1->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
+    //             $update1->execute();
+    //             // $update1->execute([$high_risk_1, $workplace_inspection_checklist_id[$loop]]);
+    //     }
+    //     $infos['high-risk-update-success'] = "Updated successfully";
+    //     // header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
+    // }
 
     // // query for data selection - workplace_inspection_high_risk_1
     // $sql1 = "SELECT * FROM workplace_inspection_high_risk_1 WHERE assessment_id=:assessee_id";

@@ -200,9 +200,10 @@ require_once "controller.php";
 
 
                                                                 <div id="construction-work" class="tabcontent">
-                                                                    <form class="user" method="POST">
-                                                                        <div class="table-responsive">
-                                                                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                                            <form class="user" method="POST">
                                                                                 <thead>
                                                                                     <tr>
                                                                                         <th rowspan="2" class="align-middle">ITEM</th>
@@ -250,6 +251,7 @@ require_once "controller.php";
                                                                                     if ($query->rowCount() > 0) {
                                                                                         foreach ($sections as $section) {
                                                                                     ?>
+
                                                                                             <tr>
                                                                                                 <th><?php echo htmlentities($section->item_no) ?></th>
                                                                                                 <th colspan="11" class="text-left"><?php echo htmlentities($section->item_name) ?></th>
@@ -262,14 +264,16 @@ require_once "controller.php";
                                                                                             $cnt = 1;
                                                                                             if ($query->rowCount() > 0) {
                                                                                                 foreach ($checklists as $checklist) {
+                                                                                                    $checklist_id = $checklist->id;
                                                                                             ?>
                                                                                                     <tr>
-                                                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="workplace_inspection_checklist_id" id="workplace_inspection_checklist_id" value="<?php echo htmlentities($checklist->id) ?>">
+                                                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?= $result->assessee_id ?>">
+                                                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="workplace_inspection_checklist_id[]" id="workplace_inspection_checklist_id[]" value="<?= $checklist_id ?>">
                                                                                                         <td><?php echo htmlentities($cnt++) ?></td>
-                                                                                                        <td class="text-left"><?php echo htmlentities($checklist->id) ?></td>
-                                                                                                        <td><input type="checkbox" class="checkbox4" name="highrisk1[]" onclick="countSelected()" value="C"></td>
-                                                                                                        <td><input type="checkbox" class="checkbox5" name="highrisk1[]" onclick="countSelected()" value="NC"></td>
-                                                                                                        <td><input type="checkbox" class="checkbox6" name="highrisk1[]" onclick="countSelected()" value="NA"></td>
+                                                                                                        <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
+                                                                                                        <td><input type="checkbox" class="checkbox4" name="highrisk1_<?= $checklist_id ?>[]" onclick="countSelected()" value="C"></td>
+                                                                                                        <td><input type="checkbox" class="checkbox5" name="highrisk1_<?= $checklist_id ?>[]" onclick="countSelected()" value="NC"></td>
+                                                                                                        <td><input type="checkbox" class="checkbox6" name="highrisk1_<?= $checklist_id ?>[]" onclick="countSelected()" value="NA"></td>
                                                                                                         <td><input type="checkbox" class="checkbox7" name="highrisk2[]" onclick="countSelected()" value="C"></td>
                                                                                                         <td><input type="checkbox" class="checkbox8" name="highrisk2[]" onclick="countSelected()" value="NC"></td>
                                                                                                         <td><input type="checkbox" class="checkbox9" name="highrisk2[]" onclick="countSelected()" value="NA"></td>
@@ -284,23 +288,21 @@ require_once "controller.php";
                                                                                     } ?>
                                                                                 </tbody>
 
-                                                                            </table>
-                                                                            <div class="form-group">
-                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?php echo htmlentities($result->assessee_id); ?>">
-                                                                            </div>
-                                                                            <div class="form-group">
-                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="high_risk_score" id="high_risk_score" onchange="countSelected()">
-                                                                            </div>
-                                                                            <div class="form-group" id="row">
-                                                                                <div class="col-sm-4 mb-3 mb-sm-0"></div>
-                                                                                <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                                    <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection-high-risk">Save</button>
+                                                                                <div class="form-group" id="row">
+                                                                                    <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="high_risk_score" id="high_risk_score" onchange="countSelected()">
+                                                                                    </div>
+                                                                                    <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                                        <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection-high-risk">Save</button>
+                                                                                    </div>
                                                                                 </div>
-                                                                                <div class="col-sm-4 mb-3 mb-sm-0"></div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <!-- End of table-responsive -->
-                                                                    </form>
+                                                                            </form>
+
+                                                                        </table>
+
+                                                                    </div>
+                                                                    <!-- End of table-responsive -->
+
                                                                 </div>
                                                                 <!-- End of tab-content -->
                                                             </div>
