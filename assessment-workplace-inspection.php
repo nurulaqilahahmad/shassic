@@ -82,7 +82,7 @@ require_once "controller.php";
                                                                 <div class="text-center">
                                                                     <div class="text-center" style="display:flex; width:auto; justify-content: start;">
                                                                         <a class="font-weight-bold" href="assessment-component.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
-                                                                            &larr; Back</a>
+                                                                            < Back</a>
                                                                     </div>
 
                                                                     <!-- Page Heading -->
@@ -124,83 +124,94 @@ require_once "controller.php";
                                                                 </div>
                                                                 <!-- End of text-center -->
 
-                                                                <!-- <form class="user" method="POST"> -->
                                                                 <div id="general" class="tabcontent">
                                                                     <div class="table-responsive">
                                                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                                                            <thead>
-                                                                                <tr>
-                                                                                    <th>ITEM</th>
-                                                                                    <th>CHECKLIST</th>
-                                                                                    <th>C</th>
-                                                                                    <th>NC</th>
-                                                                                    <th>NA</th>
-                                                                                    <th>REMARKS</th>
-                                                                                </tr>
-                                                                            </thead>
-                                                                            <tfoot>
-                                                                                <tr>
-                                                                                    <th colspan="2">SUB SCORE</th>
-                                                                                    <th id="selectedC">0</th>
-                                                                                    <th id="selectedNC">0</th>
-                                                                                    <th id="selectedNA">0</th>
-                                                                                    <th id="selectedTotal">0</th>
-                                                                                </tr>
-                                                                            </tfoot>
-                                                                            <tbody>
-                                                                                <?php
-                                                                                $sql = "SELECT * from workplace_inspection_section where id between 1 and 3";
-                                                                                $query = $dbh->prepare($sql);
-                                                                                $query->execute();
-                                                                                $sections = $query->fetchAll(PDO::FETCH_OBJ);
-                                                                                $cnt = 1;
-                                                                                if ($query->rowCount() > 0) {
-                                                                                    foreach ($sections as $section) {
-                                                                                ?>
-                                                                                        <tr>
-                                                                                            <th><?php echo htmlentities($section->item_no) ?></th>
-                                                                                            <th colspan="5" class="text-left"><?php echo htmlentities($section->item_name) ?></th>
-                                                                                        </tr>
-                                                                                        <?php
-                                                                                        $sql = "SELECT * from workplace_inspection_checklist where item_id='$section->id'";
-                                                                                        $query = $dbh->prepare($sql);
-                                                                                        $query->execute();
-                                                                                        $checklists = $query->fetchAll(PDO::FETCH_OBJ);
-                                                                                        $cnt = 1;
-                                                                                        if ($query->rowCount() > 0) {
-                                                                                            foreach ($checklists as $checklist) {
-                                                                                        ?>
-                                                                                                <tr>
-                                                                                                    <td><?php echo htmlentities($cnt++) ?></td>
-                                                                                                    <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
-                                                                                                    <td><input type="checkbox" class="checkbox1" onclick="countSelected()" value="1"></td>
-                                                                                                    <td><input type="checkbox" class="checkbox2" onclick="countSelected()" value="1"></td>
-                                                                                                    <td><input type="checkbox" class="checkbox3" onclick="countSelected()" value="1"></td>
-                                                                                                    <td></td>
-                                                                                                </tr>
-                                                                                        <?php }
-                                                                                        } ?>
-                                                                                <?php }
-                                                                                } ?>
-                                                                            </tbody>
+                                                                            <form class="user" method="POST">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>ITEM</th>
+                                                                                        <th>CHECKLIST</th>
+                                                                                        <th>C</th>
+                                                                                        <th>NC</th>
+                                                                                        <th>NA</th>
+                                                                                        <th>REMARKS</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    <?php
+                                                                                    $sql = "SELECT * from workplace_inspection_section where id between 1 and 3";
+                                                                                    $query = $dbh->prepare($sql);
+                                                                                    $query->execute();
+                                                                                    $sections = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                    $cnt = 1;
+                                                                                    if ($query->rowCount() > 0) {
+                                                                                        foreach ($sections as $section) {
+                                                                                    ?>
+                                                                                            <tr>
+                                                                                                <th><?php echo htmlentities($section->item_no) ?></th>
+                                                                                                <th colspan="5" class="text-left"><?php echo htmlentities($section->item_name) ?></th>
+                                                                                            </tr>
+                                                                                            <?php
+                                                                                            $sql = "SELECT * from workplace_inspection_checklist where item_id='$section->id'";
+                                                                                            $query = $dbh->prepare($sql);
+                                                                                            $query->execute();
+                                                                                            $checklists = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                            $cnt = 1;
+                                                                                            if ($query->rowCount() > 0) {
+                                                                                                foreach ($checklists as $checklist) {
+                                                                                                    $checklist_id = $checklist->id;
+                                                                                            ?>
+                                                                                                    <tr>
+                                                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?= $result->assessee_id ?>">
+                                                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="workplace_inspection_checklist_id[]" id="workplace_inspection_checklist_id[]" value="<?= $checklist_id ?>">
+                                                                                                        <td><?= $cnt++ ?></td>
+                                                                                                        <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
+                                                                                                        <?php
+                                                                                                        $sql = "SELECT * FROM workplace_inspection_assessment WHERE assessment_id='$result->assessee_id' AND workplace_inspection_checklist_id='$checklist_id'";
+                                                                                                        $query = $dbh->prepare($sql);
+                                                                                                        $query->execute();
+                                                                                                        $workinsps1 = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                                        if ($query->rowCount() > 0) {
+                                                                                                            foreach ($workinsps1 as $workinsp1) {
+                                                                                                        ?>
+                                                                                                                <td><input type="checkbox" class="checkbox1" onchange="countSelected()" name="workinsp_<?= $checklist_id ?>[]" <?php if (':checked') {echo 'value="C"';} else {echo 'value=""';} ?> <?php if (in_array("C", explode(", ", $workinsp1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox2" onclick="countSelected()" name="workinsp_<?= $checklist_id ?>[]" <?php if (':checked') {echo 'value="NC"';} else {echo 'value=""';} ?> <?php if (in_array("NC", explode(", ", $workinsp1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox3" onclick="countSelected()" name="workinsp_<?= $checklist_id ?>[]" <?php if (':checked') {echo 'value="NA"';} else {echo 'value=""';} ?> <?php if (in_array("NA", explode(", ", $workinsp1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td></td>
+                                                                                                    </tr>
+                                                                                            <?php }
+                                                                                                        } ?>
+                                                                                    <?php }
+                                                                                            } ?>
+                                                                            <?php }
+                                                                                    } ?>
+                                                                                </tbody>
+                                                                                <tfoot>
+                                                                                    <tr>
+                                                                                        <th colspan="2">SUB SCORE</th>
+                                                                                        <th id="selectedC"><script>document.getElementById('selectedC').innerHTML = document.querySelectorAll('input[class="checkbox1"]:checked').length</script></th>
+                                                                                        <th id="selectedNC"><script>document.getElementById('selectedNC').innerHTML = document.querySelectorAll('input[class="checkbox2"]:checked').length</script></th>
+                                                                                        <th id="selectedNA"><script>document.getElementById('selectedNA').innerHTML = document.querySelectorAll('input[class="checkbox3"]:checked').length</script></th>
+                                                                                        <th id="selectedTotal"></th>
+                                                                                    </tr>
+                                                                                </tfoot>
                                                                         </table>
-                                                                    </div>
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <!-- <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection">Save</button> -->
+                                                                        <div class="form-group" id="row">
+                                                                            <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="general_score" id="general_score" onchange="countSelected()">
+                                                                            </div>
+                                                                            <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                                <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection-general">Save</button>
+                                                                            </div>
                                                                         </div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                        </form>
                                                                     </div>
+                                                                    <!-- End of Table Responsive -->
                                                                 </div>
                                                                 <!-- End of tab-content -->
 
-                                                                <!-- </form> -->
-
-
-
                                                                 <div id="construction-work" class="tabcontent">
-
                                                                     <div class="table-responsive">
                                                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                                             <form class="user" method="POST">
@@ -225,22 +236,6 @@ require_once "controller.php";
                                                                                         <th>NA</th>
                                                                                     </tr>
                                                                                 </thead>
-                                                                                <tfoot>
-                                                                                    <tr>
-                                                                                        <th colspan="2" class="text-right">SUB SCORE</th>
-                                                                                        <th id="selectedC2">0</th>
-                                                                                        <th id="selectedNC2">0</th>
-                                                                                        <th id="selectedNA2">0</th>
-                                                                                        <th id="selectedC3">0</th>
-                                                                                        <th id="selectedNC3">0</th>
-                                                                                        <th id="selectedNA3">0</th>
-                                                                                        <th id="selectedC4">0</th>
-                                                                                        <th id="selectedNC4">0</th>
-                                                                                        <th id="selectedNA4">0</th>
-                                                                                        <th id="selectedTotal2"></th>
-                                                                                    </tr>
-                                                                                </tfoot>
-
                                                                                 <tbody>
                                                                                     <?php
                                                                                     $sql = "SELECT * from workplace_inspection_section where id between 4 and 7";
@@ -269,17 +264,47 @@ require_once "controller.php";
                                                                                                     <tr>
                                                                                                         <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?= $result->assessee_id ?>">
                                                                                                         <input type="hidden" class="form-control form-control-user font-weight-bold" name="workplace_inspection_checklist_id[]" id="workplace_inspection_checklist_id[]" value="<?= $checklist_id ?>">
-                                                                                                        <td><?php echo htmlentities($cnt++) ?></td>
+                                                                                                        <td><?= $cnt++ ?></td>
                                                                                                         <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
-                                                                                                        <td><input type="checkbox" class="checkbox4" name="highrisk1_<?= $checklist_id ?>[]" onclick="countSelected()" value="C"></td>
-                                                                                                        <td><input type="checkbox" class="checkbox5" name="highrisk1_<?= $checklist_id ?>[]" onclick="countSelected()" value="NC"></td>
-                                                                                                        <td><input type="checkbox" class="checkbox6" name="highrisk1_<?= $checklist_id ?>[]" onclick="countSelected()" value="NA"></td>
-                                                                                                        <td><input type="checkbox" class="checkbox7" name="highrisk2[]" onclick="countSelected()" value="C"></td>
-                                                                                                        <td><input type="checkbox" class="checkbox8" name="highrisk2[]" onclick="countSelected()" value="NC"></td>
-                                                                                                        <td><input type="checkbox" class="checkbox9" name="highrisk2[]" onclick="countSelected()" value="NA"></td>
-                                                                                                        <td><input type="checkbox" class="checkbox10" name="highrisk3[]" onclick="countSelected()" value="C"></td>
-                                                                                                        <td><input type="checkbox" class="checkbox11" name="highrisk3[]" onclick="countSelected()" value="NC"></td>
-                                                                                                        <td><input type="checkbox" class="checkbox12" name="highrisk3[]" onclick="countSelected()" value="NA"></td>
+                                                                                                        <?php
+                                                                                                        $sql = "SELECT * FROM workplace_inspection_high_risk_1 WHERE assessment_id='$result->assessee_id' AND workplace_inspection_checklist_id='$checklist_id'";
+                                                                                                        $query = $dbh->prepare($sql);
+                                                                                                        $query->execute();
+                                                                                                        $highrisks1 = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                                        if ($query->rowCount() > 0) {
+                                                                                                            foreach ($highrisks1 as $highrisk1) {
+                                                                                                        ?>
+                                                                                                                <td><input type="checkbox" class="checkbox4" id="C" name="highrisk1_<?= $checklist_id ?>[]" onclick="countSelected()" value="C" <?php if (in_array("C", explode(", ", $highrisk1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox5" id="NC" name="highrisk1_<?= $checklist_id ?>[]" onclick="countSelected()" value="NC" <?php if (in_array("NC", explode(", ", $highrisk1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox6" id="NA" name="highrisk1_<?= $checklist_id ?>[]" onclick="countSelected()" value="NA" <?php if (in_array("NA", explode(", ", $highrisk1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                        <?php }
+                                                                                                        } ?>
+                                                                                                        <?php
+                                                                                                        $sql = "SELECT * FROM workplace_inspection_high_risk_2 WHERE assessment_id='$result->assessee_id' AND workplace_inspection_checklist_id='$checklist_id'";
+                                                                                                        $query = $dbh->prepare($sql);
+                                                                                                        $query->execute();
+                                                                                                        $highrisks2 = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                                        if ($query->rowCount() > 0) {
+                                                                                                            foreach ($highrisks2 as $highrisk2) {
+                                                                                                        ?>
+                                                                                                                <td><input type="checkbox" class="checkbox7" name="highrisk2_<?= $checklist_id ?>[]" onclick="countSelected()" value="C" <?php if (in_array("C", explode(", ", $highrisk2->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox8" name="highrisk2_<?= $checklist_id ?>[]" onclick="countSelected()" value="NC" <?php if (in_array("NC", explode(", ", $highrisk2->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox9" name="highrisk2_<?= $checklist_id ?>[]" onclick="countSelected()" value="NA" <?php if (in_array("NA", explode(", ", $highrisk2->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                        <?php }
+                                                                                                        } ?>
+                                                                                                        <?php
+                                                                                                        $sql = "SELECT * FROM workplace_inspection_high_risk_3 WHERE assessment_id='$result->assessee_id' AND workplace_inspection_checklist_id='$checklist_id'";
+                                                                                                        $query = $dbh->prepare($sql);
+                                                                                                        $query->execute();
+                                                                                                        $highrisks3 = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                                        if ($query->rowCount() > 0) {
+                                                                                                            foreach ($highrisks3 as $highrisk3) {
+                                                                                                        ?>
+                                                                                                                <td><input type="checkbox" class="checkbox10" name="highrisk3_<?= $checklist_id ?>[]" onclick="countSelected()" value="C" <?php if (in_array("C", explode(", ", $highrisk3->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox11" name="highrisk3_<?= $checklist_id ?>[]" onclick="countSelected()" value="NC" <?php if (in_array("NC", explode(", ", $highrisk3->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox12" name="highrisk3_<?= $checklist_id ?>[]" onclick="countSelected()" value="NA" <?php if (in_array("NA", explode(", ", $highrisk3->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                        <?php }
+                                                                                                        } ?>
                                                                                                         <td></td>
                                                                                                     </tr>
                                                                                             <?php }
@@ -287,9 +312,21 @@ require_once "controller.php";
                                                                                     <?php }
                                                                                     } ?>
                                                                                 </tbody>
-
-
-
+                                                                                <tfoot>
+                                                                                    <tr>
+                                                                                        <th colspan="2" class="text-right">SUB SCORE</th>
+                                                                                        <th id="selectedC2"><script>document.getElementById('selectedC2').innerHTML = document.querySelectorAll('input[class="checkbox4"]:checked').length</script></th>
+                                                                                        <th id="selectedNC2"><script>document.getElementById('selectedNC2').innerHTML = document.querySelectorAll('input[class="checkbox5"]:checked').length</script></th>
+                                                                                        <th id="selectedNA2"><script>document.getElementById('selectedNA2').innerHTML = document.querySelectorAll('input[class="checkbox6"]:checked').length</script></th>
+                                                                                        <th id="selectedC3"><script>document.getElementById('selectedC3').innerHTML = document.querySelectorAll('input[class="checkbox7"]:checked').length</script></th>
+                                                                                        <th id="selectedNC3"><script>document.getElementById('selectedNC3').innerHTML = document.querySelectorAll('input[class="checkbox8"]:checked').length</script></th>
+                                                                                        <th id="selectedNA3"><script>document.getElementById('selectedNA3').innerHTML = document.querySelectorAll('input[class="checkbox9"]:checked').length</script></th>
+                                                                                        <th id="selectedC4"><script>document.getElementById('selectedC4').innerHTML = document.querySelectorAll('input[class="checkbox10"]:checked').length</script></th>
+                                                                                        <th id="selectedNC4"><script>document.getElementById('selectedNC4').innerHTML = document.querySelectorAll('input[class="checkbox11"]:checked').length</script></th>
+                                                                                        <th id="selectedNA4"><script>document.getElementById('selectedNA4').innerHTML = document.querySelectorAll('input[class="checkbox12"]:checked').length</script></th>
+                                                                                        <th id="selectedTotal2"></th>
+                                                                                    </tr>
+                                                                                </tfoot>
                                                                         </table>
                                                                         <div class="form-group" id="row">
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
@@ -302,7 +339,6 @@ require_once "controller.php";
                                                                         </form>
                                                                     </div>
                                                                     <!-- End of table-responsive -->
-
                                                                 </div>
                                                                 <!-- End of tab-content -->
                                                             </div>
@@ -360,162 +396,161 @@ require_once "controller.php";
         </div>
         <!-- End of Landing Container -->
 
+        <script>
+            function openSection(evt, sectionName) {
+                var i, tabcontent, tablinks;
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+                document.getElementById(sectionName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+
+            function countSelected() {
+                var checkboxes = document.querySelectorAll('.checkbox1');
+                var checkboxes2 = document.querySelectorAll('.checkbox2');
+                var checkboxes3 = document.querySelectorAll('.checkbox3');
+
+                var checkboxes4 = document.querySelectorAll('.checkbox4');
+                var checkboxes5 = document.querySelectorAll('.checkbox5');
+                var checkboxes6 = document.querySelectorAll('.checkbox6');
+
+                var checkboxes7 = document.querySelectorAll('.checkbox7');
+                var checkboxes8 = document.querySelectorAll('.checkbox8');
+                var checkboxes9 = document.querySelectorAll('.checkbox9');
+
+                var checkboxes10 = document.querySelectorAll('.checkbox10');
+                var checkboxes11 = document.querySelectorAll('.checkbox11');
+                var checkboxes12 = document.querySelectorAll('.checkbox12');
+
+                var totalScore = 0;
+                var countC = 0;
+                var countNC = 0;
+                var countNA = 0;
+
+                var totalScore2 = 0;
+                var countC2 = 0;
+                var countNC2 = 0;
+                var countNA2 = 0;
+
+                var countC3 = 0;
+                var countNC3 = 0;
+                var countNA3 = 0;
+
+                var countC4 = 0;
+                var countNC4 = 0;
+                var countNA4 = 0;
+
+                // Count the checked checkboxes
+                checkboxes.forEach(item => {
+                    if (item.checked == true) {
+                        countC++;
+                    }
+                });
+
+                checkboxes2.forEach(item => {
+                    if (item.checked == true) {
+                        countNC++;
+                    }
+                });
+
+                checkboxes3.forEach(item => {
+                    if (item.checked == true) {
+                        countNA++;
+                    }
+                });
+
+                checkboxes4.forEach(item => {
+                    if (item.checked == true) {
+                        countC2++;
+                    }
+                });
+
+                checkboxes5.forEach(item => {
+                    if (item.checked == true) {
+                        countNC2++;
+                    }
+                });
+
+                checkboxes6.forEach(item => {
+                    if (item.checked == true) {
+                        countNA2++;
+                    }
+                });
+
+                checkboxes7.forEach(item => {
+                    if (item.checked == true) {
+                        countC3++;
+                    }
+                });
+
+                checkboxes8.forEach(item => {
+                    if (item.checked == true) {
+                        countNC3++;
+                    }
+                });
+
+                checkboxes9.forEach(item => {
+                    if (item.checked == true) {
+                        countNA3++;
+                    }
+                })
+
+                checkboxes10.forEach(item => {
+                    if (item.checked == true) {
+                        countC4++;
+                    }
+                });
+
+                checkboxes11.forEach(item => {
+                    if (item.checked == true) {
+                        countNC4++;
+                    }
+                });
+
+                checkboxes12.forEach(item => {
+                    if (item.checked == true) {
+                        countNA4++;
+                    }
+                });
+
+                // Display the count of checked checkboxes
+                document.getElementById('selectedC').innerHTML = countC;
+                document.getElementById('selectedNC').innerHTML = countNC;
+                document.getElementById('selectedNA').innerHTML = countNA;
+
+                document.getElementById('selectedC2').innerHTML = countC2;
+                document.getElementById('selectedNC2').innerHTML = countNC2;
+                document.getElementById('selectedNA2').innerHTML = countNA2;
+
+                document.getElementById('selectedC3').innerHTML = countC3;
+                document.getElementById('selectedNC3').innerHTML = countNC3;
+                document.getElementById('selectedNA3').innerHTML = countNA3;
+
+                document.getElementById('selectedC4').innerHTML = countC4;
+                document.getElementById('selectedNC4').innerHTML = countNC4;
+                document.getElementById('selectedNA4').innerHTML = countNA4;
+
+                totalScore = countC + countNC + countNA;
+                // document.getElementById('selectedTotal').innerHTML = totalScore;
+                document.getElementById('general_score').value = totalScore;
+
+                totalScore2 = countC2 + countNC2 + countNA2 + countC3 + countNC3 + countNA3 + countC4 + countNC4 + countNA4;
+                // document.getElementById('selectedTotal2').innerHTML = totalScore2;
+                // workplaceInspectionHighRisk = (countC / (72 - countNA) * 20);
+                document.getElementById('high_risk_score').value = totalScore2;
+            }
+        </script>
+
     <?php } else {
         header("location: login.php");
     } ?>
-    <script>
-        function openSection(evt, sectionName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tabcontent");
-            for (i = 0; i < tabcontent.length; i++) {
-                tabcontent[i].style.display = "none";
-            }
-            tablinks = document.getElementsByClassName("tablinks");
-            for (i = 0; i < tablinks.length; i++) {
-                tablinks[i].className = tablinks[i].className.replace(" active", "");
-            }
-            document.getElementById(sectionName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
 
-        function countSelected() {
-            var checkboxes = document.querySelectorAll('.checkbox1');
-            var checkboxes2 = document.querySelectorAll('.checkbox2');
-            var checkboxes3 = document.querySelectorAll('.checkbox3');
-
-            var checkboxes4 = document.querySelectorAll('.checkbox4');
-            var checkboxes5 = document.querySelectorAll('.checkbox5');
-            var checkboxes6 = document.querySelectorAll('.checkbox6');
-
-            var checkboxes7 = document.querySelectorAll('.checkbox7');
-            var checkboxes8 = document.querySelectorAll('.checkbox8');
-            var checkboxes9 = document.querySelectorAll('.checkbox9');
-
-            var checkboxes10 = document.querySelectorAll('.checkbox10');
-            var checkboxes11 = document.querySelectorAll('.checkbox11');
-            var checkboxes12 = document.querySelectorAll('.checkbox12');
-
-            var totalScore = 0;
-            var countC = 0;
-            var countNC = 0;
-            var countNA = 0;
-
-            var totalScore2 = 0;
-            var countC2 = 0;
-            var countNC2 = 0;
-            var countNA2 = 0;
-
-            var countC3 = 0;
-            var countNC3 = 0;
-            var countNA3 = 0;
-
-            var countC4 = 0;
-            var countNC4 = 0;
-            var countNA4 = 0;
-
-            checkboxes.forEach(item => {
-                if (item.checked == true) {
-                    countC++;
-                }
-            })
-
-            checkboxes2.forEach(item => {
-                if (item.checked == true) {
-                    countNC++;
-                }
-            })
-
-            checkboxes3.forEach(item => {
-                if (item.checked == true) {
-                    countNA++;
-                }
-            })
-
-            checkboxes4.forEach(item => {
-                if (item.checked == true) {
-                    countC2++;
-                }
-            })
-
-            checkboxes5.forEach(item => {
-                if (item.checked == true) {
-                    countNC2++;
-                }
-            })
-
-            checkboxes6.forEach(item => {
-                if (item.checked == true) {
-                    countNA2++;
-                }
-            })
-
-            checkboxes7.forEach(item => {
-                if (item.checked == true) {
-                    countC3++;
-                }
-            })
-
-            checkboxes8.forEach(item => {
-                if (item.checked == true) {
-                    countNC3++;
-                }
-            })
-
-            checkboxes9.forEach(item => {
-                if (item.checked == true) {
-                    countNA3++;
-                }
-            })
-
-            checkboxes10.forEach(item => {
-                if (item.checked == true) {
-                    countC4++;
-                }
-            })
-
-            checkboxes11.forEach(item => {
-                if (item.checked == true) {
-                    countNC4++;
-                }
-            })
-
-            checkboxes12.forEach(item => {
-                if (item.checked == true) {
-                    countNA4++;
-                }
-            })
-
-            document.getElementById('selectedC').innerHTML = countC;
-            document.getElementById('selectedNC').innerHTML = countNC;
-            document.getElementById('selectedNA').innerHTML = countNA;
-
-            document.getElementById('selectedC2').innerHTML = countC2;
-            document.getElementById('selectedNC2').innerHTML = countNC2;
-            document.getElementById('selectedNA2').innerHTML = countNA2;
-
-            document.getElementById('selectedC3').innerHTML = countC3;
-            document.getElementById('selectedNC3').innerHTML = countNC3;
-            document.getElementById('selectedNA3').innerHTML = countNA3;
-
-            document.getElementById('selectedC4').innerHTML = countC4;
-            document.getElementById('selectedNC4').innerHTML = countNC4;
-            document.getElementById('selectedNA4').innerHTML = countNA4;
-
-            totalScore = countC + countNC + countNA;
-            document.getElementById('selectedTotal').innerHTML = totalScore;
-            // document.getElementById('workplace_inspection_percentage').value = totalScore;
-
-            totalScore2 = countC2 + countNC2 + countNA2 + countC3 + countNC3 + countNA3 + countC4 + countNC4 + countNA4;
-            // document.getElementById('selectedTotal2').innerHTML = totalScore2;
-            // workplaceInspectionHighRisk = (countC / (72 - countNA) * 20);
-            document.getElementById('high_risk_score').value = totalScore2;
-        }
-
-        // function getValue(idElement) {
-        //     var x = parseInt(document.getElementById(idElement).value);
-        //     return x;
-        // }
-    </script>
 </body>
 
 </html>

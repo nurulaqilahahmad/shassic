@@ -56,7 +56,7 @@ CREATE TABLE `document_check_assessment` (
   `id` int(11) NOT NULL,
   `assessment_id` int(11) NOT NULL,
   `document_check_checklist_id` int(11) NOT NULL,
-  `status` varchar(200) NOT NULL,
+  `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -460,7 +460,7 @@ CREATE TABLE `workplace_inspection_assessment` (
   `id` int(11) NOT NULL,
   `assessment_id` int(11) NOT NULL,
   `workplace_inspection_checklist_id` int(11) NOT NULL,
-  `status` varchar(200) NOT NULL,
+  `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
