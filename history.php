@@ -77,7 +77,7 @@ include('includes/config.php');
                                         <div class="card-header py-3">
                                             <div class="text-center" style="display:flex; width:auto; justify-content: start;">
                                                 <a class="font-weight-bold" href="index.php">
-                                                    &larr; Back</a>
+                                                    < Back</a>
                                             </div>
                                             <h6 class="h3 mb-4 text-gray-800 font-weight-bold">Assessment History</h6>
                                         </div>
