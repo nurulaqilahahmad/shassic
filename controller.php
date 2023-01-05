@@ -978,7 +978,7 @@ if (isset($_POST['save-personnel-interview-managerial'])) {
             if ($query1->rowCount() > 0) {
                 foreach ($results1 as $result1) {
                     //query for updation - workplace_inspection_high_risk_1
-                    $con1 = "UPDATE personnel_interview_checklist_id SET status=:managerial, remarks=:remarks WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
+                    $con1 = "UPDATE personnel_interview_managerial SET status=:managerial, remarks=:remarks WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
                     $update1 = $dbh->prepare($con1);
                     $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
                     $update1->bindParam(':managerial', $managerial, PDO::PARAM_STR);
@@ -1009,7 +1009,7 @@ if (isset($_POST['save-personnel-interview-managerial'])) {
             if ($query1->rowCount() > 0) {
                 foreach ($results1 as $result1) {
                     //query for updation - workplace_inspection_high_risk_1
-                    $con1 = "UPDATE personnel_interview_checklist_id SET status=:managerial, remarks=:remarks WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
+                    $con1 = "UPDATE personnel_interview_managerial SET status=:managerial, remarks=:remarks WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
                     $update1 = $dbh->prepare($con1);
                     $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
                     $update1->bindParam(':managerial', $managerial, PDO::PARAM_STR);
