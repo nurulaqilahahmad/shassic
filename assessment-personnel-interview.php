@@ -82,7 +82,36 @@ require_once "controller.php";
                                                                     <!-- End of Text Center with style -->
 
                                                                     <!-- Page Heading -->
-                                                                    <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Personnel Interview</h1>
+                                                                    <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Personnel Interview</h1><?php
+                                                                    if (count($infos) > 0) {
+                                                                    ?>
+                                                                        <div class="col-lg-12 mb-4">
+                                                                            <div class="card bg-success text-white shadow">
+                                                                                <div class="card-body text-center font-weight-bold">
+                                                                                    <?php foreach ($infos as $info) {
+                                                                                        echo $info;
+                                                                                    } ?>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    <?php
+                                                                    }
+                                                                    ?>
+                                                                    <?php
+                                                                    if (count($errors) > 0) {
+                                                                    ?>
+                                                                        <div class="col-lg-12 mb-4">
+                                                                            <div class="card bg-danger text-white shadow">
+                                                                                <div class="card-body text-center" style="font-weight: bold;">
+                                                                                    <?php foreach ($errors as $error) {
+                                                                                        echo $error;
+                                                                                    } ?>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    <?php
+                                                                    }
+                                                                    ?>
                                                                     <div class="tab form-group">
                                                                         <button class="tablinks font-weight-bold" style="width: 33%;" onclick="openSection(event, 'managerial')">Managerial</button>
                                                                         <button class="tablinks font-weight-bold" style="width: 33%;" onclick="openSection(event, 'supervisory')">Supervisory</button>
