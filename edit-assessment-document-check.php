@@ -1,17 +1,5 @@
 <?php
 require_once "controller.php";
-
-$assessment_id = $_GET['assessee_id'];
-$i = "SELECT * from document_check_assessment where assessment_id=:assessment_id";
-$query = $dbh->prepare($i);
-$query->bindParam(':assessment_id', $assessment_id, PDO::PARAM_STR);
-$query->execute();
-$results = $query->fetchAll(PDO::FETCH_OBJ);
-if ($query->rowCount() > 0) {
-    foreach ($results as $r) {
-        $o = explode(',', $r->remarks);
-    }
-}
 ?>
 
 <!DOCTYPE html>
@@ -143,18 +131,32 @@ if ($query->rowCount() > 0) {
                                                                                                     foreach ($checklists as $checklist) {
                                                                                                         if ($checklist->id == $i) {
                                                                                             ?>
-                                                                                                            <tr>
-                                                                                                                <td><?php echo htmlentities($cnt++) ?></td>
-                                                                                                                <!-- Name of the assessment -->
-                                                                                                                <td class="text-left" name="" value=""><?php echo htmlentities($checklist->checklist) ?></td>
-                                                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="<?php echo $i . 'nm'; ?>" id="<?php echo $i . 'nm'; ?>" value="<?php echo htmlentities($checklist->id); ?>">
 
-                                                                                                                <td><input type="checkbox" class="checkbox1" name="<?php echo $i . 'document_list[]'; ?>" value="C" <?php in_array('C', $o) ? print 'checked' : ' ' ?> onclick="countSelected()"></td>
-                                                                                                                <td><input type="checkbox" class="checkbox2" name="<?php echo $i . 'document_list[]'; ?>" value="NC" <?php in_array('NC', $o) ? print 'checked' : ' ' ?> onclick="countSelected()"></td>
-                                                                                                                <td><input type="checkbox" class="checkbox3" name="<?php echo $i . 'document_list[]'; ?>" value="NA" <?php in_array('NA', $o) ? print 'checked' : ' ' ?> onclick="countSelected()"></td>
-                                                                                                                <td></td>
-                                                                                                            </tr>
+                                                                                                            <?php
+                                                                                                            $sql = "SELECT * from document_check_assessment where document_check_checklist_id='$checklist->id'";
+                                                                                                            $query = $dbh->prepare($sql);
+                                                                                                            $query->execute();
+                                                                                                            $checks = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                                            if ($query->rowCount() > 0) {
+                                                                                                                foreach ($checks as $check) {
+                                                                                                                    $o = explode(',', $i.["document_list"]);
+                                                                                                                    // $remarks = implode(', ', $_POST[$i . "document_list"]);
+
+                                                                                                            ?>
+                                                                                                                    <tr>
+                                                                                                                        <td><?php echo htmlentities($cnt++) ?></td>
+                                                                                                                        <!-- Name of the assessment -->
+                                                                                                                        <td class="text-left" name="" value=""><?php echo htmlentities($checklist->checklist) ?></td>
+                                                                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="<?php echo $i . 'nm'; ?>" id="<?php echo $i . 'nm'; ?>" value="<?php echo htmlentities($checklist->id); ?>">
+
+                                                                                                                        <td><input type="checkbox" class="checkbox1" name="<?php echo $i . 'document_list[]'; ?>" value="C" <?php in_array('C', $o) ? print 'checked' : ' ' ?> onclick="countSelected()"></td>
+                                                                                                                        <td><input type="checkbox" class="checkbox2" name="<?php echo $i . 'document_list[]'; ?>" value="NC" <?php in_array('NC', $o) ? print 'checked' : ' ' ?> onclick="countSelected()"></td>
+                                                                                                                        <td><input type="checkbox" class="checkbox3" name="<?php echo $i . 'document_list[]'; ?>" value="NA" <?php in_array('NA', $o) ? print 'checked' : ' ' ?> onclick="countSelected()"></td>
+                                                                                                                        <td></td>
+                                                                                                                    </tr>
                                                                                             <?php }
+                                                                                                            }
+                                                                                                        }
                                                                                                     }
                                                                                                 }
                                                                                             } ?>

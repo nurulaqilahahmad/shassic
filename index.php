@@ -96,7 +96,7 @@ require_once "controller.php";
                             </div>
 
                             <li class="nav-item">
-                                <a class="nav-link font-weight-bold" href="#">
+                                <a class="nav-link font-weight-bold" href="edit-profile.php">
 
                                     <span>Edit Profile</span>
                                 </a>
