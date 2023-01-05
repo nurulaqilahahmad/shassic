@@ -7,6 +7,7 @@ $name = "";
 $infos = array();
 $errors = array();
 
+use LDAP\Result;
 use PHPMailer\PHPMailer\PHPMailer;
 // use PHPMailer\PHPMailer\SMTP;
 // use PHPMailer\PHPMailer\Exception; 
@@ -24,38 +25,59 @@ if (isset($_COOKIE['email']) && isset($_COOKIE['password'])) {
     $password = "";
 }
 
-//if user click login button on login page
-if (isset($_POST['login'])) {
+// //if user click login button on login page
+// if (isset($_POST['login'])) {
 
+//     $email = $_POST['email'];
+//     $password = $_POST['password'];
+
+//     $sql = "SELECT * FROM user WHERE email = ?";
+//     $query = $dbh->prepare($sql);
+//     $query->bindParam(1, $email);
+//     $query->execute();
+
+//     $result = $query->fetch();
+//     //$result=mysqli_query($con, $sql);
+//     if ($result) {
+//         if ($query->rowCount() > 0) {
+//             //if(mysqli_num_rows($result)==1){
+//             // $result_fetch = mysqli_fetch_assoc($result);
+//             if (password_verify($password, $result['password'])) {
+//                 $_SESSION['login'] = $_POST['email'];
+//                 // $_SESSION['email'] = $result_fetch['email'];
+//                 // if (isset($_POST['remember_me'])) {
+//                 //     setcookie('email', $_POST['email'], time() + (60 * 60 * 24));
+//                 //     setcookie('password', $_POST['password'], time() + (60 * 60 * 24));
+//                 // } else {
+//                 //     setcookie('email', '', time() - (60 * 60 * 24));
+//                 //     setcookie('password', '', time() - (60 * 60 * 24));
+//                 // }
+//                 echo "<script type='text/javascript'> document.location = 'index.php'; </script>";
+//             } else {
+//                 // echo "<script>alert('Incorrect Email Address or Password');</script>";
+//                 $errors['login-error'] = "ERROR: Incorrect details!";
+//             }
+//         }
+//     }
+// }
+
+// If user click login button on login page
+if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $sql = "SELECT * FROM user WHERE email = ?";
+    $sql = "SELECT * FROM user WHERE email=:email";
     $query = $dbh->prepare($sql);
-    $query->bindParam(1, $email);
+    $query->bindParam(':email', $email, PDO::PARAM_STR);
     $query->execute();
+    $results = $query->fetch();
 
-    $result = $query->fetch();
-    //$result=mysqli_query($con, $sql);
-    if ($result) {
-        if ($query->rowCount() > 0) {
-            //if(mysqli_num_rows($result)==1){
-            $result_fetch = mysqli_fetch_assoc($result);
-            if (password_verify($password, $result['password'])) {
-                $_SESSION['login'] = $_POST['email'];
-                $_SESSION['email'] = $result_fetch['email'];
-                if (isset($_POST['remember_me'])) {
-                    setcookie('email', $_POST['email'], time() + (60 * 60 * 24));
-                    setcookie('password', $_POST['password'], time() + (60 * 60 * 24));
-                } else {
-                    setcookie('email', '', time() - (60 * 60 * 24));
-                    setcookie('password', '', time() - (60 * 60 * 24));
-                }
-                echo "<script type='text/javascript'> document.location = 'index.php'; </script>";
-            } else {
-                // echo "<script>alert('Incorrect Email Address or Password');</script>";
-                $errors['login-error'] = "ERROR: Incorrect details!";
-            }
+    if ($query->rowCount() > 0) {
+        if (password_verify($password, $results['password'])) {
+            $_SESSION['login'] = $_POST['email'];
+            echo "<script type='text/javascript'> document.location = 'index.php'; </script>";
+        } else {
+            $errors['login-error'] = "ERROR: Incorrect details!";
         }
     }
 }
@@ -68,7 +90,9 @@ if (isset($_POST['register'])) {
     $code = $_POST['code'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $hash = password_hash($password, PASSWORD_DEFAULT);
+
+    $options = array("cost" => 4);
+    $password = password_hash($password, PASSWORD_BCRYPT, $options);
 
     //Query for data insertion
     $sql = "INSERT INTO user(username, email, password, code, fullname) VALUES(:username, :email, :password, :code, :fullname)";
@@ -76,7 +100,7 @@ if (isset($_POST['register'])) {
     $query = $dbh->prepare($sql);
     $query->bindParam(':username', $username, PDO::PARAM_STR);
     $query->bindParam(':email', $email, PDO::PARAM_STR);
-    $query->bindParam(':password', $hash, PDO::PARAM_STR);
+    $query->bindParam(':password', $password, PDO::PARAM_STR);
     $query->bindParam(':code', $code, PDO::PARAM_STR);
     $query->bindParam(':fullname', $fullname, PDO::PARAM_STR);
     $query->execute();
@@ -361,11 +385,13 @@ if (isset($_POST['save-document-check'])) {
 
         if ($update) {
             for ($i = 1; $i <= 57; $i++) {
-                
-                $document_check_checklist_id = $_POST[$i."nm"];
-                $remarks = implode(', ', $_POST[$i."document_list"]); //name for each questions
+
+                $document_check_checklist_id = $_POST[$i . "nm"];
+                $remarks = implode(', ', $_POST[$i . "document_list"]); //name for all three checkbox
+
                 //Query for data insertion
                 $conn = "INSERT INTO document_check_assessment(assessment_id, document_check_checklist_id, remarks) VALUES(:assessment_id, :document_check_checklist_id, :remarks)";
+
                 // $conn = "INSERT INTO document_check_assessment(document_check_checklist_id) VALUES(:document_check_checklist_id)";
                 $query1 = $dbh->prepare($conn);
                 $query1->bindParam(':assessment_id', $assessment_id, PDO::PARAM_STR);
@@ -389,8 +415,6 @@ if (isset($_POST['edit-document-check'])) {
     $document_check_percentage = $_POST['document_check_percentage'];
 
     $assessment_id = $_POST['assessment_id'];
-    // $document_check_checklist_id = $_POST['document_check_checklist_id'];
-    // $remarks = implode(', ', $_POST['document_list']);
 
     // query for data selection
     $sql = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
@@ -409,9 +433,9 @@ if (isset($_POST['edit-document-check'])) {
 
         if ($update) {
             for ($i = 1; $i <= 57; $i++) {
-                
-                $document_check_checklist_id = $_POST[$i."nm"];
-                $remarks = implode(', ', $_POST[$i."document_list"]); //name for each questions
+
+                $document_check_checklist_id = $_POST[$i . "nm"];
+                $remarks = implode(', ', $_POST[$i . "document_list"]); //name for each questions
                 //Query for update data insertion
 
                 $conn = "UPDATE document_check_assessment SET remarks=:remarks WHERE assessment_id=:assessment_id";
@@ -475,4 +499,83 @@ if (isset($_POST['save-workplace-inspection-high-risk'])) {
     }
 }
 
-//the workplace inspection total score is changed every time the sub score is updated
+//If user click edit-profile button in index page
+if (isset($_POST['update_profile'])) {
+    //getting the post values
+    $id = $_POST['id'];
+    $username = $_POST['username'];
+    $fullname = $_POST['fullname'];
+
+    // query for data selection
+    $sql = "SELECT * FROM user WHERE id=:id";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':id', $id, PDO::PARAM_STR);
+    $query->execute();
+    $result = $query->fetchAll(PDO::FETCH_OBJ);
+
+    if ($query->rowCount() > 0) {
+        //query for updation
+        $con = "UPDATE user SET username=:username, fullname=:fullname WHERE id=:id";
+        $update = $dbh->prepare($con);
+        $update->bindParam(':id', $id, PDO::PARAM_STR);
+        $update->bindParam(':username', $username, PDO::PARAM_STR);
+        $update->bindParam(':fullname', $fullname, PDO::PARAM_STR);
+        $update->execute();
+
+        $infos['edit-profile'] = "Updated successfully";
+    }
+}
+
+//If user click edit-password button in index page
+if (isset($_POST['edit_password'])) {
+    $email = $_POST['email'];
+    $op = $_POST['op'];
+    $np = $_POST['np'];
+    $c_np = $_POST['c_np'];
+
+    // $sql = "SELECT password from user where id=:id AND password=:op";
+    $sql = "SELECT email, password from user where email=:email";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':email', $email, PDO::PARAM_STR);
+    $query->execute();
+    $result = $query->fetch();
+
+    if ((password_verify($op, $result['password'])) && !empty($op)) {
+        if($np == ''){
+            $error[] = "New Password is required.";
+            $errors[] = "New Password is required.";
+        }
+        if ($c_np == '') {
+            $error[] = 'Confirmation password is required.';
+            $errors[] = 'Confirmation password is required.';
+        }
+        if ($np != $c_np) {
+            $error[] = 'The confirmation password does not match.';
+            $errors[] = 'The confirmation password does not match.';
+        }
+        if (!isset($error)) {
+            $options = array("cost" => 4);
+            $np = password_hash($np, PASSWORD_BCRYPT, $options);
+
+            $sql = "UPDATE user SET password=? WHERE email=?";
+            $query = $dbh->prepare($sql);
+            $query->execute([$np, $email]);
+
+            if ($query) {
+                $infos['edit-password'] = "Your password has been changed successfully";
+            } else {
+                header("Location: edit-password.php?wrong=Fail to change the password, please try again");
+            }
+        }
+    } else {
+        // $error[] = 'Old Password does not match.';
+        $errors[] = 'Old Password does not match.';
+    }
+
+    if (isset($error)) {
+
+        foreach ($error as $error) {
+            // echo '<p class="errmsg">' . $error . '</p>';
+        }
+    }
+}
