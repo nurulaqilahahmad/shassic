@@ -1053,11 +1053,6 @@ if (isset($_POST['save-personnel-interview-managerial'])) {
     }
 }
 
-//if user click save-personnel-interview-supervisory button in assessment personnel interview page
-if (isset($_POST['save-personnel-interview-supervisory'])) {
-    //getting the post values
-    $assessee_id = $_POST['assessee_id'];
-    $supervisory_score = $_POST['supervisory_score'];
 //If user click edit-profile button in index page
 if (isset($_POST['update_profile'])) {
     //getting the post values
@@ -1100,7 +1095,7 @@ if (isset($_POST['edit_password'])) {
     $result = $query->fetch();
 
     if ((password_verify($op, $result['password'])) && !empty($op)) {
-        if($np == ''){
+        if ($np == '') {
             $error[] = "New Password is required.";
             $errors[] = "New Password is required.";
         }
@@ -1138,6 +1133,12 @@ if (isset($_POST['edit_password'])) {
         }
     }
 }
+
+//if user click save-personnel-interview-supervisory button in assessment personnel interview page
+if (isset($_POST['save-personnel-interview-supervisory'])) {
+    //getting the post values
+    $assessee_id = $_POST['assessee_id'];
+    $supervisory_score = $_POST['supervisory_score'];
 
     // query for data selection - personnel_interview_subscore
     $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id=:assessee_id";
