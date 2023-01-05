@@ -83,6 +83,21 @@ require_once "controller.php";
 
                                                                     <!-- Page Heading -->
                                                                     <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Add New Assessment</h1>
+                                                                    <?php
+                                                                    if (count($errors) > 0) {
+                                                                    ?>
+                                                                        <div class="col-lg-12 mb-4">
+                                                                            <div class="card bg-danger text-white shadow">
+                                                                                <div class="card-body text-center" style="font-weight: bold;">
+                                                                                    <?php foreach ($errors as $error) {
+                                                                                        echo $error;
+                                                                                    } ?>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    <?php
+                                                                    }
+                                                                    ?>
                                                                 </div>
 
                                                                 <form class="user" method="POST" enctype="multipart/form-data">

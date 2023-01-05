@@ -272,13 +272,197 @@ if (isset($_POST['add'])) {
         $lastInsertId = $dbh->lastInsertId();
         if ($lastInsertId) {
             $assessee_id = $lastInsertId;
-            $con = "INSERT INTO workplace_inspection_subscore(assessment_id) VALUES(:assessee_id)";
+            $con = "INSERT INTO workplace_inspection_subscore(assessment_id) VALUES(:assessee_id);
+                    INSERT INTO personnel_interview_subscore(assessment_id) VALUES(:assessee_id);";
             $insert_subscore = $dbh->prepare($con);
             $insert_subscore->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $insert_subscore->execute();
-            $_SESSION['info'] = "You have successfully added a new assessment";
-            header("location: assessment-component.php?assessee_id=" . $assessee_id);
+
+            if ($insert_subscore && insertDocumentCheck($assessee_id) && insertWorkplaceInspection($assessee_id) && insertPersonnelInterviewManagerialSupervisory($assessee_id) && insertPersonnelInterviewWorker($assessee_id)) {
+                $infos['add-new-assessment-success'] = "You have successfully added a new assessment";
+                header("location: assessment-component.php?assessee_id=" . $assessee_id . "&infos=" . $infos['add-new-assessment-success']);
+            } else {
+                $errors['add-new-assessment-fail'] = "Something went wrong";
+            }
         }
+    }
+}
+
+function insertDocumentCheck($lastInsertId)
+{
+    session_start();
+    include('includes/config.php');
+
+    $assessee_id = $lastInsertId;
+
+    //query for data selection - document check
+    $sql = "SELECT * FROM document_check_checklist";
+    $query = $dbh->prepare($sql);
+    $query->execute();
+    $results = $query->fetchAll(PDO::FETCH_OBJ);
+    $cnt = 1;
+    if ($query->rowCount() > 0) {
+        foreach ($results as $result) {
+            //query for data insertion - document check
+            $document_check_checklist_id = $result->id;
+            $conn = "INSERT INTO document_check_assessment(assessment_id, document_check_checklist_id) VALUES(:assessee_id, :document_check_checklist_id);";
+            $insert_document_check = $dbh->prepare($conn);
+            $insert_document_check->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $insert_document_check->bindParam(':document_check_checklist_id', $document_check_checklist_id, PDO::PARAM_STR);
+            $insert_document_check->execute();
+        }
+    }
+
+    if ($insert_document_check) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function insertWorkplaceInspection($lastInsertId)
+{
+    session_start();
+    include('includes/config.php');
+
+    $assessee_id = $lastInsertId;
+
+    //query for data selection - workplace inspection (general)
+    $conn1 = "SELECT * FROM workplace_inspection_checklist WHERE item_id BETWEEN 1 AND 3";
+    $query1 = $dbh->prepare($conn1);
+    $query1->execute();
+    $checklists = $query1->fetchAll(PDO::FETCH_OBJ);
+    $cnt = 1;
+    if ($query1->rowCount() > 0) {
+        foreach ($checklists as $checklist) {
+            //query for data insertion - workplace inspection (general)
+            $workplace_inspection_checklist_id = $checklist->id;
+            $conn2 = "INSERT INTO workplace_inspection_assessment(assessment_id, workplace_inspection_checklist_id) VALUES(:assessee_id, :workplace_inspection_checklist_id);";
+            $insert_workplace_inspection_general = $dbh->prepare($conn2);
+            $insert_workplace_inspection_general->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $insert_workplace_inspection_general->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
+            $insert_workplace_inspection_general->execute();
+        }
+    }
+
+
+    //query for data selection - workplace inspection (construction work)
+    $conn3 = "SELECT * FROM workplace_inspection_checklist WHERE item_id BETWEEN 4 AND 7";
+    $query2 = $dbh->prepare($conn3);
+    $query2->execute();
+    $checklists1 = $query2->fetchAll(PDO::FETCH_OBJ);
+    $cnt = 1;
+    if ($query2->rowCount() > 0) {
+        foreach ($checklists1 as $checklist1) {
+            //query for data insertion - workplace inspection (construction work)
+            $workplace_inspection_checklist_id = $checklist1->id;
+            $conn4 = "INSERT INTO workplace_inspection_high_risk_1(assessment_id, workplace_inspection_checklist_id) VALUES(:assessee_id, :workplace_inspection_checklist_id);
+                      INSERT INTO workplace_inspection_high_risk_2(assessment_id, workplace_inspection_checklist_id) VALUES(:assessee_id, :workplace_inspection_checklist_id);
+                      INSERT INTO workplace_inspection_high_risk_3(assessment_id, workplace_inspection_checklist_id) VALUES(:assessee_id, :workplace_inspection_checklist_id);";
+            $insert_workplace_inspection_highrisk = $dbh->prepare($conn4);
+            $insert_workplace_inspection_highrisk->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $insert_workplace_inspection_highrisk->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
+            $insert_workplace_inspection_highrisk->execute();
+        }
+    }
+
+    if ($insert_workplace_inspection_general && $insert_workplace_inspection_highrisk) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function insertPersonnelInterviewManagerialSupervisory($lastInsertId)
+{
+    session_start();
+    include('includes/config.php');
+
+    $assessee_id = $lastInsertId;
+
+    //query for data selection - personnel interview (managerial)
+    $conn5 = "SELECT * FROM personnel_interview_checklist WHERE category_id = 1";
+    $query3 = $dbh->prepare($conn5);
+    $query3->execute();
+    $checklists2 = $query3->fetchAll(PDO::FETCH_OBJ);
+    $cnt = 1;
+    if ($query3->rowCount() > 0) {
+        foreach ($checklists2 as $checklist2) {
+            //query for data insertion - personnel interview (managerial)
+            $personnel_interview_checklist_id = $checklist2->id;
+            $conn6 = "INSERT INTO personnel_interview_managerial(assessment_id, personnel_interview_checklist_id) VALUES(:assessee_id, :personnel_interview_checklist_id)";
+            $insert_personnel_interview_managerial = $dbh->prepare($conn6);
+            $insert_personnel_interview_managerial->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $insert_personnel_interview_managerial->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
+            $insert_personnel_interview_managerial->execute();
+        }
+    }
+
+
+    //query for data selection - personnel interview (supervisory)
+    $conn7 = "SELECT * FROM personnel_interview_checklist WHERE category_id = 2";
+    $query4 = $dbh->prepare($conn7);
+    $query4->execute();
+    $checklists3 = $query4->fetchAll(PDO::FETCH_OBJ);
+    $cnt = 1;
+    if ($query4->rowCount() > 0) {
+        foreach ($checklists3 as $checklist3) {
+            //query for data insertion - personnel interview (supervisory)
+            $personnel_interview_checklist_id = $checklist3->id;
+            $conn8 = "INSERT INTO personnel_interview_supervisory_1(assessment_id, personnel_interview_checklist_id) VALUES(:assessee_id, :personnel_interview_checklist_id);
+                      INSERT INTO personnel_interview_supervisory_2(assessment_id, personnel_interview_checklist_id) VALUES(:assessee_id, :personnel_interview_checklist_id);
+                      INSERT INTO personnel_interview_supervisory_3(assessment_id, personnel_interview_checklist_id) VALUES(:assessee_id, :personnel_interview_checklist_id);";
+            $insert_personnel_interview_supervisory = $dbh->prepare($conn8);
+            $insert_personnel_interview_supervisory->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $insert_personnel_interview_supervisory->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
+            $insert_personnel_interview_supervisory->execute();
+        }
+    }
+
+    if ($insert_personnel_interview_managerial && $insert_personnel_interview_supervisory) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function insertPersonnelInterviewWorker($lastInsertId)
+{
+    session_start();
+    include('includes/config.php');
+
+    $assessee_id = $lastInsertId;
+
+    //query for data selection - personnel interview (worker)
+    $conn9 = "SELECT * FROM personnel_interview_checklist WHERE category_id = 3";
+    $query5 = $dbh->prepare($conn9);
+    $query5->execute();
+    $checklists4 = $query5->fetchAll(PDO::FETCH_OBJ);
+    $cnt = 1;
+    if ($query5->rowCount() > 0) {
+        foreach ($checklists4 as $checklist4) {
+            //query for data insertion - personnel interview (worker)
+            $personnel_interview_checklist_id = $checklist4->id;
+            $conn10 = "INSERT INTO personnel_interview_worker_1(assessment_id, personnel_interview_checklist_id) VALUES(:assessee_id, :personnel_interview_checklist_id);
+                   INSERT INTO personnel_interview_worker_2(assessment_id, personnel_interview_checklist_id) VALUES(:assessee_id, :personnel_interview_checklist_id);
+                   INSERT INTO personnel_interview_worker_3(assessment_id, personnel_interview_checklist_id) VALUES(:assessee_id, :personnel_interview_checklist_id);
+                   INSERT INTO personnel_interview_worker_4(assessment_id, personnel_interview_checklist_id) VALUES(:assessee_id, :personnel_interview_checklist_id);
+                   INSERT INTO personnel_interview_worker_5(assessment_id, personnel_interview_checklist_id) VALUES(:assessee_id, :personnel_interview_checklist_id);
+                   INSERT INTO personnel_interview_worker_6(assessment_id, personnel_interview_checklist_id) VALUES(:assessee_id, :personnel_interview_checklist_id);
+                   INSERT INTO personnel_interview_worker_7(assessment_id, personnel_interview_checklist_id) VALUES(:assessee_id, :personnel_interview_checklist_id);
+                   INSERT INTO personnel_interview_worker_8(assessment_id, personnel_interview_checklist_id) VALUES(:assessee_id, :personnel_interview_checklist_id);
+                   INSERT INTO personnel_interview_worker_9(assessment_id, personnel_interview_checklist_id) VALUES(:assessee_id, :personnel_interview_checklist_id);";
+            $insert_personnel_interview_worker = $dbh->prepare($conn10);
+            $insert_personnel_interview_worker->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $insert_personnel_interview_worker->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
+            $insert_personnel_interview_worker->execute();
+        }
+    }
+
+    if ($insert_personnel_interview_worker) {
+        return true;
+    } else {
+        return false;
     }
 }
 
@@ -315,8 +499,12 @@ if (isset($_POST['update'])) {
         $update->bindParam(':project_picture', $project_picture, PDO::PARAM_STR);
         $update->execute();
 
-        $_SESSION['info'] = "Updated successfully";
-        header("location: assessment-component.php?assessee_id=" . $assessee_id);
+        if ($update) {
+            $infos['edit-assessment-success'] = "Updated successfully";
+        } else {
+            $errors['edit-assessment-fail'] = "Something went wrong";
+        }
+        // header("location: assessment-component.php?assessee_id=" . $assessee_id);
     }
 }
 
@@ -353,21 +541,21 @@ if (isset($_POST['update-from-history'])) {
         $update->bindParam(':project_picture', $project_picture, PDO::PARAM_STR);
         $update->execute();
 
-        $_SESSION['info'] = "Updated successfully";
-        header("location: assessment-component.php?assessee_id=" . $assessee_id);
+        if ($update) {
+            $infos['update-from-history-success'] = "Updated successfully";
+        } else {
+            $errors['update-from-history-fail'] = "Something went wrong";
+        }
+        // header("location: assessment-component.php?assessee_id=" . $assessee_id);
     }
 }
 
-//if user click save-document-check button in assessment document check page
+//if user click edit-document-check button in assessment document check page
 if (isset($_POST['save-document-check'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $document_check_percentage = $_POST['document_check_percentage'];
 
-    $assessment_id = $_POST['assessment_id'];
-    // $document_check_checklist_id = $_POST['document_check_checklist_id'];
-    // $remarks = implode(', ', $_POST['document_list']);
-
     // query for data selection
     $sql = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
     $query = $dbh->prepare($sql);
@@ -382,74 +570,176 @@ if (isset($_POST['save-document-check'])) {
         $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
         $update->bindParam(':document_check_percentage', $document_check_percentage, PDO::PARAM_STR);
         $update->execute();
+    }
 
-        if ($update) {
-            for ($i = 1; $i <= 57; $i++) {
+    foreach ($_POST['document_check_checklist_id'] as $document_check_checklist_id) {
+        if (isset($_POST['doccheck_' . $document_check_checklist_id])) {
+            $doccheck = $_POST['doccheck_' . $document_check_checklist_id];
+            $doc_check = implode(', ', $doccheck);
 
-                $document_check_checklist_id = $_POST[$i . "nm"];
-                $remarks = implode(', ', $_POST[$i . "document_list"]); //name for all three checkbox
+            // query for data selection - workplace_inspection_high_risk_1
+            $sql1 = "SELECT * FROM document_check_assessment WHERE document_check_checklist_id=:document_check_checklist_id AND assessment_id=:assessee_id";
+            $query1 = $dbh->prepare($sql1);
+            $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $query1->bindParam(':document_check_checklist_id', $document_check_checklist_id, PDO::PARAM_STR);
+            $query1->execute();
+            $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
 
-                //Query for data insertion
-                $conn = "INSERT INTO document_check_assessment(assessment_id, document_check_checklist_id, remarks) VALUES(:assessment_id, :document_check_checklist_id, :remarks)";
+            if ($query1->rowCount() > 0) {
+                foreach ($results1 as $result1) {
+                    //query for updation - workplace_inspection_high_risk_1
+                    $con1 = "UPDATE document_check_assessment SET status=:doc_check WHERE document_check_checklist_id=:document_check_checklist_id AND assessment_id=:assessee_id";
+                    $update1 = $dbh->prepare($con1);
+                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update1->bindParam(':doc_check', $doc_check, PDO::PARAM_STR);
+                    $update1->bindParam(':document_check_checklist_id', $document_check_checklist_id, PDO::PARAM_STR);
+                    $update1->execute();
 
-                // $conn = "INSERT INTO document_check_assessment(document_check_checklist_id) VALUES(:document_check_checklist_id)";
-                $query1 = $dbh->prepare($conn);
-                $query1->bindParam(':assessment_id', $assessment_id, PDO::PARAM_STR);
-                $query1->bindParam(':document_check_checklist_id', $document_check_checklist_id, PDO::PARAM_STR);
-                $query1->bindParam(':remarks', $remarks, PDO::PARAM_STR);
-                $query1->execute();
+                    if ($update1) {
+                        $infos['document-check-update-success'] = "Updated successfully";
+                    } else {
+                        $errors['document-check-update-fail'] = "Something went wrong";
+                    }
+                }
+            }
+        } else {
+            $doc_check = "";
+
+            // query for data selection - workplace_inspection_high_risk_1
+            $sql1 = "SELECT * FROM document_check_assessment WHERE document_check_checklist_id=:document_check_checklist_id AND assessment_id=:assessee_id";
+            $query1 = $dbh->prepare($sql1);
+            $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $query1->bindParam(':document_check_checklist_id', $document_check_checklist_id, PDO::PARAM_STR);
+            $query1->execute();
+            $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
+
+            if ($query1->rowCount() > 0) {
+                foreach ($results1 as $result1) {
+                    //query for updation - workplace_inspection_high_risk_1
+                    $con1 = "UPDATE document_check_assessment SET status=:doc_check WHERE document_check_checklist_id=:document_check_checklist_id AND assessment_id=:assessee_id";
+                    $update1 = $dbh->prepare($con1);
+                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update1->bindParam(':doc_check', $doc_check, PDO::PARAM_STR);
+                    $update1->bindParam(':document_check_checklist_id', $document_check_checklist_id, PDO::PARAM_STR);
+                    $update1->execute();
+
+                    if ($update1) {
+                        $infos['document-check-update-success'] = "Updated successfully";
+                    } else {
+                        $errors['document-check-update-fail'] = "Something went wrong";
+                    }
+                }
             }
         }
-
-        $_SESSION['info'] = "Updated successfully";
-        // header("location: assessment-component.php?assessee_id=" . $assessee_id);
-        header("location: edit-assessment-component.php?assessee_id=" . $assessee_id);
-        // header("location: assessment-document-check.php?assessee_id=" . $assessee_id);
     }
 }
 
-//if user click edit-document-check button in assessment document check page
-if (isset($_POST['edit-document-check'])) {
+//if user click save-workplace-inspection-general button in assessment workplace inspection page
+if (isset($_POST['save-workplace-inspection-general'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
-    $document_check_percentage = $_POST['document_check_percentage'];
+    $general_score = $_POST['general_score'];
 
-    $assessment_id = $_POST['assessment_id'];
-
-    // query for data selection
-    $sql = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
+    // query for data selection - workplace_inspection_subscore
+    $sql = "SELECT * FROM workplace_inspection_subscore WHERE assessment_id=:assessee_id";
     $query = $dbh->prepare($sql);
     $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
     $query->execute();
-    $result = $query->fetchAll(PDO::FETCH_OBJ);
+    $results = $query->fetchAll(PDO::FETCH_OBJ);
 
     if ($query->rowCount() > 0) {
-        //query for updation
-        $con = "UPDATE assessment SET assessee_id=:assessee_id, document_check_percentage=:document_check_percentage WHERE assessee_id=:assessee_id";
-        $update = $dbh->prepare($con);
-        $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        $update->bindParam(':document_check_percentage', $document_check_percentage, PDO::PARAM_STR);
-        $update->execute();
+        foreach ($results as $result) {
+            //query for updation
+            $con = "UPDATE workplace_inspection_subscore SET general_score=:general_score WHERE assessment_id=:assessee_id";
+            $update = $dbh->prepare($con);
+            $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $update->bindParam(':general_score', $general_score, PDO::PARAM_STR);
+            $update->execute();
 
-        if ($update) {
-            for ($i = 1; $i <= 57; $i++) {
-
-                $document_check_checklist_id = $_POST[$i . "nm"];
-                $remarks = implode(', ', $_POST[$i . "document_list"]); //name for each questions
-                //Query for update data insertion
-
-                $conn = "UPDATE document_check_assessment SET remarks=:remarks WHERE assessment_id=:assessment_id";
+            if ($update) {
+                //query for data selection
+                $conn = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
                 $query1 = $dbh->prepare($conn);
-                $query1->bindParam(':assessment_id', $assessment_id, PDO::PARAM_STR);
-                $query1->bindParam(':document_check_checklist_id', $document_check_checklist_id, PDO::PARAM_STR);
-                $query1->bindParam(':remarks', $remarks, PDO::PARAM_STR);
+                $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
                 $query1->execute();
+                $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
+
+                if ($query1->rowCount() > 0) {
+                    $conn1 = "UPDATE assessment SET workplace_inspection_percentage=:general_score+'$result->high_risk_score' WHERE assessee_id=:assessee_id";
+                    $update1 = $dbh->prepare($conn1);
+                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update1->bindParam(':general_score', $general_score, PDO::PARAM_STR);
+                    $update1->execute();
+                }
             }
         }
-        $_SESSION['info'] = "Edit successfully";
-        // header("location: assessment-component.php?assessee_id=" . $assessee_id);
-        header("location: edit-assessment-component.php?assessee_id=" . $assessee_id);
-        // header("location: assessment-document-check.php?assessee_id=" . $assessee_id);
+    }
+
+    foreach ($_POST['workplace_inspection_checklist_id'] as $workplace_inspection_checklist_id) {
+        if (isset($_POST['workinsp_' . $workplace_inspection_checklist_id])) {
+            $workinsp = $_POST['workinsp_' . $workplace_inspection_checklist_id];
+            $work_insp = implode(', ', $workinsp);
+            $remarks = $_POST['remarks_' . $workplace_inspection_checklist_id];
+
+            // query for data selection - workplace_inspection_high_risk_1
+            $sql1 = "SELECT * FROM workplace_inspection_assessment WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
+            $query1 = $dbh->prepare($sql1);
+            $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $query1->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
+            $query1->execute();
+            $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
+
+            if ($query1->rowCount() > 0) {
+                foreach ($results1 as $result1) {
+                    //query for updation - workplace_inspection_high_risk_1
+                    $con1 = "UPDATE workplace_inspection_assessment SET status=:work_insp, remarks=:remarks WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
+                    $update1 = $dbh->prepare($con1);
+                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update1->bindParam(':work_insp', $work_insp, PDO::PARAM_STR);
+                    $update1->bindParam(':remarks', $remarks, PDO::PARAM_STR);
+                    $update1->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
+                    $update1->execute();
+
+                    if ($update1) {
+                        $infos['workplace-inspection-general-update-success'] = "Updated successfully";
+                    } else {
+                        $errors['workplace-inspection-general-update-fail'] = "Something went wrong";
+                    }
+                }
+                // header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
+            }
+        } else {
+            $work_insp = "";
+            $remarks = "";
+
+            // query for data selection - workplace_inspection_high_risk_1
+            $sql1 = "SELECT * FROM workplace_inspection_assessment WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
+            $query1 = $dbh->prepare($sql1);
+            $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $query1->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
+            $query1->execute();
+            $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
+
+            if ($query1->rowCount() > 0) {
+                foreach ($results1 as $result1) {
+                    //query for updation - workplace_inspection_high_risk_1
+                    $con1 = "UPDATE workplace_inspection_assessment SET status=:work_insp, remarks=:remarks WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
+                    $update1 = $dbh->prepare($con1);
+                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update1->bindParam(':work_insp', $work_insp, PDO::PARAM_STR);
+                    $update1->bindParam(':remarks', $remarks, PDO::PARAM_STR);
+                    $update1->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
+                    $update1->execute();
+
+                    if ($update1) {
+                        $infos['workplace-inspection-general-update-success'] = "Updated successfully";
+                    } else {
+                        $errors['workplace-inspection-general-update-fail'] = "Something went wrong";
+                    }
+                }
+                // header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
+            }
+        }
     }
 }
 
@@ -459,7 +749,7 @@ if (isset($_POST['save-workplace-inspection-high-risk'])) {
     $assessee_id = $_POST['assessee_id'];
     $high_risk_score = $_POST['high_risk_score'];
 
-    // query for data selection
+    // query for data selection - workplace_inspection_subscore
     $sql = "SELECT * FROM workplace_inspection_subscore WHERE assessment_id=:assessee_id";
     $query = $dbh->prepare($sql);
     $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
@@ -492,13 +782,282 @@ if (isset($_POST['save-workplace-inspection-high-risk'])) {
                 }
             }
         }
+    }
 
+    foreach ($_POST['workplace_inspection_checklist_id'] as $workplace_inspection_checklist_id) {
+        if (isset($_POST['highrisk1_' . $workplace_inspection_checklist_id])) {
+            $highrisk1 = $_POST['highrisk1_' . $workplace_inspection_checklist_id];
+            $high_risk_1 = implode(', ', $highrisk1);
 
-        $infos['high-risk-update-success'] = "Updated successfully";
-        // header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
+            // query for data selection - workplace_inspection_high_risk_1
+            $sql1 = "SELECT * FROM workplace_inspection_high_risk_1 WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
+            $query1 = $dbh->prepare($sql1);
+            $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $query1->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
+            $query1->execute();
+            $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
+
+            if ($query1->rowCount() > 0) {
+                foreach ($results1 as $result1) {
+                    //query for updation - workplace_inspection_high_risk_1
+                    $con1 = "UPDATE workplace_inspection_high_risk_1 SET status=:high_risk_1 WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
+                    // $con1 = "UPDATE workplace_inspection_high_risk_1 SET status=? WHERE assessment_id=:assessee_id AND workplace_inspection_checklist_id=?";
+                    $update1 = $dbh->prepare($con1);
+                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update1->bindParam(':high_risk_1', $high_risk_1, PDO::PARAM_STR);
+                    $update1->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
+                    $update1->execute();
+                }
+            }
+        } else {
+            $high_risk_1 = "";
+
+            // query for data selection - workplace_inspection_high_risk_1
+            $sql1 = "SELECT * FROM workplace_inspection_high_risk_1 WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
+            $query1 = $dbh->prepare($sql1);
+            $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $query1->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
+            $query1->execute();
+            $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
+
+            if ($query1->rowCount() > 0) {
+                foreach ($results1 as $result1) {
+                    //query for updation - workplace_inspection_high_risk_1
+                    $con1 = "UPDATE workplace_inspection_high_risk_1 SET status=:high_risk_1 WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
+                    // $con1 = "UPDATE workplace_inspection_high_risk_1 SET status=? WHERE assessment_id=:assessee_id AND workplace_inspection_checklist_id=?";
+                    $update1 = $dbh->prepare($con1);
+                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update1->bindParam(':high_risk_1', $high_risk_1, PDO::PARAM_STR);
+                    $update1->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
+                    $update1->execute();
+                }
+            }
+        }
+
+        if (isset($_POST['highrisk2_' . $workplace_inspection_checklist_id])) {
+            $highrisk2 = $_POST['highrisk2_' . $workplace_inspection_checklist_id];
+            $high_risk_2 = implode(', ', $highrisk2);
+
+            // query for data selection - workplace_inspection_high_risk_1
+            $sql2 = "SELECT * FROM workplace_inspection_high_risk_2 WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
+            $query2 = $dbh->prepare($sql2);
+            $query2->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $query2->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
+            $query2->execute();
+            $results2 = $query2->fetchAll(PDO::FETCH_OBJ);
+
+            if ($query2->rowCount() > 0) {
+                foreach ($results2 as $result2) {
+                    //query for updation - workplace_inspection_high_risk_1
+                    $con2 = "UPDATE workplace_inspection_high_risk_2 SET status=:high_risk_2 WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
+                    // $con1 = "UPDATE workplace_inspection_high_risk_1 SET status=? WHERE assessment_id=:assessee_id AND workplace_inspection_checklist_id=?";
+                    $update2 = $dbh->prepare($con2);
+                    $update2->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update2->bindParam(':high_risk_2', $high_risk_2, PDO::PARAM_STR);
+                    $update2->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
+                    $update2->execute();
+                }
+            }
+        } else {
+            $high_risk_2 = "";
+
+            // query for data selection - workplace_inspection_high_risk_1
+            $sql2 = "SELECT * FROM workplace_inspection_high_risk_2 WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
+            $query2 = $dbh->prepare($sql2);
+            $query2->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $query2->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
+            $query2->execute();
+            $results2 = $query2->fetchAll(PDO::FETCH_OBJ);
+
+            if ($query2->rowCount() > 0) {
+                foreach ($results2 as $result2) {
+                    //query for updation - workplace_inspection_high_risk_1
+                    $con2 = "UPDATE workplace_inspection_high_risk_2 SET status=:high_risk_2 WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
+                    // $con1 = "UPDATE workplace_inspection_high_risk_1 SET status=? WHERE assessment_id=:assessee_id AND workplace_inspection_checklist_id=?";
+                    $update2 = $dbh->prepare($con2);
+                    $update2->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update2->bindParam(':high_risk_2', $high_risk_2, PDO::PARAM_STR);
+                    $update2->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
+                    $update2->execute();
+                }
+            }
+        }
+
+        if (isset($_POST['highrisk3_' . $workplace_inspection_checklist_id])) {
+            $highrisk3 = $_POST['highrisk3_' . $workplace_inspection_checklist_id];
+            $high_risk_3 = implode(', ', $highrisk3);
+            $remarks = $_POST['remarks_' . $workplace_inspection_checklist_id];
+
+            // query for data selection - workplace_inspection_high_risk_1
+            $sql3 = "SELECT * FROM workplace_inspection_high_risk_3 WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
+            $query3 = $dbh->prepare($sql3);
+            $query3->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $query3->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
+            $query3->execute();
+            $results3 = $query3->fetchAll(PDO::FETCH_OBJ);
+
+            if ($query3->rowCount() > 0) {
+                foreach ($results3 as $result3) {
+                    //query for updation - workplace_inspection_high_risk_1
+                    $con3 = "UPDATE workplace_inspection_high_risk_3 SET status=:high_risk_3, remarks=:remarks WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
+                    // $con1 = "UPDATE workplace_inspection_high_risk_1 SET status=? WHERE assessment_id=:assessee_id AND workplace_inspection_checklist_id=?";
+                    $update3 = $dbh->prepare($con3);
+                    $update3->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update3->bindParam(':high_risk_3', $high_risk_3, PDO::PARAM_STR);
+                    $update3->bindParam(':remarks', $remarks, PDO::PARAM_STR);
+                    $update3->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
+                    $update3->execute();
+                }
+            }
+        } else {
+            $high_risk_3 = "";
+            $remarks = "";
+
+            // query for data selection - workplace_inspection_high_risk_1
+            $sql3 = "SELECT * FROM workplace_inspection_high_risk_3 WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
+            $query3 = $dbh->prepare($sql3);
+            $query3->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $query3->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
+            $query3->execute();
+            $results3 = $query3->fetchAll(PDO::FETCH_OBJ);
+
+            if ($query3->rowCount() > 0) {
+                foreach ($results3 as $result3) {
+                    //query for updation - workplace_inspection_high_risk_1
+                    $con3 = "UPDATE workplace_inspection_high_risk_3 SET status=:high_risk_3, remarks=:remarks WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
+                    // $con1 = "UPDATE workplace_inspection_high_risk_1 SET status=? WHERE assessment_id=:assessee_id AND workplace_inspection_checklist_id=?";
+                    $update3 = $dbh->prepare($con3);
+                    $update3->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update3->bindParam(':high_risk_3', $high_risk_3, PDO::PARAM_STR);
+                    $update3->bindParam(':remarks', $remarks, PDO::PARAM_STR);
+                    $update3->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
+                    $update3->execute();
+                }
+            }
+        }
+
+        if ($update1 || $update2 || $update3) {
+            $infos['workplace-insepection-high-risk-success'] = "Updated successfully";
+        } else {
+            $errors['workplace-insepection-high-risk-fail'] = "Something went wrong";
+        }
     }
 }
 
+//if user click save-personnel-interview-managerial button in assessment personnel interview page
+if (isset($_POST['save-personnel-interview-managerial'])) {
+    //getting the post value
+    $assessee_id = $_POST['assessee_id'];
+    $managerial_score = $_POST['managerial_score'];
+
+    // query for data selection - personnel_interview_subscore
+    $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id=:assessee_id";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+    $query->execute();
+    $results = $query->fetchAll(PDO::FETCH_OBJ);
+
+    if ($query->rowCount() > 0) {
+        foreach ($results as $result) {
+            //query for updation
+            $con = "UPDATE personnel_interview_subscore SET managerial_score=:managerial_score WHERE assessment_id=:assessee_id";
+            $update = $dbh->prepare($con);
+            $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $update->bindParam(':managerial_score', $managerial_score, PDO::PARAM_STR);
+            $update->execute();
+
+            if ($update) {
+                //query for data selection
+                $conn = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
+                $query1 = $dbh->prepare($conn);
+                $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                $query1->execute();
+                $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
+
+                if ($query1->rowCount() > 0) {
+                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=:managerial_score+'$result->supervisory_score' WHERE assessee_id=:assessee_id";
+                    $update1 = $dbh->prepare($conn1);
+                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update1->bindParam(':managerial_score', $managerial_score, PDO::PARAM_STR);
+                    $update1->execute();
+                }
+            }
+        }
+    }
+
+    foreach ($_POST['personnel_interview_checklist_id'] as $personnel_interview_checklist_id) {
+        if (isset($_POST['managerial_' . $personnel_interview_checklist_id])) {
+            $_managerial = $_POST['managerial_' . $personnel_interview_checklist_id];
+            $managerial = implode(', ', $_managerial);
+            $remarks = $_POST['remarks_' . $personnel_interview_checklist_id];
+
+            // query for data selection - personnel_interview_managerial
+            $sql1 = "SELECT * FROM personnel_interview_managerial WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
+            $query1 = $dbh->prepare($sql1);
+            $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $query1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
+            $query1->execute();
+            $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
+
+            if ($query1->rowCount() > 0) {
+                foreach ($results1 as $result1) {
+                    //query for updation - workplace_inspection_high_risk_1
+                    $con1 = "UPDATE personnel_interview_checklist_id SET status=:managerial, remarks=:remarks WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
+                    $update1 = $dbh->prepare($con1);
+                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update1->bindParam(':managerial', $managerial, PDO::PARAM_STR);
+                    $update1->bindParam(':remarks', $remarks, PDO::PARAM_STR);
+                    $update1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
+                    $update1->execute();
+
+                    if ($update1) {
+                        $infos['personnel-interview-managerial-update-success'] = "Updated successfully";
+                    } else {
+                        $errors['personnel-interview-managerial-update-fail'] = "Something went wrong";
+                    }
+                }
+                // header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
+            }
+        } else {
+            $managerial = "";
+            $remarks = "";
+
+            // query for data selection - personnel_interview_managerial
+            $sql1 = "SELECT * FROM personnel_interview_managerial WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
+            $query1 = $dbh->prepare($sql1);
+            $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $query1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
+            $query1->execute();
+            $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
+
+            if ($query1->rowCount() > 0) {
+                foreach ($results1 as $result1) {
+                    //query for updation - workplace_inspection_high_risk_1
+                    $con1 = "UPDATE personnel_interview_checklist_id SET status=:managerial, remarks=:remarks WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
+                    $update1 = $dbh->prepare($con1);
+                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update1->bindParam(':managerial', $managerial, PDO::PARAM_STR);
+                    $update1->bindParam(':remarks', $remarks, PDO::PARAM_STR);
+                    $update1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
+                    $update1->execute();
+
+                    if ($update1) {
+                        $infos['personnel-interview-managerial-update-success'] = "Updated successfully";
+                    } else {
+                        $errors['personnel-interview-managerial-update-fail'] = "Something went wrong";
+                    }
+                }
+                // header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
+            }
+        }
+    }
+}
+
+//if user click save-personnel-interview-supervisory button in assessment personnel interview page
+if (isset($_POST['save-personnel-interview-supervisory'])) {
+    //getting the post values
+    $assessee_id = $_POST['assessee_id'];
+    $supervisory_score = $_POST['supervisory_score'];
 //If user click edit-profile button in index page
 if (isset($_POST['update_profile'])) {
     //getting the post values
@@ -576,6 +1135,195 @@ if (isset($_POST['edit_password'])) {
 
         foreach ($error as $error) {
             // echo '<p class="errmsg">' . $error . '</p>';
+        }
+    }
+}
+
+    // query for data selection - personnel_interview_subscore
+    $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id=:assessee_id";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+    $query->execute();
+    $results = $query->fetchAll(PDO::FETCH_OBJ);
+
+    if ($query->rowCount() > 0) {
+        foreach ($results as $result) {
+            //query for updation
+            $con = "UPDATE personnel_interview_subscore SET supervisory_score=:supervisory_score WHERE assessment_id=:assessee_id";
+            $update = $dbh->prepare($con);
+            $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $update->bindParam(':supervisory_score', $supervisory_score, PDO::PARAM_STR);
+            $update->execute();
+
+            if ($update) {
+                //query for data selection
+                $conn = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
+                $query1 = $dbh->prepare($conn);
+                $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                $query1->execute();
+                $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
+
+                if ($query1->rowCount() > 0) {
+                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=:supervisory_score+'$result->managerial_score' WHERE assessee_id=:assessee_id";
+                    $update1 = $dbh->prepare($conn1);
+                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update1->bindParam(':supervisory_score', $supervisory_score, PDO::PARAM_STR);
+                    $update1->execute();
+                }
+            }
+        }
+    }
+
+    foreach ($_POST['personnel_interview_checklist_id'] as $personnel_interview_checklist_id) {
+        if (isset($_POST['supervisory1_' . $personnel_interview_checklist_id])) {
+            $supervisory1 = $_POST['supervisory1_' . $personnel_interview_checklist_id];
+            $supervisory_1 = implode(', ', $supervisory1);
+
+            // query for data selection - personnel_interview_supervisory_1
+            $sql1 = "SELECT * FROM personnel_interview_supervisory_1 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
+            $query1 = $dbh->prepare($sql1);
+            $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $query1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
+            $query1->execute();
+            $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
+
+            if ($query1->rowCount() > 0) {
+                foreach ($results1 as $result1) {
+                    //query for updation - personnel_interview_supervisory_1
+                    $con1 = "UPDATE personnel_interview_supervisory_1 SET status=:supervisory_1 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
+                    $update1 = $dbh->prepare($con1);
+                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update1->bindParam(':supervisory_1', $supervisory_1, PDO::PARAM_STR);
+                    $update1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
+                    $update1->execute();
+                }
+            }
+        } else {
+            $supervisory_1 = "";
+
+            // query for data selection - personnel_interview_supervisory_1
+            $sql1 = "SELECT * FROM personnel_interview_supervisory_1 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
+            $query1 = $dbh->prepare($sql1);
+            $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $query1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
+            $query1->execute();
+            $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
+
+            if ($query1->rowCount() > 0) {
+                foreach ($results1 as $result1) {
+                    //query for updation - personnel_interview_supervisory_1
+                    $con1 = "UPDATE personnel_interview_supervisory_1 SET status=:supervisory_1 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
+                    $update1 = $dbh->prepare($con1);
+                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update1->bindParam(':supervisory_1', $supervisory_1, PDO::PARAM_STR);
+                    $update1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
+                    $update1->execute();
+                }
+            }
+        }
+
+        if (isset($_POST['supervisory2_' . $personnel_interview_checklist_id])) {
+            $supervisory2 = $_POST['supervisory2_' . $personnel_interview_checklist_id];
+            $supervisory_2 = implode(', ', $supervisory2);
+
+            // query for data selection - personnel_interview_supervisory_2
+            $sql2 = "SELECT * FROM personnel_interview_supervisory_2 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
+            $query2 = $dbh->prepare($sql2);
+            $query2->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $query2->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
+            $query2->execute();
+            $results2 = $query2->fetchAll(PDO::FETCH_OBJ);
+
+            if ($query2->rowCount() > 0) {
+                foreach ($results2 as $result2) {
+                    //query for updation - personnel_interview_supervisory_2
+                    $con2 = "UPDATE personnel_interview_supervisory_2 SET status=:supervisory_2 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
+                    $update2 = $dbh->prepare($con2);
+                    $update2->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update2->bindParam(':supervisory_2', $supervisory_2, PDO::PARAM_STR);
+                    $update2->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
+                    $update2->execute();
+                }
+            }
+        } else {
+            $supervisory_2 = "";
+
+            // query for data selection - personnel_interview_supervisory_2
+            $sql2 = "SELECT * FROM personnel_interview_supervisory_2 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
+            $query2 = $dbh->prepare($sql2);
+            $query2->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $query2->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
+            $query2->execute();
+            $results2 = $query2->fetchAll(PDO::FETCH_OBJ);
+
+            if ($query2->rowCount() > 0) {
+                foreach ($results2 as $result2) {
+                    //query for updation - personnel_interview_supervisory_2
+                    $con2 = "UPDATE personnel_interview_supervisory_2 SET status=:supervisory_2 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
+                    $update2 = $dbh->prepare($con2);
+                    $update2->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update2->bindParam(':supervisory_2', $high_risk_2, PDO::PARAM_STR);
+                    $update2->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
+                    $update2->execute();
+                }
+            }
+        }
+
+        if (isset($_POST['supervisory3_' . $personnel_interview_checklist_id])) {
+            $supervisory3 = $_POST['supervisory3_' . $personnel_interview_checklist_id];
+            $supervisory_3 = implode(', ', $supervisory3);
+            $remarks = $_POST['remarks_' . $personnel_interview_checklist_id];
+
+            // query for data selection - personnel_interview_supervisory_3
+            $sql3 = "SELECT * FROM personnel_interview_supervisory_3 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
+            $query3 = $dbh->prepare($sql3);
+            $query3->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $query3->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
+            $query3->execute();
+            $results3 = $query3->fetchAll(PDO::FETCH_OBJ);
+
+            if ($query3->rowCount() > 0) {
+                foreach ($results3 as $result3) {
+                    //query for updation - personnel_interview_supervisory_3
+                    $con3 = "UPDATE personnel_interview_supervisory_3 SET status=:supervisory_3, remarks=:remarks WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
+                    $update3 = $dbh->prepare($con3);
+                    $update3->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update3->bindParam(':supervisory_3', $supervisory_3, PDO::PARAM_STR);
+                    $update3->bindParam(':remarks', $remarks, PDO::PARAM_STR);
+                    $update3->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
+                    $update3->execute();
+                }
+            }
+        } else {
+            $supervisory_3 = "";
+            $remarks = "";
+
+            // query for data selection - personnel_interview_supervisory_3
+            $sql3 = "SELECT * FROM personnel_interview_supervisory_3 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
+            $query3 = $dbh->prepare($sql3);
+            $query3->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $query3->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
+            $query3->execute();
+            $results3 = $query3->fetchAll(PDO::FETCH_OBJ);
+
+            if ($query3->rowCount() > 0) {
+                foreach ($results3 as $result3) {
+                    //query for updation - personnel_interview_supervisory_3
+                    $con3 = "UPDATE personnel_interview_supervisory_3 SET status=:supervisory_3, remarks=:remarks WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
+                    $update3 = $dbh->prepare($con3);
+                    $update3->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                    $update3->bindParam(':supervisory_3', $supervisory_3, PDO::PARAM_STR);
+                    $update3->bindParam(':remarks', $remarks, PDO::PARAM_STR);
+                    $update3->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
+                    $update3->execute();
+                }
+            }
+        }
+
+        if ($update1 || $update2 || $update3) {
+            $infos['personnel-interview-supervisory-update-success'] = "Updated successfully";
+        } else {
+            $errors['personnel-interview-supervisory-update-fail'] = "Something went wrong";
         }
     }
 }
