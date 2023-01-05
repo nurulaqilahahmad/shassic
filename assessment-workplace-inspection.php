@@ -127,7 +127,7 @@ require_once "controller.php";
                                                                 <div id="general" class="tabcontent">
                                                                     <div class="table-responsive">
                                                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                                                            <form class="user" method="POST">
+                                                                            <form class="user" method="POST" id="workplace-inspection-general">
                                                                                 <thead>
                                                                                     <tr>
                                                                                         <th>ITEM</th>
@@ -175,10 +175,10 @@ require_once "controller.php";
                                                                                                         if ($query->rowCount() > 0) {
                                                                                                             foreach ($workinsps1 as $workinsp1) {
                                                                                                         ?>
-                                                                                                                <td><input type="checkbox" class="checkbox1" onchange="countSelected()" name="workinsp_<?= $checklist_id ?>[]" <?php if (':checked') {echo 'value="C"';} else {echo 'value=""';} ?> <?php if (in_array("C", explode(", ", $workinsp1->status))) echo 'checked = "checked"'; ?>></td>
-                                                                                                                <td><input type="checkbox" class="checkbox2" onclick="countSelected()" name="workinsp_<?= $checklist_id ?>[]" <?php if (':checked') {echo 'value="NC"';} else {echo 'value=""';} ?> <?php if (in_array("NC", explode(", ", $workinsp1->status))) echo 'checked = "checked"'; ?>></td>
-                                                                                                                <td><input type="checkbox" class="checkbox3" onclick="countSelected()" name="workinsp_<?= $checklist_id ?>[]" <?php if (':checked') {echo 'value="NA"';} else {echo 'value=""';} ?> <?php if (in_array("NA", explode(", ", $workinsp1->status))) echo 'checked = "checked"'; ?>></td>
-                                                                                                                <td></td>
+                                                                                                                <td><input type="checkbox" class="checkbox1" onclick="countSelected()" name="workinsp_<?= $checklist_id ?>[]" value="C" <?php if (in_array("C", explode(", ", $workinsp1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox2" onclick="countSelected()" name="workinsp_<?= $checklist_id ?>[]" value="NC" <?php if (in_array("NC", explode(", ", $workinsp1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox3" onclick="countSelected()" name="workinsp_<?= $checklist_id ?>[]" value="NA" <?php if (in_array("NA", explode(", ", $workinsp1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><textarea form="workplace-inspection-general" rows="2" cols="20" id="remarks" name="remarks_<?= $checklist_id ?>"><?= $workinsp1->remarks ?></textarea></td>
                                                                                                     </tr>
                                                                                             <?php }
                                                                                                         } ?>
@@ -190,31 +190,43 @@ require_once "controller.php";
                                                                                 <tfoot>
                                                                                     <tr>
                                                                                         <th colspan="2">SUB SCORE</th>
-                                                                                        <th id="selectedC"><script>document.getElementById('selectedC').innerHTML = document.querySelectorAll('input[class="checkbox1"]:checked').length</script></th>
-                                                                                        <th id="selectedNC"><script>document.getElementById('selectedNC').innerHTML = document.querySelectorAll('input[class="checkbox2"]:checked').length</script></th>
-                                                                                        <th id="selectedNA"><script>document.getElementById('selectedNA').innerHTML = document.querySelectorAll('input[class="checkbox3"]:checked').length</script></th>
+                                                                                        <th id="selectedC">
+                                                                                            <script>
+                                                                                                document.getElementById('selectedC').innerHTML = document.querySelectorAll('input[class="checkbox1"]:checked').length
+                                                                                            </script>
+                                                                                        </th>
+                                                                                        <th id="selectedNC">
+                                                                                            <script>
+                                                                                                document.getElementById('selectedNC').innerHTML = document.querySelectorAll('input[class="checkbox2"]:checked').length
+                                                                                            </script>
+                                                                                        </th>
+                                                                                        <th id="selectedNA">
+                                                                                            <script>
+                                                                                                document.getElementById('selectedNA').innerHTML = document.querySelectorAll('input[class="checkbox3"]:checked').length
+                                                                                            </script>
+                                                                                        </th>
                                                                                         <th id="selectedTotal"></th>
                                                                                     </tr>
                                                                                 </tfoot>
                                                                         </table>
-                                                                        <div class="form-group" id="row">
-                                                                            <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="general_score" id="general_score" onchange="countSelected()">
-                                                                            </div>
-                                                                            <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                                <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection-general">Save</button>
-                                                                            </div>
-                                                                        </div>
-                                                                        </form>
                                                                     </div>
                                                                     <!-- End of Table Responsive -->
+                                                                    <div class="form-group" id="row">
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="general_score" id="general_score" onchange="countSelected()">
+                                                                        </div>
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection-general">Save</button>
+                                                                        </div>
+                                                                    </div>
+                                                                    </form>
                                                                 </div>
                                                                 <!-- End of tab-content -->
 
                                                                 <div id="construction-work" class="tabcontent">
                                                                     <div class="table-responsive">
                                                                         <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                                                            <form class="user" method="POST">
+                                                                            <form class="user" method="POST" id="workplace-inspection-high-risk">
                                                                                 <thead>
                                                                                     <tr>
                                                                                         <th rowspan="2" class="align-middle">ITEM</th>
@@ -303,9 +315,9 @@ require_once "controller.php";
                                                                                                                 <td><input type="checkbox" class="checkbox10" name="highrisk3_<?= $checklist_id ?>[]" onclick="countSelected()" value="C" <?php if (in_array("C", explode(", ", $highrisk3->status))) echo 'checked = "checked"'; ?>></td>
                                                                                                                 <td><input type="checkbox" class="checkbox11" name="highrisk3_<?= $checklist_id ?>[]" onclick="countSelected()" value="NC" <?php if (in_array("NC", explode(", ", $highrisk3->status))) echo 'checked = "checked"'; ?>></td>
                                                                                                                 <td><input type="checkbox" class="checkbox12" name="highrisk3_<?= $checklist_id ?>[]" onclick="countSelected()" value="NA" <?php if (in_array("NA", explode(", ", $highrisk3->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><textarea form="workplace-inspection-high-risk" rows="2" cols="20" id="remarks" name="remarks_<?= $checklist_id ?>"><?= $highrisk3->remarks ?></textarea></td>
                                                                                                         <?php }
                                                                                                         } ?>
-                                                                                                        <td></td>
                                                                                                     </tr>
                                                                                             <?php }
                                                                                             } ?>
@@ -315,30 +327,67 @@ require_once "controller.php";
                                                                                 <tfoot>
                                                                                     <tr>
                                                                                         <th colspan="2" class="text-right">SUB SCORE</th>
-                                                                                        <th id="selectedC2"><script>document.getElementById('selectedC2').innerHTML = document.querySelectorAll('input[class="checkbox4"]:checked').length</script></th>
-                                                                                        <th id="selectedNC2"><script>document.getElementById('selectedNC2').innerHTML = document.querySelectorAll('input[class="checkbox5"]:checked').length</script></th>
-                                                                                        <th id="selectedNA2"><script>document.getElementById('selectedNA2').innerHTML = document.querySelectorAll('input[class="checkbox6"]:checked').length</script></th>
-                                                                                        <th id="selectedC3"><script>document.getElementById('selectedC3').innerHTML = document.querySelectorAll('input[class="checkbox7"]:checked').length</script></th>
-                                                                                        <th id="selectedNC3"><script>document.getElementById('selectedNC3').innerHTML = document.querySelectorAll('input[class="checkbox8"]:checked').length</script></th>
-                                                                                        <th id="selectedNA3"><script>document.getElementById('selectedNA3').innerHTML = document.querySelectorAll('input[class="checkbox9"]:checked').length</script></th>
-                                                                                        <th id="selectedC4"><script>document.getElementById('selectedC4').innerHTML = document.querySelectorAll('input[class="checkbox10"]:checked').length</script></th>
-                                                                                        <th id="selectedNC4"><script>document.getElementById('selectedNC4').innerHTML = document.querySelectorAll('input[class="checkbox11"]:checked').length</script></th>
-                                                                                        <th id="selectedNA4"><script>document.getElementById('selectedNA4').innerHTML = document.querySelectorAll('input[class="checkbox12"]:checked').length</script></th>
+                                                                                        <th id="selectedC2">
+                                                                                            <script>
+                                                                                                document.getElementById('selectedC2').innerHTML = document.querySelectorAll('input[class="checkbox4"]:checked').length
+                                                                                            </script>
+                                                                                        </th>
+                                                                                        <th id="selectedNC2">
+                                                                                            <script>
+                                                                                                document.getElementById('selectedNC2').innerHTML = document.querySelectorAll('input[class="checkbox5"]:checked').length
+                                                                                            </script>
+                                                                                        </th>
+                                                                                        <th id="selectedNA2">
+                                                                                            <script>
+                                                                                                document.getElementById('selectedNA2').innerHTML = document.querySelectorAll('input[class="checkbox6"]:checked').length
+                                                                                            </script>
+                                                                                        </th>
+                                                                                        <th id="selectedC3">
+                                                                                            <script>
+                                                                                                document.getElementById('selectedC3').innerHTML = document.querySelectorAll('input[class="checkbox7"]:checked').length
+                                                                                            </script>
+                                                                                        </th>
+                                                                                        <th id="selectedNC3">
+                                                                                            <script>
+                                                                                                document.getElementById('selectedNC3').innerHTML = document.querySelectorAll('input[class="checkbox8"]:checked').length
+                                                                                            </script>
+                                                                                        </th>
+                                                                                        <th id="selectedNA3">
+                                                                                            <script>
+                                                                                                document.getElementById('selectedNA3').innerHTML = document.querySelectorAll('input[class="checkbox9"]:checked').length
+                                                                                            </script>
+                                                                                        </th>
+                                                                                        <th id="selectedC4">
+                                                                                            <script>
+                                                                                                document.getElementById('selectedC4').innerHTML = document.querySelectorAll('input[class="checkbox10"]:checked').length
+                                                                                            </script>
+                                                                                        </th>
+                                                                                        <th id="selectedNC4">
+                                                                                            <script>
+                                                                                                document.getElementById('selectedNC4').innerHTML = document.querySelectorAll('input[class="checkbox11"]:checked').length
+                                                                                            </script>
+                                                                                        </th>
+                                                                                        <th id="selectedNA4">
+                                                                                            <script>
+                                                                                                document.getElementById('selectedNA4').innerHTML = document.querySelectorAll('input[class="checkbox12"]:checked').length
+                                                                                            </script>
+                                                                                        </th>
                                                                                         <th id="selectedTotal2"></th>
                                                                                     </tr>
                                                                                 </tfoot>
                                                                         </table>
-                                                                        <div class="form-group" id="row">
-                                                                            <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="high_risk_score" id="high_risk_score" onchange="countSelected()">
-                                                                            </div>
-                                                                            <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                                <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection-high-risk">Save</button>
-                                                                            </div>
-                                                                        </div>
-                                                                        </form>
                                                                     </div>
                                                                     <!-- End of table-responsive -->
+                                                                    <div class="form-group" id="row">
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="high_risk_score" id="high_risk_score" onchange="countSelected()">
+                                                                        </div>
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection-high-risk">Save</button>
+                                                                        </div>
+                                                                    </div>
+                                                                    </form>
+
                                                                 </div>
                                                                 <!-- End of tab-content -->
                                                             </div>

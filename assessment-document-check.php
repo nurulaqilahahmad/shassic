@@ -122,11 +122,12 @@ if ($query->rowCount() > 0) {
                                                                     }
                                                                     ?>
                                                                 </div>
+                                                                <!-- End of Text Center -->
 
                                                                 <div class="card-body">
-                                                                    <form class="" action="" method="POST">
-                                                                        <div class="table-responsive">
-                                                                            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                                    <div class="table-responsive">
+                                                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                                            <form class="user" method="POST" id="document-check">
                                                                                 <thead>
                                                                                     <tr>
                                                                                         <th>Item</th>
@@ -165,7 +166,7 @@ if ($query->rowCount() > 0) {
                                                                                                         <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?= $result->assessee_id ?>">
                                                                                                         <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_checklist_id[]" id="document_check_checklist_id[]" value="<?= $checklist_id ?>">
                                                                                                         <td><?= $cnt++ ?></td>
-                                                                                                        <td class="text-left" name="" value=""><?php echo htmlentities($checklist->checklist) ?></td>
+                                                                                                        <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
                                                                                                         <?php
                                                                                                         $sql = "SELECT * FROM document_check_assessment WHERE assessment_id='$result->assessee_id' AND document_check_checklist_id='$checklist_id'";
                                                                                                         $query = $dbh->prepare($sql);
@@ -174,10 +175,10 @@ if ($query->rowCount() > 0) {
                                                                                                         if ($query->rowCount() > 0) {
                                                                                                             foreach ($docchecks1 as $doccheck1) {
                                                                                                         ?>
-                                                                                                                <td><input type="checkbox" class="checkbox1" name="doccheck_<?= $checklist_id ?>[]" value="C" <?php if (':unchecked') echo 'value=""'; ?> onclick="countSelected()" <?php if (in_array("C", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
-                                                                                                                <td><input type="checkbox" class="checkbox2" name="doccheck_<?= $checklist_id ?>[]" value="NC" <?php if (':unchecked') echo 'value=""'; ?> onclick="countSelected()" <?php if (in_array("NC", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
-                                                                                                                <td><input type="checkbox" class="checkbox3" name="doccheck_<?= $checklist_id ?>[]" <?php if (':checked') {echo 'value="NA"';} else {echo 'value=""';} ?> onclick="countSelected()" <?php if (in_array("NA", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
-                                                                                                                <td></td>
+                                                                                                                <td><input type="checkbox" class="checkbox1" name="doccheck_<?= $checklist_id ?>[]" value="C" onclick="countSelected()" <?php if (in_array("C", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox2" name="doccheck_<?= $checklist_id ?>[]" value="NC" onclick="countSelected()" <?php if (in_array("NC", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox3" name="doccheck_<?= $checklist_id ?>[]" value="NA" onclick="countSelected()" <?php if (in_array("NA", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><textarea form="document-check" rows="2" cols="20" id="remarks" name="remarks_<?= $checklist_id ?>"><?= $doccheck1->remarks ?></textarea></td>
                                                                                                     </tr>
                                                                                             <?php }
                                                                                                         } ?>
@@ -191,38 +192,56 @@ if ($query->rowCount() > 0) {
                                                                                 <tfoot>
                                                                                     <tr>
                                                                                         <th colspan="2">TOTAL SCORE</th>
-                                                                                        <th id="selectedC"><script>document.getElementById('selectedC').innerHTML = document.querySelectorAll('input[class="checkbox1"]:checked').length</script></th>
-                                                                                        <th id="selectedNC"><script>document.getElementById('selectedNC').innerHTML = document.querySelectorAll('input[class="checkbox2"]:checked').length</script></th>
-                                                                                        <th id="selectedNA"><script>document.getElementById('selectedNA').innerHTML = document.querySelectorAll('input[class="checkbox3"]:checked').length</script></th>
+                                                                                        <th id="selectedC">
+                                                                                            <script>
+                                                                                                document.getElementById('selectedC').innerHTML = document.querySelectorAll('input[class="checkbox1"]:checked').length
+                                                                                            </script>
+                                                                                        </th>
+                                                                                        <th id="selectedNC">
+                                                                                            <script>
+                                                                                                document.getElementById('selectedNC').innerHTML = document.querySelectorAll('input[class="checkbox2"]:checked').length
+                                                                                            </script>
+                                                                                        </th>
+                                                                                        <th id="selectedNA">
+                                                                                            <script>
+                                                                                                document.getElementById('selectedNA').innerHTML = document.querySelectorAll('input[class="checkbox3"]:checked').length
+                                                                                            </script>
+                                                                                        </th>
                                                                                         <th id="selectedTotal"></th>
                                                                                     </tr>
                                                                                 </tfoot>
-                                                                            </table>
-                                                                        </div>
+                                                                        </table>
+                                                                    </div>
 
-                                                                        <!-- <form class="" action="" method="POST"> -->
-                                                                        <div class="form-group" id="row">
-                                                                            <div class="col-sm-4 mb-3 mb-sm-0"></div>
-                                                                            <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                                <div class="form-group">
-                                                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" onchange="countSelected()">
-                                                                                </div>
-                                                                                <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-document-check">Save</button>
-                                                                            </div>
-                                                                            <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                                    <div class="form-group" id="row">
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" onchange="countSelected()">
                                                                         </div>
+                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-document-check">Save</button>
+                                                                        </div>
+                                                                    </div>
+                                                                    <!-- End of Form Group -->
                                                                     </form>
 
                                                                 </div>
+                                                                <!-- End of Card Body -->
                                                             </div>
+                                                            <!-- End of p-5 -->
                                                         </div>
+                                                        <!-- End of col-lg-12 -->
                                                     </div>
+                                                    <!-- End of Row -->
                                                 </div>
+                                                <!-- End of p-0 -->
                                             </div>
+                                            <!-- End of Card -->
 
                                         </div>
+                                        <!-- End of col-xl-12 -->
 
                                     </div>
+                                    <!-- End of Row Justify -->
 
                                 </div>
                                 <!-- /.container-fluid -->
@@ -265,54 +284,55 @@ if ($query->rowCount() > 0) {
             <!-- Custom scripts for all pages-->
             <script src="js/sb-admin-2.min.js"></script>
         </div>
+        <!-- End of Landing Container -->
+
+        <script>
+            function countSelected() {
+                var checkboxes = document.querySelectorAll('.checkbox1');
+                var checkboxes2 = document.querySelectorAll('.checkbox2');
+                var checkboxes3 = document.querySelectorAll('.checkbox3');
+
+                var totalScore = 0;
+                var countC = 0;
+                var countNC = 0;
+                var countNA = 0;
+                var documentCheck = 0;
+
+                checkboxes.forEach(item => {
+                    if (item.checked == true) {
+                        countC++;
+                    }
+                })
+
+                checkboxes2.forEach(item => {
+                    if (item.checked == true) {
+                        countNC++;
+                    }
+                })
+
+                checkboxes3.forEach(item => {
+                    if (item.checked == true) {
+                        countNA++;
+                    }
+                })
+
+                document.getElementById('selectedC').innerHTML = countC;
+                document.getElementById('selectedNC').innerHTML = countNC;
+                document.getElementById('selectedNA').innerHTML = countNA;
+
+                totalScore = countC + countNC + countNA;
+                documentCheck = (countC / (57 - countNA) * 20);
+                let d = documentCheck.toFixed(2);
+
+                document.getElementById('selectedTotal').innerHTML = totalScore;
+                document.getElementById('document_check_percentage').value = d;
+
+            }
+        </script>
+
     <?php } else {
         header("location: login.php");
     } ?>
-
-    <script>
-        function countSelected() {
-            var checkboxes = document.querySelectorAll('.checkbox1');
-            var checkboxes2 = document.querySelectorAll('.checkbox2');
-            var checkboxes3 = document.querySelectorAll('.checkbox3');
-
-            var totalScore = 0;
-            var countC = 0;
-            var countNC = 0;
-            var countNA = 0;
-            var documentCheck = 0;
-
-            checkboxes.forEach(item => {
-                if (item.checked == true) {
-                    countC++;
-                }
-            })
-
-            checkboxes2.forEach(item => {
-                if (item.checked == true) {
-                    countNC++;
-                }
-            })
-
-            checkboxes3.forEach(item => {
-                if (item.checked == true) {
-                    countNA++;
-                }
-            })
-
-            document.getElementById('selectedC').innerHTML = countC;
-            document.getElementById('selectedNC').innerHTML = countNC;
-            document.getElementById('selectedNA').innerHTML = countNA;
-
-            totalScore = countC + countNC + countNA;
-            documentCheck = (countC / (57 - countNA) * 20);
-            let d = documentCheck.toFixed(2);
-
-            document.getElementById('selectedTotal').innerHTML = totalScore;
-            document.getElementById('document_check_percentage').value = d;
-
-        }
-    </script>
-
 </body>
 
 </html>

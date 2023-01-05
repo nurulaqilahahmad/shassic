@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Dec 04, 2022 at 10:32 AM
+-- Generation Time: Jan 03, 2023 at 03:03 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -28,9 +28,9 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `assessment` (
-  `assessor_id` int(11) NOT NULL,
+  `assessor_id` bigint(20) NOT NULL,
   `assessor_name` varchar(200) NOT NULL,
-  `assessee_id` int(11) NOT NULL,
+  `assessee_id` bigint(20) NOT NULL,
   `assessee_name` varchar(200) NOT NULL,
   `project_name` varchar(200) NOT NULL,
   `project_date` date NOT NULL,
@@ -53,9 +53,9 @@ CREATE TABLE `assessment` (
 --
 
 CREATE TABLE `document_check_assessment` (
-  `id` int(11) NOT NULL,
-  `assessment_id` int(11) NOT NULL,
-  `document_check_checklist_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `assessment_id` bigint(20) NOT NULL,
+  `document_check_checklist_id` bigint(20) NOT NULL,
   `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -67,8 +67,8 @@ CREATE TABLE `document_check_assessment` (
 --
 
 CREATE TABLE `document_check_checklist` (
-  `id` int(11) NOT NULL,
-  `item_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `item_id` bigint(20) NOT NULL,
   `checklist` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -142,7 +142,7 @@ INSERT INTO `document_check_checklist` (`id`, `item_id`, `checklist`) VALUES
 --
 
 CREATE TABLE `document_check_section` (
-  `id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
   `item_no` varchar(200) NOT NULL,
   `item_name` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -174,7 +174,7 @@ INSERT INTO `document_check_section` (`id`, `item_no`, `item_name`) VALUES
 --
 
 CREATE TABLE `personnel_interview_category` (
-  `id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
   `category_no` varchar(200) NOT NULL,
   `category_name` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -195,8 +195,8 @@ INSERT INTO `personnel_interview_category` (`id`, `category_no`, `category_name`
 --
 
 CREATE TABLE `personnel_interview_checklist` (
-  `id` int(11) NOT NULL,
-  `category_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `category_id` bigint(20) NOT NULL,
   `checklist` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -247,11 +247,33 @@ INSERT INTO `personnel_interview_checklist` (`id`, `category_id`, `checklist`) V
 --
 
 CREATE TABLE `personnel_interview_managerial` (
-  `id` int(11) NOT NULL,
-  `assessment_id` int(11) NOT NULL,
-  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `assessment_id` bigint(20) NOT NULL,
+  `personnel_interview_checklist_id` bigint(20) NOT NULL,
   `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
   `remarks` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personnel_interview_subscore`
+--
+
+CREATE TABLE `personnel_interview_subscore` (
+  `id` bigint(20) NOT NULL,
+  `assessment_id` bigint(20) NOT NULL,
+  `managerial_score` int(11) NOT NULL,
+  `supervisory_score` int(11) NOT NULL,
+  `worker_1_score` int(11) NOT NULL,
+  `worker_2_score` int(11) NOT NULL,
+  `worker_3_score` int(11) NOT NULL,
+  `worker_4_score` int(11) NOT NULL,
+  `worker_5_score` int(11) NOT NULL,
+  `worker_6_score` int(11) NOT NULL,
+  `worker_7_score` int(11) NOT NULL,
+  `worker_8_score` int(11) NOT NULL,
+  `worker_9_score` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -261,9 +283,9 @@ CREATE TABLE `personnel_interview_managerial` (
 --
 
 CREATE TABLE `personnel_interview_supervisory_1` (
-  `id` int(11) NOT NULL,
-  `assessment_id` int(11) NOT NULL,
-  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `assessment_id` bigint(20) NOT NULL,
+  `personnel_interview_checklist_id` bigint(20) NOT NULL,
   `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -275,9 +297,9 @@ CREATE TABLE `personnel_interview_supervisory_1` (
 --
 
 CREATE TABLE `personnel_interview_supervisory_2` (
-  `id` int(11) NOT NULL,
-  `assessment_id` int(11) NOT NULL,
-  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `assessment_id` bigint(20) NOT NULL,
+  `personnel_interview_checklist_id` bigint(20) NOT NULL,
   `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -289,9 +311,9 @@ CREATE TABLE `personnel_interview_supervisory_2` (
 --
 
 CREATE TABLE `personnel_interview_supervisory_3` (
-  `id` int(11) NOT NULL,
-  `assessment_id` int(11) NOT NULL,
-  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `assessment_id` bigint(20) NOT NULL,
+  `personnel_interview_checklist_id` bigint(20) NOT NULL,
   `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -303,9 +325,9 @@ CREATE TABLE `personnel_interview_supervisory_3` (
 --
 
 CREATE TABLE `personnel_interview_worker_1` (
-  `id` int(11) NOT NULL,
-  `assessment_id` int(11) NOT NULL,
-  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `assessment_id` bigint(20) NOT NULL,
+  `personnel_interview_checklist_id` bigint(20) NOT NULL,
   `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -317,9 +339,9 @@ CREATE TABLE `personnel_interview_worker_1` (
 --
 
 CREATE TABLE `personnel_interview_worker_2` (
-  `id` int(11) NOT NULL,
-  `assessment_id` int(11) NOT NULL,
-  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `assessment_id` bigint(20) NOT NULL,
+  `personnel_interview_checklist_id` bigint(20) NOT NULL,
   `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -331,9 +353,9 @@ CREATE TABLE `personnel_interview_worker_2` (
 --
 
 CREATE TABLE `personnel_interview_worker_3` (
-  `id` int(11) NOT NULL,
-  `assessment_id` int(11) NOT NULL,
-  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `assessment_id` bigint(20) NOT NULL,
+  `personnel_interview_checklist_id` bigint(20) NOT NULL,
   `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -345,9 +367,9 @@ CREATE TABLE `personnel_interview_worker_3` (
 --
 
 CREATE TABLE `personnel_interview_worker_4` (
-  `id` int(11) NOT NULL,
-  `assessment_id` int(11) NOT NULL,
-  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `assessment_id` bigint(20) NOT NULL,
+  `personnel_interview_checklist_id` bigint(20) NOT NULL,
   `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -359,9 +381,9 @@ CREATE TABLE `personnel_interview_worker_4` (
 --
 
 CREATE TABLE `personnel_interview_worker_5` (
-  `id` int(11) NOT NULL,
-  `assessment_id` int(11) NOT NULL,
-  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `assessment_id` bigint(20) NOT NULL,
+  `personnel_interview_checklist_id` bigint(20) NOT NULL,
   `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -373,9 +395,9 @@ CREATE TABLE `personnel_interview_worker_5` (
 --
 
 CREATE TABLE `personnel_interview_worker_6` (
-  `id` int(11) NOT NULL,
-  `assessment_id` int(11) NOT NULL,
-  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `assessment_id` bigint(20) NOT NULL,
+  `personnel_interview_checklist_id` bigint(20) NOT NULL,
   `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -387,9 +409,9 @@ CREATE TABLE `personnel_interview_worker_6` (
 --
 
 CREATE TABLE `personnel_interview_worker_7` (
-  `id` int(11) NOT NULL,
-  `assessment_id` int(11) NOT NULL,
-  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `assessment_id` bigint(20) NOT NULL,
+  `personnel_interview_checklist_id` bigint(20) NOT NULL,
   `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -401,9 +423,9 @@ CREATE TABLE `personnel_interview_worker_7` (
 --
 
 CREATE TABLE `personnel_interview_worker_8` (
-  `id` int(11) NOT NULL,
-  `assessment_id` int(11) NOT NULL,
-  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `assessment_id` bigint(20) NOT NULL,
+  `personnel_interview_checklist_id` bigint(20) NOT NULL,
   `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -415,9 +437,9 @@ CREATE TABLE `personnel_interview_worker_8` (
 --
 
 CREATE TABLE `personnel_interview_worker_9` (
-  `id` int(11) NOT NULL,
-  `assessment_id` int(11) NOT NULL,
-  `personnel_interview_checklist_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `assessment_id` bigint(20) NOT NULL,
+  `personnel_interview_checklist_id` bigint(20) NOT NULL,
   `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -429,7 +451,7 @@ CREATE TABLE `personnel_interview_worker_9` (
 --
 
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
   `username` varchar(200) NOT NULL,
   `email` varchar(200) NOT NULL,
   `password` varchar(200) NOT NULL,
@@ -457,9 +479,9 @@ INSERT INTO `user` (`id`, `username`, `email`, `password`, `code`, `fullname`, `
 --
 
 CREATE TABLE `workplace_inspection_assessment` (
-  `id` int(11) NOT NULL,
-  `assessment_id` int(11) NOT NULL,
-  `workplace_inspection_checklist_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `assessment_id` bigint(20) NOT NULL,
+  `workplace_inspection_checklist_id` bigint(20) NOT NULL,
   `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -471,8 +493,8 @@ CREATE TABLE `workplace_inspection_assessment` (
 --
 
 CREATE TABLE `workplace_inspection_checklist` (
-  `id` int(11) NOT NULL,
-  `item_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `item_id` bigint(20) NOT NULL,
   `checklist` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -519,9 +541,9 @@ INSERT INTO `workplace_inspection_checklist` (`id`, `item_id`, `checklist`) VALU
 --
 
 CREATE TABLE `workplace_inspection_high_risk_1` (
-  `id` int(11) NOT NULL,
-  `assessment_id` int(11) NOT NULL,
-  `workplace_inspection_checklist_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `assessment_id` bigint(20) NOT NULL,
+  `workplace_inspection_checklist_id` bigint(20) NOT NULL,
   `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -533,9 +555,9 @@ CREATE TABLE `workplace_inspection_high_risk_1` (
 --
 
 CREATE TABLE `workplace_inspection_high_risk_2` (
-  `id` int(11) NOT NULL,
-  `assessment_id` int(11) NOT NULL,
-  `workplace_inspection_checklist_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `assessment_id` bigint(20) NOT NULL,
+  `workplace_inspection_checklist_id` bigint(20) NOT NULL,
   `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -547,9 +569,9 @@ CREATE TABLE `workplace_inspection_high_risk_2` (
 --
 
 CREATE TABLE `workplace_inspection_high_risk_3` (
-  `id` int(11) NOT NULL,
-  `assessment_id` int(11) NOT NULL,
-  `workplace_inspection_checklist_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `assessment_id` bigint(20) NOT NULL,
+  `workplace_inspection_checklist_id` bigint(20) NOT NULL,
   `status` varchar(200) NOT NULL COMMENT 'C / NC / NA',
   `remarks` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -561,7 +583,7 @@ CREATE TABLE `workplace_inspection_high_risk_3` (
 --
 
 CREATE TABLE `workplace_inspection_section` (
-  `id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
   `item_no` varchar(200) NOT NULL,
   `item_name` varchar(200) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -586,8 +608,8 @@ INSERT INTO `workplace_inspection_section` (`id`, `item_no`, `item_name`) VALUES
 --
 
 CREATE TABLE `workplace_inspection_subscore` (
-  `id` int(11) NOT NULL,
-  `assessment_id` int(11) NOT NULL,
+  `id` bigint(20) NOT NULL,
+  `assessment_id` bigint(20) NOT NULL,
   `general_score` int(11) NOT NULL,
   `high_risk_score` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -636,6 +658,12 @@ ALTER TABLE `personnel_interview_checklist`
 -- Indexes for table `personnel_interview_managerial`
 --
 ALTER TABLE `personnel_interview_managerial`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `personnel_interview_subscore`
+--
+ALTER TABLE `personnel_interview_subscore`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -737,6 +765,18 @@ ALTER TABLE `workplace_inspection_high_risk_1`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `workplace_inspection_high_risk_2`
+--
+ALTER TABLE `workplace_inspection_high_risk_2`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `workplace_inspection_high_risk_3`
+--
+ALTER TABLE `workplace_inspection_high_risk_3`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `workplace_inspection_section`
 --
 ALTER TABLE `workplace_inspection_section`
@@ -756,151 +796,169 @@ ALTER TABLE `workplace_inspection_subscore`
 -- AUTO_INCREMENT for table `assessment`
 --
 ALTER TABLE `assessment`
-  MODIFY `assessee_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `assessee_id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `document_check_assessment`
 --
 ALTER TABLE `document_check_assessment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `document_check_checklist`
 --
 ALTER TABLE `document_check_checklist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `document_check_section`
 --
 ALTER TABLE `document_check_section`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `personnel_interview_category`
 --
 ALTER TABLE `personnel_interview_category`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `personnel_interview_checklist`
 --
 ALTER TABLE `personnel_interview_checklist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `personnel_interview_managerial`
 --
 ALTER TABLE `personnel_interview_managerial`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `personnel_interview_subscore`
+--
+ALTER TABLE `personnel_interview_subscore`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `personnel_interview_supervisory_1`
 --
 ALTER TABLE `personnel_interview_supervisory_1`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `personnel_interview_supervisory_2`
 --
 ALTER TABLE `personnel_interview_supervisory_2`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `personnel_interview_supervisory_3`
 --
 ALTER TABLE `personnel_interview_supervisory_3`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `personnel_interview_worker_1`
 --
 ALTER TABLE `personnel_interview_worker_1`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `personnel_interview_worker_2`
 --
 ALTER TABLE `personnel_interview_worker_2`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `personnel_interview_worker_3`
 --
 ALTER TABLE `personnel_interview_worker_3`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `personnel_interview_worker_4`
 --
 ALTER TABLE `personnel_interview_worker_4`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `personnel_interview_worker_5`
 --
 ALTER TABLE `personnel_interview_worker_5`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `personnel_interview_worker_6`
 --
 ALTER TABLE `personnel_interview_worker_6`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `personnel_interview_worker_7`
 --
 ALTER TABLE `personnel_interview_worker_7`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `personnel_interview_worker_8`
 --
 ALTER TABLE `personnel_interview_worker_8`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `personnel_interview_worker_9`
 --
 ALTER TABLE `personnel_interview_worker_9`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `workplace_inspection_assessment`
 --
 ALTER TABLE `workplace_inspection_assessment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `workplace_inspection_checklist`
 --
 ALTER TABLE `workplace_inspection_checklist`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `workplace_inspection_high_risk_1`
 --
 ALTER TABLE `workplace_inspection_high_risk_1`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `workplace_inspection_high_risk_2`
+--
+ALTER TABLE `workplace_inspection_high_risk_2`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `workplace_inspection_high_risk_3`
+--
+ALTER TABLE `workplace_inspection_high_risk_3`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `workplace_inspection_section`
 --
 ALTER TABLE `workplace_inspection_section`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `workplace_inspection_subscore`
 --
 ALTER TABLE `workplace_inspection_subscore`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
