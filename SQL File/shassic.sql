@@ -40,10 +40,10 @@ CREATE TABLE `assessment` (
   `calculation_id` int(11) NOT NULL,
   `creation_date` timestamp NULL DEFAULT current_timestamp(),
   `updation_date` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
-  `document_check_percentage` int(11) DEFAULT NULL,
-  `workplace_inspection_percentage` int(11) DEFAULT NULL,
-  `personnel_interview_percentage` int(11) DEFAULT NULL,
-  `star_ranking` int(11) DEFAULT NULL
+  `document_check_percentage` int(11) NOT NULL,
+  `workplace_inspection_percentage` int(11) NOT NULL,
+  `personnel_interview_percentage` int(11) NOT NULL,
+  `star_ranking` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
