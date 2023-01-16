@@ -159,7 +159,7 @@ require_once "controller.php";
 
                                                                     <!-- Page Heading -->
                                                                     <h1 class="h3 mb-4 text-gray-800 font-weight-bold"><?php echo htmlentities($result->assessee_name); ?> - <?php echo htmlentities($result->project_name); ?></h1>
-                                                                    <?php
+                                                                    <!-- <?php
                                                                     if ($_SESSION['info'] != "") {
                                                                     ?>
                                                                         <div class="col-lg-12 mb-4">
@@ -173,7 +173,7 @@ require_once "controller.php";
                                                                     } else {
                                                                         $_SESSION['info'] = "";
                                                                     }
-                                                                    ?>
+                                                                    ?> -->
                                                                     <?php
                                                                     if (count($errors) > 0) {
                                                                     ?>
