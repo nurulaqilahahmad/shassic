@@ -34,19 +34,29 @@ require_once "controller.php";
 
             let progressValue = 0;
             let progressEndValue = document.getElementById("input-percentage").value;
-            let speed = 200;
+            let speed = 50;
 
             let progress = setInterval(() => {
-                progressValue++;
-                valueContainer.textContent = `${progressValue}%`;
-                progressBar.style.background = `conic-gradient(
+                if (progressValue == progressEndValue) {
+                    valueContainer.textContent = `${progressValue}%`;
+                    progressBar.style.background = `conic-gradient(
                 #4d5bf9 ${progressValue * 3.6}deg,
                 #cadcff ${progressValue * 3.6}deg
             )`;
-                if (progressValue == progressEndValue) {
                     clearInterval(progress);
+                } else {
+                    progressValue++;
+                    valueContainer.textContent = `${progressValue}%`;
+                    progressBar.style.background = `conic-gradient(
+                #4d5bf9 ${progressValue * 3.6}deg,
+                #cadcff ${progressValue * 3.6}deg
+            )`;
+                    if (progressValue == progressEndValue) {
+                        clearInterval(progress);
+                    }
                 }
             }, speed);
+
         }
 
         function workplaceInspection() {
@@ -55,19 +65,29 @@ require_once "controller.php";
 
             let progressValue = 0;
             let progressEndValue = document.getElementById("workplace-inspection").value;
-            let speed = 200;
+            let speed = 50;
 
             let progress = setInterval(() => {
-                progressValue++;
-                valueContainer.textContent = `${progressValue}%`;
-                progressBar.style.background = `conic-gradient(
+                if (progressValue == progressEndValue) {
+                    valueContainer.textContent = `${progressValue}%`;
+                    progressBar.style.background = `conic-gradient(
                 #4d5bf9 ${progressValue * 3.6}deg,
                 #cadcff ${progressValue * 3.6}deg
             )`;
-                if (progressValue == progressEndValue) {
                     clearInterval(progress);
+                } else {
+                    progressValue++;
+                    valueContainer.textContent = `${progressValue}%`;
+                    progressBar.style.background = `conic-gradient(
+                #4d5bf9 ${progressValue * 3.6}deg,
+                #cadcff ${progressValue * 3.6}deg
+            )`;
+                    if (progressValue == progressEndValue) {
+                        clearInterval(progress);
+                    }
                 }
             }, speed);
+
         }
 
         function personnelInterview() {
@@ -76,19 +96,29 @@ require_once "controller.php";
 
             let progressValue = 0;
             let progressEndValue = document.getElementById("personnel-interview").value;
-            let speed = 200;
+            let speed = 50;
 
             let progress = setInterval(() => {
-                progressValue++;
-                valueContainer.textContent = `${progressValue}%`;
-                progressBar.style.background = `conic-gradient(
+                if (progressValue == progressEndValue) {
+                    valueContainer.textContent = `${progressValue}%`;
+                    progressBar.style.background = `conic-gradient(
                 #4d5bf9 ${progressValue * 3.6}deg,
                 #cadcff ${progressValue * 3.6}deg
             )`;
-                if (progressValue == progressEndValue) {
                     clearInterval(progress);
+                } else {
+                    progressValue++;
+                    valueContainer.textContent = `${progressValue}%`;
+                    progressBar.style.background = `conic-gradient(
+                #4d5bf9 ${progressValue * 3.6}deg,
+                #cadcff ${progressValue * 3.6}deg
+            )`;
+                    if (progressValue == progressEndValue) {
+                        clearInterval(progress);
+                    }
                 }
             }, speed);
+
         }
     </script>
 
@@ -128,7 +158,6 @@ require_once "controller.php";
                         <!-- Content Wrapper -->
                         <div id="content-wrapper" class="d-flex flex-column">
 
-
                             <!-- Main Content -->
                             <div id="content">
 
@@ -136,138 +165,149 @@ require_once "controller.php";
                                 <div class="container-fluid">
 
                                     <!-- Outer Row -->
-                                    <div class="row justify-content-center">
+                                    <!-- <div class="row justify-content-center"> -->
 
 
-                                        <div class="col-xl-12 col-lg-12 col-md-9">
-                                            <div class="card o-hidden border-0 shadow-lg my-5">
-                                                <div class="p-0" id="card-body">
-                                                    <div id="row">
-                                                        <div class="col-lg-12">
-                                                            <div class="p-5">
-                                                                <div class="text-center">
-                                                                    <div class="text-center" id="row">
-                                                                        <div class="col-sm-6" style="display:flex; width:auto; justify-content: start;">
-                                                                            <a class="font-weight-bold" href="edit-assessment.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
-                                                                                < Back</a>
-                                                                        </div>
-                                                                    </div>
+                                    <!-- <div class="col-xl-12 col-lg-12 col-md-9"> -->
+                                    <!-- <div class="card o-hidden border-0 shadow-lg my-5"> -->
+                                    <!-- <div class="p-0" id="card-body"> -->
+                                    <!-- <div id="row"> -->
+                                    <!-- <div class="col-lg-12"> -->
+                                    <!-- <div class="p-5"> -->
+                                    <!-- <div class="text-center"> -->
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <div class="text-center" id="row">
+                                                <div class="col-sm-6" style="display:flex; width:auto; justify-content: start;">
+                                                    <a class="font-weight-bold" href="edit-assessment.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
+                                                        < Back</a>
+                                                </div>
+                                            </div>
+                                            <!-- Page Heading -->
+                                            <h1 class="h3 mb-4 text-gray-800 font-weight-bold"><?php echo htmlentities($result->assessee_name); ?> - <?php echo htmlentities($result->project_name); ?></h1>
+                                        </div>
+                                        <div class="card-body">
+                                            <?php
+                                            if (count($infos) > 0) {
+                                            ?>
+                                                <div class="col-lg-12 mb-4">
+                                                    <div class="card bg-success text-white shadow">
+                                                        <div class="card-body text-center font-weight-bold">
+                                                            <?php foreach ($infos as $info) {
+                                                                echo $info;
+                                                            } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php
+                                            }
+                                            ?>
+                                            <?php
+                                            if (count($errors) > 0) {
+                                            ?>
+                                                <div class="col-lg-12 mb-4">
+                                                    <div class="card bg-danger text-white shadow">
+                                                        <div class="card-body text-center" style="font-weight: bold;">
+                                                            <?php foreach ($errors as $error) {
+                                                                echo $error;
+                                                            } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php
+                                            }
+                                            ?>
 
-                                                                    <!-- Page Heading -->
-                                                                    <h1 class="h3 mb-4 text-gray-800 font-weight-bold"><?php echo htmlentities($result->assessee_name); ?> - <?php echo htmlentities($result->project_name); ?></h1>
+                                            <form class="user" method="POST">
+                                                <div class="form-group" id="row">
+                                                    <div class="col-sm-4 mb-3 mb-sm-0">
+                                                        <a href="assessment-document-check.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
+                                                            <div class="card mb-4">
+                                                                <div class="card-body card-hover py-3">
+                                                                    <h6 class="m-0 font-weight-bold">Document Check</h6>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                        <div class="outer-container" align="center">
+                                                            <div class="circular-progress-each">
+                                                                <div id="progress-document-check">
+                                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="input-percentage" id="input-percentage" value="<?php echo htmlentities($result->document_check_percentage); ?>">
                                                                     <?php
-                                                                    if (count($infos) > 0) {
-                                                                    ?>
-                                                                        <div class="col-lg-12 mb-4">
-                                                                            <div class="card bg-success text-white shadow">
-                                                                                <div class="card-body text-center font-weight-bold">
-                                                                                    <?php foreach ($infos as $info) {
-                                                                                        echo $info;
-                                                                                    } ?>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    <?php
-                                                                    }
-                                                                    ?>
-                                                                    <?php
-                                                                    if (count($errors) > 0) {
-                                                                    ?>
-                                                                        <div class="col-lg-12 mb-4">
-                                                                            <div class="card bg-danger text-white shadow">
-                                                                                <div class="card-body text-center" style="font-weight: bold;">
-                                                                                    <?php foreach ($errors as $error) {
-                                                                                        echo $error;
-                                                                                    } ?>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    <?php
-                                                                    }
+                                                                    echo '<script type="text/javascript"> documentCheck(); </script>';
                                                                     ?>
                                                                 </div>
-
-                                                                <form class="user" method="POST">
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="assessment-document-check.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
-                                                                                <div class="card mb-4">
-                                                                                    <div class="card-body card-hover py-3">
-                                                                                        <h6 class="m-0 font-weight-bold">Document Check</h6>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                            <div class="outer-container" align="center">
-                                                                                <div class="circular-progress-each">
-                                                                                    <div id="progress-document-check">
-                                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="input-percentage" id="input-percentage" value="<?php echo htmlentities($result->document_check_percentage); ?>">
-                                                                                        <?php
-                                                                                        echo '<script type="text/javascript"> documentCheck(); </script>';
-                                                                                        ?>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="assessment-workplace-inspection.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
-                                                                                <div class="card mb-4">
-                                                                                    <div class="card-body card-hover py-3">
-                                                                                        <h6 class="m-0 font-weight-bold">Workplace Inspection</h6>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                            <div class="outer-container" align="center">
-                                                                                <div class="circular-progress-each-1">
-                                                                                    <div id="progress-document-workplace">
-                                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="workplace-inspection" id="workplace-inspection" value="<?php echo htmlentities($result->workplace_inspection_percentage);?>">
-                                                                                        <?php
-                                                                                        echo '<script type="text/javascript"> workplaceInspection(); </script>';
-                                                                                        ?>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <a href="assessment-personnel-interview.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
-                                                                                <div class="card mb-4">
-                                                                                    <div class="card-body card-hover py-3">
-                                                                                        <h6 class="m-0 font-weight-bold">Personnel Interview</h6>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </a>
-                                                                            <div class="outer-container" align="center">
-                                                                                <div class="circular-progress-each-2">
-                                                                                    <div id="progress-document-personnel">
-                                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="personnel-interview" id="personnel-interview" value="<?php echo htmlentities($result->personnel_interview_percentage); ?>">
-                                                                                        <?php
-                                                                                        echo '<script type="text/javascript"> personnelInterview(); </script>';
-                                                                                        ?>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 mb-3 mb-sm-0">
+                                                        <a href="assessment-workplace-inspection.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
+                                                            <div class="card mb-4">
+                                                                <div class="card-body card-hover py-3">
+                                                                    <h6 class="m-0 font-weight-bold">Workplace Inspection</h6>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                        <div class="outer-container" align="center">
+                                                            <div class="circular-progress-each-1">
+                                                                <div id="progress-document-workplace">
+                                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="workplace-inspection" id="workplace-inspection" value="<?php echo htmlentities($result->workplace_inspection_percentage); ?>">
+                                                                    <?php
+                                                                    echo '<script type="text/javascript"> workplaceInspection(); </script>';
+                                                                    ?>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4 mb-3 mb-sm-0">
+                                                        <a href="assessment-personnel-interview.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
+                                                            <div class="card mb-4">
+                                                                <div class="card-body card-hover py-3">
+                                                                    <h6 class="m-0 font-weight-bold">Personnel Interview</h6>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                        <div class="outer-container" align="center">
+                                                            <div class="circular-progress-each-2">
+                                                                <div id="progress-document-personnel">
+                                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="personnel-interview" id="personnel-interview" value="<?php echo htmlentities($result->personnel_interview_percentage); ?>">
+                                                                    <?php
+                                                                    echo '<script type="text/javascript"> personnelInterview(); </script>';
+                                                                    ?>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            </div>
-
+                                            </form>
                                         </div>
-
-
                                     </div>
+                                    <!-- </div> -->
+                                    <!-- </div> -->
+                                    <!-- </div> -->
+                                    <!-- </div> -->
+
+                                    <!-- </div> -->
+
+
+                                    <!-- </div> -->
+
+                                    <!-- </div> -->
+                                    <!-- container-fluid -->
+
+                                    <!-- </div> -->
+                                    <!-- End of Main Content -->
+
+                                    <!-- </div> -->
+                                    <!-- End of Content Wrapper -->
 
                                 </div>
-                                <!-- /.container-fluid -->
+                                <!-- container-fluid -->
 
                             </div>
                             <!-- End of Main Content -->
 
                         </div>
                         <!-- End of Content Wrapper -->
-
 
                 <?php }
                 } ?>
