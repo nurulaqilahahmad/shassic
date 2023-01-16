@@ -215,7 +215,7 @@ if ($query->rowCount() > 0) {
 
                                                                     <div class="form-group" id="row">
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" onchange="countSelected()">
+                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" onchange="countSelected()" value="">
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                                                             <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-document-check">Save</button>
@@ -324,7 +324,7 @@ if ($query->rowCount() > 0) {
                 documentCheck = (countC / (57 - countNA) * 20);
                 let d = documentCheck.toFixed(2);
 
-                document.getElementById('selectedTotal').innerHTML = totalScore;
+                // document.getElementById('selectedTotal').innerHTML = totalScore;
                 document.getElementById('document_check_percentage').value = d;
 
             }

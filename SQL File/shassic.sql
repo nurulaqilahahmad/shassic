@@ -263,17 +263,28 @@ CREATE TABLE `personnel_interview_managerial` (
 CREATE TABLE `personnel_interview_subscore` (
   `id` bigint(20) NOT NULL,
   `assessment_id` bigint(20) NOT NULL,
-  `managerial_score` int(11) NOT NULL,
-  `supervisory_score` int(11) NOT NULL,
-  `worker_1_score` int(11) NOT NULL,
-  `worker_2_score` int(11) NOT NULL,
-  `worker_3_score` int(11) NOT NULL,
-  `worker_4_score` int(11) NOT NULL,
-  `worker_5_score` int(11) NOT NULL,
-  `worker_6_score` int(11) NOT NULL,
-  `worker_7_score` int(11) NOT NULL,
-  `worker_8_score` int(11) NOT NULL,
-  `worker_9_score` int(11) NOT NULL
+  `managerial_c_score` int(11) NOT NULL,
+  `managerial_na_score` int(11) NOT NULL,
+  `supervisory_c_score` int(11) NOT NULL,
+  `supervisory_na_score` int(11) NOT NULL,
+  `worker_1_c_score` int(11) NOT NULL,
+  `worker_1_na_score` int(11) NOT NULL,
+  `worker_2_c_score` int(11) NOT NULL,
+  `worker_2_na_score` int(11) NOT NULL,
+  `worker_3_c_score` int(11) NOT NULL,
+  `worker_3_na_score` int(11) NOT NULL,
+  `worker_4_c_score` int(11) NOT NULL,
+  `worker_4_na_score` int(11) NOT NULL,
+  `worker_5_c_score` int(11) NOT NULL,
+  `worker_5_na_score` int(11) NOT NULL,
+  `worker_6_c_score` int(11) NOT NULL,
+  `worker_6_na_score` int(11) NOT NULL,
+  `worker_7_c_score` int(11) NOT NULL,
+  `worker_7_na_score` int(11) NOT NULL,
+  `worker_8_c_score` int(11) NOT NULL,
+  `worker_8_na_score` int(11) NOT NULL,
+  `worker_9_c_score` int(11) NOT NULL,
+  `worker_9_na_score` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -610,8 +621,10 @@ INSERT INTO `workplace_inspection_section` (`id`, `item_no`, `item_name`) VALUES
 CREATE TABLE `workplace_inspection_subscore` (
   `id` bigint(20) NOT NULL,
   `assessment_id` bigint(20) NOT NULL,
-  `general_score` int(11) NOT NULL,
-  `high_risk_score` int(11) NOT NULL
+  `general_c_score` int(11) NOT NULL,
+  `general_na_score` int(11) NOT NULL,
+  `high_risk_c_score` int(11) NOT NULL,
+  `high_risk_na_score` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

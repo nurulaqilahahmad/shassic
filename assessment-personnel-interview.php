@@ -83,19 +83,19 @@ require_once "controller.php";
 
                                                                     <!-- Page Heading -->
                                                                     <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Personnel Interview</h1><?php
-                                                                    if (count($infos) > 0) {
-                                                                    ?>
+                                                                                                                                                if (count($infos) > 0) {
+                                                                                                                                                ?>
                                                                         <div class="col-lg-12 mb-4">
                                                                             <div class="card bg-success text-white shadow">
                                                                                 <div class="card-body text-center font-weight-bold">
                                                                                     <?php foreach ($infos as $info) {
-                                                                                        echo $info;
-                                                                                    } ?>
+                                                                                                                                                        echo $info;
+                                                                                                                                                    } ?>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
                                                                     <?php
-                                                                    }
+                                                                                                                                                }
                                                                     ?>
                                                                     <?php
                                                                     if (count($errors) > 0) {
@@ -208,7 +208,8 @@ require_once "controller.php";
                                                                     <!-- End of Table Responsive -->
                                                                     <div class="form-group" id="row">
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="managerial_score" id="managerial_score" onchange="countSelected()">
+                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="managerial_c_score" id="managerial_c_score" onchange="countSelected()">
+                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="managerial_na_score" id="managerial_na_score" onchange="countSelected()">
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                                                             <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-managerial">Save</button>
@@ -370,7 +371,8 @@ require_once "controller.php";
                                                                     <!-- End of Table Responsive -->
                                                                     <div class="form-group" id="row">
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="supervisory_score" id="supervisory_score" onchange="countSelected()">
+                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="supervisory_c_score" id="supervisory_c_score" onchange="countSelected()">
+                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="supervisory_na_score" id="supervisory_na_score" onchange="countSelected()">
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                                                             <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-supervisory">Save</button>
@@ -480,7 +482,8 @@ require_once "controller.php";
                                                                         <!-- End of Table Responsive -->
                                                                         <div class="form-group" id="row">
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_1_score" id="worker_1_score" onchange="countSelected()">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_1_c_score" id="worker_1_c_score" onchange="countSelected()">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_1_na_score" id="worker_1_na_score" onchange="countSelected()">
                                                                             </div>
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
                                                                                 <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-1">Save</button>
@@ -574,7 +577,8 @@ require_once "controller.php";
                                                                         <!-- End of Table Responsive -->
                                                                         <div class="form-group" id="row">
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_2_score" id="worker_2_score" onchange="countSelected()">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_2_c_score" id="worker_2_c_score" onchange="countSelected()">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_2_na_score" id="worker_2_na_score" onchange="countSelected()">
                                                                             </div>
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
                                                                                 <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-2">Save</button>
@@ -668,7 +672,8 @@ require_once "controller.php";
                                                                         <!-- End of Table Responsive -->
                                                                         <div class="form-group" id="row">
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_3_score" id="worker_3_score" onchange="countSelected()">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_3_c_score" id="worker_3_c_score" onchange="countSelected()">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_3_na_score" id="worker_3_na_score" onchange="countSelected()">
                                                                             </div>
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
                                                                                 <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-3">Save</button>
@@ -762,7 +767,8 @@ require_once "controller.php";
                                                                         <!-- End of Table Responsive -->
                                                                         <div class="form-group" id="row">
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_4_score" id="worker_4_score" onchange="countSelected()">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_4_c_score" id="worker_4_c_score" onchange="countSelected()">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_4_na_score" id="worker_4_na_score" onchange="countSelected()">
                                                                             </div>
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
                                                                                 <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-4">Save</button>
@@ -856,7 +862,8 @@ require_once "controller.php";
                                                                         <!-- End of Table Responsive -->
                                                                         <div class="form-group" id="row">
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_5_score" id="worker_5_score" onchange="countSelected()">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_5_c_score" id="worker_5_c_score" onchange="countSelected()">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_5_na_score" id="worker_5_na_score" onchange="countSelected()">
                                                                             </div>
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
                                                                                 <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-5">Save</button>
@@ -950,7 +957,8 @@ require_once "controller.php";
                                                                         <!-- End of Table Responsive -->
                                                                         <div class="form-group" id="row">
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_6_score" id="worker_6_score" onchange="countSelected()">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_6_c_score" id="worker_6_c_score" onchange="countSelected()">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_6_na_score" id="worker_6_na_score" onchange="countSelected()">
                                                                             </div>
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
                                                                                 <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-6">Save</button>
@@ -1044,7 +1052,8 @@ require_once "controller.php";
                                                                         <!-- End of Table Responsive -->
                                                                         <div class="form-group" id="row">
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_7_score" id="worker_7_score" onchange="countSelected()">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_7_c_score" id="worker_7_c_score" onchange="countSelected()">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_7_na_score" id="worker_7_na_score" onchange="countSelected()">
                                                                             </div>
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
                                                                                 <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-7">Save</button>
@@ -1138,7 +1147,8 @@ require_once "controller.php";
                                                                         <!-- End of Table Responsive -->
                                                                         <div class="form-group" id="row">
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_8_score" id="worker_8_score" onchange="countSelected()">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_8_c_score" id="worker_8_c_score" onchange="countSelected()">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_8_na_score" id="worker_8_na_score" onchange="countSelected()">
                                                                             </div>
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
                                                                                 <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-8">Save</button>
@@ -1232,7 +1242,8 @@ require_once "controller.php";
                                                                         <!-- End of Table Responsive -->
                                                                         <div class="form-group" id="row">
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_9_score" id="worker_9_score" onchange="countSelected()">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_9_c_score" id="worker_9_c_score" onchange="countSelected()">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_9_na_score" id="worker_9_na_score" onchange="countSelected()">
                                                                             </div>
                                                                             <div class="col-sm-4 mb-3 mb-sm-0">
                                                                                 <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-9">Save</button>
@@ -1366,7 +1377,8 @@ require_once "controller.php";
                 document.getElementById('selectedNA').innerHTML = countNA;
 
                 totalScore = countC + countNC + countNA;
-                document.getElementById('managerial_score').value = totalScore;
+                document.getElementById('managerial_c_score').value = countC;
+                document.getElementById('managerial_na_score').value = countNA;
 
                 //supervisory 1
                 var checkboxes4 = document.querySelectorAll('.checkbox4');
@@ -1463,7 +1475,8 @@ require_once "controller.php";
                 document.getElementById('selectedNA4').innerHTML = countNA4;
 
                 totalScore2 = countC2 + countNC2 + countNA2 + countC3 + countNC3 + countNA3 + countC4 + countNC4 + countNA4;
-                document.getElementById('supervisory_score').value = totalScore2;
+                document.getElementById('supervisory_c_score').value = countC2 + countC3 + countC4;
+                document.getElementById('supervisory_na_score').value = countNA2 + countNA3 + countNA4;
 
                 //worker 1
                 var checkboxes13 = document.querySelectorAll('.checkbox13');
@@ -1498,7 +1511,8 @@ require_once "controller.php";
                 document.getElementById('selectedNA5').innerHTML = countNA5;
 
                 totalScore3 = countC5 + countNC5 + countNA5;
-                document.getElementById('worker_1_score').value = totalScore3;
+                document.getElementById('worker_1_c_score').value = countC5;
+                document.getElementById('worker_1_na_score').value = countNA5;
 
                 //worker 2
                 var checkboxes16 = document.querySelectorAll('.checkbox16');
@@ -1533,7 +1547,8 @@ require_once "controller.php";
                 document.getElementById('selectedNA6').innerHTML = countNA6;
 
                 totalScore4 = countC6 + countNC6 + countNA6;
-                document.getElementById('worker_2_score').value = totalScore4;
+                document.getElementById('worker_2_c_score').value = countC6;
+                document.getElementById('worker_2_na_score').value = countNA6;
 
                 //worker 3
                 var checkboxes19 = document.querySelectorAll('.checkbox19');
@@ -1568,7 +1583,8 @@ require_once "controller.php";
                 document.getElementById('selectedNA7').innerHTML = countNA7;
 
                 totalScore5 = countC7 + countNC7 + countNA7;
-                document.getElementById('worker_3_score').value = totalScore5;
+                document.getElementById('worker_3_c_score').value = countC7;
+                document.getElementById('worker_3_na_score').value = countNA7;
 
                 //worker 4
                 var checkboxes22 = document.querySelectorAll('.checkbox22');
@@ -1603,7 +1619,8 @@ require_once "controller.php";
                 document.getElementById('selectedNA8').innerHTML = countNA8;
 
                 totalScore6 = countC8 + countNC8 + countNA8;
-                document.getElementById('worker_4_score').value = totalScore6;
+                document.getElementById('worker_4_c_score').value = countC8;
+                document.getElementById('worker_4_na_score').value = countNA8;
 
                 //worker 5
                 var checkboxes25 = document.querySelectorAll('.checkbox25');
@@ -1638,7 +1655,8 @@ require_once "controller.php";
                 document.getElementById('selectedNA9').innerHTML = countNA9;
 
                 totalScore7 = countC9 + countNC9 + countNA9;
-                document.getElementById('worker_5_score').value = totalScore7;
+                document.getElementById('worker_5_c_score').value = countC9;
+                document.getElementById('worker_5_na_score').value = countNA9;
 
                 //worker 6
                 var checkboxes28 = document.querySelectorAll('.checkbox28');
@@ -1673,7 +1691,8 @@ require_once "controller.php";
                 document.getElementById('selectedNA10').innerHTML = countNA10;
 
                 totalScore8 = countC10 + countNC10 + countNA10;
-                document.getElementById('worker_6_score').value = totalScore8;
+                document.getElementById('worker_6_c_score').value = countC10;
+                document.getElementById('worker_6_na_score').value = countNA10;
 
                 //worker 7
                 var checkboxes31 = document.querySelectorAll('.checkbox31');
@@ -1708,7 +1727,8 @@ require_once "controller.php";
                 document.getElementById('selectedNA11').innerHTML = countNA11;
 
                 totalScore9 = countC11 + countNC11 + countNA11;
-                document.getElementById('worker_7_score').value = totalScore9;
+                document.getElementById('worker_7_c_score').value = countC11;
+                document.getElementById('worker_7_na_score').value = countNA11;
 
                 //worker 8
                 var checkboxes34 = document.querySelectorAll('.checkbox34');
@@ -1743,7 +1763,8 @@ require_once "controller.php";
                 document.getElementById('selectedNA12').innerHTML = countNA12;
 
                 totalScore10 = countC12 + countNC12 + countNA12;
-                document.getElementById('worker_8_score').value = totalScore10;
+                document.getElementById('worker_8_c_score').value = countC12;
+                document.getElementById('worker_8_na_score').value = countNA12;
 
                 //worker 9
                 var checkboxes37 = document.querySelectorAll('.checkbox37');
@@ -1778,8 +1799,87 @@ require_once "controller.php";
                 document.getElementById('selectedNA13').innerHTML = countNA13;
 
                 totalScore11 = countC13 + countNC13 + countNA13;
-                document.getElementById('worker_9_score').value = totalScore11;
+                document.getElementById('worker_9_c_score').value = countC13;
+                document.getElementById('worker_9_na_score').value = countNA13;
             }
+
+            var managerialCScore = document.getElementById('managerial_c_score');
+            var managerialNAScore = document.getElementById('managerial_na_score');
+            var managerial_c = document.querySelectorAll('input[class="checkbox1"]:checked').length;
+            var managerial_na = document.querySelectorAll('input[class="checkbox3"]:checked').length;
+            managerialCScore.setAttribute('value', managerial_c);
+            managerialNAScore.setAttribute('value', managerial_na);
+
+            var supervisoryCScore = document.getElementById('supervisory_c_score');
+            var supervisoryNAScore = document.getElementById('supervisory_na_score');
+            var supervisory_c = document.querySelectorAll('input[class="checkbox4"]:checked').length + document.querySelectorAll('input[class="checkbox7"]:checked').length + document.querySelectorAll('input[class="checkbox10"]:checked').length;
+            var supervisory_na = document.querySelectorAll('input[class="checkbox6"]:checked').length + document.querySelectorAll('input[class="checkbox9"]:checked').length + document.querySelectorAll('input[class="checkbox12"]:checked').length;
+            supervisoryCScore.setAttribute('value', supervisory_c);
+            supervisoryNAScore.setAttribute('value', supervisory_na);
+
+            var worker1CScore = document.getElementById('worker_1_c_score');
+            var worker1NAScore = document.getElementById('worker_1_na_score');
+            var worker1_c = document.querySelectorAll('input[class="checkbox13"]:checked').length;
+            var worker1_na = document.querySelectorAll('input[class="checkbox15"]:checked').length;
+            worker1CScore.setAttribute('value', worker1_c);
+            worker1NAScore.setAttribute('value', worker1_na);
+            
+            var worker2CScore = document.getElementById('worker_2_c_score');
+            var worker2NAScore = document.getElementById('worker_2_na_score');
+            var worker2_c = document.querySelectorAll('input[class="checkbox16"]:checked').length;
+            var worker2_na = document.querySelectorAll('input[class="checkbox18"]:checked').length;
+            worker2CScore.setAttribute('value', worker2_c);
+            worker2NAScore.setAttribute('value', worker2_na);
+            
+            var worker3CScore = document.getElementById('worker_3_c_score');
+            var worker3NAScore = document.getElementById('worker_3_na_score');
+            var worker3_c = document.querySelectorAll('input[class="checkbox19"]:checked').length;
+            var worker3_na = document.querySelectorAll('input[class="checkbox21"]:checked').length;
+            worker3CScore.setAttribute('value', worker3_c);
+            worker3NAScore.setAttribute('value', worker3_na);
+            
+            var worker4CScore = document.getElementById('worker_4_c_score');
+            var worker4NAScore = document.getElementById('worker_4_na_score');
+            var worker4_c = document.querySelectorAll('input[class="checkbox22"]:checked').length;
+            var worker4_na = document.querySelectorAll('input[class="checkbox24"]:checked').length;
+            worker4CScore.setAttribute('value', worker4_c);
+            worker4NAScore.setAttribute('value', worker4_na);
+            
+            var worker5CScore = document.getElementById('worker_5_c_score');
+            var worker5NAScore = document.getElementById('worker_5_na_score');
+            var worker5_c = document.querySelectorAll('input[class="checkbox25"]:checked').length;
+            var worker5_na = document.querySelectorAll('input[class="checkbox27"]:checked').length;
+            worker5CScore.setAttribute('value', worker5_c);
+            worker5NAScore.setAttribute('value', worker5_na);
+            
+            var worker6CScore = document.getElementById('worker_6_c_score');
+            var worker6NAScore = document.getElementById('worker_6_na_score');
+            var worker6_c = document.querySelectorAll('input[class="checkbox28"]:checked').length;
+            var worker6_na = document.querySelectorAll('input[class="checkbox30"]:checked').length;
+            worker6CScore.setAttribute('value', worker6_c);
+            worker6NAScore.setAttribute('value', worker6_na);
+            
+            var worker7CScore = document.getElementById('worker_7_c_score');
+            var worker7NAScore = document.getElementById('worker_7_na_score');
+            var worker7_c = document.querySelectorAll('input[class="checkbox31"]:checked').length;
+            var worker7_na = document.querySelectorAll('input[class="checkbox33"]:checked').length;
+            worker7CScore.setAttribute('value', worker7_c);
+            worker7NAScore.setAttribute('value', worker7_na);
+            
+            var worker8CScore = document.getElementById('worker_8_c_score');
+            var worker8NAScore = document.getElementById('worker_8_na_score');
+            var worker8_c = document.querySelectorAll('input[class="checkbox34"]:checked').length;
+            var worker8_na = document.querySelectorAll('input[class="checkbox36"]:checked').length;
+            worker8CScore.setAttribute('value', worker8_c);
+            worker8NAScore.setAttribute('value', worker8_na);
+            
+            var worker9CScore = document.getElementById('worker_9_c_score');
+            var worker9NAScore = document.getElementById('worker_9_na_score');
+            var worker9_c = document.querySelectorAll('input[class="checkbox37"]:checked').length;
+            var worker9_na = document.querySelectorAll('input[class="checkbox39"]:checked').length;
+            worker9CScore.setAttribute('value', worker9_c);
+            worker9NAScore.setAttribute('value', worker9_na);
+            
         </script>
 
     <?php } else {
