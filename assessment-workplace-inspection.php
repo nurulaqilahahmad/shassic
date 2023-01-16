@@ -175,9 +175,9 @@ require_once "controller.php";
                                                                                                         if ($query->rowCount() > 0) {
                                                                                                             foreach ($workinsps1 as $workinsp1) {
                                                                                                         ?>
-                                                                                                                <td><input type="checkbox" class="checkbox1" onclick="countSelected()" name="workinsp_<?= $checklist_id ?>[]" value="C" <?php if (in_array("C", explode(", ", $workinsp1->status))) echo 'checked = "checked"'; ?>></td>
-                                                                                                                <td><input type="checkbox" class="checkbox2" onclick="countSelected()" name="workinsp_<?= $checklist_id ?>[]" value="NC" <?php if (in_array("NC", explode(", ", $workinsp1->status))) echo 'checked = "checked"'; ?>></td>
-                                                                                                                <td><input type="checkbox" class="checkbox3" onclick="countSelected()" name="workinsp_<?= $checklist_id ?>[]" value="NA" <?php if (in_array("NA", explode(", ", $workinsp1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox1" onchange="countSelected()" name="workinsp_<?= $checklist_id ?>[]" value="C" <?php if (in_array("C", explode(", ", $workinsp1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox2" onchange="countSelected()" name="workinsp_<?= $checklist_id ?>[]" value="NC" <?php if (in_array("NC", explode(", ", $workinsp1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox3" onchange="countSelected()" name="workinsp_<?= $checklist_id ?>[]" value="NA" <?php if (in_array("NA", explode(", ", $workinsp1->status))) echo 'checked = "checked"'; ?>></td>
                                                                                                                 <td><textarea form="workplace-inspection-general" rows="2" cols="20" id="remarks" name="remarks_<?= $checklist_id ?>"><?= $workinsp1->remarks ?></textarea></td>
                                                                                                     </tr>
                                                                                             <?php }
@@ -213,7 +213,8 @@ require_once "controller.php";
                                                                     <!-- End of Table Responsive -->
                                                                     <div class="form-group" id="row">
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="general_score" id="general_score" onchange="countSelected()">
+                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="general_c_score" id="general_c_score" onchange="countSelected()">
+                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="general_na_score" id="general_na_score" onchange="countSelected()">
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                                                             <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection-general">Save</button>
@@ -286,9 +287,9 @@ require_once "controller.php";
                                                                                                         if ($query->rowCount() > 0) {
                                                                                                             foreach ($highrisks1 as $highrisk1) {
                                                                                                         ?>
-                                                                                                                <td><input type="checkbox" class="checkbox4" id="C" name="highrisk1_<?= $checklist_id ?>[]" onclick="countSelected()" value="C" <?php if (in_array("C", explode(", ", $highrisk1->status))) echo 'checked = "checked"'; ?>></td>
-                                                                                                                <td><input type="checkbox" class="checkbox5" id="NC" name="highrisk1_<?= $checklist_id ?>[]" onclick="countSelected()" value="NC" <?php if (in_array("NC", explode(", ", $highrisk1->status))) echo 'checked = "checked"'; ?>></td>
-                                                                                                                <td><input type="checkbox" class="checkbox6" id="NA" name="highrisk1_<?= $checklist_id ?>[]" onclick="countSelected()" value="NA" <?php if (in_array("NA", explode(", ", $highrisk1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox4" id="C" name="highrisk1_<?= $checklist_id ?>[]" onchange="countSelected()" value="C" <?php if (in_array("C", explode(", ", $highrisk1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox5" id="NC" name="highrisk1_<?= $checklist_id ?>[]" onchange="countSelected()" value="NC" <?php if (in_array("NC", explode(", ", $highrisk1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox6" id="NA" name="highrisk1_<?= $checklist_id ?>[]" onchange="countSelected()" value="NA" <?php if (in_array("NA", explode(", ", $highrisk1->status))) echo 'checked = "checked"'; ?>></td>
                                                                                                         <?php }
                                                                                                         } ?>
                                                                                                         <?php
@@ -299,9 +300,9 @@ require_once "controller.php";
                                                                                                         if ($query->rowCount() > 0) {
                                                                                                             foreach ($highrisks2 as $highrisk2) {
                                                                                                         ?>
-                                                                                                                <td><input type="checkbox" class="checkbox7" name="highrisk2_<?= $checklist_id ?>[]" onclick="countSelected()" value="C" <?php if (in_array("C", explode(", ", $highrisk2->status))) echo 'checked = "checked"'; ?>></td>
-                                                                                                                <td><input type="checkbox" class="checkbox8" name="highrisk2_<?= $checklist_id ?>[]" onclick="countSelected()" value="NC" <?php if (in_array("NC", explode(", ", $highrisk2->status))) echo 'checked = "checked"'; ?>></td>
-                                                                                                                <td><input type="checkbox" class="checkbox9" name="highrisk2_<?= $checklist_id ?>[]" onclick="countSelected()" value="NA" <?php if (in_array("NA", explode(", ", $highrisk2->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox7" name="highrisk2_<?= $checklist_id ?>[]" onchange="countSelected()" value="C" <?php if (in_array("C", explode(", ", $highrisk2->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox8" name="highrisk2_<?= $checklist_id ?>[]" onchange="countSelected()" value="NC" <?php if (in_array("NC", explode(", ", $highrisk2->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox9" name="highrisk2_<?= $checklist_id ?>[]" onchange="countSelected()" value="NA" <?php if (in_array("NA", explode(", ", $highrisk2->status))) echo 'checked = "checked"'; ?>></td>
                                                                                                         <?php }
                                                                                                         } ?>
                                                                                                         <?php
@@ -312,9 +313,9 @@ require_once "controller.php";
                                                                                                         if ($query->rowCount() > 0) {
                                                                                                             foreach ($highrisks3 as $highrisk3) {
                                                                                                         ?>
-                                                                                                                <td><input type="checkbox" class="checkbox10" name="highrisk3_<?= $checklist_id ?>[]" onclick="countSelected()" value="C" <?php if (in_array("C", explode(", ", $highrisk3->status))) echo 'checked = "checked"'; ?>></td>
-                                                                                                                <td><input type="checkbox" class="checkbox11" name="highrisk3_<?= $checklist_id ?>[]" onclick="countSelected()" value="NC" <?php if (in_array("NC", explode(", ", $highrisk3->status))) echo 'checked = "checked"'; ?>></td>
-                                                                                                                <td><input type="checkbox" class="checkbox12" name="highrisk3_<?= $checklist_id ?>[]" onclick="countSelected()" value="NA" <?php if (in_array("NA", explode(", ", $highrisk3->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox10" name="highrisk3_<?= $checklist_id ?>[]" onchange="countSelected()" value="C" <?php if (in_array("C", explode(", ", $highrisk3->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox11" name="highrisk3_<?= $checklist_id ?>[]" onchange="countSelected()" value="NC" <?php if (in_array("NC", explode(", ", $highrisk3->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox12" name="highrisk3_<?= $checklist_id ?>[]" onchange="countSelected()" value="NA" <?php if (in_array("NA", explode(", ", $highrisk3->status))) echo 'checked = "checked"'; ?>></td>
                                                                                                                 <td><textarea form="workplace-inspection-high-risk" rows="2" cols="20" id="remarks" name="remarks_<?= $checklist_id ?>"><?= $highrisk3->remarks ?></textarea></td>
                                                                                                         <?php }
                                                                                                         } ?>
@@ -380,7 +381,8 @@ require_once "controller.php";
                                                                     <!-- End of table-responsive -->
                                                                     <div class="form-group" id="row">
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="high_risk_score" id="high_risk_score" onchange="countSelected()">
+                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="high_risk_c_score" id="high_risk_c_score" onchange="countSelected()">
+                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="high_risk_na_score" id="high_risk_na_score" onchange="countSelected()">
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                                                             <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection-high-risk">Save</button>
@@ -587,13 +589,35 @@ require_once "controller.php";
 
                 totalScore = countC + countNC + countNA;
                 // document.getElementById('selectedTotal').innerHTML = totalScore;
-                document.getElementById('general_score').value = totalScore;
+                // document.getElementById('general_score').value = totalScore;
+                // workInsp_general = (countC / (9 - countNA));
+                // let g = workInsp_general.toFixed(2);
+                document.getElementById('general_c_score').value = countC;
+                document.getElementById('general_na_score').value = countNA;
 
                 totalScore2 = countC2 + countNC2 + countNA2 + countC3 + countNC3 + countNA3 + countC4 + countNC4 + countNA4;
                 // document.getElementById('selectedTotal2').innerHTML = totalScore2;
-                // workplaceInspectionHighRisk = (countC / (72 - countNA) * 20);
-                document.getElementById('high_risk_score').value = totalScore2;
+                // highrisk1 = (countC2 / (21 - countNA2));
+                // highrisk2 = (countC3 / (21 - countNA3));
+                // highrisk3 = (countC4 / (21 - countNA4));
+                // workInsp_highrisk = highrisk1 + highrisk2 + highrisk3;
+                document.getElementById('high_risk_c_score').value = countC2 + countC3 + countC4;
+                document.getElementById('high_risk_na_score').value = countNA2 + countNA3 + countNA4;
             }
+
+            var generalCScore = document.getElementById('general_c_score');
+            var generalNAScore = document.getElementById('general_na_score');
+            var general_c = document.querySelectorAll('input[class="checkbox1"]:checked').length;
+            var general_na = document.querySelectorAll('input[class="checkbox3"]:checked').length;
+            generalCScore.setAttribute('value', general_c);
+            generalNAScore.setAttribute('value', general_na);
+
+            var highRiskCScore = document.getElementById('high_risk_c_score');
+            var highRiskNAScore = document.getElementById('high_risk_na_score');
+            var highrisk_c = document.querySelectorAll('input[class="checkbox4"]:checked').length + document.querySelectorAll('input[class="checkbox7"]:checked').length + document.querySelectorAll('input[class="checkbox10"]:checked').length;
+            var highrisk_na = document.querySelectorAll('input[class="checkbox6"]:checked').length + document.querySelectorAll('input[class="checkbox9"]:checked').length + document.querySelectorAll('input[class="checkbox12"]:checked').length;
+            highRiskCScore.setAttribute('value', highrisk_c);
+            highRiskNAScore.setAttribute('value', highrisk_na);
         </script>
 
     <?php } else {

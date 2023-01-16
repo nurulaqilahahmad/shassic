@@ -80,11 +80,11 @@ require_once "controller.php";
                                                                 <div class="text-center" id="row">
                                                                     <div class="col-sm-6" style="display:flex; width:auto; justify-content: start;">
                                                                         <a class="font-weight-bold" href="index.php">
-                                                                            &larr; Back</a>
+                                                                            < Back</a>
                                                                     </div>
                                                                     <div class="col-sm-6" style="display:flex; width:auto; justify-content: end;">
                                                                         <a class="font-weight-bold" href="assessment-component.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>&info=">
-                                                                            Next &rarr;</a>
+                                                                            Next ></a>
                                                                     </div>
                                                                 </div>
 
