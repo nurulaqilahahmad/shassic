@@ -25,7 +25,7 @@ require_once "controller.php";
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/landing.css">
-    <link rel="stylesheet" type="text/css" href="css/progress-bar.css">
+    <link rel="stylesheet" type="text/css" href="css/circular-progress-bar.css">
 
     <script type=text/javascript>
         function documentCheck() {

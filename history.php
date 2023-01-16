@@ -4,11 +4,11 @@ error_reporting(0);
 include('includes/config.php');
 ?>
 
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -31,6 +31,68 @@ include('includes/config.php');
     <link rel="stylesheet" type="text/css" href="css/landing.css">
     <link rel="stylesheet" type="text/css" href="css/progress-bar.css">
 
+    <script type=text/javascript>
+        // function circularBar() {
+        //     let progressBar = document.querySelector(".circular-progress");
+        //     let valueContainer = document.querySelector(".value-container");
+
+        //     let progressValue = 0;
+        //     let progressEndValue = 65;
+        //     let speed = 100;
+
+        //     let progress = setInterval(() => {
+        //         progressValue++;
+        //         valueContainer.textContent = `${progressValue}%`;
+        //     //     progressBar.style.background = `conic-gradient(
+        //     //     #4d5bf9 ${progressValue * 3.6}deg,
+        //     //     #cadcff ${progressValue * 3.6}deg
+        //     // )`;
+        //         if (progressValue == progressEndValue) {
+        //             clearInterval(progress);
+        //         }
+        //     }, speed);
+        // }
+
+        // function progressBar() {
+        //     let progressBar = document.querySelector(".circular-progress");
+        //     // let valueContainer = document.querySelector("#progress-item");
+        //     let valueContainer = document.getElementsByClassName("progress_item");
+
+        //     let progressValue = 0;
+        //     // let progressEndValue = document.getElementById("input-percentage").value;
+        //     // Hint 1: sama dengan let value.
+        //     let progressEndValue = document.getElementsByClassName("bar")[0].value;
+        //     let speed = 200;
+
+        //     let progress = setInterval(() => {
+        //         progressValue++;
+        //         valueContainer.textContent = `${progressValue}%`;
+        //         progressBar.style.background = `conic-gradient(
+        //         #4d5bf9 ${progressValue * 3.6}deg,
+        //         #cadcff ${progressValue * 3.6}deg
+        //     )`;
+        //         if (progressValue == progressEndValue) {
+        //             clearInterval(progress);
+        //         }
+        //     }, speed);
+        // }
+
+        window.onload = function() {
+            let bar = document.querySelectorAll('.bar');
+            bar.forEach((progress) => {
+                let value = progress.getAttribute('data-value');
+                progress.style.width = `${value}%`;
+                let count = 0;
+                let progressAnimation = setInterval(() => {
+                    count++;
+                    progress.setAttribute('data-text', `${count}%`);
+                    if (count >= value) {
+                        clearInterval(progressAnimation);
+                    }
+                }, 15);
+            });
+        };
+    </script>
 </head>
 
 <body id="page-top">
@@ -39,11 +101,6 @@ include('includes/config.php');
         <div class="landing-container">
             <div class="landing-navbar">
                 <img src="img/landing/logo.png" class="landing-logo">
-                <!-- <nav class="landing-nav">
-                    <ul class="landing-ul" id="menuList">
-                        <li class="landing-li"><a href="about.php" class="landing-a">ABOUT</a></li>
-                    </ul>
-                </nav> -->
                 <img src="img/landing/menu.png" class="menu-icon" onclick="togglemenu()">
             </div>
 
@@ -110,6 +167,8 @@ include('includes/config.php');
                                                         $query->bindParam(':assessor_id', $assessor_id, PDO::PARAM_STR);
                                                         $query->execute();
                                                         $histories = $query->fetchAll(PDO::FETCH_OBJ);
+
+                                                        $count = 0;
                                                         if ($query->rowCount() > 0) {
                                                             foreach ($histories as $history) { ?>
                                                                 <tr>
@@ -117,15 +176,18 @@ include('includes/config.php');
                                                                     <td class="assessee_name"><?php echo htmlentities($history->assessee_name); ?></td>
                                                                     <td class="project_name"><?php echo htmlentities($history->project_name); ?></td>
                                                                     <td class="assessement_progress" align="center">
-                                                                        <div class="outer-container">
-                                                                            <div class="circular-progress">
-                                                                                <div id="progress-num">
-                                                                                    <!-- <?php echo htmlentities($history->document_check_percentage); ?> -->
-                                                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="input-percentage" id="input-percentage" value="<?php echo htmlentities($history->document_check_percentage); ?>">
-                                                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="max-percentage" id="max-percentage" value="100">
+
+                                                                        <div class="p_progress_container">
+                                                                            <div class="progress">
+                                                                                <div class="p_progress_item">
+                                                                                    <div class="progress_bar">
+                                                                                        <!-- <div class="bar" data-value="70" data-text="70"></div> -->
+                                                                                        <div class="bar" data-value="<?php echo htmlentities($history->document_check_percentage); ?>" data-text="<?php echo htmlentities($history->document_check_percentage); ?>" value="<?php echo htmlentities($history->document_check_percentage); ?>">
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
-                                                                        </div>
+
                                                                     </td>
                                                                     <td>
                                                                         <button class="btn btn-primary btn-user btn-block font-weight-bold" onclick="window.location='edit-assessment-from-history.php?assessee_id=<?php echo htmlentities($history->assessee_id); ?>';">Edit</button>
@@ -137,16 +199,9 @@ include('includes/config.php');
                                                     </tbody>
                                                 </table>
                                             </div>
-
                                         </div>
                                     </div>
-
                                 </div>
-                                <!-- /.container-fluid -->
-
-                                <!-- </div> -->
-                                <!-- End of Content Wrapper -->
-
                         <?php }
                 } ?>
 
@@ -192,28 +247,6 @@ include('includes/config.php');
     <?php } else {
         header("location: login.php");
     } ?>
-
-    <script>
-        let progressBar = document.querySelector(".circular-progress");
-        let valueContainer = document.querySelector("#progress-num");
-
-        let progressValue = 0;
-        let progressEndValue = document.getElementById("input-percentage").value;
-        let speed = 200;
-
-        let progress = setInterval(() => {
-            progressValue++;
-            valueContainer.textContent = `${progressValue}%`;
-            progressBar.style.background = `conic-gradient(
-                #4d5bf9 ${progressValue * 3.6}deg,
-                #cadcff ${progressValue * 3.6}deg
-            )`;
-            if (progressValue == progressEndValue) {
-                clearInterval(progress);
-            }
-        }, speed);
-    </script>
-
 </body>
 
 </html>
