@@ -1,0 +1,117 @@
+.circular-progress-container {
+   height: 70px;
+   width: 70px;
+   background-color: #ffffff;
+   /* position: absolute; */
+   /* transform: translate(-50%, -50%); */
+   top: 50%;
+   left: 50%;
+   border-radius: 8px;
+   box-shadow: 10px 10px 20px rgba(60, 60, 150, 0.25);
+   display: grid;
+   place-items: center;
+}
+
+.circular-progress {
+    position: relative;
+    height: 60px;
+    width: 60px;
+    background-color: rgb(188, 255, 207);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+ }
+
+ .circular-progress:before {
+   content: "";
+   position: absolute;
+   height: 84%;
+   width: 84%;
+   background-color: #ffffff;
+   border-radius: 50%;
+}
+
+.value-container {
+   position: relative;
+   font-family: "Poppins", sans-serif;
+   font-size: 10px;
+   color: #231c3d;
+
+}
+
+ .circular-progress-each {
+   position: relative;
+   height: 160px;
+   width: 160px;
+   border-radius: 50%;
+   display: grid;
+   place-items: center;
+}
+
+ .circular-progress-each:before {
+   content: ""; 
+   position: absolute;
+   height: 84%;
+   width: 84%;
+   background-color: #ffffff;
+   border-radius: 50%;
+}
+
+.circular-progress-each-1 {
+   position: relative;
+   height: 160px;
+   width: 160px;
+   border-radius: 50%;
+   display: grid;
+   place-items: center;
+}
+
+ .circular-progress-each-1:before {
+   content: "";
+   position: absolute;
+   height: 84%;
+   width: 84%;
+   background-color: #ffffff;
+   border-radius: 50%;
+}
+
+.circular-progress-each-2 {
+   position: relative;
+   height: 160px;
+   width: 160px;
+   border-radius: 50%;
+   display: grid;
+   place-items: center;
+}
+
+ .circular-progress-each-2:before {
+   content: "";
+   position: absolute;
+   height: 84%;
+   width: 84%;
+   background-color: #ffffff;
+   border-radius: 50%;
+}
+
+ #progress-document-check {
+   position: relative;
+   font-family: "Poppins", sans-serif;
+   font-size: 30px;
+   color: #231c3d;
+}
+
+#progress-document-workplace {
+   position: relative;
+   font-family: "Poppins", sans-serif;
+   font-size: 30px;
+   color: #231c3d;
+}
+
+#progress-document-personnel {
+   position: relative;
+   font-family: "Poppins", sans-serif;
+   font-size: 30px;
+   color: #231c3d;
+}
+
+

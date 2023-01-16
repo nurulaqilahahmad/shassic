@@ -25,7 +25,7 @@ require_once "controller.php";
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/landing.css">
-    <link rel="stylesheet" type="text/css" href="css/progress-bar.css">
+    <link rel="stylesheet" type="text/css" href="css/circular-progress-bar.css">
 
     <script type=text/javascript>
         function documentCheck() {
@@ -148,7 +148,7 @@ require_once "controller.php";
                                                                 <div class="text-center">
                                                                     <div class="text-center" style="display:flex; width:auto; justify-content: start;">
                                                                         <a class="font-weight-bold" href="history.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
-                                                                            &larr; Back</a>
+                                                                            < Back</a>
                                                                     </div>
                                                                     <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Assessment Result</h1>
                                                                 </div>
