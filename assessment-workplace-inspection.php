@@ -81,7 +81,7 @@ require_once "controller.php";
                                                             <div class="p-5">
                                                                 <div class="text-center">
                                                                     <div class="text-center" style="display:flex; width:auto; justify-content: start;">
-                                                                        <a class="font-weight-bold" href="assessment-component.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
+                                                                        <a class="font-weight-bold" href="assessment-component-from-history.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
                                                                             < Back</a>
                                                                     </div>
 
