@@ -62,11 +62,10 @@ require_once "controller.php";
                         <!-- Content Wrapper -->
                         <div id="content-wrapper" class="d-flex flex-column">
 
-
                             <!-- Main Content -->
                             <div id="content">
 
-                                <!-- Begin Page Content -->
+                                <!-- Begin container-fluid -->
                                 <div class="container-fluid">
 
                                     <!-- Outer Row -->
@@ -84,7 +83,6 @@ require_once "controller.php";
                                             <div class="text-center" id="row">
                                                 <div class="col-sm-6" style="display:flex; width:auto; justify-content: start;">
                                                     <a class="font-weight-bold" href="history.php">
-                                                        < Back</a>
                                                         < Back</a>
                                                 </div>
                                                 <div class="col-sm-6" style="display:flex; width:auto; justify-content: end;">
@@ -150,28 +148,16 @@ require_once "controller.php";
                                                 </div>
                                             </form>
                                         </div>
-
-                                        <!-- </div>
-                                                </div>
-                                            </div>
-
-                                        </div>
-
-
-                                    </div> -->
-
                                     </div>
-                                    <!-- /.container-fluid -->
 
                                 </div>
-                                <!-- End of Page Content -->
+                                <!-- container-fluid -->
 
                             </div>
                             <!-- End of Main Content -->
 
                         </div>
                         <!-- End of Content Wrapper -->
-
 
                 <?php }
                 } ?>
