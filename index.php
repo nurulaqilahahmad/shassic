@@ -71,7 +71,7 @@ require_once "controller.php";
 
                             <li class="nav-item">
                                 <a class="nav-link disabled" style="text-align: center;">
-                                    <img class="img-profile rounded-circle" src="img/undraw_profile.svg" href="user-profile.php">
+                                    <img class="img-profile rounded-circle" src="img/blank-profile-picture.png" href="edit-profile.php">
                                 </a>
 
                             </li>

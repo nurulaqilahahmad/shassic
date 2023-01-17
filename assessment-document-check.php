@@ -215,7 +215,9 @@ if ($query->rowCount() > 0) {
 
                                                                     <div class="form-group" id="row">
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" onchange="countSelected()" value="">
+                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="doc_check_c_score" id="doc_check_c_score" onchange="countSelected()">
+                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="doc_check_na_score" id="doc_check_na_score" onchange="countSelected()">
+                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" onchange="countSelected()">
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                                                             <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-document-check">Save</button>
@@ -325,8 +327,16 @@ if ($query->rowCount() > 0) {
                 let d = documentCheck.toFixed(2);
 
                 // document.getElementById('selectedTotal').innerHTML = totalScore;
+                document.getElementById('doc_check_c_score').value = countC;
+                document.getElementById('doc_check_na_score').value = countNA;
                 document.getElementById('document_check_percentage').value = d;
 
+                var docCheckCScore = document.getElementById('doc_check_c_score');
+                var docCheckNAScore = document.getElementById('doc_check_na_score');
+                var doc_check_c = document.querySelectorAll('input[class="checkbox1"]:checked').length;
+                var doc_check_na = document.querySelectorAll('input[class="checkbox3"]:checked').length;
+                docCheckCScore.setAttribute('value', doc_check_c);
+                docCheckNAScore.setAttribute('value', doc_check_na);
             }
         </script>
 
