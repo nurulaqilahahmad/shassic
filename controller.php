@@ -353,7 +353,8 @@ if (isset($_POST['add'])) {
         $lastInsertId = $dbh->lastInsertId();
         if ($lastInsertId) {
             $assessee_id = $lastInsertId;
-            $con = "INSERT INTO workplace_inspection_subscore(assessment_id) VALUES(:assessee_id);
+            $con = "INSERT INTO document_check_subscore(assessment_id) VALUES(:assessee_id);
+                    INSERT INTO workplace_inspection_subscore(assessment_id) VALUES(:assessee_id);
                     INSERT INTO personnel_interview_subscore(assessment_id) VALUES(:assessee_id);";
             $insert_subscore = $dbh->prepare($con);
             $insert_subscore->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
@@ -635,7 +636,28 @@ if (isset($_POST['update-from-history'])) {
 if (isset($_POST['save-document-check'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
+    $doc_check_c_score = $_POST['doc_check_c_score'];
+    $doc_check_na_score = $_POST['doc_check_na_score'];
     $document_check_percentage = $_POST['document_check_percentage'];
+
+    // query for data selection - workplace_inspection_subscore
+    $sql = "SELECT * FROM document_check_subscore WHERE assessment_id=:assessee_id";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+    $query->execute();
+    $results = $query->fetchAll(PDO::FETCH_OBJ);
+
+    if ($query->rowCount() > 0) {
+        foreach ($results as $result) {
+            //query for updation
+            $con = "UPDATE document_check_subscore SET doc_check_c_score=:doc_check_c_score, doc_check_na_score=:doc_check_na_score WHERE assessment_id=:assessee_id";
+            $update = $dbh->prepare($con);
+            $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $update->bindParam(':doc_check_c_score', $doc_check_c_score, PDO::PARAM_STR);
+            $update->bindParam(':doc_check_na_score', $doc_check_na_score, PDO::PARAM_STR);
+            $update->execute();
+        }
+    }
 
     // query for data selection
     $sql = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";

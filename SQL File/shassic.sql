@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 03, 2023 at 03:03 AM
+-- Generation Time: Jan 17, 2023 at 01:42 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -166,6 +166,19 @@ INSERT INTO `document_check_section` (`id`, `item_no`, `item_name`) VALUES
 (12, 'L', 'INCIDENT, NONCONFORMITY AND CORRECTIVE ACTION'),
 (13, 'M', 'INTERNAL AUDIT PROGRAMME'),
 (14, 'N', 'CONSTRUCTION WORK ACTIVITIES');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `document_check_subscore`
+--
+
+CREATE TABLE `document_check_subscore` (
+  `id` bigint(20) NOT NULL,
+  `assessment_id` bigint(20) NOT NULL,
+  `doc_check_c_score` int(11) NOT NULL,
+  `doc_check_na_score` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -656,6 +669,12 @@ ALTER TABLE `document_check_section`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `document_check_subscore`
+--
+ALTER TABLE `document_check_subscore`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `personnel_interview_category`
 --
 ALTER TABLE `personnel_interview_category`
@@ -828,6 +847,12 @@ ALTER TABLE `document_check_checklist`
 --
 ALTER TABLE `document_check_section`
   MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `document_check_subscore`
+--
+ALTER TABLE `document_check_subscore`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `personnel_interview_category`
