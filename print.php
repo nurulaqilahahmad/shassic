@@ -72,7 +72,7 @@ require_once "controller.php";
             let HighRiskNaScore = document.getElementById("high_risk_na_score").value;
 
             let progressEndValue = Math.round((((parseInt(generalCScore) + parseInt(generalNaScore) + parseInt(HighRiskCScore) + parseInt(HighRiskNaScore)) / 72) * 100));
-            console.log(progressEndValue);
+            // console.log(progressEndValue);
 
             let speed = 50;
 
@@ -103,8 +103,44 @@ require_once "controller.php";
             let valueContainer = document.querySelector("#progress-document-personnel");
 
             let progressValue = 0;
-            let progressEndValue = document.getElementById("personnel-interview").value;
+            // let progressEndValue = document.getElementById("personnel-interview").value;
             let speed = 50;
+
+            let managerialcscore = document.getElementById("managerial_c_score").value;
+            let managerialnascore = document.getElementById("managerial_na_score").value;
+            let supervisorycscore = document.getElementById("supervisory_c_score").value;
+            let supervisorynascore = document.getElementById("supervisory_na_score").value;
+
+            let workerc1 = document.getElementById("worker_1_c_score").value;
+            let workerc2 = document.getElementById("worker_2_c_score").value;
+            let workerc3 = document.getElementById("worker_3_c_score").value;
+            let workerc4 = document.getElementById("worker_4_c_score").value;
+            let workerc5 = document.getElementById("worker_5_c_score").value;
+            let workerc6 = document.getElementById("worker_6_c_score").value;
+            let workerc7 = document.getElementById("worker_7_c_score").value;
+            let workerc8 = document.getElementById("worker_8_c_score").value;
+            let workerc9 = document.getElementById("worker_9_c_score").value;
+
+            let workerna1 = document.getElementById("worker_1_na_score").value;
+            let workerna2 = document.getElementById("worker_2_na_score").value;
+            let workerna3 = document.getElementById("worker_3_na_score").value;
+            let workerna4 = document.getElementById("worker_4_na_score").value;
+            let workerna5 = document.getElementById("worker_5_na_score").value;
+            let workerna6 = document.getElementById("worker_6_na_score").value;
+            let workerna7 = document.getElementById("worker_7_na_score").value;
+            let workerna8 = document.getElementById("worker_8_na_score").value;
+            let workerna9 = document.getElementById("worker_9_na_score").value;
+
+            let workerc = parseInt(workerc1)+parseInt(workerc2)+ parseInt(workerc3)+ parseInt(workerc4)+ parseInt(workerc5)+ parseInt(workerc6)+ parseInt(workerc7)+parseInt(workerc8)+parseInt(workerc9);
+            let workerna = parseInt(workerna1)+parseInt(workerna2)+ parseInt(workerna3)+ parseInt(workerna4)+ parseInt(workerna5)+ parseInt(workerna6)+ parseInt(workerna7)+parseInt(workerna8)+parseInt(workerna9);
+
+            // let c = parseInt(managerialcscore) + parseInt(managerialnascore) + parseInt(supervisorycscore) + parseInt(supervisorynascore);
+
+            // let t = parseInt(workerc) +parseInt(workerna) + c;
+            // console.log(workerna);
+            
+            let progressEndValue = Math.round((((parseInt(managerialcscore) + parseInt(managerialnascore) + parseInt(supervisorycscore) + parseInt(supervisorynascore) + workerc + workerna) / 186) * 100));
+            // console.log(progressEndValue);
 
             let progress = setInterval(() => {
                 if (progressValue == progressEndValue) {
@@ -228,17 +264,44 @@ require_once "controller.php";
 
                                                             <!-- value from personnel subscore -->
                                                             <?php
-                                                            $sql = "SELECT * FROM workplace_inspection_subscore WHERE assessment_id='$result->assessee_id'";
+                                                            $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id='$result->assessee_id'";
                                                             $query = $dbh->prepare($sql);
                                                             $query->execute();
-                                                            $totalcna = $query->fetchAll(PDO::FETCH_OBJ);
+                                                            $totalcna1 = $query->fetchAll(PDO::FETCH_OBJ);
                                                             if ($query->rowCount() > 0) {
-                                                                foreach ($totalcna as $totalcnas) {
+                                                                foreach ($totalcna1 as $totalcnas1) {
                                                             ?>
-                                                                    <input type="hidden" id="general_c_score" value="<?php echo htmlentities($totalcnas->general_c_score); ?>">
-                                                                    <input type="hidden" id="general_na_score" value="<?php echo htmlentities($totalcnas->general_na_score); ?>">
-                                                                    <input type="hidden" id="high_risk_c_score" value="<?php echo htmlentities($totalcnas->high_risk_c_score); ?>">
-                                                                    <input type="hidden" id="high_risk_na_score" value="<?php echo htmlentities($totalcnas->high_risk_na_score); ?>">
+                                                                    <input type="hidden" id="managerial_c_score" value="<?php echo htmlentities($totalcnas1->managerial_c_score); ?>">
+                                                                    <input type="hidden" id="managerial_na_score" value="<?php echo htmlentities($totalcnas1->managerial_na_score); ?>">
+                                                                    <input type="hidden" id="supervisory_c_score" value="<?php echo htmlentities($totalcnas1->supervisory_c_score); ?>">
+                                                                    <input type="hidden" id="supervisory_na_score" value="<?php echo htmlentities($totalcnas1->supervisory_na_score); ?>">
+
+                                                                    <input type="hidden" id="worker_1_c_score" value="<?php echo htmlentities($totalcnas1->worker_1_c_score); ?>">
+                                                                    <input type="hidden" id="worker_1_na_score" value="<?php echo htmlentities($totalcnas1->worker_1_na_score); ?>">
+                                                                    
+                                                                    <input type="hidden" id="worker_2_c_score" value="<?php echo htmlentities($totalcnas1->worker_2_c_score); ?>">
+                                                                    <input type="hidden" id="worker_2_na_score" value="<?php echo htmlentities($totalcnas1->worker_2_na_score); ?>">
+                                                                    
+                                                                    <input type="hidden" id="worker_3_c_score" value="<?php echo htmlentities($totalcnas1->worker_3_c_score); ?>">
+                                                                    <input type="hidden" id="worker_3_na_score" value="<?php echo htmlentities($totalcnas1->worker_3_na_score); ?>">
+                                                                    
+                                                                    <input type="hidden" id="worker_4_c_score" value="<?php echo htmlentities($totalcnas1->worker_4_c_score); ?>">
+                                                                    <input type="hidden" id="worker_4_na_score" value="<?php echo htmlentities($totalcnas1->worker_4_na_score); ?>">
+                                                                    
+                                                                    <input type="hidden" id="worker_5_c_score" value="<?php echo htmlentities($totalcnas1->worker_5_c_score); ?>">
+                                                                    <input type="hidden" id="worker_5_na_score" value="<?php echo htmlentities($totalcnas1->worker_5_na_score); ?>">
+                                                                    
+                                                                    <input type="hidden" id="worker_6_c_score" value="<?php echo htmlentities($totalcnas1->worker_6_c_score); ?>">
+                                                                    <input type="hidden" id="worker_6_na_score" value="<?php echo htmlentities($totalcnas1->worker_6_na_score); ?>">
+                                                                    
+                                                                    <input type="hidden" id="worker_7_c_score" value="<?php echo htmlentities($totalcnas1->worker_7_c_score); ?>">
+                                                                    <input type="hidden" id="worker_7_na_score" value="<?php echo htmlentities($totalcnas1->worker_7_na_score); ?>">
+                                                                    
+                                                                    <input type="hidden" id="worker_8_c_score" value="<?php echo htmlentities($totalcnas1->worker_8_c_score); ?>">
+                                                                    <input type="hidden" id="worker_8_na_score" value="<?php echo htmlentities($totalcnas1->worker_8_na_score); ?>">
+                                                                    
+                                                                    <input type="hidden" id="worker_9_c_score" value="<?php echo htmlentities($totalcnas1->worker_9_c_score); ?>">
+                                                                    <input type="hidden" id="worker_9_na_score" value="<?php echo htmlentities($totalcnas1->worker_9_na_score); ?>">
                                                             <?php }
                                                             } ?>
 
