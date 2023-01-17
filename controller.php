@@ -90,8 +90,10 @@ if (isset($_POST['register'])) {
     $code = $_POST['code'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-    $password = password_hash($password, PASSWORD_BCRYPT, $options);
     $picture = 'blank-profile-picture.png';
+
+    $options = array("cost" => 4);
+    $password = password_hash($password, PASSWORD_BCRYPT, $options);
 
     //Query for data insertion
     $sql = "INSERT INTO user(username, email, password, code, fullname, picture) VALUES(:username, :email, :password, :code, :fullname, :picture)";
