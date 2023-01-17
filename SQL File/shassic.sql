@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 17, 2023 at 01:42 AM
+-- Generation Time: Jan 17, 2023 at 03:12 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -300,6 +300,14 @@ CREATE TABLE `personnel_interview_subscore` (
   `worker_9_na_score` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `personnel_interview_subscore`
+--
+
+INSERT INTO `personnel_interview_subscore` (`id`, `assessment_id`, `managerial_c_score`, `managerial_na_score`, `supervisory_c_score`, `supervisory_na_score`, `worker_1_c_score`, `worker_1_na_score`, `worker_2_c_score`, `worker_2_na_score`, `worker_3_c_score`, `worker_3_na_score`, `worker_4_c_score`, `worker_4_na_score`, `worker_5_c_score`, `worker_5_na_score`, `worker_6_c_score`, `worker_6_na_score`, `worker_7_c_score`, `worker_7_na_score`, `worker_8_c_score`, `worker_8_na_score`, `worker_9_c_score`, `worker_9_na_score`) VALUES
+(1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+
 -- --------------------------------------------------------
 
 --
@@ -481,20 +489,10 @@ CREATE TABLE `user` (
   `password` varchar(200) NOT NULL,
   `code` varchar(200) NOT NULL,
   `fullname` varchar(200) NOT NULL,
+  `picture` varchar(200) NOT NULL,
   `password_code` mediumint(50) NOT NULL,
   `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `user`
---
-
-INSERT INTO `user` (`id`, `username`, `email`, `password`, `code`, `fullname`, `password_code`, `creation_date`) VALUES
-(1, 'irmazafirah', 'irmazafirah@graduate.utm.my', '$2y$10$n81EAVqUxBmB6tVB1d5Qme7tpZ1ezWEs.cAWrpKubqIxXf0vw1Qmq', '1234', 'Irma Zafirah Mohd Ikram', 0, '2022-11-08 01:27:04'),
-(2, 'syahidatul', 'nursyahidatulasyiqin@graduate.utm.my', '$2y$10$pqqxZ84JgZAUmzkkoYwrpeQxLzQgnAS0hbV.N1OsenbdVq2x8NkjO', '1235', 'Nursyahidatul Asyiqin', 0, '2022-11-10 01:10:51'),
-(3, 'aqilah', 'nrlaqilahahmd@gmail.com', '$2y$10$lKdwOzZ2NwyN0OYyGmbgAei4YVKW2p0ikNyd/JxHIILYKHvNrNDpa', '1236', 'Nurul Aqilah Ahmad', 0, '2022-11-10 01:12:31'),
-(4, 'nuraqilah.a', 'nurulaqilah.a@graduate.utm.my', '$2y$10$NavI8gq178qMROS5iQuOJ.GQVk8bX0Swzod2kICUYyULBlpsGizSG', '1118', 'Nur Aqilah', 0, '2022-11-10 01:20:13'),
-(5, 'arinie', 'arinie@gmail.com', '$2y$10$YmjJe.ABktcpRrVceoAQfezehxgzaEHRYcDHXwkcYseu7F.F40zLe', '1111', 'Noor Arinie Norhalil', 0, '2022-11-10 08:08:30');
 
 -- --------------------------------------------------------
 
@@ -876,7 +874,7 @@ ALTER TABLE `personnel_interview_managerial`
 -- AUTO_INCREMENT for table `personnel_interview_subscore`
 --
 ALTER TABLE `personnel_interview_subscore`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `personnel_interview_supervisory_1`
@@ -954,7 +952,7 @@ ALTER TABLE `personnel_interview_worker_9`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `workplace_inspection_assessment`

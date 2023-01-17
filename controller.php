@@ -90,12 +90,11 @@ if (isset($_POST['register'])) {
     $code = $_POST['code'];
     $email = $_POST['email'];
     $password = $_POST['password'];
-
-    $options = array("cost" => 4);
     $password = password_hash($password, PASSWORD_BCRYPT, $options);
+    $picture = 'blank-profile-picture.png';
 
     //Query for data insertion
-    $sql = "INSERT INTO user(username, email, password, code, fullname) VALUES(:username, :email, :password, :code, :fullname)";
+    $sql = "INSERT INTO user(username, email, password, code, fullname, picture) VALUES(:username, :email, :password, :code, :fullname, :picture)";
 
     $query = $dbh->prepare($sql);
     $query->bindParam(':username', $username, PDO::PARAM_STR);
@@ -103,6 +102,7 @@ if (isset($_POST['register'])) {
     $query->bindParam(':password', $password, PDO::PARAM_STR);
     $query->bindParam(':code', $code, PDO::PARAM_STR);
     $query->bindParam(':fullname', $fullname, PDO::PARAM_STR);
+    $query->bindParam(':picture', $picture, PDO::PARAM_STR);
     $query->execute();
 
     $lastInsertId = $dbh->lastInsertId();
