@@ -220,8 +220,8 @@ require_once "controller.php";
                                                         <thead>
                                                             <tr>
                                                                 <th><a href="assessment-document-check.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">Document Check</a></th>
+                                                                <th><a href="assessment-workplace-inspection.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">Workplace Inspection</a></th>
                                                                 <th><a href="assessment-personnel-interview.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">Personnel Interview</a></th>
-                                                                <th><a href="assessment-workplace-inspection.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">Personnel Interview</a></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
@@ -275,7 +275,6 @@ require_once "controller.php";
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?php echo htmlentities($result->assessee_id); ?>">
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" onchange="countSelected()">
                                                         </div>
-                                                        <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-document-check">Print</button>
                                                     </div>
                                                     <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                 </div>

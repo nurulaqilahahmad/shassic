@@ -6,7 +6,6 @@ require_once "controller.php";
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -26,6 +25,7 @@ require_once "controller.php";
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/landing.css">
     <link rel="stylesheet" type="text/css" href="css/circular-progress-bar.css">
+    <link rel="stylesheet" type="text/css" href="css/star-rantings.css">
 
     <script type=text/javascript>
         function documentCheck() {
@@ -64,7 +64,16 @@ require_once "controller.php";
             let valueContainer = document.querySelector("#progress-document-workplace");
 
             let progressValue = 0;
-            let progressEndValue = document.getElementById("workplace-inspection").value;
+            // let progressEndValue = document.getElementById("workplace-inspection").value;
+
+            let generalCScore = document.getElementById("general_c_score").value;
+            let generalNaScore = document.getElementById("general_na_score").value;
+            let HighRiskCScore = document.getElementById("high_risk_c_score").value;
+            let HighRiskNaScore = document.getElementById("high_risk_na_score").value;
+
+            let progressEndValue = Math.round((((parseInt(generalCScore) + parseInt(generalNaScore) + parseInt(HighRiskCScore) + parseInt(HighRiskNaScore)) / 72) * 100));
+            console.log(progressEndValue);
+
             let speed = 50;
 
             let progress = setInterval(() => {
@@ -118,6 +127,28 @@ require_once "controller.php";
                 }
             }, speed);
         }
+
+        // Get ratings
+        function getRankings() {
+
+            // Initial Ratings
+            let ratings = document.getElementById("rating-control").value;
+
+            // Total Stars
+            const starsTotal = 5;
+
+            // Get percentage
+            const starPercentage = (ratings / starsTotal) * 100;
+
+            // Round to nearest 10
+            const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
+
+            // Set width of stars-inner to percentage
+            document.querySelector(`.stars-inner`).style.width = starPercentageRounded;
+
+            // Add number rating
+            document.querySelector(`.number-rating`).innerHTML = starPercentageRounded;
+        }
     </script>
 
 
@@ -130,11 +161,6 @@ require_once "controller.php";
         <div class="landing-container">
             <div class="landing-navbar">
                 <img src="img/landing/logo.png" class="landing-logo">
-                <!-- <nav class="landing-nav">
-                    <ul class="landing-ul" id="menuList">
-                        <li class="landing-li"><a href="about.php" class="landing-a">ABOUT</a></li>
-                    </ul>
-                </nav> -->
                 <img src="img/landing/menu.png" class="menu-icon" onclick="togglemenu()">
             </div>
 
@@ -162,17 +188,6 @@ require_once "controller.php";
 
                                 <!-- Begin Page Content -->
                                 <div class="container-fluid">
-
-                                    <!-- Outer Row -->
-                                    <!-- <div class="row justify-content-center"> -->
-
-                                    <!-- <div class="col-xl-12 col-lg-12 col-md-9">
-                                            <div class="card o-hidden border-0 shadow-lg my-5">
-                                                <div class="p-0" id="card-body">
-                                                    <div id="row"> -->
-                                    <!-- <div class="col-lg-12"> -->
-                                    <!-- <div class="p-5"> -->
-                                    <!-- Page Heading -->
                                     <div class="card shadow mb-4">
                                         <div class="card-header py-3">
                                             <div class="text-center">
@@ -195,41 +210,84 @@ require_once "controller.php";
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <tr>
-                                                                <td>
-                                                                    <div class="outer-container" align="center">
-                                                                        <div class="circular-progress-each">
-                                                                            <div id="progress-document-check">
-                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="input-percentage" id="input-percentage" value="<?php echo htmlentities($result->document_check_percentage); ?>">
-                                                                                <?php
-                                                                                echo '<script type="text/javascript"> documentCheck(); </script>';
-                                                                                ?>
-                                                                            </div>
+                                                            <!-- value from workplace subscore -->
+                                                            <?php
+                                                            $sql = "SELECT * FROM workplace_inspection_subscore WHERE assessment_id='$result->assessee_id'";
+                                                            $query = $dbh->prepare($sql);
+                                                            $query->execute();
+                                                            $totalcna = $query->fetchAll(PDO::FETCH_OBJ);
+                                                            if ($query->rowCount() > 0) {
+                                                                foreach ($totalcna as $totalcnas) {
+                                                            ?>
+                                                                    <input type="hidden" id="general_c_score" value="<?php echo htmlentities($totalcnas->general_c_score); ?>">
+                                                                    <input type="hidden" id="general_na_score" value="<?php echo htmlentities($totalcnas->general_na_score); ?>">
+                                                                    <input type="hidden" id="high_risk_c_score" value="<?php echo htmlentities($totalcnas->high_risk_c_score); ?>">
+                                                                    <input type="hidden" id="high_risk_na_score" value="<?php echo htmlentities($totalcnas->high_risk_na_score); ?>">
+                                                            <?php }
+                                                            } ?>
+
+                                                            <!-- value from personnel subscore -->
+                                                            <?php
+                                                            $sql = "SELECT * FROM workplace_inspection_subscore WHERE assessment_id='$result->assessee_id'";
+                                                            $query = $dbh->prepare($sql);
+                                                            $query->execute();
+                                                            $totalcna = $query->fetchAll(PDO::FETCH_OBJ);
+                                                            if ($query->rowCount() > 0) {
+                                                                foreach ($totalcna as $totalcnas) {
+                                                            ?>
+                                                                    <input type="hidden" id="general_c_score" value="<?php echo htmlentities($totalcnas->general_c_score); ?>">
+                                                                    <input type="hidden" id="general_na_score" value="<?php echo htmlentities($totalcnas->general_na_score); ?>">
+                                                                    <input type="hidden" id="high_risk_c_score" value="<?php echo htmlentities($totalcnas->high_risk_c_score); ?>">
+                                                                    <input type="hidden" id="high_risk_na_score" value="<?php echo htmlentities($totalcnas->high_risk_na_score); ?>">
+                                                            <?php }
+                                                            } ?>
+
+                                                            <td>
+                                                                <div class="outer-container" align="center">
+                                                                    <div class="circular-progress-each">
+                                                                        <div id="progress-document-check">
+                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="input-percentage" id="input-percentage" value="<?php echo htmlentities($result->document_check_percentage); ?>">
+                                                                            <?php
+                                                                            echo '<script type="text/javascript"> documentCheck(); </script>';
+                                                                            ?>
                                                                         </div>
                                                                     </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="outer-container" align="center">
-                                                                        <div class="circular-progress-each-1">
-                                                                            <div id="progress-document-workplace">
-                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="workplace-inspection" id="workplace-inspection" value="<?php echo htmlentities($result->workplace_inspection_percentage); ?>">
-                                                                                <?php
-                                                                                echo '<script type="text/javascript"> workplaceInspection(); </script>';
-                                                                                ?>
-                                                                            </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="outer-container" align="center">
+                                                                    <div class="circular-progress-each-1">
+                                                                        <div id="progress-document-workplace">
+                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="workplace-inspection" id="workplace-inspection" value="<?php echo htmlentities($result->workplace_inspection_percentage); ?>">
+                                                                            <?php
+                                                                            echo '<script type="text/javascript"> workplaceInspection(); </script>';
+                                                                            ?>
                                                                         </div>
                                                                     </div>
-                                                                </td>
-                                                                <td>
-                                                                    <div class="outer-container" align="center">
-                                                                        <div class="circular-progress-each-2">
-                                                                            <div id="progress-document-personnel">
-                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="personnel-interview" id="personnel-interview" value="<?php echo htmlentities($result->personnel_interview_percentage); ?>">
-                                                                                <?php
-                                                                                echo '<script type="text/javascript"> personnelInterview(); </script>';
-                                                                                ?>
-                                                                            </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="outer-container" align="center">
+                                                                    <div class="circular-progress-each-2">
+                                                                        <div id="progress-document-personnel">
+                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="personnel-interview" id="personnel-interview" value="<?php echo htmlentities($result->personnel_interview_percentage); ?>">
+                                                                            <?php
+                                                                            echo '<script type="text/javascript"> personnelInterview(); </script>';
+                                                                            ?>
                                                                         </div>
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+
+                                                            <!-- For ranking star -->
+                                                            <tr class="star">
+                                                                <td colspan="3">
+
+                                                                    <div class="stars-outer">
+                                                                        <div class="stars-inner"></div>
+                                                                    </div>
+                                                                    <div>Total Score:
+                                                                        <span class="number-rating"></span>
                                                                     </div>
                                                                 </td>
                                                             </tr>
@@ -237,7 +295,6 @@ require_once "controller.php";
                                                     </table>
                                                 </div>
 
-                                                <!-- <form class="" action="" method="POST"> -->
                                                 <div class="form-group" id="row">
                                                     <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                     <div class="col-sm-4 mb-3 mb-sm-0">
@@ -248,6 +305,15 @@ require_once "controller.php";
                                                         <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-document-check">Print</button>
                                                     </div>
                                                     <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                                </div>
+
+                                                <!-- ID for ranking star -->
+                                                <div id="assessee-select">
+                                                    <input type="hidden" value="<?php echo htmlentities($result->assessee_name); ?>">
+                                                    <input type="hidden" id="rating-control" value="<?php echo htmlentities($result->star_ranking); ?>">
+                                                    <?php
+                                                    echo '<script type="text/javascript"> getRankings(); </script>';
+                                                    ?>
                                                 </div>
                                             </form>
 

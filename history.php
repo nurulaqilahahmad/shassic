@@ -32,51 +32,6 @@ include('includes/config.php');
     <link rel="stylesheet" type="text/css" href="css/progress-bar.css">
 
     <script type=text/javascript>
-        // function circularBar() {
-        //     let progressBar = document.querySelector(".circular-progress");
-        //     let valueContainer = document.querySelector(".value-container");
-
-        //     let progressValue = 0;
-        //     let progressEndValue = 65;
-        //     let speed = 100;
-
-        //     let progress = setInterval(() => {
-        //         progressValue++;
-        //         valueContainer.textContent = `${progressValue}%`;
-        //     //     progressBar.style.background = `conic-gradient(
-        //     //     #4d5bf9 ${progressValue * 3.6}deg,
-        //     //     #cadcff ${progressValue * 3.6}deg
-        //     // )`;
-        //         if (progressValue == progressEndValue) {
-        //             clearInterval(progress);
-        //         }
-        //     }, speed);
-        // }
-
-        // function progressBar() {
-        //     let progressBar = document.querySelector(".circular-progress");
-        //     // let valueContainer = document.querySelector("#progress-item");
-        //     let valueContainer = document.getElementsByClassName("progress_item");
-
-        //     let progressValue = 0;
-        //     // let progressEndValue = document.getElementById("input-percentage").value;
-        //     // Hint 1: sama dengan let value.
-        //     let progressEndValue = document.getElementsByClassName("bar")[0].value;
-        //     let speed = 200;
-
-        //     let progress = setInterval(() => {
-        //         progressValue++;
-        //         valueContainer.textContent = `${progressValue}%`;
-        //         progressBar.style.background = `conic-gradient(
-        //         #4d5bf9 ${progressValue * 3.6}deg,
-        //         #cadcff ${progressValue * 3.6}deg
-        //     )`;
-        //         if (progressValue == progressEndValue) {
-        //             clearInterval(progress);
-        //         }
-        //     }, speed);
-        // }
-
         window.onload = function() {
             let bar = document.querySelectorAll('.bar');
             bar.forEach((progress) => {
@@ -84,11 +39,17 @@ include('includes/config.php');
                 progress.style.width = `${value}%`;
                 let count = 0;
                 let progressAnimation = setInterval(() => {
-                    count++;
-                    progress.setAttribute('data-text', `${count}%`);
-                    if (count >= value) {
+                    if (count == value) {
+                        progress.setAttribute('data-text', `${count}%`);
                         clearInterval(progressAnimation);
+                    } else {
+                        count++;
+                        progress.setAttribute('data-text', `${count}%`);
+                        if (count >= value) {
+                            clearInterval(progressAnimation);
+                        }
                     }
+
                 }, 15);
             });
         };
