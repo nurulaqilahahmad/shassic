@@ -171,11 +171,6 @@ require_once "controller.php";
         <div class="landing-container">
             <div class="landing-navbar">
                 <img src="img/landing/logo.png" class="landing-logo">
-                <!-- <nav class="landing-nav">
-                    <ul class="landing-ul" id="menuList">
-                        <li class="landing-li"><a href="about.php" class="landing-a">ABOUT</a></li>
-                    </ul>
-                </nav> -->
                 <img src="img/landing/menu.png" class="menu-icon" onclick="togglemenu()">
             </div>
 
@@ -212,7 +207,7 @@ require_once "controller.php";
                                                 </div>
                                             </div>
                                             <!-- Page Heading -->
-                                            <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Assessment Progres</h1>
+                                            <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Assessment Progress</h1>
                                         </div>
                                         <div class="card-body">
                                             <?php

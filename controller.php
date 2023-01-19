@@ -324,6 +324,7 @@ if (isset($_POST['add'])) {
     $project_date = $_POST['project_date'];
     $project_location = $_POST['project_location'];
     $project_picture = $_FILES['project_picture']['name'];
+    $status = $_POST['status'];
 
     // get the image extension
     $extension = substr($project_picture, strlen($project_picture) - 4, strlen($project_picture));
@@ -339,8 +340,8 @@ if (isset($_POST['add'])) {
         move_uploaded_file($_FILES["project_picture"]["tmp_name"], "img/project-image/" . $imgnewfile);
 
         //Query for data insertion
-        $sql = "INSERT INTO assessment(assessor_id, assessor_name, assessee_name, project_name, project_date, project_location, project_picture) VALUES 
-                    (:assessor_id, :assessor_name, :assessee_name, :project_name, :project_date, :project_location, :imgnewfile)";
+        $sql = "INSERT INTO assessment(assessor_id, assessor_name, assessee_name, project_name, project_date, project_location, project_picture, status) VALUES 
+                    (:assessor_id, :assessor_name, :assessee_name, :project_name, :project_date, :project_location, :imgnewfile, :status)";
 
         $query = $dbh->prepare($sql);
         $query->bindParam(':assessor_id', $assessor_id, PDO::PARAM_STR);
@@ -350,6 +351,7 @@ if (isset($_POST['add'])) {
         $query->bindParam(':project_date', $project_date, PDO::PARAM_STR);
         $query->bindParam(':project_location', $project_location, PDO::PARAM_STR);
         $query->bindParam(':imgnewfile', $imgnewfile, PDO::PARAM_STR);
+        $query->bindParam(':status', $status, PDO::PARAM_STR);
         $query->execute();
 
         $lastInsertId = $dbh->lastInsertId();
@@ -658,23 +660,27 @@ if (isset($_POST['save-document-check'])) {
             $update->bindParam(':doc_check_c_score', $doc_check_c_score, PDO::PARAM_STR);
             $update->bindParam(':doc_check_na_score', $doc_check_na_score, PDO::PARAM_STR);
             $update->execute();
+
+            if ($update) {
+                // query for data selection
+                $sql = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
+                $query = $dbh->prepare($sql);
+                $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                $query->execute();
+                $result1 = $query->fetchAll(PDO::FETCH_OBJ);
+
+
+                if ($query->rowCount() > 0) {
+                    foreach ($result1 as $results1) {
+                        $con = "UPDATE assessment SET assessee_id=:assessee_id, document_check_percentage=:document_check_percentage, total_percentage=('$results1->workplace_inspection_percentage'+'$results1->personnel_interview_percentage'+'$document_check_percentage') WHERE assessee_id=:assessee_id";
+                        $update = $dbh->prepare($con);
+                        $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                        $update->bindParam(':document_check_percentage', $document_check_percentage, PDO::PARAM_STR);
+                        $update->execute();
+                    }
+                }
+            }
         }
-    }
-
-    // query for data selection
-    $sql = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-    $query->execute();
-    $result = $query->fetchAll(PDO::FETCH_OBJ);
-
-    if ($query->rowCount() > 0) {
-        //query for updation
-        $con = "UPDATE assessment SET assessee_id=:assessee_id, document_check_percentage=:document_check_percentage WHERE assessee_id=:assessee_id";
-        $update = $dbh->prepare($con);
-        $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        $update->bindParam(':document_check_percentage', $document_check_percentage, PDO::PARAM_STR);
-        $update->execute();
     }
 
     foreach ($_POST['document_check_checklist_id'] as $document_check_checklist_id) {
@@ -752,11 +758,14 @@ if (isset($_POST['save-workplace-inspection-general'])) {
                 $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
 
                 if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET workplace_inspection_percentage=((:general_c_score + '$result->high_risk_c_score') / (72 - (:general_na_score + '$result->high_risk_na_score')) * 60) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update->bindParam(':general_c_score', $general_c_score, PDO::PARAM_STR);
-                    $update->bindParam(':general_na_score', $general_na_score, PDO::PARAM_STR);
-                    $update1->execute();
+                    foreach ($result1 as $results1) {
+                        $conn1 = "UPDATE assessment SET total_percentage=(((:general_c_score + '$result->high_risk_c_score') / (72 - (:general_na_score + '$result->high_risk_na_score')) * 60)+'$results1->document_check_percentage'+'$results1->personnel_interview_percentage'), 
+                        workplace_inspection_percentage=((:general_c_score + '$result->high_risk_c_score') / (72 - (:general_na_score + '$result->high_risk_na_score')) * 60) WHERE assessee_id=:assessee_id";
+                        $update1 = $dbh->prepare($conn1);
+                        $update->bindParam(':general_c_score', $general_c_score, PDO::PARAM_STR);
+                        $update->bindParam(':general_na_score', $general_na_score, PDO::PARAM_STR);
+                        $update1->execute();
+                    }
                 }
             }
         }
@@ -838,12 +847,15 @@ if (isset($_POST['save-workplace-inspection-high-risk'])) {
                 $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
 
                 if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET workplace_inspection_percentage=((:high_risk_c_score + '$result->general_c_score') / (72 - (:high_risk_na_score + '$result->general_na_score')) * 60) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                    $update1->bindParam(':high_risk_c_score', $high_risk_c_score, PDO::PARAM_STR);
-                    $update1->bindParam(':high_risk_na_score', $high_risk_na_score, PDO::PARAM_STR);
-                    $update1->execute();
+                    foreach ($result1 as $results1) {
+                        $conn1 = "UPDATE assessment SET total_percentage=(((:high_risk_c_score + '$result->general_c_score') / (72 - (:high_risk_na_score + '$result->general_na_score')) * 60)+'$results1->document_check_percentage'+'$results1->personnel_interview_percentage'), 
+                        workplace_inspection_percentage=((:high_risk_c_score + '$result->general_c_score') / (72 - (:high_risk_na_score + '$result->general_na_score')) * 60) WHERE assessee_id=:assessee_id";
+                        $update1 = $dbh->prepare($conn1);
+                        $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                        $update1->bindParam(':high_risk_c_score', $high_risk_c_score, PDO::PARAM_STR);
+                        $update1->bindParam(':high_risk_na_score', $high_risk_na_score, PDO::PARAM_STR);
+                        $update1->execute();
+                    }
                 }
             }
         }
@@ -977,12 +989,15 @@ if (isset($_POST['save-personnel-interview-managerial'])) {
                 $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
 
                 if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=((:managerial_c_score+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - (:managerial_na_score+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                    $update1->bindParam(':managerial_c_score', $managerial_c_score, PDO::PARAM_STR);
-                    $update1->bindParam(':managerial_na_score', $managerial_na_score, PDO::PARAM_STR);
-                    $update1->execute();
+                    foreach ($result1 as $results1) {
+                        $conn1 = "UPDATE assessment SET total_percentage=(((:managerial_c_score+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - (:managerial_na_score+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20)+'$results1->document_check_percentage'+'$results1->workplace_inspection_percentage'), 
+                        personnel_interview_percentage=((:managerial_c_score+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - (:managerial_na_score+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
+                        $update1 = $dbh->prepare($conn1);
+                        $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                        $update1->bindParam(':managerial_c_score', $managerial_c_score, PDO::PARAM_STR);
+                        $update1->bindParam(':managerial_na_score', $managerial_na_score, PDO::PARAM_STR);
+                        $update1->execute();
+                    }
                 }
             }
         }
@@ -1064,12 +1079,15 @@ if (isset($_POST['save-personnel-interview-supervisory'])) {
                 $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
 
                 if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=(('$result->managerial_c_score'+:supervisory_c_score+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+:supervisory_na_score+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                    $update1->bindParam(':supervisory_c_score', $supervisory_c_score, PDO::PARAM_STR);
-                    $update1->bindParam(':supervisory_na_score', $supervisory_na_score, PDO::PARAM_STR);
-                    $update1->execute();
+                    foreach ($result1 as $results1) {
+                        $conn1 = "UPDATE assessment SET total_percentage=((('$result->managerial_c_score'+:supervisory_c_score+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+:supervisory_na_score+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20)+'$results1->document_check_percentage'+'$results1->workplace_inspection_percentage'), 
+                        personnel_interview_percentage=(('$result->managerial_c_score'+:supervisory_c_score+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+:supervisory_na_score+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
+                        $update1 = $dbh->prepare($conn1);
+                        $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                        $update1->bindParam(':supervisory_c_score', $supervisory_c_score, PDO::PARAM_STR);
+                        $update1->bindParam(':supervisory_na_score', $supervisory_na_score, PDO::PARAM_STR);
+                        $update1->execute();
+                    }
                 }
             }
         }
@@ -1202,12 +1220,15 @@ if (isset($_POST['save-personnel-interview-worker-1'])) {
                 $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
 
                 if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+:worker_1_c_score+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+:worker_1_na_score+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_1_c_score', $worker_1_c_score, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_1_na_score', $worker_1_na_score, PDO::PARAM_STR);
-                    $update1->execute();
+                    foreach ($result1 as $results1) {
+                        $conn1 = "UPDATE assessment SET total_percentage=((('$result->managerial_c_score'+'$result->supervisory_c_score'+:worker_1_c_score+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+:worker_1_na_score+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20)+'$results1->document_check_percentage'+'$results1->workplace_inspection_percentage'), 
+                        personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+:worker_1_c_score+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+:worker_1_na_score+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
+                        $update1 = $dbh->prepare($conn1);
+                        $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                        $update1->bindParam(':worker_1_c_score', $worker_1_c_score, PDO::PARAM_STR);
+                        $update1->bindParam(':worker_1_na_score', $worker_1_na_score, PDO::PARAM_STR);
+                        $update1->execute();
+                    }
                 }
             }
         }
@@ -1289,12 +1310,15 @@ if (isset($_POST['save-personnel-interview-worker-2'])) {
                 $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
 
                 if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+:worker_2_c_score+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+:worker_2_na_score+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_2_c_score', $worker_2_c_score, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_2_na_score', $worker_2_na_score, PDO::PARAM_STR);
-                    $update1->execute();
+                    foreach ($result1 as $results1) {
+                        $conn1 = "UPDATE assessment SET total_percentage=((('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+:worker_2_c_score+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+:worker_2_na_score+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20)+'$results1->document_check_percentage'+'$results1->workplace_inspection_percentage'), 
+                        personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+:worker_2_c_score+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+:worker_2_na_score+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
+                        $update1 = $dbh->prepare($conn1);
+                        $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                        $update1->bindParam(':worker_2_c_score', $worker_2_c_score, PDO::PARAM_STR);
+                        $update1->bindParam(':worker_2_na_score', $worker_2_na_score, PDO::PARAM_STR);
+                        $update1->execute();
+                    }
                 }
             }
         }
@@ -1376,12 +1400,15 @@ if (isset($_POST['save-personnel-interview-worker-3'])) {
                 $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
 
                 if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+:worker_3_c_score+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+:worker_3_na_score+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_3_c_score', $worker_3_c_score, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_3_na_score', $worker_3_na_score, PDO::PARAM_STR);
-                    $update1->execute();
+                    foreach ($result1 as $results1) {
+                        $conn1 = "UPDATE assessment SET total_percentage=((('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+:worker_3_c_score+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+:worker_3_na_score+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20)+'$results1->document_check_percentage'+'$results1->workplace_inspection_percentage'), 
+                        personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+:worker_3_c_score+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+:worker_3_na_score+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
+                        $update1 = $dbh->prepare($conn1);
+                        $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                        $update1->bindParam(':worker_3_c_score', $worker_3_c_score, PDO::PARAM_STR);
+                        $update1->bindParam(':worker_3_na_score', $worker_3_na_score, PDO::PARAM_STR);
+                        $update1->execute();
+                    }
                 }
             }
         }
@@ -1463,12 +1490,15 @@ if (isset($_POST['save-personnel-interview-worker-4'])) {
                 $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
 
                 if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+:worker_4_c_score+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+:worker_4_na_score+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_4_c_score', $worker_4_c_score, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_4_na_score', $worker_4_na_score, PDO::PARAM_STR);
-                    $update1->execute();
+                    foreach ($result1 as $results1) {
+                        $conn1 = "UPDATE assessment SET total_percentage=((('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+:worker_4_c_score+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+:worker_4_na_score+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20)+'$results1->document_check_percentage'+'$results1->workplace_inspection_percentage'), 
+                        personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+:worker_4_c_score+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+:worker_4_na_score+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
+                        $update1 = $dbh->prepare($conn1);
+                        $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                        $update1->bindParam(':worker_4_c_score', $worker_4_c_score, PDO::PARAM_STR);
+                        $update1->bindParam(':worker_4_na_score', $worker_4_na_score, PDO::PARAM_STR);
+                        $update1->execute();
+                    }
                 }
             }
         }
@@ -1550,11 +1580,14 @@ if (isset($_POST['save-personnel-interview-worker-5'])) {
                 $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
 
                 if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+:worker_5_c_score+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+:worker_5_na_score+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update->bindParam(':worker_5_c_score', $worker_5_c_score, PDO::PARAM_STR);
-                    $update->bindParam(':worker_5_na_score', $worker_5_na_score, PDO::PARAM_STR);
-                    $update1->execute();
+                    foreach ($result1 as $results1) {
+                        $conn1 = "UPDATE assessment SET total_percentage=((('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+:worker_5_c_score+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+:worker_5_na_score+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20)+'$results1->document_check_percentage'+'$results1->workplace_inspection_percentage'), 
+                        personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+:worker_5_c_score+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+:worker_5_na_score+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
+                        $update1 = $dbh->prepare($conn1);
+                        $update->bindParam(':worker_5_c_score', $worker_5_c_score, PDO::PARAM_STR);
+                        $update->bindParam(':worker_5_na_score', $worker_5_na_score, PDO::PARAM_STR);
+                        $update1->execute();
+                    }
                 }
             }
         }
@@ -1636,12 +1669,15 @@ if (isset($_POST['save-personnel-interview-worker-6'])) {
                 $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
 
                 if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'result->worker_5_c_score'+:worker_6_c_score+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+:worker_6_na_score+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_6_c_score', $worker_6_c_score, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_6_na_score', $worker_6_na_score, PDO::PARAM_STR);
-                    $update1->execute();
+                    foreach ($result1 as $results1) {
+                        $conn1 = "UPDATE assessment SET total_percentage=((('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+:worker_6_c_score+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+:worker_6_na_score+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20)+'$results1->document_check_percentage'+'$results1->workplace_inspection_percentage'), 
+                        personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+:worker_6_c_score+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+:worker_6_na_score+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
+                        $update1 = $dbh->prepare($conn1);
+                        $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                        $update1->bindParam(':worker_6_c_score', $worker_6_c_score, PDO::PARAM_STR);
+                        $update1->bindParam(':worker_6_na_score', $worker_6_na_score, PDO::PARAM_STR);
+                        $update1->execute();
+                    }
                 }
             }
         }
@@ -1723,12 +1759,15 @@ if (isset($_POST['save-personnel-interview-worker-7'])) {
                 $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
 
                 if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'result->worker_5_c_score'+'$result->worker_6_c_score'+:worker_7_c_score+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+:worker_7_na_score+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_7_c_score', $worker_7_c_score, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_7_na_score', $worker_7_na_score, PDO::PARAM_STR);
-                    $update1->execute();
+                    foreach ($result1 as $results1) {
+                        $conn1 = "UPDATE assessment SET total_percentage=((('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+:worker_7_c_score+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+:worker_7_na_score+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20)+'$results1->document_check_percentage'+'$results1->workplace_inspection_percentage'), 
+                        personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+:worker_7_c_score+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+:worker_7_na_score+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
+                        $update1 = $dbh->prepare($conn1);
+                        $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                        $update1->bindParam(':worker_7_c_score', $worker_7_c_score, PDO::PARAM_STR);
+                        $update1->bindParam(':worker_7_na_score', $worker_7_na_score, PDO::PARAM_STR);
+                        $update1->execute();
+                    }
                 }
             }
         }
@@ -1810,12 +1849,15 @@ if (isset($_POST['save-personnel-interview-worker-8'])) {
                 $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
 
                 if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+:worker_8_c_score+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+:worker_8_na_score+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_8_c_score', $worker_8_c_score, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_8_na_score', $worker_8_na_score, PDO::PARAM_STR);
-                    $update1->execute();
+                    foreach ($result1 as $results1) {
+                        $conn1 = "UPDATE assessment SET total_percentage=((('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+:worker_8_c_score+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+:worker_8_na_score+'$result->worker_9_na_score')) * 20)+'$results1->document_check_percentage'+'$results1->workplace_inspection_percentage'), 
+                        personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+:worker_8_c_score+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+:worker_8_na_score+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
+                        $update1 = $dbh->prepare($conn1);
+                        $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                        $update1->bindParam(':worker_8_c_score', $worker_8_c_score, PDO::PARAM_STR);
+                        $update1->bindParam(':worker_8_na_score', $worker_8_na_score, PDO::PARAM_STR);
+                        $update1->execute();
+                    }
                 }
             }
         }
@@ -1897,12 +1939,15 @@ if (isset($_POST['save-personnel-interview-worker-9'])) {
                 $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
 
                 if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+:worker_9_c_score) / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+:worker_9_na_score)) * 20) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_9_c_score', $worker_9_c_score, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_9_na_score', $worker_9_na_score, PDO::PARAM_STR);
-                    $update1->execute();
+                    foreach ($result1 as $results1) {
+                        $conn1 = "UPDATE assessment SET total_percentage=((('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+:worker_9_c_score) / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+:worker_9_na_score)) * 20)+'$results1->document_check_percentage'+'$results1->workplace_inspection_percentage'), 
+                        personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+:worker_9_c_score) / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+:worker_9_na_score)) * 20) WHERE assessee_id=:assessee_id";
+                        $update1 = $dbh->prepare($conn1);
+                        $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                        $update1->bindParam(':worker_9_c_score', $worker_9_c_score, PDO::PARAM_STR);
+                        $update1->bindParam(':worker_9_na_score', $worker_9_na_score, PDO::PARAM_STR);
+                        $update1->execute();
+                    }
                 }
             }
         }
