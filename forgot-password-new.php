@@ -1,12 +1,5 @@
 <?php require_once "controller.php"; ?>
 
-<?php
-$email = $_SESSION['email'];
-if ($email == false) {
-    header('Location: login.php');
-}
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,83 +27,101 @@ if ($email == false) {
 
 <body class="bg-gradient-primary">
 
-    <div class="landing-container">
+    <?php
+    $email = $_SESSION['email'];
+    if ($email == false) {
+        header('Location: login.php');
+    } else {
+        $sql = "SELECT * from user where email=:email";
+        $query = $dbh->prepare($sql);
+        $query->bindParam(':email', $email, PDO::PARAM_STR);
+        $query->execute();
+        $results = $query->fetchAll(PDO::FETCH_OBJ);
+        $cnt = 1;
+        if ($query->rowCount() > 0) {
+            foreach ($results as $result) {
+    ?>
+
+                <div class="landing-container">
 
 
-        <!-- Outer Row -->
-        <div class="row justify-content-center">
+                    <!-- Outer Row -->
+                    <div class="row justify-content-center">
 
-            <div class="col-xl-7 col-lg-12 col-md-9">
+                        <div class="col-xl-7 col-lg-12 col-md-9">
 
-                <div class="card o-hidden border-0 shadow-lg my-5">
-                    <div class="card-body p-0">
-                        <!-- Nested Row within Card Body -->
-                        <div class="row justify-content-center">
-                            <div class="col-lg-12">
-                                <div class="p-5">
-                                    <div class="text-center">
-                                        <h1 class="h4 text-gray-900 mb-4 font-weight-bold">New Password</h1>
-                                        <br>
-                                        <?php
-                                        if ($_SESSION['info'] != "") {
-                                        ?>
-                                            <div class="col-lg-12 mb-4">
-                                                <div class="card bg-success text-white shadow">
-                                                    <div class="card-body text-center font-weight-bold" style="margin: 10px;">
-                                                        <?php echo $_SESSION['info']; ?>
-                                                    </div>
+                            <div class="card o-hidden border-0 shadow-lg my-5">
+                                <div class="card-body p-0">
+                                    <!-- Nested Row within Card Body -->
+                                    <div class="row justify-content-center">
+                                        <div class="col-lg-12">
+                                            <div class="p-5">
+                                                <div class="text-center">
+                                                    <h1 class="h4 text-gray-900 mb-4 font-weight-bold">New Password</h1>
+                                                    <?php
+                                                    if ($_SESSION['info'] != "") {
+                                                    ?>
+                                                        <div class="col-lg-12 mb-4">
+                                                            <div class="card bg-success text-white shadow">
+                                                                <div class="card-body text-center font-weight-bold" style="margin: 10px;">
+                                                                    <?php echo $_SESSION['info']; ?>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                    <?php
+                                                    if (count($errors) > 0) {
+                                                    ?>
+                                                        <div class="col-lg-12 mb-4">
+                                                            <div class="card bg-danger text-white shadow">
+                                                                <div class="card-body text-center font-weight-bold" style="margin: 10px;">
+                                                                    <?php foreach ($errors as $error) {
+                                                                        echo $error;
+                                                                    } ?>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    <?php
+                                                    }
+                                                    ?>
                                                 </div>
-                                            </div>
-                                        <?php
-                                        }
-                                        ?>
-                                        <?php
-                                        if (count($errors) > 0) {
-                                        ?>
-                                            <div class="col-lg-12 mb-4">
-                                                <div class="card bg-danger text-white shadow">
-                                                    <div class="card-body text-center font-weight-bold" style="margin: 10px;">
-                                                        <?php foreach ($errors as $error) {
-                                                            echo $error;
-                                                        } ?>
+                                                <form class="user" method="post">
+                                                    <div class="form-group">
+                                                        <input type="password" class="form-control form-control-user font-weight-bold" id="password" name="password" aria-describedby="emailHelp" placeholder="New Password">
+                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" id="old_password" name="old_password" value="<?= $result->password ?>">
                                                     </div>
-                                                </div>
+                                                    <br>
+                                                    <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="change-password">Change</button>
+                                                </form>
                                             </div>
-                                        <?php
-                                        }
-                                        ?>
-                                    </div>
-                                    <form class="user" method="post">
-                                        <div class="form-group">
-                                            <input type="password" class="form-control form-control-user font-weight-bold" id="password" name="password" aria-describedby="emailHelp" placeholder="New Password">
                                         </div>
-                                        <br>
-                                        <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="change-password">Change</button>
-                                        <!-- <a href="login.html" class="btn btn-primary btn-user btn-block">
-                                            Reset Password
-                                        </a> -->
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
+
                         </div>
+
                     </div>
+
                 </div>
 
-            </div>
+                <!-- Bootstrap core JavaScript-->
+                <script src="vendor/jquery/jquery.min.js"></script>
+                <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-        </div>
+                <!-- Core plugin JavaScript-->
+                <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-    </div>
+                <!-- Custom scripts for all pages-->
+                <script src="js/sb-admin-2.min.js"></script>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <?php
+            }
+        }
+    }
+    ?>
 
 </body>
 

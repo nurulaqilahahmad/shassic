@@ -76,7 +76,7 @@ require_once "controller.php";
                                                             <div class="p-5">
                                                                 <div class="text-center">
                                                                     <div class="text-center" style="display:flex; width:auto; justify-content: start;">
-                                                                        <a class="font-weight-bold" href="assessment-component-from-history.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
+                                                                        <a class="font-weight-bold" href="assessment-component.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
                                                                             < Back</a>
                                                                     </div>
                                                                     <!-- End of Text Center with style -->
@@ -1823,63 +1823,62 @@ require_once "controller.php";
             var worker1_na = document.querySelectorAll('input[class="checkbox15"]:checked').length;
             worker1CScore.setAttribute('value', worker1_c);
             worker1NAScore.setAttribute('value', worker1_na);
-            
+
             var worker2CScore = document.getElementById('worker_2_c_score');
             var worker2NAScore = document.getElementById('worker_2_na_score');
             var worker2_c = document.querySelectorAll('input[class="checkbox16"]:checked').length;
             var worker2_na = document.querySelectorAll('input[class="checkbox18"]:checked').length;
             worker2CScore.setAttribute('value', worker2_c);
             worker2NAScore.setAttribute('value', worker2_na);
-            
+
             var worker3CScore = document.getElementById('worker_3_c_score');
             var worker3NAScore = document.getElementById('worker_3_na_score');
             var worker3_c = document.querySelectorAll('input[class="checkbox19"]:checked').length;
             var worker3_na = document.querySelectorAll('input[class="checkbox21"]:checked').length;
             worker3CScore.setAttribute('value', worker3_c);
             worker3NAScore.setAttribute('value', worker3_na);
-            
+
             var worker4CScore = document.getElementById('worker_4_c_score');
             var worker4NAScore = document.getElementById('worker_4_na_score');
             var worker4_c = document.querySelectorAll('input[class="checkbox22"]:checked').length;
             var worker4_na = document.querySelectorAll('input[class="checkbox24"]:checked').length;
             worker4CScore.setAttribute('value', worker4_c);
             worker4NAScore.setAttribute('value', worker4_na);
-            
+
             var worker5CScore = document.getElementById('worker_5_c_score');
             var worker5NAScore = document.getElementById('worker_5_na_score');
             var worker5_c = document.querySelectorAll('input[class="checkbox25"]:checked').length;
             var worker5_na = document.querySelectorAll('input[class="checkbox27"]:checked').length;
             worker5CScore.setAttribute('value', worker5_c);
             worker5NAScore.setAttribute('value', worker5_na);
-            
+
             var worker6CScore = document.getElementById('worker_6_c_score');
             var worker6NAScore = document.getElementById('worker_6_na_score');
             var worker6_c = document.querySelectorAll('input[class="checkbox28"]:checked').length;
             var worker6_na = document.querySelectorAll('input[class="checkbox30"]:checked').length;
             worker6CScore.setAttribute('value', worker6_c);
             worker6NAScore.setAttribute('value', worker6_na);
-            
+
             var worker7CScore = document.getElementById('worker_7_c_score');
             var worker7NAScore = document.getElementById('worker_7_na_score');
             var worker7_c = document.querySelectorAll('input[class="checkbox31"]:checked').length;
             var worker7_na = document.querySelectorAll('input[class="checkbox33"]:checked').length;
             worker7CScore.setAttribute('value', worker7_c);
             worker7NAScore.setAttribute('value', worker7_na);
-            
+
             var worker8CScore = document.getElementById('worker_8_c_score');
             var worker8NAScore = document.getElementById('worker_8_na_score');
             var worker8_c = document.querySelectorAll('input[class="checkbox34"]:checked').length;
             var worker8_na = document.querySelectorAll('input[class="checkbox36"]:checked').length;
             worker8CScore.setAttribute('value', worker8_c);
             worker8NAScore.setAttribute('value', worker8_na);
-            
+
             var worker9CScore = document.getElementById('worker_9_c_score');
             var worker9NAScore = document.getElementById('worker_9_na_score');
             var worker9_c = document.querySelectorAll('input[class="checkbox37"]:checked').length;
             var worker9_na = document.querySelectorAll('input[class="checkbox39"]:checked').length;
             worker9CScore.setAttribute('value', worker9_c);
             worker9NAScore.setAttribute('value', worker9_na);
-            
         </script>
 
     <?php } else {

@@ -71,9 +71,8 @@ require_once "controller.php";
 
                             <li class="nav-item">
                                 <a class="nav-link disabled" style="text-align: center;">
-                                    <img class="img-profile rounded-circle" src="img/<?php echo htmlentities($result->picture); ?>">
+                                    <img class="img-profile" src="img/profile-picture/<?php echo htmlentities($result->picture); ?>">
                                 </a>
-
                             </li>
 
                             <li class="nav-item">
@@ -151,12 +150,6 @@ require_once "controller.php";
                                         <h5 class="h5 mb-5 text-justify text-white font-weight-bold">an independent method to assess and evaluate the safety and health performance of a contractor in construction works / projects</h5>
 
                                     </div>
-
-                                    <!-- <div class="row">
-
-                                    <button type="submit" class="mt-5 d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm font-weight-bold" name="add" style="margin-top: 10rem;">Add New Assessment</button>
-
-                                    </div> -->
 
                                     <div class="row text-center">
                                         <a class="mt-5 d-none d-sm-inline-block btn btn-sm btn-secondary shadow-sm font-weight-bold" href="add-assessment.php" style="margin-top: 10rem;">Add New Assessment</a>

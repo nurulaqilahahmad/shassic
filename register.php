@@ -14,6 +14,7 @@
     <title>SHASSIC | Register</title>
 
     <link rel="icon" type="image/x-icon" href="img/favicon.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
     <!-- Custom fonts for this template-->
     <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
@@ -60,7 +61,7 @@
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4 font-weight-bold">Create an Account!</h1>
                                         <?php
-                                        if ($_SESSION['info'] != "") {
+                                        if (isset($_SESSION['info'])) {
                                         ?>
                                             <div class="col-lg-12 mb-4">
                                                 <div class="card bg-success text-white shadow">
@@ -88,7 +89,7 @@
                                         }
                                         ?>
                                     </div>
-                                    <form class="user" method="POST">
+                                    <form class="user" method="POST" enctype="multipart/form-data">
                                         <div class="form-group">
                                             <input type="text" class="form-control form-control-user font-weight-bold" name="fullname" id="fullname" placeholder="Full Name" required>
                                         </div>
@@ -105,6 +106,9 @@
                                         </div>
                                         <div class="form-group">
                                             <input type="password" class="form-control form-control-user font-weight-bold" name="password" id="password" placeholder="Password" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <input type="file" class="form-control form-control-user font-weight-bold" name="picture" id="picture" accept="image/*" onchange="document.getElementById('picture').src = window.URL.createObjectURL(this.files[0])" required>
                                         </div>
                                         <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="register">Register Account</button>
                                     </form>
