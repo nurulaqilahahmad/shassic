@@ -84,7 +84,7 @@ require_once "controller.php";
                                                         < Back </a>
                                                 </div>
                                                 <div class="col-sm-6" style="display:flex; width:auto; justify-content: end;">
-                                                    <a class="font-weight-bold" href="assessment-component.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>&info=">
+                                                    <a class="font-weight-bold" href="assessment-component.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
                                                         Next ></a>
                                                 </div>
                                             </div>
@@ -92,6 +92,20 @@ require_once "controller.php";
                                             <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Edit Assessment</h1>
                                         </div>
                                         <div class="card-body">
+                                        <?php
+                                            if (count($infos) > 0) {
+                                            ?>
+                                                <div class="col-lg-12 mb-4">
+                                                    <div class="card bg-success text-white shadow">
+                                                        <div class="card-body text-center" style="font-weight: bold;">
+                                                            <?php foreach ($infos as $info) {
+                                                                echo $info;
+                                                            } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php
+                                            } ?>
                                             <?php
                                             if (count($errors) > 0) {
                                             ?>
@@ -108,7 +122,7 @@ require_once "controller.php";
                                             } ?>
 
 
-                                            <form class="user" method="POST">
+                                            <form class="user" method="POST" enctype="multipart/form-data">
                                                 <div class="form-group">
                                                     <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessor_id" id="assessor_id" value="<?php echo htmlentities($result->assessor_id); ?>">
                                                 </div>
@@ -119,6 +133,9 @@ require_once "controller.php";
                                                     <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?php echo htmlentities($result->assessee_id); ?>">
                                                 </div>
                                                 <div class="form-group">
+                                                    <img class="img-profile" src="img/project-image/<?php echo htmlentities($result->project_picture); ?>" height="20%" width="20%">
+                                                </div>
+                                                <div class="form-group">
                                                     <input type="text" class="form-control form-control-user font-weight-bold" name="assessee_name" id="assessee_name" placeholder="Assessee Name" required value="<?php echo htmlentities($result->assessee_name); ?>">
                                                 </div>
                                                 <div class="form-group" id="row">
@@ -126,7 +143,8 @@ require_once "controller.php";
                                                         <input type="text" class="form-control form-control-user font-weight-bold" name="project_name" id="project_name" placeholder="Project Name" required value="<?php echo htmlentities($result->project_name); ?>">
                                                     </div>
                                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                                        <input type="text" onfocus="(this.type='date')" onchange="(this.type='date')" class="form-control form-control-user font-weight-bold" name="project_date" id="project_date" required placeholder="Project Date" date_format='dd/mm/yyyy' value="<?php echo date_format(new DateTime($result->project_date), 'd/m/Y'); ?>">
+                                                        <!-- <input type="text" onfocus="(this.type='date')" onchange="(this.type='date')" class="form-control form-control-user font-weight-bold" name="project_date" id="project_date" required placeholder="Project Date" date_format='dd/mm/yyyy' value="<?php echo date_format(new DateTime($result->project_date), 'd/m/Y'); ?>"> -->
+                                                        <input type="date" class="form-control form-control-user font-weight-bold" name="project_date" id="project_date" required placeholder="Project Date" date_format='dd/mm/yyyy' value="<?php echo htmlentities($result->project_date); ?>">
                                                     </div>
                                                 </div>
                                                 <div class="form-group" id="row">
@@ -134,7 +152,8 @@ require_once "controller.php";
                                                         <input type="text" class="form-control form-control-user font-weight-bold" name="project_location" id="project_location" placeholder="Project Location" required value="<?php echo htmlentities($result->project_location); ?>">
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <input type="text" onfocus="(this.type='file')" class="form-control form-control-user font-weight-bold" name="project_picture" id="project_picture" required placeholder="Project Picture" accept="image/*" onchange="document.getElementById('project_picture').src = window.URL.createObjectURL(this.files[0])" value="<?php echo htmlentities($result->project_picture); ?>" />
+                                                        <input type="file" class="form-control form-control-user font-weight-bold" name="project_picture" id="project_picture" placeholder="Project Picture" accept="image/*"/>
+                                                        <input type="text" hidden class="form-control form-control-user font-weight-bold" name="old_project_picture" id="old_project_picture" value="<?php echo htmlentities($result->project_picture); ?>" />
                                                     </div>
                                                 </div>
                                                 <div class="form-group" id="row">

@@ -87,7 +87,7 @@ if ($query->rowCount() > 0) {
                                                                 <!-- Page Heading -->
                                                                 <div class="text-center">
                                                                     <div class="text-center" style="display:flex; width:auto; justify-content: start;">
-                                                                        <a class="font-weight-bold" href="assessment-component-from-history.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
+                                                                        <a class="font-weight-bold" href="assessment-component.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
                                                                             < Back</a>
                                                                     </div>
                                                                     <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Document Check</h1>
@@ -330,14 +330,13 @@ if ($query->rowCount() > 0) {
                 document.getElementById('doc_check_c_score').value = countC;
                 document.getElementById('doc_check_na_score').value = countNA;
                 document.getElementById('document_check_percentage').value = d;
-
+            }
                 var docCheckCScore = document.getElementById('doc_check_c_score');
                 var docCheckNAScore = document.getElementById('doc_check_na_score');
                 var doc_check_c = document.querySelectorAll('input[class="checkbox1"]:checked').length;
                 var doc_check_na = document.querySelectorAll('input[class="checkbox3"]:checked').length;
                 docCheckCScore.setAttribute('value', doc_check_c);
                 docCheckNAScore.setAttribute('value', doc_check_na);
-            }
         </script>
 
     <?php } else {

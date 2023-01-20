@@ -108,9 +108,18 @@ require_once "controller.php";
                                             }
                                             ?>
 
-                                            <form class="user" method="POST">
+                                            <form class="user" method="POST" enctype="multipart/form-data">
                                                 <div class="form-group">
                                                     <input type="hidden" class="form-control form-control-user font-weight-bold" name="id" id="id" value="<?php echo htmlentities($result->id); ?>">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <img class="img-profile" src="img/profile-picture/<?php echo htmlentities($result->picture); ?>" height="15%" width="15%">
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <input type="file" class="form-control form-control-user font-weight-bold" name="picture" id="picture" accept="image/*">
+                                                    <input type="text" hidden class="form-control form-control-user font-weight-bold" name="old_picture" id="old_picture" value="<?php echo htmlentities($result->picture); ?>" />
                                                 </div>
 
                                                 <div class="form-group">
@@ -130,7 +139,7 @@ require_once "controller.php";
                                                         <input type="text" class="form-control form-control-user font-weight-bold" disabled="disable" name="email" id="email" placeholder="<?php echo htmlentities($result->email); ?>" required value="<?php echo htmlentities($result->email); ?>">
                                                     </div>
                                                     <div class="col-sm-2 mb-3 mb-sm-0">
-                                                        <a class="btn btn-secondary btn-user btn-block font-weight-bold" href="edit-password.php">Edit email</a>
+                                                        <a class="btn btn-secondary btn-user btn-block font-weight-bold" href="edit-email-verify-password.php">Edit email</a>
                                                     </div>
                                                 </div>
 

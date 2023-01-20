@@ -207,23 +207,21 @@ require_once "controller.php";
                                         <div class="card-header py-3">
                                             <div class="text-center" id="row">
                                                 <div class="col-sm-6" style="display:flex; width:auto; justify-content: start;">
-                                                    <a class="font-weight-bold" href="index.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
+                                                    <a class="font-weight-bold" href="edit-assessment.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
                                                         < Back</a>
                                                 </div>
                                             </div>
                                             <!-- Page Heading -->
-                                            <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Assessment Progres</h1>
+                                            <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Assessment Progress</h1>
                                         </div>
                                         <div class="card-body">
                                             <?php
-                                            if (count($infos) > 0) {
+                                            if ($_SESSION['info'] != '') {
                                             ?>
                                                 <div class="col-lg-12 mb-4">
                                                     <div class="card bg-success text-white shadow">
                                                         <div class="card-body text-center font-weight-bold">
-                                                            <?php foreach ($infos as $info) {
-                                                                echo $info;
-                                                            } ?>
+                                                            <?php echo $_SESSION['info']; $_SESSION['info'] = ''; ?>
                                                         </div>
                                                     </div>
                                                 </div>

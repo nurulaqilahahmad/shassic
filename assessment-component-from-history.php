@@ -252,9 +252,9 @@ require_once "controller.php";
                                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                         <thead>
                                                             <tr>
-                                                                <th><a href="assessment-document-check.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">Document Check</a></th>
-                                                                <th><a href="assessment-workplace-inspection.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">Workplace Inspection</a></th>
-                                                                <th><a href="assessment-personnel-interview.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">Personnel Interview</a></th>
+                                                                <th><a href="assessment-document-check-from-history.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">Document Check</a></th>
+                                                                <th><a href="assessment-workplace-inspection-from-history.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">Workplace Inspection</a></th>
+                                                                <th><a href="assessment-personnel-interview-from-history.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">Personnel Interview</a></th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>

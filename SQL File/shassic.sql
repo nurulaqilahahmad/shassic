@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 17, 2023 at 03:12 AM
+-- Generation Time: Jan 18, 2023 at 07:50 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -40,9 +40,9 @@ CREATE TABLE `assessment` (
   `calculation_id` int(11) NOT NULL,
   `creation_date` timestamp NULL DEFAULT current_timestamp(),
   `updation_date` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
-  `document_check_percentage` int(11) NOT NULL,
-  `workplace_inspection_percentage` int(11) NOT NULL,
-  `personnel_interview_percentage` int(11) NOT NULL,
+  `document_check_percentage` float(11,2) NOT NULL,
+  `workplace_inspection_percentage` float(11,2) NOT NULL,
+  `personnel_interview_percentage` float(11,2) NOT NULL,
   `star_ranking` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -306,7 +306,10 @@ CREATE TABLE `personnel_interview_subscore` (
 
 INSERT INTO `personnel_interview_subscore` (`id`, `assessment_id`, `managerial_c_score`, `managerial_na_score`, `supervisory_c_score`, `supervisory_na_score`, `worker_1_c_score`, `worker_1_na_score`, `worker_2_c_score`, `worker_2_na_score`, `worker_3_c_score`, `worker_3_na_score`, `worker_4_c_score`, `worker_4_na_score`, `worker_5_c_score`, `worker_5_na_score`, `worker_6_c_score`, `worker_6_na_score`, `worker_7_c_score`, `worker_7_na_score`, `worker_8_c_score`, `worker_8_na_score`, `worker_9_c_score`, `worker_9_na_score`) VALUES
 (1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
+(2, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(3, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(4, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+(5, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -874,7 +877,7 @@ ALTER TABLE `personnel_interview_managerial`
 -- AUTO_INCREMENT for table `personnel_interview_subscore`
 --
 ALTER TABLE `personnel_interview_subscore`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `personnel_interview_supervisory_1`
