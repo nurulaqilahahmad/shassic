@@ -171,11 +171,6 @@ require_once "controller.php";
         <div class="landing-container">
             <div class="landing-navbar">
                 <img src="img/landing/logo.png" class="landing-logo">
-                <!-- <nav class="landing-nav">
-                    <ul class="landing-ul" id="menuList">
-                        <li class="landing-li"><a href="about.php" class="landing-a">ABOUT</a></li>
-                    </ul>
-                </nav> -->
                 <img src="img/landing/menu.png" class="menu-icon" onclick="togglemenu()">
             </div>
 

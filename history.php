@@ -33,25 +33,56 @@ include('includes/config.php');
 
     <script type=text/javascript>
         window.onload = function() {
-            let bar = document.querySelectorAll('.bar');
-            bar.forEach((progress) => {
-                let value = progress.getAttribute('data-value');
-                progress.style.width = `${value}%`;
-                let count = 0;
-                let progressAnimation = setInterval(() => {
-                    if (count == value) {
-                        progress.setAttribute('data-text', `${count}%`);
-                        clearInterval(progressAnimation);
-                    } else {
-                        count++;
-                        progress.setAttribute('data-text', `${count}%`);
-                        if (count >= value) {
-                            clearInterval(progressAnimation);
-                        }
-                    }
 
-                }, 15);
+            // let bar = document.querySelectorAll('.bar');
+            let status = document.querySelectorAll('.status');
+
+            status.forEach((progress) => {
+
+                let calc = progress.getAttribute('data-value');
+
+                let value = progress.getAttribute('data-value'); //valid
+                let values = Math.trunc((parseInt(value) / 315) * 100);
+
+                // alert("Total = " + values);
+
+                if (values == 0) {
+                    // progress.innerHTML = "Not Started = " + values; //valid
+                    progress.innerHTML = "Not Started"; //valid
+                    progress.style.color = "red";
+                } else if (values > 0 && values <= 99) {
+                    progress.innerHTML = "In Progress"; //valid
+                    progress.style.color = "#CCCC00";
+                } else if (values == 100) {
+                    progress.innerHTML = "Completed"; //valid
+                    progress.style.color = "green";
+                }
+
             });
+
+            // bar.forEach((progress) => {
+
+            //     let value = progress.getAttribute('data-value');
+            //     console.log(value);
+            //     let values = Math.trunc((value / 315) * 100);
+
+            //     progress.style.width = `${values}%`;
+            //     let count = 0;
+
+            //     let progressAnimation = setInterval(() => {
+            //         if (count == values) {
+            //             progress.setAttribute('data-text', `${count}%`);
+            //             clearInterval(progressAnimation);
+            //         } else {
+            //             count++;
+            //             progress.setAttribute('data-text', `${count}%`);
+            //             if (count >= values) {
+            //                 clearInterval(progressAnimation);
+            //             }
+            //         }
+
+            //     }, 15);
+            // });
         };
     </script>
 </head>
@@ -108,7 +139,7 @@ include('includes/config.php');
                                                             <th>Assessee</th>
                                                             <th>Project Name</th>
                                                             <th>Progress</th>
-                                                            <th>Edit</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </thead>
                                                     <tfoot>
@@ -117,7 +148,7 @@ include('includes/config.php');
                                                             <th>Assessee</th>
                                                             <th>Project Name</th>
                                                             <th>Progress</th>
-                                                            <th>Edit</th>
+                                                            <th>Action</th>
                                                         </tr>
                                                     </tfoot>
                                                     <tbody>
@@ -132,29 +163,178 @@ include('includes/config.php');
                                                         $count = 0;
                                                         if ($query->rowCount() > 0) {
                                                             foreach ($histories as $history) { ?>
-                                                                <tr>
-                                                                    <td class="project_image"> <img class="img-thumbnail" width="100" src="img/project-image/<?php echo htmlentities($history->project_picture); ?>" alt="project image" /></td>
-                                                                    <td class="assessee_name"><?php echo htmlentities($history->assessee_name); ?></td>
-                                                                    <td class="project_name"><?php echo htmlentities($history->project_name); ?></td>
-                                                                    <td class="assessement_progress" align="center">
 
-                                                                        <div class="p_progress_container">
-                                                                            <div class="progress">
-                                                                                <div class="p_progress_item">
-                                                                                    <div class="progress_bar">
-                                                                                        <!-- <div class="bar" data-value="70" data-text="70"></div> -->
-                                                                                        <div class="bar" data-value="<?php echo htmlentities($history->document_check_percentage); ?>" data-text="<?php echo htmlentities($history->document_check_percentage); ?>" value="<?php echo htmlentities($history->document_check_percentage); ?>">
-                                                                                        </div>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
+                                                                <!-- value from document subscore -->
+                                                                <?php
+                                                                $sql = "SELECT * FROM document_check_subscore WHERE assessment_id='$history->assessee_id'";
+                                                                $query = $dbh->prepare($sql);
+                                                                $query->execute();
+                                                                $totalcna = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                if ($query->rowCount() > 0) {
+                                                                    foreach ($totalcna as $totalcnas) {
+                                                                ?>
+                                                                        <!-- value from workplace subscore -->
+                                                                        <?php
+                                                                        $sql = "SELECT * FROM workplace_inspection_subscore WHERE assessment_id='$totalcnas->assessment_id'";
+                                                                        $query = $dbh->prepare($sql);
+                                                                        $query->execute();
+                                                                        $totalcna1 = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                        if ($query->rowCount() > 0) {
+                                                                            foreach ($totalcna1 as $totalcnas1) {
+                                                                        ?>
+                                                                                <!-- value from personnel subscore -->
+                                                                                <?php
+                                                                                $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id='$totalcnas->assessment_id'";
+                                                                                $query = $dbh->prepare($sql);
+                                                                                $query->execute();
+                                                                                $totalcna2 = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                if ($query->rowCount() > 0) {
+                                                                                    foreach ($totalcna2 as $totalcnas2) {
+                                                                                ?>
+                                                                                        <tr>
+                                                                                            <td class="project_image"> <img class="img-thumbnail" width="100" src="img/project-image/<?php echo htmlentities($history->project_picture); ?>" alt="project image" /></td>
+                                                                                            <td class="assessee_name"><?php echo htmlentities($history->assessee_name); ?></td>
+                                                                                            <td class="project_name"><?php echo htmlentities($history->project_name); ?></td>
+                                                                                            <td class="assessement_progress" align="center">
+                                                                                                <!-- <?php echo htmlentities($history->status); ?> -->
 
-                                                                    </td>
-                                                                    <td>
-                                                                        <button class="btn btn-primary btn-user btn-block font-weight-bold" onclick="window.location='edit-assessment-from-history.php?assessee_id=<?php echo htmlentities($history->assessee_id); ?>';">Edit</button>
-                                                                        <button class="btn btn-primary btn-user btn-block font-weight-bold" onclick="window.location='print.php?assessee_id=<?php echo htmlentities($history->assessee_id); ?>';">Print</button>
-                                                                    </td>
-                                                                </tr>
+                                                                                                <!-- <div class="p_progress_container">
+                                                                                                    <div class="progress">
+                                                                                                        <div class="p_progress_item">
+                                                                                                            <div class="progress_bar">
+                                                                                                                <div class="bar" data-value="<?php echo htmlentities($totalcnas->doc_check_c_score)
+                                                                                                                                                    + htmlentities($totalcnas->doc_check_na_score)
+                                                                                                                                                    + htmlentities($totalcnas1->general_c_score)
+                                                                                                                                                    + htmlentities($totalcnas1->general_na_score)
+                                                                                                                                                    + htmlentities($totalcnas1->high_risk_c_score)
+                                                                                                                                                    + htmlentities($totalcnas1->high_risk_na_score)
+                                                                                                                                                    + htmlentities($totalcnas2->managerial_c_score)
+                                                                                                                                                    + htmlentities($totalcnas2->managerial_na_score)
+                                                                                                                                                    + htmlentities($totalcnas2->supervisory_c_score)
+                                                                                                                                                    + htmlentities($totalcnas2->supervisory_na_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_1_c_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_1_na_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_2_c_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_2_na_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_3_c_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_3_na_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_4_c_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_4_na_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_5_c_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_5_na_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_6_c_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_6_na_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_7_c_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_7_na_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_8_c_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_8_na_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_9_c_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_9_na_score); ?>" data-text="<?php echo htmlentities($totalcnas->doc_check_c_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas->doc_check_na_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas1->general_c_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas1->general_na_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas1->high_risk_c_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas1->high_risk_na_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas2->managerial_c_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas2->managerial_na_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas2->supervisory_c_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas2->supervisory_na_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_1_c_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_1_na_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_2_c_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_2_na_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_3_c_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_3_na_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_4_c_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_4_na_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_5_c_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_5_na_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_6_c_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_6_na_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_7_c_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_7_na_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_8_c_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_8_na_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_9_c_score)
+                                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_9_na_score);
+                                                                                                                                                                                                                    ?>">
+                                                                                                                </div>
+
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </div>
+                                                                                                </div> -->
+
+                                                                                                <div class="status" data-value="<?php echo htmlentities($totalcnas->doc_check_c_score)
+                                                                                                                                                    + htmlentities($totalcnas->doc_check_na_score)
+                                                                                                                                                    + htmlentities($totalcnas1->general_c_score)
+                                                                                                                                                    + htmlentities($totalcnas1->general_na_score)
+                                                                                                                                                    + htmlentities($totalcnas1->high_risk_c_score)
+                                                                                                                                                    + htmlentities($totalcnas1->high_risk_na_score)
+                                                                                                                                                    + htmlentities($totalcnas2->managerial_c_score)
+                                                                                                                                                    + htmlentities($totalcnas2->managerial_na_score)
+                                                                                                                                                    + htmlentities($totalcnas2->supervisory_c_score)
+                                                                                                                                                    + htmlentities($totalcnas2->supervisory_na_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_1_c_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_1_na_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_2_c_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_2_na_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_3_c_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_3_na_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_4_c_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_4_na_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_5_c_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_5_na_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_6_c_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_6_na_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_7_c_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_7_na_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_8_c_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_8_na_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_9_c_score)
+                                                                                                                                                    + htmlentities($totalcnas2->worker_9_na_score); ?>" data-text="<?php echo htmlentities($totalcnas->doc_check_c_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas->doc_check_na_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas1->general_c_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas1->general_na_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas1->high_risk_c_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas1->high_risk_na_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas2->managerial_c_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas2->managerial_na_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas2->supervisory_c_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas2->supervisory_na_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_1_c_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_1_na_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_2_c_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_2_na_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_3_c_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_3_na_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_4_c_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_4_na_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_5_c_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_5_na_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_6_c_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_6_na_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_7_c_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_7_na_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_8_c_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_8_na_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_9_c_score)
+                                                                                                                                                                                                        + htmlentities($totalcnas2->worker_9_na_score);
+                                                                                                                                                                                                    ?>">
+                                                                                                </div>
+                                                                                            </td>
+                                                                                            <td>
+                                                                                                <button class="btn btn-primary btn-user btn-block font-weight-bold" onclick="window.location='edit-assessment-from-history.php?assessee_id=<?php echo htmlentities($history->assessee_id); ?>';">Edit</button>
+                                                                                                <button class="btn btn-primary btn-user btn-block font-weight-bold" onclick="window.location='print.php?assessee_id=<?php echo htmlentities($history->assessee_id); ?>';">Print</button>
+                                                                                                <button class="btn btn-primary btn-user btn-block font-weight-bold" onclick="" >Delete</button>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                <?php }
+                                                                                } ?>
+                                                                        <?php }
+                                                                        } ?>
+                                                                <?php }
+                                                                } ?>
                                                         <?php }
                                                         } ?>
                                                     </tbody>

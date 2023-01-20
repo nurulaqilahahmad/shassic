@@ -28,153 +28,115 @@ require_once "controller.php";
     <link rel="stylesheet" type="text/css" href="css/star-rantings.css">
 
     <script type=text/javascript>
-        function documentCheck() {
-            let progressBar = document.querySelector(".circular-progress-each");
-            let valueContainer = document.querySelector("#progress-document-check");
+        // function documentCheck() {
+        //     let progressBar = document.querySelector(".circular-progress-each");
+        //     let valueContainer = document.querySelector("#progress-document-check");
 
-            var progressValue = 0;
-            // let progressEndValue = document.getElementById("input-percentage").value;
-            let speed = 50;
+        //     var progressValue = 0;
+        //     let progressEndValue = document.getElementById("input-percentage").value;
+        //     let speed = 50;
 
-            let checkc = document.getElementById("doc_check_c_score").value;
-            let checkna = document.getElementById("doc_check_na_score").value;
+        //     let progress = setInterval(() => {
+        //         if (progressValue == progressEndValue) {
+        //             valueContainer.textContent = `${progressValue}%`;
+        //             progressBar.style.background = `conic-gradient(
+        //         #4d5bf9 ${progressValue * 3.6}deg,
+        //         #cadcff ${progressValue * 3.6}deg
+        //     )`;
+        //             clearInterval(progress);
+        //         } else {
+        //             progressValue++;
+        //             valueContainer.textContent = `${progressValue}%`;
+        //             progressBar.style.background = `conic-gradient(
+        //         #4d5bf9 ${progressValue * 3.6}deg,
+        //         #cadcff ${progressValue * 3.6}deg
+        //     )`;
+        //             if (progressValue == progressEndValue) {
+        //                 clearInterval(progress);
+        //             }
+        //         }
+        //     }, speed);
 
-            let progressEndValue = Math.round((((parseInt(checkc) + parseInt(checkna)) / 57) * 100));
-            // console.log(progressEndValue);
+        // }
 
-            let progress = setInterval(() => {
-                if (progressValue == progressEndValue) {
-                    valueContainer.textContent = `${progressValue}%`;
-                    progressBar.style.background = `conic-gradient(
-                #4d5bf9 ${progressValue * 3.6}deg,
-                #cadcff ${progressValue * 3.6}deg
-            )`;
-                    clearInterval(progress);
-                } else {
-                    progressValue++;
-                    valueContainer.textContent = `${progressValue}%`;
-                    progressBar.style.background = `conic-gradient(
-                #4d5bf9 ${progressValue * 3.6}deg,
-                #cadcff ${progressValue * 3.6}deg
-            )`;
-                    if (progressValue == progressEndValue) {
-                        clearInterval(progress);
-                    }
-                }
-            }, speed);
+        // function workplaceInspection() {
+        //     let progressBar = document.querySelector(".circular-progress-each-1");
+        //     let valueContainer = document.querySelector("#progress-document-workplace");
 
-        }
+        //     let progressValue = 0;
+        //     let progressEndValue = document.getElementById("workplace-inspection").value;
 
-        function workplaceInspection() {
-            let progressBar = document.querySelector(".circular-progress-each-1");
-            let valueContainer = document.querySelector("#progress-document-workplace");
+        //     let speed = 50;
 
-            let progressValue = 0;
-            // let progressEndValue = document.getElementById("workplace-inspection").value;
+        //     let progress = setInterval(() => {
+        //         if (progressValue == progressEndValue) {
+        //             valueContainer.textContent = `${progressValue}%`;
+        //             progressBar.style.background = `conic-gradient(
+        //         #4d5bf9 ${progressValue * 3.6}deg,
+        //         #cadcff ${progressValue * 3.6}deg
+        //     )`;
+        //             clearInterval(progress);
+        //         } else {
+        //             progressValue++;
+        //             valueContainer.textContent = `${progressValue}%`;
+        //             progressBar.style.background = `conic-gradient(
+        //         #4d5bf9 ${progressValue * 3.6}deg,
+        //         #cadcff ${progressValue * 3.6}deg
+        //     )`;
+        //             if (progressValue == progressEndValue) {
+        //                 clearInterval(progress);
+        //             }
+        //         }
+        //     }, speed);
+        // }
 
-            let generalCScore = document.getElementById("general_c_score").value;
-            let generalNaScore = document.getElementById("general_na_score").value;
-            let HighRiskCScore = document.getElementById("high_risk_c_score").value;
-            let HighRiskNaScore = document.getElementById("high_risk_na_score").value;
+        // function personnelInterview() {
+        //     let progressBar = document.querySelector(".circular-progress-each-2");
+        //     let valueContainer = document.querySelector("#progress-document-personnel");
 
-            let progressEndValue = Math.round((((parseInt(generalCScore) + parseInt(generalNaScore) + parseInt(HighRiskCScore) + parseInt(HighRiskNaScore)) / 72) * 100));
-            // console.log(progressEndValue);
+        //     let progressValue = 0;
+        //     let progressEndValue = document.getElementById("personnel-interview").value;
+        //     let speed = 50;
 
-            let speed = 50;
-
-            let progress = setInterval(() => {
-                if (progressValue == progressEndValue) {
-                    valueContainer.textContent = `${progressValue}%`;
-                    progressBar.style.background = `conic-gradient(
-                #4d5bf9 ${progressValue * 3.6}deg,
-                #cadcff ${progressValue * 3.6}deg
-            )`;
-                    clearInterval(progress);
-                } else {
-                    progressValue++;
-                    valueContainer.textContent = `${progressValue}%`;
-                    progressBar.style.background = `conic-gradient(
-                #4d5bf9 ${progressValue * 3.6}deg,
-                #cadcff ${progressValue * 3.6}deg
-            )`;
-                    if (progressValue == progressEndValue) {
-                        clearInterval(progress);
-                    }
-                }
-            }, speed);
-        }
-
-        function personnelInterview() {
-            let progressBar = document.querySelector(".circular-progress-each-2");
-            let valueContainer = document.querySelector("#progress-document-personnel");
-
-            let progressValue = 0;
-            // let progressEndValue = document.getElementById("personnel-interview").value;
-            let speed = 50;
-
-            let managerialcscore = document.getElementById("managerial_c_score").value;
-            let managerialnascore = document.getElementById("managerial_na_score").value;
-            let supervisorycscore = document.getElementById("supervisory_c_score").value;
-            let supervisorynascore = document.getElementById("supervisory_na_score").value;
-
-            let workerc1 = document.getElementById("worker_1_c_score").value;
-            let workerc2 = document.getElementById("worker_2_c_score").value;
-            let workerc3 = document.getElementById("worker_3_c_score").value;
-            let workerc4 = document.getElementById("worker_4_c_score").value;
-            let workerc5 = document.getElementById("worker_5_c_score").value;
-            let workerc6 = document.getElementById("worker_6_c_score").value;
-            let workerc7 = document.getElementById("worker_7_c_score").value;
-            let workerc8 = document.getElementById("worker_8_c_score").value;
-            let workerc9 = document.getElementById("worker_9_c_score").value;
-
-            let workerna1 = document.getElementById("worker_1_na_score").value;
-            let workerna2 = document.getElementById("worker_2_na_score").value;
-            let workerna3 = document.getElementById("worker_3_na_score").value;
-            let workerna4 = document.getElementById("worker_4_na_score").value;
-            let workerna5 = document.getElementById("worker_5_na_score").value;
-            let workerna6 = document.getElementById("worker_6_na_score").value;
-            let workerna7 = document.getElementById("worker_7_na_score").value;
-            let workerna8 = document.getElementById("worker_8_na_score").value;
-            let workerna9 = document.getElementById("worker_9_na_score").value;
-
-            let workerc = parseInt(workerc1) + parseInt(workerc2) + parseInt(workerc3) + parseInt(workerc4) + parseInt(workerc5) + parseInt(workerc6) + parseInt(workerc7) + parseInt(workerc8) + parseInt(workerc9);
-            let workerna = parseInt(workerna1) + parseInt(workerna2) + parseInt(workerna3) + parseInt(workerna4) + parseInt(workerna5) + parseInt(workerna6) + parseInt(workerna7) + parseInt(workerna8) + parseInt(workerna9);
-
-            // let c = parseInt(managerialcscore) + parseInt(managerialnascore) + parseInt(supervisorycscore) + parseInt(supervisorynascore);
-
-            // let t = parseInt(workerc) +parseInt(workerna) + c;
-            // console.log(workerna);
-
-            let progressEndValue = Math.round((((parseInt(managerialcscore) + parseInt(managerialnascore) + parseInt(supervisorycscore) + parseInt(supervisorynascore) + workerc + workerna) / 186) * 100));
-            // console.log(progressEndValue);
-
-            let progress = setInterval(() => {
-                if (progressValue == progressEndValue) {
-                    valueContainer.textContent = `${progressValue}%`;
-                    progressBar.style.background = `conic-gradient(
-                #4d5bf9 ${progressValue * 3.6}deg,
-                #cadcff ${progressValue * 3.6}deg
-            )`;
-                    clearInterval(progress);
-                } else {
-                    progressValue++;
-                    valueContainer.textContent = `${progressValue}%`;
-                    progressBar.style.background = `conic-gradient(
-                #4d5bf9 ${progressValue * 3.6}deg,
-                #cadcff ${progressValue * 3.6}deg
-            )`;
-                    if (progressValue == progressEndValue) {
-                        clearInterval(progress);
-                    }
-                }
-            }, speed);
-        }
+        //     let progress = setInterval(() => {
+        //         if (progressValue == progressEndValue) {
+        //             valueContainer.textContent = `${progressValue}%`;
+        //             progressBar.style.background = `conic-gradient(
+        //         #4d5bf9 ${progressValue * 3.6}deg,
+        //         #cadcff ${progressValue * 3.6}deg
+        //     )`;
+        //             clearInterval(progress);
+        //         } else {
+        //             progressValue++;
+        //             valueContainer.textContent = `${progressValue}%`;
+        //             progressBar.style.background = `conic-gradient(
+        //         #4d5bf9 ${progressValue * 3.6}deg,
+        //         #cadcff ${progressValue * 3.6}deg
+        //     )`;
+        //             if (progressValue == progressEndValue) {
+        //                 clearInterval(progress);
+        //             }
+        //         }
+        //     }, speed);
+        // }
 
         // Get ratings
         function getRankings() {
-
             // Initial Ratings
-            let ratings = document.getElementById("rating-control").value;
+            // let ratings = document.getElementById("rating-control").value;
+            
+            let documents = document.getElementById("input-percentage").value;
+            let workplace = document.getElementById("workplace-inspection").value;
+            let personnel = document.getElementById("personnel-interview").value;
+            
+
+            let ratings = ((parseInt(documents) + parseInt(workplace) + parseInt(personnel))/100)*5 ;
+
+            let star = 3;
+            
+            console.log(workplace);
+            console.log(personnel);
+            console.log(ratings);
 
             // Total Stars
             const starsTotal = 5;
@@ -182,14 +144,30 @@ require_once "controller.php";
             // Get percentage
             const starPercentage = (ratings / starsTotal) * 100;
 
-            // Round to nearest 10
-            const starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
+            if (starPercentage <= 49) {
+                star = 0;
+            } else if (starPercentage >= 50 && starPercentage <= 59.9) {
+                star = 20;
+            } else if (starPercentage >= 60 && starPercentage <= 69.9) {
+                star = 40;
+            } else if (starPercentage >= 70 && starPercentage <= 79.9) {
+                star = 60;
+            } else if (starPercentage >= 80 && starPercentage <= 89.9) {
+                star = 80;
+            } else {
+                star = 100;
+            }
 
+            // Round to nearest 10
+            const starPercentageRounded = `${Math.round(parseInt(star / 10) * 10)}%`;
+            console.log(starPercentageRounded);
+            
             // Set width of stars-inner to percentage
+            console.log(star);
             document.querySelector(`.stars-inner`).style.width = starPercentageRounded;
 
             // Add number rating
-            document.querySelector(`.number-rating`).innerHTML = starPercentageRounded;
+            // document.querySelector(`.number-rating`).innerHTML = star;
         }
     </script>
 
@@ -246,135 +224,45 @@ require_once "controller.php";
                                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                         <thead>
                                                             <tr>
-                                                                <th>Document Check</th>
-                                                                <th>Workplace Inspection</th>
-                                                                <th>Personnel Interview</th>
+                                                                <th colspan="3">Assessment Name</th>
+                                                                <th>Percentage</th>
                                                             </tr>
                                                         </thead>
                                                         <tbody>
-                                                            <!-- value from workplace subscore -->
-                                                            <?php
-                                                            $sql = "SELECT * FROM workplace_inspection_subscore WHERE assessment_id='$result->assessee_id'";
-                                                            $query = $dbh->prepare($sql);
-                                                            $query->execute();
-                                                            $totalcna = $query->fetchAll(PDO::FETCH_OBJ);
-                                                            if ($query->rowCount() > 0) {
-                                                                foreach ($totalcna as $totalcnas) {
-                                                            ?>
-                                                                    <input type="hidden" id="general_c_score" value="<?php echo htmlentities($totalcnas->general_c_score); ?>">
-                                                                    <input type="hidden" id="general_na_score" value="<?php echo htmlentities($totalcnas->general_na_score); ?>">
-                                                                    <input type="hidden" id="high_risk_c_score" value="<?php echo htmlentities($totalcnas->high_risk_c_score); ?>">
-                                                                    <input type="hidden" id="high_risk_na_score" value="<?php echo htmlentities($totalcnas->high_risk_na_score); ?>">
-                                                            <?php }
-                                                            } ?>
-
-                                                            <!-- value from personnel subscore -->
-                                                            <?php
-                                                            $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id='$result->assessee_id'";
-                                                            $query = $dbh->prepare($sql);
-                                                            $query->execute();
-                                                            $totalcna1 = $query->fetchAll(PDO::FETCH_OBJ);
-                                                            if ($query->rowCount() > 0) {
-                                                                foreach ($totalcna1 as $totalcnas1) {
-                                                            ?>
-                                                                    <input type="hidden" id="managerial_c_score" value="<?php echo htmlentities($totalcnas1->managerial_c_score); ?>">
-                                                                    <input type="hidden" id="managerial_na_score" value="<?php echo htmlentities($totalcnas1->managerial_na_score); ?>">
-                                                                    <input type="hidden" id="supervisory_c_score" value="<?php echo htmlentities($totalcnas1->supervisory_c_score); ?>">
-                                                                    <input type="hidden" id="supervisory_na_score" value="<?php echo htmlentities($totalcnas1->supervisory_na_score); ?>">
-
-                                                                    <input type="hidden" id="worker_1_c_score" value="<?php echo htmlentities($totalcnas1->worker_1_c_score); ?>">
-                                                                    <input type="hidden" id="worker_1_na_score" value="<?php echo htmlentities($totalcnas1->worker_1_na_score); ?>">
-
-                                                                    <input type="hidden" id="worker_2_c_score" value="<?php echo htmlentities($totalcnas1->worker_2_c_score); ?>">
-                                                                    <input type="hidden" id="worker_2_na_score" value="<?php echo htmlentities($totalcnas1->worker_2_na_score); ?>">
-
-                                                                    <input type="hidden" id="worker_3_c_score" value="<?php echo htmlentities($totalcnas1->worker_3_c_score); ?>">
-                                                                    <input type="hidden" id="worker_3_na_score" value="<?php echo htmlentities($totalcnas1->worker_3_na_score); ?>">
-
-                                                                    <input type="hidden" id="worker_4_c_score" value="<?php echo htmlentities($totalcnas1->worker_4_c_score); ?>">
-                                                                    <input type="hidden" id="worker_4_na_score" value="<?php echo htmlentities($totalcnas1->worker_4_na_score); ?>">
-
-                                                                    <input type="hidden" id="worker_5_c_score" value="<?php echo htmlentities($totalcnas1->worker_5_c_score); ?>">
-                                                                    <input type="hidden" id="worker_5_na_score" value="<?php echo htmlentities($totalcnas1->worker_5_na_score); ?>">
-
-                                                                    <input type="hidden" id="worker_6_c_score" value="<?php echo htmlentities($totalcnas1->worker_6_c_score); ?>">
-                                                                    <input type="hidden" id="worker_6_na_score" value="<?php echo htmlentities($totalcnas1->worker_6_na_score); ?>">
-
-                                                                    <input type="hidden" id="worker_7_c_score" value="<?php echo htmlentities($totalcnas1->worker_7_c_score); ?>">
-                                                                    <input type="hidden" id="worker_7_na_score" value="<?php echo htmlentities($totalcnas1->worker_7_na_score); ?>">
-
-                                                                    <input type="hidden" id="worker_8_c_score" value="<?php echo htmlentities($totalcnas1->worker_8_c_score); ?>">
-                                                                    <input type="hidden" id="worker_8_na_score" value="<?php echo htmlentities($totalcnas1->worker_8_na_score); ?>">
-
-                                                                    <input type="hidden" id="worker_9_c_score" value="<?php echo htmlentities($totalcnas1->worker_9_c_score); ?>">
-                                                                    <input type="hidden" id="worker_9_na_score" value="<?php echo htmlentities($totalcnas1->worker_9_na_score); ?>">
-                                                            <?php }
-                                                            } ?>
-
-                                                            <!-- value from document subscore -->
-                                                            <?php
-                                                            $sql = "SELECT * FROM document_check_subscore WHERE assessment_id='$result->assessee_id'";
-                                                            $query = $dbh->prepare($sql);
-                                                            $query->execute();
-                                                            $totalcna = $query->fetchAll(PDO::FETCH_OBJ);
-                                                            if ($query->rowCount() > 0) {
-                                                                foreach ($totalcna as $totalcnas) {
-                                                            ?>
-                                                                    <input type="hidden" id="doc_check_c_score" value="<?php echo htmlentities($totalcnas->doc_check_c_score); ?>">
-                                                                    <input type="hidden" id="doc_check_na_score" value="<?php echo htmlentities($totalcnas->doc_check_na_score); ?>">
-                                                            <?php }
-                                                            } ?>
-
-                                                            <td>
-                                                                <div class="outer-container" align="center">
-                                                                    <div class="circular-progress-each">
-                                                                        <div id="progress-document-check">
-                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="input-percentage" id="input-percentage" value="<?php echo htmlentities($result->document_check_percentage); ?>">
-                                                                            <?php
-                                                                            echo '<script type="text/javascript"> documentCheck(); </script>';
-                                                                            ?>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="outer-container" align="center">
-                                                                    <div class="circular-progress-each-1">
-                                                                        <div id="progress-document-workplace">
-                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="workplace-inspection" id="workplace-inspection" value="<?php echo htmlentities($result->workplace_inspection_percentage); ?>">
-                                                                            <?php
-                                                                            echo '<script type="text/javascript"> workplaceInspection(); </script>';
-                                                                            ?>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
-                                                            <td>
-                                                                <div class="outer-container" align="center">
-                                                                    <div class="circular-progress-each-2">
-                                                                        <div id="progress-document-personnel">
-                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="personnel-interview" id="personnel-interview" value="<?php echo htmlentities($result->personnel_interview_percentage); ?>">
-                                                                            <?php
-                                                                            echo '<script type="text/javascript"> personnelInterview(); </script>';
-                                                                            ?>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </td>
+                                                            <tr>
+                                                                <td colspan="3">Document Check</td>
+                                                                <td><?php echo htmlentities($result->document_check_percentage); ?> %</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="3">Workplace Inspection</td>
+                                                                <td><?php echo htmlentities($result->workplace_inspection_percentage); ?> %</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td colspan="3">Personnel Interview</td>
+                                                                <td><?php echo htmlentities($result->personnel_interview_percentage); ?> %</td>
+                                                            </tr>
+                                                        
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <!-- For total score -->
+                                                            <tr>
+                                                                <td colspan="3" class="font-weight-bold">Total SHASSIC (score %)</td>
+                                                                <td class="font-weight-bold"><?php echo htmlentities($result->total_percentage)?></td>
+                                                            </tr>
 
                                                             <!-- For ranking star -->
                                                             <tr class="star">
-                                                                <td colspan="3">
-
+                                                                <td colspan="3" class="font-weight-bold">Star(s) Awarded</td>
+                                                                <td>
                                                                     <div class="stars-outer">
                                                                         <div class="stars-inner"></div>
                                                                     </div>
-                                                                    <div>Total Score:
+                                                                    <div>
                                                                         <span class="number-rating"></span>
                                                                     </div>
                                                                 </td>
                                                             </tr>
-                                                        </tbody>
+                                                        </tfoot>
                                                     </table>
                                                 </div>
 
@@ -394,6 +282,9 @@ require_once "controller.php";
                                                 <div id="assessee-select">
                                                     <input type="hidden" value="<?php echo htmlentities($result->assessee_name); ?>">
                                                     <input type="hidden" id="rating-control" value="<?php echo htmlentities($result->star_ranking); ?>">
+                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="input-percentage" id="input-percentage" value="<?php echo htmlentities($result->document_check_percentage); ?>">
+                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="workplace-inspection" id="workplace-inspection" value="<?php echo htmlentities($result->workplace_inspection_percentage); ?>">
+                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="personnel-interview" id="personnel-interview" value="<?php echo htmlentities($result->personnel_interview_percentage); ?>">
                                                     <?php
                                                     echo '<script type="text/javascript"> getRankings(); </script>';
                                                     ?>
@@ -412,7 +303,6 @@ require_once "controller.php";
 
                         </div>
                         <!-- End of Content Wrapper -->
-
 
                 <?php }
                 } ?>

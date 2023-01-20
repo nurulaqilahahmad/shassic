@@ -1,7 +1,7 @@
 /* For progress bar CSS */
 .p_progress_container {
     max-width: 1140px;
-    width: 100%;
+    width: 110%;
     padding: 0 1rem;
     margin: 0 auto;
   }
@@ -22,7 +22,7 @@
  
   .progress_bar {
     position: relative;
-    width: 15rem;
+    width: 10rem;
     height: 8px;
     border-radius: 2rem;
     background: rgb(200, 200, 226);

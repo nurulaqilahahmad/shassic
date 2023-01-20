@@ -175,9 +175,9 @@ if ($query->rowCount() > 0) {
                                                                                                         if ($query->rowCount() > 0) {
                                                                                                             foreach ($docchecks1 as $doccheck1) {
                                                                                                         ?>
-                                                                                                                <td><input type="checkbox" class="checkbox1" name="doccheck_<?= $checklist_id ?>[]" value="C" onclick="countSelected()" <?php if (in_array("C", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
-                                                                                                                <td><input type="checkbox" class="checkbox2" name="doccheck_<?= $checklist_id ?>[]" value="NC" onclick="countSelected()" <?php if (in_array("NC", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
-                                                                                                                <td><input type="checkbox" class="checkbox3" name="doccheck_<?= $checklist_id ?>[]" value="NA" onclick="countSelected()" <?php if (in_array("NA", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox1" name="doccheck_<?= $checklist_id ?>[]" value="C" onchange="countSelected()" <?php if (in_array("C", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox2" name="doccheck_<?= $checklist_id ?>[]" value="NC" onchange="countSelected()" <?php if (in_array("NC", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="checkbox" class="checkbox3" name="doccheck_<?= $checklist_id ?>[]" value="NA" onchange="countSelected()" <?php if (in_array("NA", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
                                                                                                                 <td><textarea form="document-check" rows="2" cols="20" id="remarks" name="remarks_<?= $checklist_id ?>"><?= $doccheck1->remarks ?></textarea></td>
                                                                                                     </tr>
                                                                                             <?php }
@@ -331,12 +331,16 @@ if ($query->rowCount() > 0) {
                 document.getElementById('doc_check_na_score').value = countNA;
                 document.getElementById('document_check_percentage').value = d;
             }
-                var docCheckCScore = document.getElementById('doc_check_c_score');
-                var docCheckNAScore = document.getElementById('doc_check_na_score');
-                var doc_check_c = document.querySelectorAll('input[class="checkbox1"]:checked').length;
-                var doc_check_na = document.querySelectorAll('input[class="checkbox3"]:checked').length;
-                docCheckCScore.setAttribute('value', doc_check_c);
-                docCheckNAScore.setAttribute('value', doc_check_na);
+            var docCheckCScore = document.getElementById('doc_check_c_score');
+            var docCheckNAScore = document.getElementById('doc_check_na_score');
+            var docCheckPercent = document.getElementById('document_check_percentage');
+            var doc_check_c = document.querySelectorAll('input[class="checkbox1"]:checked').length;
+            var doc_check_na = document.querySelectorAll('input[class="checkbox3"]:checked').length;
+            var doc_check_percent = (doc_check_c / (57 - doc_check_na) * 20);
+            let e = doc_check_percent.toFixed(2);
+            docCheckCScore.setAttribute('value', doc_check_c);
+            docCheckNAScore.setAttribute('value', doc_check_na);
+            docCheckPercent.setAttribute('value', e);
         </script>
 
     <?php } else {

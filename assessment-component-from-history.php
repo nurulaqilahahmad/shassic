@@ -33,7 +33,7 @@ require_once "controller.php";
             let valueContainer = document.querySelector("#progress-document-check");
 
             let progressValue = 0;
-            let speed = 50;
+            let speed = 0;
 
             let checkc = document.getElementById("doc_check_c_score").value;
             let checkna = document.getElementById("doc_check_na_score").value;
@@ -68,7 +68,7 @@ require_once "controller.php";
 
             let progressValue = 0;
             // let progressEndValue = document.getElementById("workplace-inspection").value;
-            
+
             let generalCScore = document.getElementById("general_c_score").value;
             let generalNaScore = document.getElementById("general_na_score").value;
             let HighRiskCScore = document.getElementById("high_risk_c_score").value;
@@ -77,7 +77,7 @@ require_once "controller.php";
             let progressEndValue = Math.round((((parseInt(generalCScore) + parseInt(generalNaScore) + parseInt(HighRiskCScore) + parseInt(HighRiskNaScore)) / 72) * 100));
             // console.log(progressEndValue);
 
-            let speed = 50;
+            let speed = 0;
 
             let progress = setInterval(() => {
                 if (progressValue == progressEndValue) {
@@ -107,7 +107,7 @@ require_once "controller.php";
 
             let progressValue = 0;
             // let progressEndValue = document.getElementById("personnel-interview").value;
-            let speed = 50;
+            let speed = 0;
 
             let managerialcscore = document.getElementById("managerial_c_score").value;
             let managerialnascore = document.getElementById("managerial_na_score").value;
@@ -289,8 +289,8 @@ require_once "controller.php";
                                                             <?php }
                                                             } ?>
 
-                                                                                                                        <!-- value from personnel subscore -->
-                                                                                                                        <?php
+                                                            <!-- value from personnel subscore -->
+                                                            <?php
                                                             $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id='$result->assessee_id'";
                                                             $query = $dbh->prepare($sql);
                                                             $query->execute();

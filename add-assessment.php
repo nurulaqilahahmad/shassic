@@ -129,6 +129,7 @@ require_once "controller.php";
                                                                     <div class="form-group" id="row">
                                                                         <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0">
+                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="status" id="status" value="Not Started">
                                                                             <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="add">Add</button>
                                                                         </div>
                                                                         <div class="col-sm-4 mb-3 mb-sm-0"></div>
