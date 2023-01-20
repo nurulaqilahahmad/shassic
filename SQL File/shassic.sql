@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 20, 2023 at 03:35 AM
+-- Generation Time: Jan 20, 2023 at 03:42 AM
 -- Server version: 10.4.25-MariaDB
 -- PHP Version: 7.4.30
 
@@ -300,20 +300,6 @@ CREATE TABLE `personnel_interview_subscore` (
   `worker_9_c_score` int(11) NOT NULL,
   `worker_9_na_score` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `personnel_interview_subscore`
---
-
-INSERT INTO `personnel_interview_subscore` (`id`, `assessment_id`, `managerial_c_score`, `managerial_na_score`, `supervisory_c_score`, `supervisory_na_score`, `worker_1_c_score`, `worker_1_na_score`, `worker_2_c_score`, `worker_2_na_score`, `worker_3_c_score`, `worker_3_na_score`, `worker_4_c_score`, `worker_4_na_score`, `worker_5_c_score`, `worker_5_na_score`, `worker_6_c_score`, `worker_6_na_score`, `worker_7_c_score`, `worker_7_na_score`, `worker_8_c_score`, `worker_8_na_score`, `worker_9_c_score`, `worker_9_na_score`) VALUES
-(4, 2, 9, 0, 24, 0, 17, 0, 17, 0, 17, 0, 17, 0, 17, 0, 17, 0, 17, 0, 17, 0, 17, 0),
-(5, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(6, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(7, 5, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(8, 6, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(9, 7, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(10, 8, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
-(11, 9, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -881,7 +867,7 @@ ALTER TABLE `personnel_interview_managerial`
 -- AUTO_INCREMENT for table `personnel_interview_subscore`
 --
 ALTER TABLE `personnel_interview_subscore`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `personnel_interview_supervisory_1`
