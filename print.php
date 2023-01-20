@@ -122,7 +122,6 @@ require_once "controller.php";
 
         // Get ratings
         function getRankings() {
-
             // Initial Ratings
             // let ratings = document.getElementById("rating-control").value;
             

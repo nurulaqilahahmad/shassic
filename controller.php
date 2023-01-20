@@ -324,7 +324,6 @@ if (isset($_POST['add'])) {
     $project_date = $_POST['project_date'];
     $project_location = $_POST['project_location'];
     $project_picture = $_FILES['project_picture']['name'];
-    $status = $_POST['status'];
 
     // get the image extension
     $extension = substr($project_picture, strlen($project_picture) - 4, strlen($project_picture));
@@ -340,8 +339,8 @@ if (isset($_POST['add'])) {
         move_uploaded_file($_FILES["project_picture"]["tmp_name"], "img/project-image/" . $imgnewfile);
 
         //Query for data insertion
-        $sql = "INSERT INTO assessment(assessor_id, assessor_name, assessee_name, project_name, project_date, project_location, project_picture, status) VALUES 
-                    (:assessor_id, :assessor_name, :assessee_name, :project_name, :project_date, :project_location, :imgnewfile, :status)";
+        $sql = "INSERT INTO assessment(assessor_id, assessor_name, assessee_name, project_name, project_date, project_location, project_picture) VALUES 
+                    (:assessor_id, :assessor_name, :assessee_name, :project_name, :project_date, :project_location, :imgnewfile)";
 
         $query = $dbh->prepare($sql);
         $query->bindParam(':assessor_id', $assessor_id, PDO::PARAM_STR);
@@ -351,7 +350,6 @@ if (isset($_POST['add'])) {
         $query->bindParam(':project_date', $project_date, PDO::PARAM_STR);
         $query->bindParam(':project_location', $project_location, PDO::PARAM_STR);
         $query->bindParam(':imgnewfile', $imgnewfile, PDO::PARAM_STR);
-        $query->bindParam(':status', $status, PDO::PARAM_STR);
         $query->execute();
 
         $lastInsertId = $dbh->lastInsertId();
@@ -644,7 +642,7 @@ if (isset($_POST['save-document-check'])) {
     $doc_check_na_score = $_POST['doc_check_na_score'];
     $document_check_percentage = $_POST['document_check_percentage'];
 
-    // query for data selection - workplace_inspection_subscore
+    // query for data selection - document_check_subscore
     $sql = "SELECT * FROM document_check_subscore WHERE assessment_id=:assessee_id";
     $query = $dbh->prepare($sql);
     $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
@@ -669,10 +667,9 @@ if (isset($_POST['save-document-check'])) {
                 $query->execute();
                 $result1 = $query->fetchAll(PDO::FETCH_OBJ);
 
-
                 if ($query->rowCount() > 0) {
                     foreach ($result1 as $results1) {
-                        $con = "UPDATE assessment SET assessee_id=:assessee_id, document_check_percentage=:document_check_percentage, total_percentage=('$results1->workplace_inspection_percentage'+'$results1->personnel_interview_percentage'+'$document_check_percentage') WHERE assessee_id=:assessee_id";
+                        $con = "UPDATE assessment SET assessee_id=:assessee_id, document_check_percentage=:document_check_percentage, total_percentage=('$results1->workplace_inspection_percentage'+'$results1->personnel_interview_percentage'+'$document_check_percentage') WHERE assessee_id='$result->assessment_id'";
                         $update = $dbh->prepare($con);
                         $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
                         $update->bindParam(':document_check_percentage', $document_check_percentage, PDO::PARAM_STR);
