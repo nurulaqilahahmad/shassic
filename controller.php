@@ -1,6 +1,6 @@
 <?php
 session_start();
-include_once 'includes/config.php';
+include 'includes/config.php';
 error_reporting(0);
 
 $email = "";
@@ -606,8 +606,10 @@ if (isset($_POST['add'])) {
 
 function insertDocumentCheck($lastInsertId)
 {
-    session_start();
-    include('includes/config.php');
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+    include 'includes/config.php';
 
     $assessee_id = $lastInsertId;
 
@@ -638,8 +640,10 @@ function insertDocumentCheck($lastInsertId)
 
 function insertWorkplaceInspection($lastInsertId)
 {
-    session_start();
-    include('includes/config.php');
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+    include 'includes/config.php';
 
     $assessee_id = $lastInsertId;
 
@@ -691,8 +695,10 @@ function insertWorkplaceInspection($lastInsertId)
 
 function insertPersonnelInterviewManagerialSupervisory($lastInsertId)
 {
-    session_start();
-    include('includes/config.php');
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+    include 'includes/config.php';
 
     $assessee_id = $lastInsertId;
 
@@ -744,8 +750,10 @@ function insertPersonnelInterviewManagerialSupervisory($lastInsertId)
 
 function insertPersonnelInterviewWorker($lastInsertId)
 {
-    session_start();
-    include('includes/config.php');
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+    include 'includes/config.php';
 
     $assessee_id = $lastInsertId;
 
@@ -4947,7 +4955,7 @@ if (isset($_POST['save-personnel-interview-worker-9-from-history'])) {
 // function deletePersonnelInterviewWorker($assessee_id)
 // {
 //     session_start();
-//     include('includes/config.php');
+//     require_once 'includes/config.php';
 
 //     $assessment_id = $assessee_id;
 
