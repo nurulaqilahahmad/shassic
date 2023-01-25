@@ -424,10 +424,12 @@ if (isset($_POST['verify-password'])) {
     $query->execute();
     $result = $query->fetch();
 
+
     if (password_verify($password, $result['password'])) {
         header('location: edit-email-change-email.php');
     } else {
         $errors['verify-password-fail'] = "Invalid password";
+    }
     }
 }
 
@@ -4866,7 +4868,7 @@ if (isset($_POST['save-personnel-interview-worker-9-from-history'])) {
                 $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
 
                 if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+:worker_9_c_score) / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+:worker_9_na_score)) * 20) WHERE assessee_id=:assessee_id";
+                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+:worker_9_c_score) / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+:worker_9_na_score)) * 20) WHERE assessee_id=:assessee_id";
                     $update1 = $dbh->prepare($conn1);
                     $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
                     $update1->bindParam(':worker_9_c_score', $worker_9_c_score, PDO::PARAM_STR);
@@ -4917,5 +4919,44 @@ if (isset($_POST['save-personnel-interview-worker-9-from-history'])) {
             }
             // header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
         }
+    }
+}
+
+if (isset($_GET['delete_id'])) {
+    $assessee_id = intval($_GET['delete_id']);
+    $sql = "DELETE assessment, document_check_subscore, document_check_assessment, personnel_interview_subscore, personnel_interview_managerial, personnel_interview_supervisory_1, personnel_interview_supervisory_2, personnel_interview_supervisory_3
+    FROM assessment INNER JOIN document_check_subscore INNER JOIN document_check_assessment INNER JOIN personnel_interview_subscore INNER JOIN personnel_interview_managerial INNER JOIN personnel_interview_supervisory_1 INNER JOIN personnel_interview_supervisory_2 INNER JOIN personnel_interview_supervisory_3
+    ON assessment.assessee_id = document_check_subscore.assessment_id 
+    AND document_check_subscore.assessment_id = document_check_assessment.assessment_id 
+    AND document_check_assessment.assessment_id = personnel_interview_subscore.assessment_id
+    AND personnel_interview_subscore.assessment_id = personnel_interview_managerial.assessment_id
+    AND personnel_interview_managerial.assessment_id = personnel_interview_supervisory_1.assessment_id
+    AND personnel_interview_supervisory_1.assessment_id = personnel_interview_supervisory_2.assessment_id
+    AND personnel_interview_supervisory_2.assessment_id = personnel_interview_supervisory_3.assessment_id
+    WHERE assessment.assessee_id = $assessee_id";
+    
+    $query = $dbh->prepare($sql);
+    if ($query && deletePersonnelInterviewWorker($assessee_id)) {
+        $query->execute();
+        echo "<script>alert('Assessment deleted');</script>";
+    } else {
+        echo "<script>alert('Error');</script>";
+    }
+}
+
+function deletePersonnelInterviewWorker($assessee_id)
+{
+    session_start();
+    include('includes/config.php');
+    
+    $assessment_id = $assessee_id;
+    
+    $sql = "DELETE FROM personnel_interview_worker_1 WHERE assessment_id=$assessment_id";
+    $query = $dbh->prepare($sql);
+    $query->execute();
+    if ($query) {
+        return true;
+    } else {
+        return false;
     }
 }

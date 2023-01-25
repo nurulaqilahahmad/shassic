@@ -124,16 +124,16 @@ require_once "controller.php";
         function getRankings() {
             // Initial Ratings
             // let ratings = document.getElementById("rating-control").value;
-            
+
             let documents = document.getElementById("input-percentage").value;
             let workplace = document.getElementById("workplace-inspection").value;
             let personnel = document.getElementById("personnel-interview").value;
-            
 
-            let ratings = ((parseInt(documents) + parseInt(workplace) + parseInt(personnel))/100)*5 ;
+
+            let ratings = ((parseInt(documents) + parseInt(workplace) + parseInt(personnel)) / 100) * 5;
 
             let star = 3;
-            
+
             console.log(workplace);
             console.log(personnel);
             console.log(ratings);
@@ -145,7 +145,7 @@ require_once "controller.php";
             const starPercentage = (ratings / starsTotal) * 100;
 
             if (starPercentage <= 49) {
-                star = 0;
+                star = "Certificate of Participation ONLY";
             } else if (starPercentage >= 50 && starPercentage <= 59.9) {
                 star = 20;
             } else if (starPercentage >= 60 && starPercentage <= 69.9) {
@@ -161,7 +161,7 @@ require_once "controller.php";
             // Round to nearest 10
             const starPercentageRounded = `${Math.round(parseInt(star / 10) * 10)}%`;
             console.log(starPercentageRounded);
-            
+
             // Set width of stars-inner to percentage
             console.log(star);
             document.querySelector(`.stars-inner`).style.width = starPercentageRounded;
@@ -219,6 +219,13 @@ require_once "controller.php";
                                             </div>
                                         </div>
                                         <div class="card-body">
+
+                                            <!-- Details Assessee -->
+                                            <p align=left>Assessee Name: <strong><?php echo htmlentities($result->assessee_name); ?></strong><br>
+                                                Project Name: <strong><?php echo htmlentities($result->project_name); ?></strong><br>
+                                                Project Date: <strong><?php echo htmlentities($result->project_date); ?></strong><br>
+                                                Project Location: <strong><?php echo htmlentities($result->project_location); ?></strong></p>
+
                                             <form class="" action="" method="POST">
                                                 <div class="table-responsive">
                                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
@@ -241,13 +248,13 @@ require_once "controller.php";
                                                                 <td colspan="3">Personnel Interview</td>
                                                                 <td><?php echo htmlentities($result->personnel_interview_percentage); ?> %</td>
                                                             </tr>
-                                                        
+
                                                         </tbody>
                                                         <tfoot>
                                                             <!-- For total score -->
                                                             <tr>
                                                                 <td colspan="3" class="font-weight-bold">Total SHASSIC (score %)</td>
-                                                                <td class="font-weight-bold"><?php echo htmlentities($result->total_percentage)?></td>
+                                                                <td class="font-weight-bold"><?php echo htmlentities($result->total_percentage) ?></td>
                                                             </tr>
 
                                                             <!-- For ranking star -->
@@ -266,6 +273,7 @@ require_once "controller.php";
                                                     </table>
                                                 </div>
 
+                                                <!-- For print -->
                                                 <div class="form-group" id="row">
                                                     <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                     <div class="col-sm-4 mb-3 mb-sm-0">
@@ -273,7 +281,7 @@ require_once "controller.php";
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?php echo htmlentities($result->assessee_id); ?>">
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" onchange="countSelected()">
                                                         </div>
-                                                        <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-document-check">Print</button>
+                                                        <button class="btn btn-primary btn-user btn-block font-weight-bold" name="print_document" onclick="window.print()">Print</button>
                                                     </div>
                                                     <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                 </div>
@@ -291,6 +299,14 @@ require_once "controller.php";
                                                 </div>
                                             </form>
 
+                                            <p align=left><b>SHASSIC Star Ranking Description</b><br>
+                                                90 to 100: 5 STAR(S)<br>
+                                                80 to 89.9: 4 STAR(S)<br>
+                                                70 to 79.9: 3 STAR(S)<br>
+                                                60 to 69.9: 2 STAR(S)<br>
+                                                50 to 59.9: 1 STAR(S)<br>
+                                                49 and below: Certificate of Participation ONLY<br></p>
+                                            <p align=left> Note: CIDB may award CCD point for the projects scored with star rankings</p>
                                         </div>
 
                                     </div>
