@@ -141,7 +141,7 @@ require_once "controller.php";
                                     <div class="card shadow mb-4">
                                         <div class="card-header py-3">
                                             <div class="text-center" style="display:flex; width:auto; justify-content: start;">
-                                                <a class="font-weight-bold" href="index.php">
+                                                <a class="font-weight-bold" href="landing.php">
                                                     < Back</a>
                                             </div>
                                             <h6 class="h3 mb-4 text-gray-800 font-weight-bold">Assessment History</h6>

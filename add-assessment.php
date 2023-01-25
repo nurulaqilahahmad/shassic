@@ -77,7 +77,7 @@ require_once "controller.php";
                                                             <div class="p-5">
                                                                 <div class="text-center">
                                                                     <div class="text-center" style="display:flex; width:auto; justify-content: start;">
-                                                                        <a class="font-weight-bold" href="index.php">
+                                                                        <a class="font-weight-bold" href="landing.php">
                                                                             < Back</a>
                                                                     </div>
 
