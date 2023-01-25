@@ -175,9 +175,9 @@ if ($query->rowCount() > 0) {
                                                                                                         if ($query->rowCount() > 0) {
                                                                                                             foreach ($docchecks1 as $doccheck1) {
                                                                                                         ?>
-                                                                                                                <td><input type="checkbox" class="checkbox1" name="doccheck_<?= $checklist_id ?>[]" value="C" onchange="countSelected()" <?php if (in_array("C", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
-                                                                                                                <td><input type="checkbox" class="checkbox2" name="doccheck_<?= $checklist_id ?>[]" value="NC" onchange="countSelected()" <?php if (in_array("NC", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
-                                                                                                                <td><input type="checkbox" class="checkbox3" name="doccheck_<?= $checklist_id ?>[]" value="NA" onchange="countSelected()" <?php if (in_array("NA", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="radio" class="checkbox1" name="doccheck_<?= $checklist_id ?>[]" value="C" onchange="countSelected()" <?php if (in_array("C", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="radio" class="checkbox2" name="doccheck_<?= $checklist_id ?>[]" value="NC" onchange="countSelected()" <?php if (in_array("NC", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                                                <td><input type="radio" class="checkbox3" name="doccheck_<?= $checklist_id ?>[]" value="NA" onchange="countSelected()" <?php if (in_array("NA", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
                                                                                                                 <td><textarea form="document-check" rows="2" cols="20" id="remarks" name="remarks_<?= $checklist_id ?>"><?= $doccheck1->remarks ?></textarea></td>
                                                                                                     </tr>
                                                                                             <?php }
@@ -331,6 +331,7 @@ if ($query->rowCount() > 0) {
                 document.getElementById('doc_check_na_score').value = countNA;
                 document.getElementById('document_check_percentage').value = d;
             }
+
             var docCheckCScore = document.getElementById('doc_check_c_score');
             var docCheckNAScore = document.getElementById('doc_check_na_score');
             var docCheckPercent = document.getElementById('document_check_percentage');

@@ -9,8 +9,8 @@ $errors = array();
 
 use LDAP\Result;
 use PHPMailer\PHPMailer\PHPMailer;
-// use PHPMailer\PHPMailer\SMTP;
-// use PHPMailer\PHPMailer\Exception; 
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception; 
 
 require_once 'vendor/autoload.php';
 require_once 'phpmailer/src/Exception.php';
@@ -423,12 +423,12 @@ if (isset($_POST['verify-password'])) {
     $query->bindParam(':email', $email, PDO::PARAM_STR);
     $query->execute();
     $result = $query->fetch();
-    
+
     if (password_verify($password, $result['password'])) {
         header('location: edit-email-change-email.php');
     } else {
         $errors['verify-password-fail'] = "Invalid password";
-    }    
+    }
 }
 
 //if user click update-email button in edit email change email page
@@ -437,6 +437,111 @@ if (isset($_POST['update-email'])) {
     $id = $_POST['id'];
     $old_email = $_POST['old_email'];
     $email = $_POST['email'];
+
+    if ($old_email != $email) {
+        //Query for data selection
+        $sql = "SELECT * from user where id=:id AND email=:old_email";
+        $query = $dbh->prepare($sql);
+        $query->bindParam(':id', $id, PDO::PARAM_STR);
+        $query->bindParam(':old_email', $old_email, PDO::PARAM_STR);
+        $query->execute();
+        $result = $query->fetch();
+
+        if ($query->rowCount() > 0) {
+            $email_code = mt_rand(100000, 999999);
+            //query for updation
+            $con = "UPDATE user SET temp_email=:email, email_code=:email_code WHERE id=:id AND email=:old_email";
+            $update = $dbh->prepare($con);
+            $update->bindParam(':id', $id, PDO::PARAM_STR);
+            $update->bindParam(':old_email', $old_email, PDO::PARAM_STR);
+            $update->bindParam(':email', $email, PDO::PARAM_STR);
+            $update->bindParam(':email_code', $email_code, PDO::PARAM_STR);
+            $update->execute();
+
+            if ($update) {
+                $subject = "SHASSIC | CHANGE EMAIL REQUEST";
+                $message =
+                    "<h1 class='h4 text-gray-900 mb-4' style='font-weight: bold;'>SHASSIC</h1>
+            <p style='text-align:center; font-family:'Poppins', sans-serif;'>You have requested to change email.<br> The code for change email is <b>$email_code</b></p>
+            <p style='font-size:smaller; text-align:center; font-family:'Poppins', sans-serif;'>IMPORTANT: Do not reply to this email</p>";
+                try {
+                    $mail = new PHPMailer(true);
+
+                    $mail->isSMTP();
+                    $mail->SMTPAuth = true;
+                    $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+
+                    $mail->Host = 'smtp.gmail.com';
+                    $mail->Port = 587;
+
+                    $mail->Username = 'nrlaqilahahmd@gmail.com';
+                    $mail->Password = 'lakykidmxxwegolu';
+
+                    $mail->setFrom('nrlaqilahahmd@gmail.com');
+                    $mail->addAddress($email);
+
+                    $mail->isHTML(true);
+
+                    $mail->Subject = $subject;
+                    $mail->Body = $message;
+
+                    $mail->send();
+
+                    // $_SESSION['info'] = "Code has been sent to your email!";
+                    // $_SESSION['email'] = $email;
+                    header('location: edit-email-code.php');
+                } catch (Exception $e) {
+                    $errors['otp-error'] = $e;
+                }
+            } else {
+                $errors['change-email-fail'] = "Something went wrong";
+            }
+        }
+    } else {
+        $errors['same-email-error'] = "Email cannot be the same";
+    }
+}
+
+if (isset($_POST['check-emailcode'])) {
+    $id = $_POST['id'];
+    $email = $_POST['email'];
+    $temp_email = $_POST['temp_email'];
+    $email_code = $_POST['email_code'];
+
+    //Query for data selection
+    $sql = "SELECT * from user where id=:id AND email=:email AND temp_email=:temp_email";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':id', $id, PDO::PARAM_STR);
+    $query->bindParam(':email', $email, PDO::PARAM_STR);
+    $query->bindParam(':temp_email', $temp_email, PDO::PARAM_STR);
+    $query->execute();
+    $result = $query->fetch();
+
+    if ($query->rowCount() > 0) {
+        if ($email_code == $result['email_code']) {
+            $email = $temp_email;
+            $temp_email = '';
+            $email_code = 0;
+            //query for updation
+            $con = "UPDATE user SET email=:email, temp_email=:temp_email, email_code=:email_code WHERE id=:id";
+            $update = $dbh->prepare($con);
+            $update->bindParam(':id', $id, PDO::PARAM_STR);
+            $update->bindParam(':email', $email, PDO::PARAM_STR);
+            $update->bindParam(':temp_email', $temp_email, PDO::PARAM_STR);
+            $update->bindParam(':email_code', $email_code, PDO::PARAM_STR);
+            $update->execute();
+
+            if ($update) {
+                $_SESSION['info'] = 'Updated successfully';
+                $_SESSION['login'] = $email;
+                header('location: edit-profile.php');
+            } else {
+                $errors['update-email-fail'] = 'Something went wrong';
+            }
+        } else {
+            $errors['email-code-invalid'] = 'ERROR: Incorrect code!';
+        }
+    }
 }
 
 // if user click add button in add new assessment page

@@ -76,6 +76,19 @@ require_once "controller.php";
                                         </div>
 
                                         <div class="card-body">
+                                        <?php
+                                            if ($_SESSION['info'] != '') {
+                                            ?>
+                                                <div class="col-lg-12 mb-4">
+                                                    <div class="card bg-success text-white shadow">
+                                                        <div class="card-body text-center" style="font-weight: bold;">
+                                                                <?php echo $_SESSION['info']; $_SESSION['info'] = ''; ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php
+                                            }
+                                            ?>
                                             <?php
                                             if (count($infos) > 0) {
                                             ?>
