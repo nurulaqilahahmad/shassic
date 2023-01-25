@@ -222,7 +222,7 @@ require_once "controller.php";
                                             <!-- Details Assessee -->
                                             <p align=left>Assessee Name: <strong><?php echo htmlentities($result->assessee_name); ?></strong><br>
                                                 Project Name: <strong><?php echo htmlentities($result->project_name); ?></strong><br>
-                                                Project Date: <strong><?php echo htmlentities($result->project_date); ?></strong><br>
+                                                Project Date: <strong><?php echo htmlentities(date_format(new DateTime($result->project_date), 'd/m/Y')); ?></strong><br>
                                                 Project Location: <strong><?php echo htmlentities($result->project_location); ?></strong></p>
 
                                             <form class="" action="" method="POST">
