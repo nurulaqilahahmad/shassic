@@ -67,7 +67,7 @@ require_once "controller.php";
                                         <div class="card-header py-3">
                                             <div class="text-center" id="row">
                                                 <div class="col-sm-6" style="display:flex; width:auto; justify-content: start;">
-                                                    <a class="font-weight-bold" href="index.php">
+                                                    <a class="font-weight-bold" href="landing.php">
                                                         < Back</a>
                                                 </div>
                                             </div>

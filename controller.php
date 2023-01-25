@@ -76,7 +76,7 @@ if (isset($_POST['login'])) {
     if ($query->rowCount() > 0) {
         if (password_verify($password, $results['password'])) {
             $_SESSION['login'] = $_POST['email'];
-            echo "<script type='text/javascript'> document.location = 'index.php'; </script>";
+            echo "<script type='text/javascript'> document.location = 'landing.php'; </script>";
         } else {
             $errors['login-error'] = "ERROR: Incorrect details!";
         }
@@ -4921,45 +4921,6 @@ if (isset($_POST['save-personnel-interview-worker-9-from-history'])) {
         }
     }
 }
-
-// if (isset($_GET['delete_id'])) {
-//     $assessee_id = intval($_GET['delete_id']);
-//     $sql = "DELETE assessment, document_check_subscore, document_check_assessment, personnel_interview_subscore, personnel_interview_managerial, personnel_interview_supervisory_1, personnel_interview_supervisory_2, personnel_interview_supervisory_3
-//     FROM assessment INNER JOIN document_check_subscore INNER JOIN document_check_assessment INNER JOIN personnel_interview_subscore INNER JOIN personnel_interview_managerial INNER JOIN personnel_interview_supervisory_1 INNER JOIN personnel_interview_supervisory_2 INNER JOIN personnel_interview_supervisory_3
-//     ON assessment.assessee_id = document_check_subscore.assessment_id 
-//     AND document_check_subscore.assessment_id = document_check_assessment.assessment_id 
-//     AND document_check_assessment.assessment_id = personnel_interview_subscore.assessment_id
-//     AND personnel_interview_subscore.assessment_id = personnel_interview_managerial.assessment_id
-//     AND personnel_interview_managerial.assessment_id = personnel_interview_supervisory_1.assessment_id
-//     AND personnel_interview_supervisory_1.assessment_id = personnel_interview_supervisory_2.assessment_id
-//     AND personnel_interview_supervisory_2.assessment_id = personnel_interview_supervisory_3.assessment_id
-//     WHERE assessment.assessee_id = $assessee_id";
-
-//     $query = $dbh->prepare($sql);
-//     if ($query && deletePersonnelInterviewWorker($assessee_id)) {
-//         $query->execute();
-//         echo "<script>alert('Assessment deleted');</script>";
-//     } else {
-//         echo "<script>alert('Error');</script>";
-//     }
-// }
-
-// function deletePersonnelInterviewWorker($assessee_id)
-// {
-//     session_start();
-//     include('includes/config.php');
-
-//     $assessment_id = $assessee_id;
-
-//     $sql = "DELETE FROM personnel_interview_worker_1 WHERE assessment_id=$assessment_id";
-//     $query = $dbh->prepare($sql);
-//     $query->execute();
-//     if ($query) {
-//         return true;
-//     } else {
-//         return false;
-//     }
-// }
 
 if (isset($_POST['edit'])) {
     $assessee_id = $_POST['assessee_id'];
