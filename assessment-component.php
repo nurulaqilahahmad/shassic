@@ -216,7 +216,7 @@ require_once "controller.php";
                                                 <div class="col-lg-12 mb-4">
                                                     <div class="card bg-success text-white shadow">
                                                         <div class="card-body text-center font-weight-bold">
-                                                            <?php echo $_SESSION['info']; $_SESSION['info'] = ''; ?>
+                                                            <?php echo $_SESSION['info']; unset($_SESSION['info']); ?>
                                                         </div>
                                                     </div>
                                                 </div>

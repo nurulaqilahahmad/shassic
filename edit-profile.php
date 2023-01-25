@@ -77,12 +77,12 @@ require_once "controller.php";
 
                                         <div class="card-body">
                                         <?php
-                                            if ($_SESSION['info'] != '') {
+                                            if (isset($_SESSION['info'])) {
                                             ?>
                                                 <div class="col-lg-12 mb-4">
                                                     <div class="card bg-success text-white shadow">
                                                         <div class="card-body text-center" style="font-weight: bold;">
-                                                                <?php echo $_SESSION['info']; $_SESSION['info'] = ''; ?>
+                                                                <?php echo $_SESSION['info']; unset($_SESSION['info']); ?>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -136,15 +136,15 @@ require_once "controller.php";
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control form-control-user font-weight-bold" name="username" id="username" placeholder="<?php echo htmlentities($result->username); ?>" required value="<?php echo htmlentities($result->username); ?>">
+                                                    <input type="text" class="form-control form-control-user font-weight-bold" name="username" id="username" placeholder="Username" required value="<?php echo htmlentities($result->username); ?>">
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control form-control-user font-weight-bold" name="fullname" id="fullname" placeholder="<?php echo htmlentities($result->fullname); ?>" required value="<?php echo htmlentities($result->fullname); ?>">
+                                                    <input type="text" class="form-control form-control-user font-weight-bold" name="fullname" id="fullname" placeholder="Full Name" required value="<?php echo htmlentities($result->fullname); ?>">
                                                 </div>
 
                                                 <div class="form-group">
-                                                    <input type="text" class="form-control form-control-user font-weight-bold" disabled="disable" name="code" id="code" required placeholder="code" value="Staff Code: <?php echo htmlentities($result->code); ?>" />
+                                                    <input type="text" class="form-control form-control-user font-weight-bold" disabled="disable" name="code" id="code" required placeholder="Staff Code" value="Staff Code: <?php echo htmlentities($result->code); ?>" />
                                                 </div>
 
                                                 <div class="form-group" id="row">

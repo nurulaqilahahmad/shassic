@@ -1,6 +1,7 @@
 <?php
 session_start();
-include('includes/config.php');
+include_once 'includes/config.php';
+error_reporting(0);
 
 $email = "";
 $name = "";
@@ -10,7 +11,7 @@ $errors = array();
 use LDAP\Result;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
-use PHPMailer\PHPMailer\Exception; 
+use PHPMailer\PHPMailer\Exception;
 
 require_once 'vendor/autoload.php';
 require_once 'phpmailer/src/Exception.php';
@@ -429,7 +430,6 @@ if (isset($_POST['verify-password'])) {
         header('location: edit-email-change-email.php');
     } else {
         $errors['verify-password-fail'] = "Invalid password";
-    }
     }
 }
 
@@ -4922,41 +4922,180 @@ if (isset($_POST['save-personnel-interview-worker-9-from-history'])) {
     }
 }
 
-if (isset($_GET['delete_id'])) {
-    $assessee_id = intval($_GET['delete_id']);
-    $sql = "DELETE assessment, document_check_subscore, document_check_assessment, personnel_interview_subscore, personnel_interview_managerial, personnel_interview_supervisory_1, personnel_interview_supervisory_2, personnel_interview_supervisory_3
-    FROM assessment INNER JOIN document_check_subscore INNER JOIN document_check_assessment INNER JOIN personnel_interview_subscore INNER JOIN personnel_interview_managerial INNER JOIN personnel_interview_supervisory_1 INNER JOIN personnel_interview_supervisory_2 INNER JOIN personnel_interview_supervisory_3
-    ON assessment.assessee_id = document_check_subscore.assessment_id 
-    AND document_check_subscore.assessment_id = document_check_assessment.assessment_id 
-    AND document_check_assessment.assessment_id = personnel_interview_subscore.assessment_id
-    AND personnel_interview_subscore.assessment_id = personnel_interview_managerial.assessment_id
-    AND personnel_interview_managerial.assessment_id = personnel_interview_supervisory_1.assessment_id
-    AND personnel_interview_supervisory_1.assessment_id = personnel_interview_supervisory_2.assessment_id
-    AND personnel_interview_supervisory_2.assessment_id = personnel_interview_supervisory_3.assessment_id
-    WHERE assessment.assessee_id = $assessee_id";
-    
+// if (isset($_GET['delete_id'])) {
+//     $assessee_id = intval($_GET['delete_id']);
+//     $sql = "DELETE assessment, document_check_subscore, document_check_assessment, personnel_interview_subscore, personnel_interview_managerial, personnel_interview_supervisory_1, personnel_interview_supervisory_2, personnel_interview_supervisory_3
+//     FROM assessment INNER JOIN document_check_subscore INNER JOIN document_check_assessment INNER JOIN personnel_interview_subscore INNER JOIN personnel_interview_managerial INNER JOIN personnel_interview_supervisory_1 INNER JOIN personnel_interview_supervisory_2 INNER JOIN personnel_interview_supervisory_3
+//     ON assessment.assessee_id = document_check_subscore.assessment_id 
+//     AND document_check_subscore.assessment_id = document_check_assessment.assessment_id 
+//     AND document_check_assessment.assessment_id = personnel_interview_subscore.assessment_id
+//     AND personnel_interview_subscore.assessment_id = personnel_interview_managerial.assessment_id
+//     AND personnel_interview_managerial.assessment_id = personnel_interview_supervisory_1.assessment_id
+//     AND personnel_interview_supervisory_1.assessment_id = personnel_interview_supervisory_2.assessment_id
+//     AND personnel_interview_supervisory_2.assessment_id = personnel_interview_supervisory_3.assessment_id
+//     WHERE assessment.assessee_id = $assessee_id";
+
+//     $query = $dbh->prepare($sql);
+//     if ($query && deletePersonnelInterviewWorker($assessee_id)) {
+//         $query->execute();
+//         echo "<script>alert('Assessment deleted');</script>";
+//     } else {
+//         echo "<script>alert('Error');</script>";
+//     }
+// }
+
+// function deletePersonnelInterviewWorker($assessee_id)
+// {
+//     session_start();
+//     include('includes/config.php');
+
+//     $assessment_id = $assessee_id;
+
+//     $sql = "DELETE FROM personnel_interview_worker_1 WHERE assessment_id=$assessment_id";
+//     $query = $dbh->prepare($sql);
+//     $query->execute();
+//     if ($query) {
+//         return true;
+//     } else {
+//         return false;
+//     }
+// }
+
+if (isset($_POST['edit'])) {
+    $assessee_id = $_POST['assessee_id'];
+    header('location: edit-assessment-from-history.php?assessee_id='. $assessee_id);
+}
+
+if (isset($_POST['print'])) {
+    $assessee_id = $_POST['assessee_id'];
+    header('location: print.php?assessee_id='. $assessee_id);
+}
+
+// if (isset($_GET['delete_id'])) {
+if (isset($_POST['delete'])) {
+    // $assessee_id = intval($_GET['delete_id']);
+    $assessee_id = $_POST['assessee_id'];
+
+    $sql = "DELETE FROM assessment WHERE assessee_id=:assessee_id";
     $query = $dbh->prepare($sql);
-    if ($query && deletePersonnelInterviewWorker($assessee_id)) {
-        $query->execute();
-        echo "<script>alert('Assessment deleted');</script>";
-    } else {
-        echo "<script>alert('Error');</script>";
+    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+    $query->execute();
+
+    if ($query) {
+        $con = "DELETE FROM document_check_subscore WHERE assessment_id=:assessee_id;
+                DELETE FROM workplace_inspection_subscore WHERE assessment_id=:assessee_id;
+                DELETE FROM personnel_interview_subscore WHERE assessment_id=:assessee_id;";
+        $delete_subscore = $dbh->prepare($con);
+        $delete_subscore->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+        $delete_subscore->execute();
+
+        if ($delete_subscore && deleteDocumentCheck($assessee_id) && deleteWorkplaceInspection($assessee_id) && deletePersonnelInterviewManagerialSupervisory($assessee_id) && deletePersonnelInterviewWorker($assessee_id)) {
+            $infos['delete-assessment-success'] = 'Deleted successfully';
+        } else {
+            $errors['delete-assessment-fail'] = 'Something went wrong';
+        }
     }
 }
 
-function deletePersonnelInterviewWorker($assessee_id)
+function deleteDocumentCheck($assessee_id)
 {
-    session_start();
-    include('includes/config.php');
-    
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+    include 'includes/config.php';
+
     $assessment_id = $assessee_id;
-    
-    $sql = "DELETE FROM personnel_interview_worker_1 WHERE assessment_id=$assessment_id";
+
+    //query for data selection - document check
+    $sql = "DELETE FROM document_check_assessment WHERE assessment_id=:assessment_id";
     $query = $dbh->prepare($sql);
+    $query->bindParam(':assessment_id', $assessment_id, PDO::PARAM_STR);
     $query->execute();
+
     if ($query) {
         return true;
     } else {
         return false;
     }
 }
+
+function deleteWorkplaceInspection($assessee_id)
+{
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+    include 'includes/config.php';
+
+    $assessment_id = $assessee_id;
+
+    //query for data selection - document check
+    $sql = "DELETE FROM workplace_inspection_assessment WHERE assessment_id=:assessment_id;
+            DELETE FROM workplace_inspection_high_risk_1 WHERE assessment_id=:assessment_id;
+            DELETE FROM workplace_inspection_high_risk_2 WHERE assessment_id=:assessment_id;
+            DELETE FROM workplace_inspection_high_risk_3 WHERE assessment_id=:assessment_id;";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':assessment_id', $assessment_id, PDO::PARAM_STR);
+    $query->execute();
+
+    if ($query) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function deletePersonnelInterviewManagerialSupervisory($assessee_id)
+{
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+    include 'includes/config.php';
+
+    $assessment_id = $assessee_id;
+
+    //query for data selection - document check
+    $sql = "DELETE FROM personnel_interview_managerial WHERE assessment_id=:assessment_id;
+            DELETE FROM personnel_interview_supervisory_1 WHERE assessment_id=:assessment_id;
+            DELETE FROM personnel_interview_supervisory_2 WHERE assessment_id=:assessment_id;
+            DELETE FROM personnel_interview_supervisory_3 WHERE assessment_id=:assessment_id;";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':assessment_id', $assessment_id, PDO::PARAM_STR);
+    $query->execute();
+
+    if ($query) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function deletePersonnelInterviewWorker($assessee_id)
+{
+    if (!isset($_SESSION)) {
+        session_start();
+    }
+    include 'includes/config.php';
+
+    $assessment_id = $assessee_id;
+
+    //query for data selection - document check
+    $sql = "DELETE FROM personnel_interview_worker_1 WHERE assessment_id=:assessment_id;
+            DELETE FROM personnel_interview_worker_2 WHERE assessment_id=:assessment_id;
+            DELETE FROM personnel_interview_worker_3 WHERE assessment_id=:assessment_id;
+            DELETE FROM personnel_interview_worker_4 WHERE assessment_id=:assessment_id;
+            DELETE FROM personnel_interview_worker_5 WHERE assessment_id=:assessment_id;
+            DELETE FROM personnel_interview_worker_6 WHERE assessment_id=:assessment_id;
+            DELETE FROM personnel_interview_worker_7 WHERE assessment_id=:assessment_id;
+            DELETE FROM personnel_interview_worker_8 WHERE assessment_id=:assessment_id;
+            DELETE FROM personnel_interview_worker_9 WHERE assessment_id=:assessment_id;";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':assessment_id', $assessment_id, PDO::PARAM_STR);
+    $query->execute();
+
+    if ($query) {
+        return true;
+    } else {
+        return false;
+    }
+}
+?>

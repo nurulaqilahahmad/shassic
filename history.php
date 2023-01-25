@@ -147,74 +147,103 @@ require_once "controller.php";
                                             <h6 class="h3 mb-4 text-gray-800 font-weight-bold">Assessment History</h6>
                                         </div>
                                         <div class="card-body">
-                                            <div class="table-responsive">
-                                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Project Image</th>
-                                                            <th>Assessee</th>
-                                                            <th>Project Name</th>
-                                                            <th>Progress</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tfoot>
-                                                        <tr>
-                                                            <th>Project Image</th>
-                                                            <th>Assessee</th>
-                                                            <th>Project Name</th>
-                                                            <th>Progress</th>
-                                                            <th>Action</th>
-                                                        </tr>
-                                                    </tfoot>
-                                                    <tbody>
-                                                        <?php
-                                                        $assessor_id = $result->id;
-                                                        $sql = "SELECT * FROM `assessment` WHERE `assessor_id`=:assessor_id";
-                                                        $query = $dbh->prepare($sql);
-                                                        $query->bindParam(':assessor_id', $assessor_id, PDO::PARAM_STR);
-                                                        $query->execute();
-                                                        $histories = $query->fetchAll(PDO::FETCH_OBJ);
+                                            <?php
+                                            if (count($infos) > 0) {
+                                            ?>
+                                                <div class="col-lg-12 mb-4">
+                                                    <div class="card bg-success text-white shadow">
+                                                        <div class="card-body text-center" style="font-weight: bold;">
+                                                            <?php foreach ($infos as $info) {
+                                                                echo $info;
+                                                            } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php
+                                            } ?>
+                                            <?php
+                                            if (count($errors) > 0) {
+                                            ?>
+                                                <div class="col-lg-12 mb-4">
+                                                    <div class="card bg-danger text-white shadow">
+                                                        <div class="card-body text-center" style="font-weight: bold;">
+                                                            <?php foreach ($errors as $error) {
+                                                                echo $error;
+                                                            } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php
+                                            } ?>
+                                            <form class="user" method="POST" enctype="multipart/form-data">
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Project Image</th>
+                                                                <th>Assessee</th>
+                                                                <th>Project Name</th>
+                                                                <th>Progress</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <th>Project Image</th>
+                                                                <th>Assessee</th>
+                                                                <th>Project Name</th>
+                                                                <th>Progress</th>
+                                                                <th>Action</th>
+                                                            </tr>
+                                                        </tfoot>
+                                                        <tbody>
+                                                            <?php
+                                                            $assessor_id = $result->id;
+                                                            $sql = "SELECT * FROM `assessment` WHERE `assessor_id`=:assessor_id";
+                                                            $query = $dbh->prepare($sql);
+                                                            $query->bindParam(':assessor_id', $assessor_id, PDO::PARAM_STR);
+                                                            $query->execute();
+                                                            $histories = $query->fetchAll(PDO::FETCH_OBJ);
 
-                                                        $count = 0;
-                                                        if ($query->rowCount() > 0) {
-                                                            foreach ($histories as $history) { ?>
+                                                            $count = 0;
+                                                            if ($query->rowCount() > 0) {
+                                                                foreach ($histories as $history) { ?>
 
-                                                                <!-- value from document subscore -->
-                                                                <?php
-                                                                $sql = "SELECT * FROM document_check_subscore WHERE assessment_id='$history->assessee_id'";
-                                                                $query = $dbh->prepare($sql);
-                                                                $query->execute();
-                                                                $totalcna = $query->fetchAll(PDO::FETCH_OBJ);
-                                                                if ($query->rowCount() > 0) {
-                                                                    foreach ($totalcna as $totalcnas) {
-                                                                ?>
-                                                                        <!-- value from workplace subscore -->
-                                                                        <?php
-                                                                        $sql = "SELECT * FROM workplace_inspection_subscore WHERE assessment_id='$totalcnas->assessment_id'";
-                                                                        $query = $dbh->prepare($sql);
-                                                                        $query->execute();
-                                                                        $totalcna1 = $query->fetchAll(PDO::FETCH_OBJ);
-                                                                        if ($query->rowCount() > 0) {
-                                                                            foreach ($totalcna1 as $totalcnas1) {
-                                                                        ?>
-                                                                                <!-- value from personnel subscore -->
-                                                                                <?php
-                                                                                $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id='$totalcnas->assessment_id'";
-                                                                                $query = $dbh->prepare($sql);
-                                                                                $query->execute();
-                                                                                $totalcna2 = $query->fetchAll(PDO::FETCH_OBJ);
-                                                                                if ($query->rowCount() > 0) {
-                                                                                    foreach ($totalcna2 as $totalcnas2) {
-                                                                                ?>
-                                                                                        <tr>
-                                                                                            <td class="project_image"> <img class="img-thumbnail" width="80" src="img/project-image/<?php echo htmlentities($history->project_picture); ?>" alt="project image" /></td>
-                                                                                            <td class="assessee_name"><?php echo htmlentities($history->assessee_name); ?></td>
-                                                                                            <td class="project_name"><?php echo htmlentities($history->project_name); ?></td>
-                                                                                            <td class="assessement_progress" align="center">
-                                                                                                <!-- <?php echo htmlentities($history->status); ?> -->
+                                                                    <!-- value from document subscore -->
+                                                                    <?php
+                                                                    $sql = "SELECT * FROM document_check_subscore WHERE assessment_id='$history->assessee_id'";
+                                                                    $query = $dbh->prepare($sql);
+                                                                    $query->execute();
+                                                                    $totalcna = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                    if ($query->rowCount() > 0) {
+                                                                        foreach ($totalcna as $totalcnas) {
+                                                                    ?>
+                                                                            <!-- value from workplace subscore -->
+                                                                            <?php
+                                                                            $sql = "SELECT * FROM workplace_inspection_subscore WHERE assessment_id='$totalcnas->assessment_id'";
+                                                                            $query = $dbh->prepare($sql);
+                                                                            $query->execute();
+                                                                            $totalcna1 = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                            if ($query->rowCount() > 0) {
+                                                                                foreach ($totalcna1 as $totalcnas1) {
+                                                                            ?>
+                                                                                    <!-- value from personnel subscore -->
+                                                                                    <?php
+                                                                                    $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id='$totalcnas->assessment_id'";
+                                                                                    $query = $dbh->prepare($sql);
+                                                                                    $query->execute();
+                                                                                    $totalcna2 = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                    if ($query->rowCount() > 0) {
+                                                                                        foreach ($totalcna2 as $totalcnas2) {
+                                                                                    ?>
+                                                                                            <tr>
+                                                                                                <td class="project_image"> <img class="img-thumbnail" width="80" src="img/project-image/<?php echo htmlentities($history->project_picture); ?>" alt="project image" /></td>
+                                                                                                <td class="assessee_name"><?php echo htmlentities($history->assessee_name); ?></td>
+                                                                                                <td class="project_name"><?php echo htmlentities($history->project_name); ?></td>
+                                                                                                <td class="assessement_progress" align="center">
+                                                                                                    <!-- <?php echo htmlentities($history->status); ?> -->
 
-                                                                                                <!-- <div class="p_progress_container">
+                                                                                                    <!-- <div class="p_progress_container">
                                                                                                     <div class="progress">
                                                                                                         <div class="p_progress_item">
                                                                                                             <div class="progress_bar">
@@ -281,34 +310,34 @@ require_once "controller.php";
                                                                                                     </div>
                                                                                                 </div> -->
 
-                                                                                                <div class="status" data-value="<?php echo htmlentities($totalcnas->doc_check_c_score)
-                                                                                                                                    + htmlentities($totalcnas->doc_check_na_score)
-                                                                                                                                    + htmlentities($totalcnas1->general_c_score)
-                                                                                                                                    + htmlentities($totalcnas1->general_na_score)
-                                                                                                                                    + htmlentities($totalcnas1->high_risk_c_score)
-                                                                                                                                    + htmlentities($totalcnas1->high_risk_na_score)
-                                                                                                                                    + htmlentities($totalcnas2->managerial_c_score)
-                                                                                                                                    + htmlentities($totalcnas2->managerial_na_score)
-                                                                                                                                    + htmlentities($totalcnas2->supervisory_c_score)
-                                                                                                                                    + htmlentities($totalcnas2->supervisory_na_score)
-                                                                                                                                    + htmlentities($totalcnas2->worker_1_c_score)
-                                                                                                                                    + htmlentities($totalcnas2->worker_1_na_score)
-                                                                                                                                    + htmlentities($totalcnas2->worker_2_c_score)
-                                                                                                                                    + htmlentities($totalcnas2->worker_2_na_score)
-                                                                                                                                    + htmlentities($totalcnas2->worker_3_c_score)
-                                                                                                                                    + htmlentities($totalcnas2->worker_3_na_score)
-                                                                                                                                    + htmlentities($totalcnas2->worker_4_c_score)
-                                                                                                                                    + htmlentities($totalcnas2->worker_4_na_score)
-                                                                                                                                    + htmlentities($totalcnas2->worker_5_c_score)
-                                                                                                                                    + htmlentities($totalcnas2->worker_5_na_score)
-                                                                                                                                    + htmlentities($totalcnas2->worker_6_c_score)
-                                                                                                                                    + htmlentities($totalcnas2->worker_6_na_score)
-                                                                                                                                    + htmlentities($totalcnas2->worker_7_c_score)
-                                                                                                                                    + htmlentities($totalcnas2->worker_7_na_score)
-                                                                                                                                    + htmlentities($totalcnas2->worker_8_c_score)
-                                                                                                                                    + htmlentities($totalcnas2->worker_8_na_score)
-                                                                                                                                    + htmlentities($totalcnas2->worker_9_c_score)
-                                                                                                                                    + htmlentities($totalcnas2->worker_9_na_score); ?>" data-text="<?php echo htmlentities($totalcnas->doc_check_c_score)
+                                                                                                    <div class="status" data-value="<?php echo htmlentities($totalcnas->doc_check_c_score)
+                                                                                                                                        + htmlentities($totalcnas->doc_check_na_score)
+                                                                                                                                        + htmlentities($totalcnas1->general_c_score)
+                                                                                                                                        + htmlentities($totalcnas1->general_na_score)
+                                                                                                                                        + htmlentities($totalcnas1->high_risk_c_score)
+                                                                                                                                        + htmlentities($totalcnas1->high_risk_na_score)
+                                                                                                                                        + htmlentities($totalcnas2->managerial_c_score)
+                                                                                                                                        + htmlentities($totalcnas2->managerial_na_score)
+                                                                                                                                        + htmlentities($totalcnas2->supervisory_c_score)
+                                                                                                                                        + htmlentities($totalcnas2->supervisory_na_score)
+                                                                                                                                        + htmlentities($totalcnas2->worker_1_c_score)
+                                                                                                                                        + htmlentities($totalcnas2->worker_1_na_score)
+                                                                                                                                        + htmlentities($totalcnas2->worker_2_c_score)
+                                                                                                                                        + htmlentities($totalcnas2->worker_2_na_score)
+                                                                                                                                        + htmlentities($totalcnas2->worker_3_c_score)
+                                                                                                                                        + htmlentities($totalcnas2->worker_3_na_score)
+                                                                                                                                        + htmlentities($totalcnas2->worker_4_c_score)
+                                                                                                                                        + htmlentities($totalcnas2->worker_4_na_score)
+                                                                                                                                        + htmlentities($totalcnas2->worker_5_c_score)
+                                                                                                                                        + htmlentities($totalcnas2->worker_5_na_score)
+                                                                                                                                        + htmlentities($totalcnas2->worker_6_c_score)
+                                                                                                                                        + htmlentities($totalcnas2->worker_6_na_score)
+                                                                                                                                        + htmlentities($totalcnas2->worker_7_c_score)
+                                                                                                                                        + htmlentities($totalcnas2->worker_7_na_score)
+                                                                                                                                        + htmlentities($totalcnas2->worker_8_c_score)
+                                                                                                                                        + htmlentities($totalcnas2->worker_8_na_score)
+                                                                                                                                        + htmlentities($totalcnas2->worker_9_c_score)
+                                                                                                                                        + htmlentities($totalcnas2->worker_9_na_score); ?>" data-text="<?php echo htmlentities($totalcnas->doc_check_c_score)
                                                                                                                                                                                                         + htmlentities($totalcnas->doc_check_na_score)
                                                                                                                                                                                                         + htmlentities($totalcnas1->general_c_score)
                                                                                                                                                                                                         + htmlentities($totalcnas1->general_na_score)
@@ -337,26 +366,34 @@ require_once "controller.php";
                                                                                                                                                                                                         + htmlentities($totalcnas2->worker_9_c_score)
                                                                                                                                                                                                         + htmlentities($totalcnas2->worker_9_na_score);
                                                                                                                                                                                                     ?>">
-                                                                                                </div>
-                                                                                            </td>
-                                                                                            <td>
-                                                                                                <button class="btn" onclick="window.location='edit-assessment-from-history.php?assessee_id=<?php echo htmlentities($history->assessee_id); ?>';"><i class="material-icons">edit</i></button>
-                                                                                                <button class="btn" onclick="window.location='print.php?assessee_id=<?php echo htmlentities($history->assessee_id); ?>';"><i class="material-icons">print</i></button>
-                                                                                                <a href="history.php?delete_id=<?php echo htmlentities($history->assessee_id); ?>"><button class="btn" name="delete" title="Delete" data-toggle="tooltip" onclick="return confirm('Do you really want to delete ?');"><i class="material-icons">delete</i></button></a>
-                                                                                                <!-- <button class="btn" onclick="window.location='history.php?delete_id=<?php echo htmlentities($history->assessee_id); ?>';" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">delete</i></button> -->
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                <?php }
-                                                                                } ?>
-                                                                        <?php }
-                                                                        } ?>
-                                                                <?php }
-                                                                } ?>
-                                                        <?php }
-                                                        } ?>
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?php echo htmlentities($history->assessee_id); ?>">
+                                                                                                <td>
+
+                                                                                                    <!-- <button class="btn" onclick="window.location='edit-assessment-from-history.php?assessee_id=<?php echo htmlentities($history->assessee_id); ?>';"><i class="material-icons">edit</i></button> -->
+                                                                                                    <button type="submit" class="btn" name="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">edit</i></button>
+
+                                                                                                    <!-- <button class="btn" onclick="window.location='print.php?assessee_id=<?php echo htmlentities($history->assessee_id); ?>';"><i class="material-icons">print</i></button> -->
+                                                                                                    <button type="submit" class="btn" name="print" title="Print" data-toggle="tooltip"><i class="material-icons">print</i></button>
+
+                                                                                                    <button type="submit" class="btn" name="delete" title="Delete" data-toggle="tooltip" onclick="return confirm('Do you really want to delete ?');"><i class="material-icons">delete</i></button>
+                                                                                                    <!-- <a href="history.php?delete_id=<?php echo htmlentities($history->assessee_id); ?>"><button class="btn" name="delete" title="Delete" data-toggle="tooltip" onclick="return confirm('Do you really want to delete ?');"><i class="material-icons">delete</i></button></a> -->
+                                                                                                    <!-- <button class="btn" onclick="window.location='history.php?delete_id=<?php echo htmlentities($history->assessee_id); ?>';" name="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">delete</i></button> -->
+                                                                                                </td>
+                                                                                            </tr>
+                                                                                    <?php }
+                                                                                    } ?>
+                                                                            <?php }
+                                                                            } ?>
+                                                                    <?php }
+                                                                    } ?>
+                                                            <?php }
+                                                            } ?>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
