@@ -170,7 +170,9 @@ require_once "controller.php";
 
         <div class="landing-container">
             <div class="landing-navbar">
-                <img src="img/landing/logo.png" class="landing-logo">
+                <a href="landing.php" class="d-flex landing-a">
+                    <h1 style="font-size: 24px; font-weight: 700; color: #fff; margin-top: 3rem; margin-bottom: 3rem">SHASSIC<span style="color: #558381;">.</span></h1>
+                </a>
                 <img src="img/landing/menu.png" class="menu-icon" onclick="togglemenu()">
             </div>
 
@@ -211,12 +213,13 @@ require_once "controller.php";
                                         </div>
                                         <div class="card-body">
                                             <?php
-                                            if ($_SESSION['info'] != '') {
+                                            if (isset($_SESSION['info'])) {
                                             ?>
                                                 <div class="col-lg-12 mb-4">
                                                     <div class="card bg-success text-white shadow">
                                                         <div class="card-body text-center font-weight-bold">
-                                                            <?php echo $_SESSION['info']; unset($_SESSION['info']); ?>
+                                                            <?php echo $_SESSION['info'];
+                                                            unset($_SESSION['info']); ?>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -239,138 +242,143 @@ require_once "controller.php";
                                             }
                                             ?>
 
-                                            <form class="user" method="POST">
-                                                <!-- value from document subscore -->
-                                                <?php
-                                                $sql = "SELECT * FROM document_check_subscore WHERE assessment_id='$result->assessee_id'";
-                                                $query = $dbh->prepare($sql);
-                                                $query->execute();
-                                                $totalcna = $query->fetchAll(PDO::FETCH_OBJ);
-                                                if ($query->rowCount() > 0) {
-                                                    foreach ($totalcna as $totalcnas) {
-                                                ?>
-                                                        <input type="hidden" id="doc_check_c_score" value="<?php echo htmlentities($totalcnas->doc_check_c_score); ?>">
-                                                        <input type="hidden" id="doc_check_na_score" value="<?php echo htmlentities($totalcnas->doc_check_na_score); ?>">
-                                                <?php }
-                                                } ?>
+                                            <form class="" action="" method="POST">
+                                                <div class="table-responsive">
+                                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                        <thead>
+                                                            <tr>
+                                                                <th><a href="assessment-document-check.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">Document Check</a></th>
+                                                                <th><a href="assessment-workplace-inspection.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">Workplace Inspection</a></th>
+                                                                <th><a href="assessment-personnel-interview.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">Personnel Interview</a></th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
 
-                                                <!-- value from workplace subscore -->
-                                                <?php
-                                                $sql = "SELECT * FROM workplace_inspection_subscore WHERE assessment_id='$result->assessee_id'";
-                                                $query = $dbh->prepare($sql);
-                                                $query->execute();
-                                                $totalcna = $query->fetchAll(PDO::FETCH_OBJ);
-                                                if ($query->rowCount() > 0) {
-                                                    foreach ($totalcna as $totalcnas) {
-                                                ?>
-                                                        <input type="hidden" id="general_c_score" value="<?php echo htmlentities($totalcnas->general_c_score); ?>">
-                                                        <input type="hidden" id="general_na_score" value="<?php echo htmlentities($totalcnas->general_na_score); ?>">
-                                                        <input type="hidden" id="high_risk_c_score" value="<?php echo htmlentities($totalcnas->high_risk_c_score); ?>">
-                                                        <input type="hidden" id="high_risk_na_score" value="<?php echo htmlentities($totalcnas->high_risk_na_score); ?>">
-                                                <?php }
-                                                } ?>
+                                                            <!-- value from document subscore -->
+                                                            <?php
+                                                            $sql = "SELECT * FROM document_check_subscore WHERE assessment_id='$result->assessee_id'";
+                                                            $query = $dbh->prepare($sql);
+                                                            $query->execute();
+                                                            $totalcna = $query->fetchAll(PDO::FETCH_OBJ);
+                                                            if ($query->rowCount() > 0) {
+                                                                foreach ($totalcna as $totalcnas) {
+                                                            ?>
+                                                                    <input type="hidden" id="doc_check_c_score" value="<?php echo htmlentities($totalcnas->doc_check_c_score); ?>">
+                                                                    <input type="hidden" id="doc_check_na_score" value="<?php echo htmlentities($totalcnas->doc_check_na_score); ?>">
+                                                            <?php }
+                                                            } ?>
 
-                                                <!-- value from personnel subscore -->
-                                                <?php
-                                                $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id='$result->assessee_id'";
-                                                $query = $dbh->prepare($sql);
-                                                $query->execute();
-                                                $totalcna1 = $query->fetchAll(PDO::FETCH_OBJ);
-                                                if ($query->rowCount() > 0) {
-                                                    foreach ($totalcna1 as $totalcnas1) {
-                                                ?>
-                                                        <input type="hidden" id="managerial_c_score" value="<?php echo htmlentities($totalcnas1->managerial_c_score); ?>">
-                                                        <input type="hidden" id="managerial_na_score" value="<?php echo htmlentities($totalcnas1->managerial_na_score); ?>">
-                                                        <input type="hidden" id="supervisory_c_score" value="<?php echo htmlentities($totalcnas1->supervisory_c_score); ?>">
-                                                        <input type="hidden" id="supervisory_na_score" value="<?php echo htmlentities($totalcnas1->supervisory_na_score); ?>">
+                                                            <!-- value from workplace subscore -->
+                                                            <?php
+                                                            $sql = "SELECT * FROM workplace_inspection_subscore WHERE assessment_id='$result->assessee_id'";
+                                                            $query = $dbh->prepare($sql);
+                                                            $query->execute();
+                                                            $totalcna = $query->fetchAll(PDO::FETCH_OBJ);
+                                                            if ($query->rowCount() > 0) {
+                                                                foreach ($totalcna as $totalcnas) {
+                                                            ?>
+                                                                    <input type="hidden" id="general_c_score" value="<?php echo htmlentities($totalcnas->general_c_score); ?>">
+                                                                    <input type="hidden" id="general_na_score" value="<?php echo htmlentities($totalcnas->general_na_score); ?>">
+                                                                    <input type="hidden" id="high_risk_c_score" value="<?php echo htmlentities($totalcnas->high_risk_c_score); ?>">
+                                                                    <input type="hidden" id="high_risk_na_score" value="<?php echo htmlentities($totalcnas->high_risk_na_score); ?>">
+                                                            <?php }
+                                                            } ?>
 
-                                                        <input type="hidden" id="worker_1_c_score" value="<?php echo htmlentities($totalcnas1->worker_1_c_score); ?>">
-                                                        <input type="hidden" id="worker_1_na_score" value="<?php echo htmlentities($totalcnas1->worker_1_na_score); ?>">
+                                                            <!-- value from personnel subscore -->
+                                                            <?php
+                                                            $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id='$result->assessee_id'";
+                                                            $query = $dbh->prepare($sql);
+                                                            $query->execute();
+                                                            $totalcna1 = $query->fetchAll(PDO::FETCH_OBJ);
+                                                            if ($query->rowCount() > 0) {
+                                                                foreach ($totalcna1 as $totalcnas1) {
+                                                            ?>
+                                                                    <input type="hidden" id="managerial_c_score" value="<?php echo htmlentities($totalcnas1->managerial_c_score); ?>">
+                                                                    <input type="hidden" id="managerial_na_score" value="<?php echo htmlentities($totalcnas1->managerial_na_score); ?>">
+                                                                    <input type="hidden" id="supervisory_c_score" value="<?php echo htmlentities($totalcnas1->supervisory_c_score); ?>">
+                                                                    <input type="hidden" id="supervisory_na_score" value="<?php echo htmlentities($totalcnas1->supervisory_na_score); ?>">
 
-                                                        <input type="hidden" id="worker_2_c_score" value="<?php echo htmlentities($totalcnas1->worker_2_c_score); ?>">
-                                                        <input type="hidden" id="worker_2_na_score" value="<?php echo htmlentities($totalcnas1->worker_2_na_score); ?>">
+                                                                    <input type="hidden" id="worker_1_c_score" value="<?php echo htmlentities($totalcnas1->worker_1_c_score); ?>">
+                                                                    <input type="hidden" id="worker_1_na_score" value="<?php echo htmlentities($totalcnas1->worker_1_na_score); ?>">
 
-                                                        <input type="hidden" id="worker_3_c_score" value="<?php echo htmlentities($totalcnas1->worker_3_c_score); ?>">
-                                                        <input type="hidden" id="worker_3_na_score" value="<?php echo htmlentities($totalcnas1->worker_3_na_score); ?>">
+                                                                    <input type="hidden" id="worker_2_c_score" value="<?php echo htmlentities($totalcnas1->worker_2_c_score); ?>">
+                                                                    <input type="hidden" id="worker_2_na_score" value="<?php echo htmlentities($totalcnas1->worker_2_na_score); ?>">
 
-                                                        <input type="hidden" id="worker_4_c_score" value="<?php echo htmlentities($totalcnas1->worker_4_c_score); ?>">
-                                                        <input type="hidden" id="worker_4_na_score" value="<?php echo htmlentities($totalcnas1->worker_4_na_score); ?>">
+                                                                    <input type="hidden" id="worker_3_c_score" value="<?php echo htmlentities($totalcnas1->worker_3_c_score); ?>">
+                                                                    <input type="hidden" id="worker_3_na_score" value="<?php echo htmlentities($totalcnas1->worker_3_na_score); ?>">
 
-                                                        <input type="hidden" id="worker_5_c_score" value="<?php echo htmlentities($totalcnas1->worker_5_c_score); ?>">
-                                                        <input type="hidden" id="worker_5_na_score" value="<?php echo htmlentities($totalcnas1->worker_5_na_score); ?>">
+                                                                    <input type="hidden" id="worker_4_c_score" value="<?php echo htmlentities($totalcnas1->worker_4_c_score); ?>">
+                                                                    <input type="hidden" id="worker_4_na_score" value="<?php echo htmlentities($totalcnas1->worker_4_na_score); ?>">
 
-                                                        <input type="hidden" id="worker_6_c_score" value="<?php echo htmlentities($totalcnas1->worker_6_c_score); ?>">
-                                                        <input type="hidden" id="worker_6_na_score" value="<?php echo htmlentities($totalcnas1->worker_6_na_score); ?>">
+                                                                    <input type="hidden" id="worker_5_c_score" value="<?php echo htmlentities($totalcnas1->worker_5_c_score); ?>">
+                                                                    <input type="hidden" id="worker_5_na_score" value="<?php echo htmlentities($totalcnas1->worker_5_na_score); ?>">
 
-                                                        <input type="hidden" id="worker_7_c_score" value="<?php echo htmlentities($totalcnas1->worker_7_c_score); ?>">
-                                                        <input type="hidden" id="worker_7_na_score" value="<?php echo htmlentities($totalcnas1->worker_7_na_score); ?>">
+                                                                    <input type="hidden" id="worker_6_c_score" value="<?php echo htmlentities($totalcnas1->worker_6_c_score); ?>">
+                                                                    <input type="hidden" id="worker_6_na_score" value="<?php echo htmlentities($totalcnas1->worker_6_na_score); ?>">
 
-                                                        <input type="hidden" id="worker_8_c_score" value="<?php echo htmlentities($totalcnas1->worker_8_c_score); ?>">
-                                                        <input type="hidden" id="worker_8_na_score" value="<?php echo htmlentities($totalcnas1->worker_8_na_score); ?>">
+                                                                    <input type="hidden" id="worker_7_c_score" value="<?php echo htmlentities($totalcnas1->worker_7_c_score); ?>">
+                                                                    <input type="hidden" id="worker_7_na_score" value="<?php echo htmlentities($totalcnas1->worker_7_na_score); ?>">
 
-                                                        <input type="hidden" id="worker_9_c_score" value="<?php echo htmlentities($totalcnas1->worker_9_c_score); ?>">
-                                                        <input type="hidden" id="worker_9_na_score" value="<?php echo htmlentities($totalcnas1->worker_9_na_score); ?>">
-                                                <?php }
-                                                } ?>
+                                                                    <input type="hidden" id="worker_8_c_score" value="<?php echo htmlentities($totalcnas1->worker_8_c_score); ?>">
+                                                                    <input type="hidden" id="worker_8_na_score" value="<?php echo htmlentities($totalcnas1->worker_8_na_score); ?>">
 
+                                                                    <input type="hidden" id="worker_9_c_score" value="<?php echo htmlentities($totalcnas1->worker_9_c_score); ?>">
+                                                                    <input type="hidden" id="worker_9_na_score" value="<?php echo htmlentities($totalcnas1->worker_9_na_score); ?>">
+                                                            <?php }
+                                                            } ?>
+
+                                                            <tr>
+                                                                <td>
+                                                                    <div class="outer-container" align="center">
+                                                                        <div class="circular-progress-each">
+                                                                            <div id="progress-document-check">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="input-percentage" id="input-percentage" value="<?php echo htmlentities($result->document_check_percentage); ?>">
+                                                                                <?php
+                                                                                echo '<script type="text/javascript"> documentCheck(); </script>';
+                                                                                ?>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="outer-container" align="center">
+                                                                        <div class="circular-progress-each-1">
+                                                                            <div id="progress-document-workplace">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="workplace-inspection" id="workplace-inspection" value="<?php echo htmlentities($result->workplace_inspection_percentage); ?>">
+                                                                                <?php
+                                                                                echo '<script type="text/javascript"> workplaceInspection(); </script>';
+                                                                                ?>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                                <td>
+                                                                    <div class="outer-container" align="center">
+                                                                        <div class="circular-progress-each-2">
+                                                                            <div id="progress-document-personnel">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="personnel-interview" id="personnel-interview" value="<?php echo htmlentities($result->personnel_interview_percentage); ?>">
+                                                                                <?php
+                                                                                echo '<script type="text/javascript"> personnelInterview(); </script>';
+                                                                                ?>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+
+                                                <!-- <form class="" action="" method="POST"> -->
                                                 <div class="form-group" id="row">
+                                                    <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                     <div class="col-sm-4 mb-3 mb-sm-0">
-                                                        <a href="assessment-document-check.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
-                                                            <div class="card mb-4">
-                                                                <div class="card-body card-hover py-3">
-                                                                    <h6 class="m-0 font-weight-bold">Document Check</h6>
-                                                                </div>
-                                                            </div>
-                                                        </a>
-                                                        <div class="outer-container" align="center">
-                                                            <div class="circular-progress-each">
-                                                                <div id="progress-document-check">
-                                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="input-percentage" id="input-percentage" value="<?php echo htmlentities($result->document_check_percentage); ?>">
-                                                                    <?php
-                                                                    echo '<script type="text/javascript"> documentCheck(); </script>';
-                                                                    ?>
-                                                                </div>
-                                                            </div>
+                                                        <div class="form-group">
+                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?php echo htmlentities($result->assessee_id); ?>">
+                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" onchange="countSelected()">
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-4 mb-3 mb-sm-0">
-                                                        <a href="assessment-workplace-inspection.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
-                                                            <div class="card mb-4">
-                                                                <div class="card-body card-hover py-3">
-                                                                    <h6 class="m-0 font-weight-bold">Workplace Inspection</h6>
-                                                                </div>
-                                                            </div>
-                                                        </a>
-                                                        <div class="outer-container" align="center">
-                                                            <div class="circular-progress-each-1">
-                                                                <div id="progress-document-workplace">
-                                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="workplace-inspection" id="workplace-inspection" value="<?php echo htmlentities($result->workplace_inspection_percentage); ?>">
-                                                                    <?php
-                                                                    echo '<script type="text/javascript"> workplaceInspection(); </script>';
-                                                                    ?>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-4 mb-3 mb-sm-0">
-                                                        <a href="assessment-personnel-interview.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
-                                                            <div class="card mb-4">
-                                                                <div class="card-body card-hover py-3">
-                                                                    <h6 class="m-0 font-weight-bold">Personnel Interview</h6>
-                                                                </div>
-                                                            </div>
-                                                        </a>
-                                                        <div class="outer-container" align="center">
-                                                            <div class="circular-progress-each-2">
-                                                                <div id="progress-document-personnel">
-                                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="personnel-interview" id="personnel-interview" value="<?php echo htmlentities($result->personnel_interview_percentage); ?>">
-                                                                    <?php
-                                                                    echo '<script type="text/javascript"> personnelInterview(); </script>';
-                                                                    ?>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                    <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                 </div>
                                             </form>
                                         </div>

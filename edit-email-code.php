@@ -34,7 +34,9 @@ require_once "controller.php";
 
         <div class="landing-container">
             <div class="landing-navbar">
-                <img src="img/landing/logo.png" class="landing-logo">
+                <a href="landing.php" class="d-flex landing-a">
+                    <h1 style="font-size: 24px; font-weight: 700; color: #fff; margin-top: 3rem; margin-bottom: 3rem">SHASSIC<span style="color: #558381;">.</span></h1>
+                </a>
                 <img src="img/landing/menu.png" class="menu-icon" onclick="togglemenu()">
             </div>
 
@@ -109,7 +111,7 @@ require_once "controller.php";
                                                 <div class="form-group" id="row">
                                                     <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                     <div class="col-sm-4 mb-3 mb-sm-0">
-                                                        <p class="font-weight-bold">Enter the code to verify your Email</p> 
+                                                        <p class="font-weight-bold">Enter the code to verify your Email</p>
                                                         <input type="number" class="form-control form-control-user font-weight-bold" id="email_code" name="email_code" aria-describedby="emailHelp" placeholder="Code" required>
                                                     </div>
                                                     <div class="col-sm-4 mb-3 mb-sm-0"></div>

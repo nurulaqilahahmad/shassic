@@ -176,7 +176,9 @@ require_once "controller.php";
 
         <div class="landing-container">
             <div class="landing-navbar">
-                <img src="img/landing/logo.png" class="landing-logo">
+                <a href="landing.php" class="d-flex landing-a">
+                    <h1 style="font-size: 24px; font-weight: 700; color: #fff; margin-top: 3rem; margin-bottom: 3rem">SHASSIC<span style="color: #558381;">.</span></h1>
+                </a>
                 <img src="img/landing/menu.png" class="menu-icon" onclick="togglemenu()">
             </div>
 
@@ -215,6 +217,9 @@ require_once "controller.php";
 
                                             <!-- Page Heading -->
                                             <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Assessment Progress</h1>
+                                        </div>
+                                        <div class="card-body">
+
                                             <?php
                                             if (count($errors) > 0) {
                                             ?>
@@ -230,8 +235,6 @@ require_once "controller.php";
                                             <?php
                                             }
                                             ?>
-                                        </div>
-                                        <div class="card-body">
                                             <form class="" action="" method="POST">
                                                 <div class="table-responsive">
                                                     <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">

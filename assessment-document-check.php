@@ -46,7 +46,9 @@ if ($query->rowCount() > 0) {
 
         <div class="landing-container">
             <div class="landing-navbar">
-                <img src="img/landing/logo.png" class="landing-logo">
+                <a href="landing.php" class="d-flex landing-a">
+                    <h1 style="font-size: 24px; font-weight: 700; color: #fff; margin-top: 3rem; margin-bottom: 3rem">SHASSIC<span style="color: #558381;">.</span></h1>
+                </a>
                 <img src="img/landing/menu.png" class="menu-icon" onclick="togglemenu()">
             </div>
 
@@ -75,276 +77,254 @@ if ($query->rowCount() > 0) {
                                 <!-- Begin Page Content -->
                                 <div class="container-fluid">
 
-                                    <!-- Outer Row -->
-                                    <div class="row justify-content-center">
-
-                                        <div class="col-xl-12 col-lg-12 col-md-9">
-                                            <div class="card o-hidden border-0 shadow-lg my-5">
-                                                <div class="p-0" id="card-body">
-                                                    <div id="row">
-                                                        <div class="col-lg-12">
-                                                            <div class="p-5">
-                                                                <!-- Page Heading -->
-                                                                <div class="text-center">
-                                                                    <div class="text-center" style="display:flex; width:auto; justify-content: start;">
-                                                                        <a class="font-weight-bold" href="assessment-component.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
-                                                                            < Back</a>
-                                                                    </div>
-                                                                    <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Document Check</h1>
-                                                                    <?php
-                                                                    if (count($infos) > 0) {
-                                                                    ?>
-                                                                        <div class="col-lg-12 mb-4">
-                                                                            <div class="card bg-success text-white shadow">
-                                                                                <div class="card-body text-center font-weight-bold">
-                                                                                    <?php foreach ($infos as $info) {
-                                                                                        echo $info;
-                                                                                    } ?>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    <?php
-                                                                    }
-                                                                    ?>
-                                                                    <?php
-                                                                    if (count($errors) > 0) {
-                                                                    ?>
-                                                                        <div class="col-lg-12 mb-4">
-                                                                            <div class="card bg-danger text-white shadow">
-                                                                                <div class="card-body text-center" style="font-weight: bold;">
-                                                                                    <?php foreach ($errors as $error) {
-                                                                                        echo $error;
-                                                                                    } ?>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    <?php
-                                                                    }
-                                                                    ?>
-                                                                </div>
-                                                                <!-- End of Text Center -->
-
-                                                                <div class="card-body">
-                                                                    <div class="table-responsive">
-                                                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                                                            <form class="user" method="POST" id="document-check">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th>Item</th>
-                                                                                        <th>Checklist</th>
-                                                                                        <th>C</th>
-                                                                                        <th>NC</th>
-                                                                                        <th>NA</th>
-                                                                                        <th>Remarks</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                    <?php
-                                                                                    $sql = "SELECT * from document_check_section";
-                                                                                    $query = $dbh->prepare($sql);
-                                                                                    $query->execute();
-                                                                                    $sections = $query->fetchAll(PDO::FETCH_OBJ);
-                                                                                    $cnt = 1;
-                                                                                    if ($query->rowCount() > 0) {
-                                                                                        foreach ($sections as $section) {
-                                                                                    ?>
-                                                                                            <tr>
-                                                                                                <th><?php echo htmlentities($section->item_no) ?></th>
-                                                                                                <th colspan="5" class="text-left"><?php echo htmlentities($section->item_name) ?></th>
-                                                                                            </tr>
-                                                                                            <?php
-                                                                                            $sql = "SELECT * from document_check_checklist where item_id='$section->id'";
-                                                                                            $query = $dbh->prepare($sql);
-                                                                                            $query->execute();
-                                                                                            $checklists = $query->fetchAll(PDO::FETCH_OBJ);
-                                                                                            $cnt = 1;
-                                                                                            if ($query->rowCount() > 0) {
-                                                                                                foreach ($checklists as $checklist) {
-                                                                                                    $checklist_id = $checklist->id;
-                                                                                            ?>
-                                                                                                    <tr>
-                                                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?= $result->assessee_id ?>">
-                                                                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_checklist_id[]" id="document_check_checklist_id[]" value="<?= $checklist_id ?>">
-                                                                                                        <td><?= $cnt++ ?></td>
-                                                                                                        <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
-                                                                                                        <?php
-                                                                                                        $sql = "SELECT * FROM document_check_assessment WHERE assessment_id='$result->assessee_id' AND document_check_checklist_id='$checklist_id'";
-                                                                                                        $query = $dbh->prepare($sql);
-                                                                                                        $query->execute();
-                                                                                                        $docchecks1 = $query->fetchAll(PDO::FETCH_OBJ);
-                                                                                                        if ($query->rowCount() > 0) {
-                                                                                                            foreach ($docchecks1 as $doccheck1) {
-                                                                                                        ?>
-                                                                                                                <td><input type="radio" class="checkbox1" name="doccheck_<?= $checklist_id ?>[]" value="C" onchange="countSelected()" <?php if (in_array("C", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
-                                                                                                                <td><input type="radio" class="checkbox2" name="doccheck_<?= $checklist_id ?>[]" value="NC" onchange="countSelected()" <?php if (in_array("NC", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
-                                                                                                                <td><input type="radio" class="checkbox3" name="doccheck_<?= $checklist_id ?>[]" value="NA" onchange="countSelected()" <?php if (in_array("NA", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
-                                                                                                                <td><textarea form="document-check" rows="2" cols="20" id="remarks" name="remarks_<?= $checklist_id ?>"><?= $doccheck1->remarks ?></textarea></td>
-                                                                                                    </tr>
-                                                                                            <?php }
-                                                                                                        } ?>
-                                                                                    <?php
-                                                                                                }
-                                                                                            } ?>
-
-                                                                            <?php }
-                                                                                    } ?>
-                                                                                </tbody>
-                                                                                <tfoot>
-                                                                                    <tr>
-                                                                                        <th colspan="2">TOTAL SCORE</th>
-                                                                                        <th id="selectedC">
-                                                                                            <script>
-                                                                                                document.getElementById('selectedC').innerHTML = document.querySelectorAll('input[class="checkbox1"]:checked').length
-                                                                                            </script>
-                                                                                        </th>
-                                                                                        <th id="selectedNC">
-                                                                                            <script>
-                                                                                                document.getElementById('selectedNC').innerHTML = document.querySelectorAll('input[class="checkbox2"]:checked').length
-                                                                                            </script>
-                                                                                        </th>
-                                                                                        <th id="selectedNA">
-                                                                                            <script>
-                                                                                                document.getElementById('selectedNA').innerHTML = document.querySelectorAll('input[class="checkbox3"]:checked').length
-                                                                                            </script>
-                                                                                        </th>
-                                                                                        <th id="selectedTotal"></th>
-                                                                                    </tr>
-                                                                                </tfoot>
-                                                                        </table>
-                                                                    </div>
-
-                                                                    <div class="form-group" id="row">
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="doc_check_c_score" id="doc_check_c_score" onchange="countSelected()">
-                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="doc_check_na_score" id="doc_check_na_score" onchange="countSelected()">
-                                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" onchange="countSelected()">
-                                                                        </div>
-                                                                        <div class="col-sm-4 mb-3 mb-sm-0">
-                                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-document-check">Save</button>
-                                                                        </div>
-                                                                    </div>
-                                                                    <!-- End of Form Group -->
-                                                                    </form>
-
-                                                                </div>
-                                                                <!-- End of Card Body -->
-                                                            </div>
-                                                            <!-- End of p-5 -->
-                                                        </div>
-                                                        <!-- End of col-lg-12 -->
-                                                    </div>
-                                                    <!-- End of Row -->
+                                    <div class="card shadow mb-4">
+                                        <div class="card-header py-3">
+                                            <div class="text-center" id="row">
+                                                <div class="col-sm-6" style="display:flex; width:auto; justify-content: start;">
+                                                    <a class="font-weight-bold" href="assessment-component.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
+                                                        < Back</a>
                                                 </div>
-                                                <!-- End of p-0 -->
                                             </div>
-                                            <!-- End of Card -->
-
+                                            <!-- Page Heading -->
+                                            <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Document Check</h1>
                                         </div>
-                                        <!-- End of col-xl-12 -->
+                                        <div class="card-body">
+                                            <?php
+                                            if (count($infos) > 0) {
+                                            ?>
+                                                <div class="col-lg-12 mb-4">
+                                                    <div class="card bg-success text-white shadow">
+                                                        <div class="card-body text-center font-weight-bold">
+                                                            <?php foreach ($infos as $info) {
+                                                                echo $info;
+                                                            } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php
+                                            }
+                                            ?>
+                                            <?php
+                                            if (count($errors) > 0) {
+                                            ?>
+                                                <div class="col-lg-12 mb-4">
+                                                    <div class="card bg-danger text-white shadow">
+                                                        <div class="card-body text-center" style="font-weight: bold;">
+                                                            <?php foreach ($errors as $error) {
+                                                                echo $error;
+                                                            } ?>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            <?php
+                                            }
+                                            ?>
 
+                                            <div class="table-responsive">
+                                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                    <form class="user" method="POST" id="document-check">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Item</th>
+                                                                <th>Checklist</th>
+                                                                <th>C</th>
+                                                                <th>NC</th>
+                                                                <th>NA</th>
+                                                                <th>Remarks</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            <?php
+                                                            $sql = "SELECT * from document_check_section";
+                                                            $query = $dbh->prepare($sql);
+                                                            $query->execute();
+                                                            $sections = $query->fetchAll(PDO::FETCH_OBJ);
+                                                            $cnt = 1;
+                                                            if ($query->rowCount() > 0) {
+                                                                foreach ($sections as $section) {
+                                                            ?>
+                                                                    <tr>
+                                                                        <th><?php echo htmlentities($section->item_no) ?></th>
+                                                                        <th colspan="5" class="text-left"><?php echo htmlentities($section->item_name) ?></th>
+                                                                    </tr>
+                                                                    <?php
+                                                                    $sql = "SELECT * from document_check_checklist where item_id='$section->id'";
+                                                                    $query = $dbh->prepare($sql);
+                                                                    $query->execute();
+                                                                    $checklists = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                    $cnt = 1;
+                                                                    if ($query->rowCount() > 0) {
+                                                                        foreach ($checklists as $checklist) {
+                                                                            $checklist_id = $checklist->id;
+                                                                    ?>
+                                                                            <tr>
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?= $result->assessee_id ?>">
+                                                                                <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_checklist_id[]" id="document_check_checklist_id[]" value="<?= $checklist_id ?>">
+                                                                                <td><?= $cnt++ ?></td>
+                                                                                <td class="text-left"><?php echo htmlentities($checklist->checklist) ?></td>
+                                                                                <?php
+                                                                                $sql = "SELECT * FROM document_check_assessment WHERE assessment_id='$result->assessee_id' AND document_check_checklist_id='$checklist_id'";
+                                                                                $query = $dbh->prepare($sql);
+                                                                                $query->execute();
+                                                                                $docchecks1 = $query->fetchAll(PDO::FETCH_OBJ);
+                                                                                if ($query->rowCount() > 0) {
+                                                                                    foreach ($docchecks1 as $doccheck1) {
+                                                                                ?>
+                                                                                        <td><input type="radio" class="checkbox1" name="doccheck_<?= $checklist_id ?>[]" value="C" onchange="countSelected()" <?php if (in_array("C", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                        <td><input type="radio" class="checkbox2" name="doccheck_<?= $checklist_id ?>[]" value="NC" onchange="countSelected()" <?php if (in_array("NC", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                        <td><input type="radio" class="checkbox3" name="doccheck_<?= $checklist_id ?>[]" value="NA" onchange="countSelected()" <?php if (in_array("NA", explode(", ", $doccheck1->status))) echo 'checked = "checked"'; ?>></td>
+                                                                                        <td><textarea form="document-check" rows="2" cols="20" id="remarks" name="remarks_<?= $checklist_id ?>"><?= $doccheck1->remarks ?></textarea></td>
+                                                                            </tr>
+                                                                    <?php }
+                                                                                } ?>
+                                                            <?php
+                                                                        }
+                                                                    } ?>
+
+                                                    <?php }
+                                                            } ?>
+                                                        </tbody>
+                                                        <tfoot>
+                                                            <tr>
+                                                                <th colspan="2">TOTAL SCORE</th>
+                                                                <th id="selectedC">
+                                                                    <script>
+                                                                        document.getElementById('selectedC').innerHTML = document.querySelectorAll('input[class="checkbox1"]:checked').length
+                                                                    </script>
+                                                                </th>
+                                                                <th id="selectedNC">
+                                                                    <script>
+                                                                        document.getElementById('selectedNC').innerHTML = document.querySelectorAll('input[class="checkbox2"]:checked').length
+                                                                    </script>
+                                                                </th>
+                                                                <th id="selectedNA">
+                                                                    <script>
+                                                                        document.getElementById('selectedNA').innerHTML = document.querySelectorAll('input[class="checkbox3"]:checked').length
+                                                                    </script>
+                                                                </th>
+                                                                <th id="selectedTotal"></th>
+                                                            </tr>
+                                                        </tfoot>
+                                                </table>
+                                            </div>
+
+                                            <div class="form-group" id="row">
+                                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="doc_check_c_score" id="doc_check_c_score" onchange="countSelected()">
+                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="doc_check_na_score" id="doc_check_na_score" onchange="countSelected()">
+                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" onchange="countSelected()">
+                                                </div>
+                                                <div class="col-sm-4 mb-3 mb-sm-0">
+                                                    <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-document-check">Save</button>
+                                                </div>
+                                            </div>
+                                            <!-- End of Form Group -->
+                                            </form>
+                                        </div>
                                     </div>
-                                    <!-- End of Row Justify -->
-
                                 </div>
-                                <!-- /.container-fluid -->
-
                             </div>
-                            <!-- End of Main Content -->
 
                         </div>
-                        <!-- End of Content Wrapper -->
+                        <!-- /.container-fluid -->
 
-
-                <?php }
-                } ?>
             </div>
-            <!-- End of Page Wrapper -->
+            <!-- End of Main Content -->
 
-            <!-- Footer -->
-            <footer class="small">
-                <div class="container my-auto justify-content-center">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; SHASSIC 2022</span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
-
-            <!-- Scroll to Top Button-->
-            <a class="scroll-to-top rounded" href="#page-top">
-                <!-- <i class="fas fa-angle-up"></i> -->
-                &uarr;
-            </a>
-
-            <!-- Bootstrap core JavaScript-->
-            <script src="vendor/jquery/jquery.min.js"></script>
-            <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-            <!-- Core plugin JavaScript-->
-            <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-            <!-- Custom scripts for all pages-->
-            <script src="js/sb-admin-2.min.js"></script>
         </div>
-        <!-- End of Landing Container -->
+        <!-- End of Content Wrapper -->
 
-        <script>
-            function countSelected() {
-                var checkboxes = document.querySelectorAll('.checkbox1');
-                var checkboxes2 = document.querySelectorAll('.checkbox2');
-                var checkboxes3 = document.querySelectorAll('.checkbox3');
 
-                var totalScore = 0;
-                var countC = 0;
-                var countNC = 0;
-                var countNA = 0;
-                var documentCheck = 0;
+<?php }
+                } ?>
+</div>
+<!-- End of Page Wrapper -->
 
-                checkboxes.forEach(item => {
-                    if (item.checked == true) {
-                        countC++;
-                    }
-                })
+<!-- Footer -->
+<footer class="small">
+    <div class="container my-auto justify-content-center">
+        <div class="copyright text-center my-auto">
+            <span>Copyright &copy; SHASSIC 2022</span>
+        </div>
+    </div>
+</footer>
+<!-- End of Footer -->
 
-                checkboxes2.forEach(item => {
-                    if (item.checked == true) {
-                        countNC++;
-                    }
-                })
+<!-- Scroll to Top Button-->
+<a class="scroll-to-top rounded" href="#page-top">
+    <!-- <i class="fas fa-angle-up"></i> -->
+    &uarr;
+</a>
 
-                checkboxes3.forEach(item => {
-                    if (item.checked == true) {
-                        countNA++;
-                    }
-                })
+<!-- Bootstrap core JavaScript-->
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-                document.getElementById('selectedC').innerHTML = countC;
-                document.getElementById('selectedNC').innerHTML = countNC;
-                document.getElementById('selectedNA').innerHTML = countNA;
+<!-- Core plugin JavaScript-->
+<script src="vendor/jquery-easing/jquery.easing.min.js"></script>
 
-                totalScore = countC + countNC + countNA;
-                documentCheck = (countC / (57 - countNA) * 20);
-                let d = documentCheck.toFixed(2);
+<!-- Custom scripts for all pages-->
+<script src="js/sb-admin-2.min.js"></script>
+</div>
+<!-- End of Landing Container -->
 
-                // document.getElementById('selectedTotal').innerHTML = totalScore;
-                document.getElementById('doc_check_c_score').value = countC;
-                document.getElementById('doc_check_na_score').value = countNA;
-                document.getElementById('document_check_percentage').value = d;
+<script>
+    function countSelected() {
+        var checkboxes = document.querySelectorAll('.checkbox1');
+        var checkboxes2 = document.querySelectorAll('.checkbox2');
+        var checkboxes3 = document.querySelectorAll('.checkbox3');
+
+        var totalScore = 0;
+        var countC = 0;
+        var countNC = 0;
+        var countNA = 0;
+        var documentCheck = 0;
+
+        checkboxes.forEach(item => {
+            if (item.checked == true) {
+                countC++;
             }
+        })
 
-            var docCheckCScore = document.getElementById('doc_check_c_score');
-            var docCheckNAScore = document.getElementById('doc_check_na_score');
-            var docCheckPercent = document.getElementById('document_check_percentage');
-            var doc_check_c = document.querySelectorAll('input[class="checkbox1"]:checked').length;
-            var doc_check_na = document.querySelectorAll('input[class="checkbox3"]:checked').length;
-            var doc_check_percent = (doc_check_c / (57 - doc_check_na) * 20);
-            let e = doc_check_percent.toFixed(2);
-            docCheckCScore.setAttribute('value', doc_check_c);
-            docCheckNAScore.setAttribute('value', doc_check_na);
-            docCheckPercent.setAttribute('value', e);
-        </script>
+        checkboxes2.forEach(item => {
+            if (item.checked == true) {
+                countNC++;
+            }
+        })
 
-    <?php } else {
+        checkboxes3.forEach(item => {
+            if (item.checked == true) {
+                countNA++;
+            }
+        })
+
+        document.getElementById('selectedC').innerHTML = countC;
+        document.getElementById('selectedNC').innerHTML = countNC;
+        document.getElementById('selectedNA').innerHTML = countNA;
+
+        totalScore = countC + countNC + countNA;
+        documentCheck = (countC / (57 - countNA) * 20);
+        let d = documentCheck.toFixed(2);
+
+        // document.getElementById('selectedTotal').innerHTML = totalScore;
+        document.getElementById('doc_check_c_score').value = countC;
+        document.getElementById('doc_check_na_score').value = countNA;
+        document.getElementById('document_check_percentage').value = d;
+    }
+
+    var docCheckCScore = document.getElementById('doc_check_c_score');
+    var docCheckNAScore = document.getElementById('doc_check_na_score');
+    var docCheckPercent = document.getElementById('document_check_percentage');
+    var doc_check_c = document.querySelectorAll('input[class="checkbox1"]:checked').length;
+    var doc_check_na = document.querySelectorAll('input[class="checkbox3"]:checked').length;
+    var doc_check_percent = (doc_check_c / (57 - doc_check_na) * 20);
+    let e = doc_check_percent.toFixed(2);
+    docCheckCScore.setAttribute('value', doc_check_c);
+    docCheckNAScore.setAttribute('value', doc_check_na);
+    docCheckPercent.setAttribute('value', e);
+</script>
+
+<?php } else {
         header("location: login.php");
     } ?>
 </body>

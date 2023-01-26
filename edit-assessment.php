@@ -34,12 +34,9 @@ require_once "controller.php";
 
         <div class="landing-container">
             <div class="landing-navbar">
-                <img src="img/landing/logo.png" class="landing-logo">
-                <!-- <nav class="landing-nav">
-                    <ul class="landing-ul" id="menuList">
-                        <li class="landing-li"><a href="about.php" class="landing-a">ABOUT</a></li>
-                    </ul>
-                </nav> -->
+                <a href="landing.php" class="d-flex landing-a">
+                    <h1 style="font-size: 24px; font-weight: 700; color: #fff; margin-top: 3rem; margin-bottom: 3rem">SHASSIC<span style="color: #558381;">.</span></h1>
+                </a>
                 <img src="img/landing/menu.png" class="menu-icon" onclick="togglemenu()">
             </div>
 
@@ -67,15 +64,6 @@ require_once "controller.php";
 
                                 <!-- Begin Page Content -->
                                 <div class="container-fluid">
-
-                                    <!-- Outer Row -->
-                                    <!-- <div class="row justify-content-center"> -->
-                                    <!-- <div class="col-xl-12 col-lg-12 col-md-9"> -->
-                                    <!-- <div class="card o-hidden border-0 shadow-lg my-5"> -->
-                                    <!-- <div class="p-0" id="card-body"> -->
-                                    <!-- <div id="row"> -->
-                                    <!-- <div class="col-lg-12"> -->
-                                    <!-- <div class="p-5"> -->
                                     <div class="card shadow mb-4">
                                         <div class="card-header py-3">
                                             <div class="text-center" id="row">
@@ -92,7 +80,7 @@ require_once "controller.php";
                                             <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Edit Assessment</h1>
                                         </div>
                                         <div class="card-body">
-                                        <?php
+                                            <?php
                                             if (count($infos) > 0) {
                                             ?>
                                                 <div class="col-lg-12 mb-4">
@@ -152,7 +140,7 @@ require_once "controller.php";
                                                         <input type="text" class="form-control form-control-user font-weight-bold" name="project_location" id="project_location" placeholder="Project Location" required value="<?php echo htmlentities($result->project_location); ?>">
                                                     </div>
                                                     <div class="col-sm-6">
-                                                        <input type="file" class="form-control form-control-user font-weight-bold" name="project_picture" id="project_picture" placeholder="Project Picture" accept="image/*"/>
+                                                        <input type="file" class="form-control form-control-user font-weight-bold" name="project_picture" id="project_picture" placeholder="Project Picture" accept="image/*" />
                                                         <input type="text" hidden class="form-control form-control-user font-weight-bold" name="old_project_picture" id="old_project_picture" value="<?php echo htmlentities($result->project_picture); ?>" />
                                                     </div>
                                                 </div>
@@ -166,16 +154,6 @@ require_once "controller.php";
                                             </form>
                                         </div>
                                     </div>
-
-                                    <!-- </div> -->
-                                    <!-- </div> -->
-                                    <!-- </div> -->
-                                    <!-- </div> -->
-                                    <!-- </div> -->
-
-                                    <!-- </div> -->
-
-                                    <!-- </div> -->
 
                                 </div>
                                 <!-- container-fluid -->

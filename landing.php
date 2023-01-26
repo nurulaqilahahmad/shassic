@@ -32,6 +32,13 @@ require_once "controller.php";
     <?php if ($_SESSION['login']) { ?>
 
         <div class="landing-container">
+            <div class="landing-navbar">
+                <a href="landing.php" class="d-flex landing-a">
+                    <h1 style="font-size: 24px; font-weight: 700; color: #fff; margin-top: 3rem; margin-bottom: 3rem">SHASSIC<span style="color: #558381;">.</span></h1>
+                </a>
+                <img src="img/landing/menu.png" class="menu-icon" onclick="togglemenu()">
+            </div>
+
             <?php
             $email = $_SESSION['login'];
             $sql = "SELECT * from user where email=:email";
@@ -43,31 +50,12 @@ require_once "controller.php";
             if ($query->rowCount() > 0) {
                 foreach ($results as $result) {
             ?>
-                    <div class="landing-navbar">
-                        <img src="img/landing/logo.png" class="landing-logo">
-                        <nav class="landing-nav">
-                            <ul class="landing-ul" id="menuList">
-                                <li class="landing-li"><a href="about.php" class="landing-a">ABOUT</a></li>
-                            </ul>
-                        </nav>
-                        <img src="img/landing/menu.png" class="menu-icon" onclick="togglemenu()">
-                    </div>
-
 
                     <!-- Page Wrapper -->
                     <div id="wrapper">
 
                         <!-- Sidebar -->
                         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-
-                            <!-- Sidebar - Brand -->
-                            <!-- <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html"> -->
-                            <!-- <div class="sidebar-brand-icon rotate-n-15">
-                            <i class="fas fa-laugh-wink"></i>
-                        </div> -->
-                            <!-- <div class="sidebar-brand-text mx-3"><?php echo htmlentities($_SESSION['username']); ?></div> -->
-                            <!-- <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo htmlentities($_SESSION['username']); ?></span>
-                            </a> -->
 
                             <li class="nav-item">
                                 <a class="nav-link disabled" style="text-align: center;">
@@ -113,20 +101,6 @@ require_once "controller.php";
                                 </a>
                             </li>
 
-                            <!-- Nav Item - Dashboard -->
-                            <!-- <li class="nav-item active">
-                                <a class="nav-link" href="index.html" style="text-align: center;"> -->
-                            <!-- <i class="fas fa-fw fa-tachometer-alt"></i> -->
-                            <!-- <img class="img-profile rounded-circle" src="img/undraw_profile.svg"><br>
-                                    <span><?php echo htmlentities($result->fullname); ?></span>
-                                </a>
-                            </li> -->
-
-                            <!-- Divider -->
-                            <!-- <hr class="sidebar-divider"> -->
-
-
-
                         </ul>
                         <!-- End of Sidebar -->
 
@@ -141,7 +115,7 @@ require_once "controller.php";
 
                                     <!-- Page Heading -->
                                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                                        <h1 class="h1 mb-0 text-white font-weight-bold">SHASSIC</h1>
+                                        <h1 class=" h1 mb-0 text-white font-weight-bold"><span>SHASSIC</span></h1>
                                     </div>
 
                                     <!-- Content Row -->
@@ -221,8 +195,7 @@ require_once "controller.php";
         <script src="js/demo/chart-area-demo.js"></script>
         <script src="js/demo/chart-pie-demo.js"></script>
 
-    <?php }
-    else{
+    <?php } else {
         header("location: login.php");
     } ?>
 </body>

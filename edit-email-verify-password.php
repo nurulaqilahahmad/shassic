@@ -34,7 +34,9 @@ require_once "controller.php";
 
         <div class="landing-container">
             <div class="landing-navbar">
-                <img src="img/landing/logo.png" class="landing-logo">
+                <a href="landing.php" class="d-flex landing-a">
+                    <h1 style="font-size: 24px; font-weight: 700; color: #fff; margin-top: 3rem; margin-bottom: 3rem">SHASSIC<span style="color: #558381;">.</span></h1>
+                </a>
                 <img src="img/landing/menu.png" class="menu-icon" onclick="togglemenu()">
             </div>
 
@@ -105,7 +107,7 @@ require_once "controller.php";
                                                 <div class="form-group" id="row">
                                                     <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                                     <div class="col-sm-4 mb-3 mb-sm-0">
-                                                        <p class="font-weight-bold">Enter your password to continue</p> 
+                                                        <p class="font-weight-bold">Enter your password to continue</p>
                                                         <input type="password" class="form-control form-control-user font-weight-bold" name="password" id="password" placeholder="Password" required>
                                                     </div>
                                                     <div class="col-sm-4 mb-3 mb-sm-0"></div>

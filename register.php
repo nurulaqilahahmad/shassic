@@ -54,7 +54,7 @@
                             <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <a href="landing.php"><img src="img/shassic-logo.jpg" width="200px""></a>
+                                        <a href="index.php"><img src="img/shassic-logo.png" width="200px""></a>
                                         <br>
                                         <br>
                                     </div>
@@ -66,7 +66,7 @@
                                             <div class="col-lg-12 mb-4">
                                                 <div class="card bg-success text-white shadow">
                                                     <div class="card-body text-center font-weight-bold" style="margin: 10px">
-                                                        <?php echo $_SESSION['info']; ?><a class="small font-weight-bold" href="login.php">Login Now</a>
+                                                        <?php echo $_SESSION['info']; unset($_SESSION['info']); ?><a class="small font-weight-bold" href="login.php">Login Now</a>
                                                     </div>
                                                 </div>
                                             </div>

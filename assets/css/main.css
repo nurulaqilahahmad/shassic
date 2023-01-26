@@ -12,15 +12,15 @@
 /* Fonts */
 :root {
   --font-default: "Open Sans", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-primary: "Roboto", sans-serif;
-  --font-secondary: "Work Sans", sans-serif;
+  --font-primary: "Poppins", sans-serif;
+  --font-secondary: "Poppins", sans-serif;
 }
 
 /* Colors */
 :root {
-  --color-default: #364d59;
-  --color-primary: #feb900;
-  --color-secondary: #52565e;
+  --color-default: #112434;
+  --color-primary: #558381;
+  --color-secondary: #858796;
 }
 
 /* Smooth scroll behavior */
@@ -43,7 +43,7 @@ a {
 }
 
 a:hover {
-  color: #ffc732;
+  color: #558381;
   text-decoration: none;
 }
 
@@ -183,12 +183,12 @@ section {
 
 .scroll-top i {
   font-size: 24px;
-  color: var(--color-secondary);
+  color: #fff;
   line-height: 0;
 }
 
 .scroll-top:hover {
-  background: #ffc732;
+  background: #112434;
   color: #fff;
 }
 
@@ -1948,7 +1948,8 @@ section {
 }
 
 .hero .info .btn-get-started:hover {
-  background: var(--color-primary);
+  background: var(--color-default);
+  border: 2px solid var(--color-default);
 }
 
 .hero .carousel-control-prev {

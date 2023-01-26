@@ -180,7 +180,9 @@ require_once "controller.php";
 
         <div class="landing-container">
             <div class="landing-navbar">
-                <img src="img/landing/logo.png" class="landing-logo">
+                <a href="landing.php" class="d-flex landing-a">
+                    <h1 style="font-size: 24px; font-weight: 700; color: #fff; margin-top: 3rem; margin-bottom: 3rem">SHASSIC<span style="color: #558381;">.</span></h1>
+                </a>
                 <img src="img/landing/menu.png" class="menu-icon" onclick="togglemenu()">
             </div>
 
@@ -208,15 +210,20 @@ require_once "controller.php";
 
                                 <!-- Begin Page Content -->
                                 <div class="container-fluid">
+
                                     <div class="card shadow mb-4">
+
                                         <div class="card-header py-3">
-                                            <div class="text-center">
+                                            <div class="text-center" id="row">
                                                 <div class="col-sm-6" style="display:flex; width:auto; justify-content: start;">
-                                                    <a class="font-weight-bold" href="history.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">< Back</a>
+                                                    <a class="font-weight-bold" href="history.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
+                                                        < Back</a>
                                                 </div>
-                                                <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Assessment Result</h1>
                                             </div>
+                                            <!-- Page Heading -->
+                                            <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Assessment Result</h1>
                                         </div>
+
                                         <div class="card-body">
 
                                             <!-- Details Assessee -->

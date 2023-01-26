@@ -45,7 +45,7 @@ require_once "controller.php";
                             <div class="col-lg-12">
                                 <div class="p-5">
                                     <div class="text-center">
-                                        <a href="landing.php"><img src="img/shassic-logo.jpg" width="200px"></a>
+                                        <a href="index.php"><img src="img/shassic-logo.png" width="200px"></a>
                                         <br>
                                         <br>
                                     </div>

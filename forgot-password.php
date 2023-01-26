@@ -70,7 +70,7 @@
 
                                         <hr>
                                         <div class="text-center">
-                                            <a class="small font-weight-bold" href="login.php">&larr; Back to Login</a>
+                                            <a class="small font-weight-bold" href="login.php">< Back to Login</a>
                                         </div>
                                     </form>
                                 </div>
