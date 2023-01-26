@@ -28,98 +28,6 @@ require_once "controller.php";
     <link rel="stylesheet" type="text/css" href="css/star-rantings.css">
 
     <script type=text/javascript>
-        // function documentCheck() {
-        //     let progressBar = document.querySelector(".circular-progress-each");
-        //     let valueContainer = document.querySelector("#progress-document-check");
-
-        //     var progressValue = 0;
-        //     let progressEndValue = document.getElementById("input-percentage").value;
-        //     let speed = 50;
-
-        //     let progress = setInterval(() => {
-        //         if (progressValue == progressEndValue) {
-        //             valueContainer.textContent = `${progressValue}%`;
-        //             progressBar.style.background = `conic-gradient(
-        //         #4d5bf9 ${progressValue * 3.6}deg,
-        //         #cadcff ${progressValue * 3.6}deg
-        //     )`;
-        //             clearInterval(progress);
-        //         } else {
-        //             progressValue++;
-        //             valueContainer.textContent = `${progressValue}%`;
-        //             progressBar.style.background = `conic-gradient(
-        //         #4d5bf9 ${progressValue * 3.6}deg,
-        //         #cadcff ${progressValue * 3.6}deg
-        //     )`;
-        //             if (progressValue == progressEndValue) {
-        //                 clearInterval(progress);
-        //             }
-        //         }
-        //     }, speed);
-
-        // }
-
-        // function workplaceInspection() {
-        //     let progressBar = document.querySelector(".circular-progress-each-1");
-        //     let valueContainer = document.querySelector("#progress-document-workplace");
-
-        //     let progressValue = 0;
-        //     let progressEndValue = document.getElementById("workplace-inspection").value;
-
-        //     let speed = 50;
-
-        //     let progress = setInterval(() => {
-        //         if (progressValue == progressEndValue) {
-        //             valueContainer.textContent = `${progressValue}%`;
-        //             progressBar.style.background = `conic-gradient(
-        //         #4d5bf9 ${progressValue * 3.6}deg,
-        //         #cadcff ${progressValue * 3.6}deg
-        //     )`;
-        //             clearInterval(progress);
-        //         } else {
-        //             progressValue++;
-        //             valueContainer.textContent = `${progressValue}%`;
-        //             progressBar.style.background = `conic-gradient(
-        //         #4d5bf9 ${progressValue * 3.6}deg,
-        //         #cadcff ${progressValue * 3.6}deg
-        //     )`;
-        //             if (progressValue == progressEndValue) {
-        //                 clearInterval(progress);
-        //             }
-        //         }
-        //     }, speed);
-        // }
-
-        // function personnelInterview() {
-        //     let progressBar = document.querySelector(".circular-progress-each-2");
-        //     let valueContainer = document.querySelector("#progress-document-personnel");
-
-        //     let progressValue = 0;
-        //     let progressEndValue = document.getElementById("personnel-interview").value;
-        //     let speed = 50;
-
-        //     let progress = setInterval(() => {
-        //         if (progressValue == progressEndValue) {
-        //             valueContainer.textContent = `${progressValue}%`;
-        //             progressBar.style.background = `conic-gradient(
-        //         #4d5bf9 ${progressValue * 3.6}deg,
-        //         #cadcff ${progressValue * 3.6}deg
-        //     )`;
-        //             clearInterval(progress);
-        //         } else {
-        //             progressValue++;
-        //             valueContainer.textContent = `${progressValue}%`;
-        //             progressBar.style.background = `conic-gradient(
-        //         #4d5bf9 ${progressValue * 3.6}deg,
-        //         #cadcff ${progressValue * 3.6}deg
-        //     )`;
-        //             if (progressValue == progressEndValue) {
-        //                 clearInterval(progress);
-        //             }
-        //         }
-        //     }, speed);
-        // }
-
         // Get ratings
         function getRankings() {
             // Initial Ratings
@@ -171,7 +79,6 @@ require_once "controller.php";
         }
     </script>
 
-
 </head>
 
 <body id="page-top">
@@ -218,101 +125,117 @@ require_once "controller.php";
                                                 <div class="col-sm-6" style="display:flex; width:auto; justify-content: start;">
                                                     <a class="font-weight-bold" href="history.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
                                                         < Back</a>
+                                                    <a class="font-weight-bold" href="history.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
+                                                        < Back</a>
                                                 </div>
                                             </div>
                                             <!-- Page Heading -->
                                             <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Assessment Result</h1>
                                         </div>
+                                        <style>
+                                            @media print {
+                                            body * {
+                                                visibility: hidden;
+                                            }
 
-                                        <div class="card-body">
+                                            .print-container, .print-container * {
+                                                visibility: visible;
+                                            }
+                                        }
+                                        </style>
+                                        <div class="row print-container">
+                                            <div class="card-body">
 
-                                            <!-- Details Assessee -->
-                                            <p align=left>Assessee Name: <strong><?php echo htmlentities($result->assessee_name); ?></strong><br>
-                                                Project Name: <strong><?php echo htmlentities($result->project_name); ?></strong><br>
-                                                Project Date: <strong><?php echo htmlentities(date_format(new DateTime($result->project_date), 'd/m/Y')); ?></strong><br>
-                                                Project Location: <strong><?php echo htmlentities($result->project_location); ?></strong></p>
+                                                <!-- Details Assessee -->
+                                                <p align=left>Assessee Name: <strong><?php echo htmlentities($result->assessee_name); ?></strong><br>
+                                                    Project Name: <strong><?php echo htmlentities($result->project_name); ?></strong><br>
+                                                    Project Date: <strong><?php echo htmlentities(date_format(new DateTime($result->project_date), 'd/m/Y')); ?></strong><br>
+                                                    Project Location: <strong><?php echo htmlentities($result->project_location); ?></strong></p>
 
-                                            <form class="" action="" method="POST">
-                                                <div class="table-responsive">
-                                                    <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                                                        <thead>
-                                                            <tr>
-                                                                <th colspan="3">Assessment Name</th>
-                                                                <th>Percentage</th>
-                                                            </tr>
-                                                        </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td colspan="3">Document Check</td>
-                                                                <td><?php echo htmlentities($result->document_check_percentage); ?> %</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="3">Workplace Inspection</td>
-                                                                <td><?php echo htmlentities($result->workplace_inspection_percentage); ?> %</td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td colspan="3">Personnel Interview</td>
-                                                                <td><?php echo htmlentities($result->personnel_interview_percentage); ?> %</td>
-                                                            </tr>
+                                                <form class="" action="" method="POST">
+                                                    <div class="table-responsive">
+                                                        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th colspan="3">Assessment Name</th>
+                                                                    <th>Percentage</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr>
+                                                                    <td colspan="3">Document Check</td>
+                                                                    <td><?php echo htmlentities($result->document_check_percentage); ?> %</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="3">Workplace Inspection</td>
+                                                                    <td><?php echo htmlentities($result->workplace_inspection_percentage); ?> %</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td colspan="3">Personnel Interview</td>
+                                                                    <td><?php echo htmlentities($result->personnel_interview_percentage); ?> %</td>
+                                                                </tr>
 
-                                                        </tbody>
-                                                        <tfoot>
-                                                            <!-- For total score -->
-                                                            <tr>
-                                                                <td colspan="3" class="font-weight-bold">Total SHASSIC (score %)</td>
-                                                                <td class="font-weight-bold"><?php echo htmlentities($result->total_percentage) ?></td>
-                                                            </tr>
+                                                            </tbody>
+                                                            <tfoot>
+                                                                <!-- For total score -->
+                                                                <tr>
+                                                                    <td colspan="3" class="font-weight-bold">Total SHASSIC (score %)</td>
+                                                                    <td class="font-weight-bold"><?php echo htmlentities($result->total_percentage) ?></td>
+                                                                </tr>
 
-                                                            <!-- For ranking star -->
-                                                            <tr class="star">
-                                                                <td colspan="3" class="font-weight-bold">Star(s) Awarded</td>
-                                                                <td>
-                                                                    <div class="stars-outer">
-                                                                        <div class="stars-inner"></div>
-                                                                    </div>
-                                                                    <div>
-                                                                        <span class="number-rating"></span>
-                                                                    </div>
-                                                                </td>
-                                                            </tr>
-                                                        </tfoot>
-                                                    </table>
-                                                </div>
-
-                                                <!-- For print -->
-                                                <div class="form-group" id="row">
-                                                    <div class="col-sm-4 mb-3 mb-sm-0"></div>
-                                                    <div class="col-sm-4 mb-3 mb-sm-0">
-                                                        <div class="form-group">
-                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?php echo htmlentities($result->assessee_id); ?>">
-                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" onchange="countSelected()">
-                                                        </div>
-                                                        <button class="btn btn-primary btn-user btn-block font-weight-bold" name="print_document" onclick="window.print()">Print</button>
+                                                                <!-- For ranking star -->
+                                                                <tr class="star">
+                                                                    <td colspan="3" class="font-weight-bold">Star(s) Awarded</td>
+                                                                    <td>
+                                                                        <div class="stars-outer">
+                                                                            <div class="stars-inner"></div>
+                                                                        </div>
+                                                                        <div>
+                                                                            <span class="number-rating"></span>
+                                                                        </div>
+                                                                    </td>
+                                                                </tr>
+                                                            </tfoot>
+                                                        </table>
                                                     </div>
-                                                    <div class="col-sm-4 mb-3 mb-sm-0"></div>
-                                                </div>
 
-                                                <!-- ID for ranking star -->
-                                                <div id="assessee-select">
-                                                    <input type="hidden" value="<?php echo htmlentities($result->assessee_name); ?>">
-                                                    <input type="hidden" id="rating-control" value="<?php echo htmlentities($result->star_ranking); ?>">
-                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="input-percentage" id="input-percentage" value="<?php echo htmlentities($result->document_check_percentage); ?>">
-                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="workplace-inspection" id="workplace-inspection" value="<?php echo htmlentities($result->workplace_inspection_percentage); ?>">
-                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="personnel-interview" id="personnel-interview" value="<?php echo htmlentities($result->personnel_interview_percentage); ?>">
-                                                    <?php
-                                                    echo '<script type="text/javascript"> getRankings(); </script>';
-                                                    ?>
-                                                </div>
-                                            </form>
 
-                                            <p align=left><b>SHASSIC Star Ranking Description</b><br>
-                                                90 to 100: 5 STAR(S)<br>
-                                                80 to 89.9: 4 STAR(S)<br>
-                                                70 to 79.9: 3 STAR(S)<br>
-                                                60 to 69.9: 2 STAR(S)<br>
-                                                50 to 59.9: 1 STAR(S)<br>
-                                                49 and below: Certificate of Participation ONLY<br></p>
-                                            <p align=left> Note: CIDB may award CCD point for the projects scored with star rankings</p>
+
+                                                    <!-- ID for ranking star -->
+                                                    <div id="assessee-select">
+                                                        <input type="hidden" value="<?php echo htmlentities($result->assessee_name); ?>">
+                                                        <input type="hidden" id="rating-control" value="<?php echo htmlentities($result->star_ranking); ?>">
+                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="input-percentage" id="input-percentage" value="<?php echo htmlentities($result->document_check_percentage); ?>">
+                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="workplace-inspection" id="workplace-inspection" value="<?php echo htmlentities($result->workplace_inspection_percentage); ?>">
+                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="personnel-interview" id="personnel-interview" value="<?php echo htmlentities($result->personnel_interview_percentage); ?>">
+                                                        <?php
+                                                        echo '<script type="text/javascript"> getRankings(); </script>';
+                                                        ?>
+                                                    </div>
+                                                </form>
+
+                                                <p align=left><b>SHASSIC Star Ranking Description</b><br>
+                                                    90 to 100: 5 STAR(S)<br>
+                                                    80 to 89.9: 4 STAR(S)<br>
+                                                    70 to 79.9: 3 STAR(S)<br>
+                                                    60 to 69.9: 2 STAR(S)<br>
+                                                    50 to 59.9: 1 STAR(S)<br>
+                                                    49 and below: Certificate of Participation ONLY<br></p>
+                                                <p align=left> Note: CIDB may award CCD point for the projects scored with star rankings</p>
+                                            </div>
+                                        </div>
+
+                                        <!-- For print -->
+                                        <div class="form-group" id="row">
+                                            <div class="col-sm-4 mb-3 mb-sm-0"></div>
+                                            <div class="col-sm-4 mb-3 mb-sm-0">
+                                                <div class="form-group">
+                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="assessee_id" id="assessee_id" value="<?php echo htmlentities($result->assessee_id); ?>">
+                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" onchange="countSelected()">
+                                                </div>
+                                                <button class="btn btn-primary btn-user btn-block font-weight-bold" name="print_document" onclick="window.print()">Print</button>
+                                            </div>
+                                            <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                         </div>
 
                                     </div>
