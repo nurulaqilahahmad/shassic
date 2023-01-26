@@ -51,7 +51,7 @@ require_once "controller.php";
                                     </div>
 
                                     <div class="text-center">
-                                        <!-- <h1 class="h4 text-gray-900 mb-4" style="font-weight: bold;">Log In</h1> -->
+                                        <h1 class="h4 text-gray-900 mb-4" style="font-weight: bold;">Log In</h1>
                                         <?php
                                         if (count($errors) > 0) {
                                         ?>

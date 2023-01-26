@@ -130,25 +130,45 @@ require_once "controller.php";
                                             <!-- Page Heading -->
                                             <h1 class="h3 mb-4 text-gray-800 font-weight-bold">Assessment Result</h1>
                                         </div>
+
                                         <style>
                                             @media print {
-                                            body * {
-                                                visibility: hidden;
-                                            }
+                                                body * {
+                                                    visibility: hidden;
+                                                }
 
-                                            .print-container, .print-container * {
-                                                visibility: visible;
+                                                .print-container,
+                                                .print-container * {
+                                                    visibility: visible;
+                                                }
+
+                                                .print-container {
+
+                                                    left: 0px;
+                                                    top: 0px;
+                                                }
                                             }
-                                        }
                                         </style>
                                         <div class="row print-container">
                                             <div class="card-body">
 
+                                                <div class="text-center">
+                                                    <a href=""><img src="img/shassic-logo.png" width="200px"></a>
+                                                    <br>
+                                                    <br>
+                                                </div>
+
+                                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                                    <thead>
+                                                        <th colspan="4">Title Here</th>
+                                                    </thead>
+                                                </table>
+
                                                 <!-- Details Assessee -->
-                                                <p align=left>Assessee Name: <strong><?php echo htmlentities($result->assessee_name); ?></strong><br>
-                                                    Project Name: <strong><?php echo htmlentities($result->project_name); ?></strong><br>
-                                                    Project Date: <strong><?php echo htmlentities(date_format(new DateTime($result->project_date), 'd/m/Y')); ?></strong><br>
-                                                    Project Location: <strong><?php echo htmlentities($result->project_location); ?></strong></p>
+                                                <p align=left>Assessee Name<span style="padding-left: 30px">: <?php echo htmlentities($result->assessee_name); ?></span></p>
+                                                <p align=left>Project Name<span style="padding-left: 50px">: <?php echo htmlentities($result->project_name); ?></span></p>
+                                                <p align=left>Project Date<span style="padding-left: 60px">: <?php echo htmlentities(date_format(new DateTime($result->project_date), 'd/m/Y')); ?></span></p>
+                                                <p align=left>Project Location<span style="padding-left: 30px">: <?php echo htmlentities($result->project_location); ?></span></p>
 
                                                 <form class="" action="" method="POST">
                                                     <div class="table-responsive">
@@ -212,16 +232,19 @@ require_once "controller.php";
                                                     </div>
                                                 </form>
 
-                                                <p align=left><b>SHASSIC Star Ranking Description</b><br>
-                                                    90 to 100: 5 STAR(S)<br>
-                                                    80 to 89.9: 4 STAR(S)<br>
-                                                    70 to 79.9: 3 STAR(S)<br>
-                                                    60 to 69.9: 2 STAR(S)<br>
-                                                    50 to 59.9: 1 STAR(S)<br>
-                                                    49 and below: Certificate of Participation ONLY<br></p>
-                                                <p align=left> Note: CIDB may award CCD point for the projects scored with star rankings</p>
+                                                <p align=left><b>SHASSIC Star Ranking Description</b></p>
+                                                <p align=left>90 to 100: 5 STAR(S)</p>
+                                                <p align=left>80 to 89.9: 4 STAR(S)</p>
+                                                <p align=left>70 to 79.9: 3 STAR(S)</p>
+                                                <p align=left>60 to 69.9: 2 STAR(S)</p>
+                                                <p align=left>50 to 59.9: 1 STAR(S)</p>
+                                                <p align=left>49 and below: Certificate of Participation ONLY</p>
+                                                <p align=left><b>Note: CIDB may award CCD point for the projects scored with star rankings</b></p>
                                             </div>
                                         </div>
+                                        
+                                        <!-- For sign -->
+                                        <p>Prepared By</p>
 
                                         <!-- For print -->
                                         <div class="form-group" id="row">
@@ -235,6 +258,8 @@ require_once "controller.php";
                                             </div>
                                             <div class="col-sm-4 mb-3 mb-sm-0"></div>
                                         </div>
+
+
 
                                     </div>
 
