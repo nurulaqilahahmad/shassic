@@ -12,7 +12,7 @@ require_once "controller.php";
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SHASSIC | Document Check</title>
+    <title>SHASSIC | Assessment Result</title>
 
     <link rel="icon" type="image/x-icon" href="img/favicon.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -123,8 +123,6 @@ require_once "controller.php";
                                         <div class="card-header py-3">
                                             <div class="text-center" id="row">
                                                 <div class="col-sm-6" style="display:flex; width:auto; justify-content: start;">
-                                                    <a class="font-weight-bold" href="history.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
-                                                        < Back</a>
                                                     <a class="font-weight-bold" href="history.php?assessee_id=<?php echo htmlentities($result->assessee_id); ?>">
                                                         < Back</a>
                                                 </div>
