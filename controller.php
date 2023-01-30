@@ -92,44 +92,54 @@ if (isset($_POST['register'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $options = array("cost" => 4);
-    $password = password_hash($password, PASSWORD_BCRYPT, $options);
+    //validate password strength
+    $uppercase = preg_match('@[A-Z]@', $password);
+    $lowercase = preg_match('@[a-z]@', $password);
+    $number    = preg_match('@[0-9]@', $password);
+    $specialChars = preg_match('@[^\w]@', $password);
 
-    $picture = $_FILES['picture']['name'];
-
-    // get the image extension
-    $extension = substr($picture, strlen($picture) - 4, strlen($picture));
-    // allowed extensions
-    $allowed_extensions = array(".jpg", "jpeg", ".png", ".gif");
-    // Validation for allowed extensions .in_array() function searches an array for a specific value.
-    if (!in_array($extension, $allowed_extensions)) {
-        echo "<script>alert('Invalid format. Only jpg / jpeg/ png /gif format allowed');</script>";
+    if (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
+        $errors['weak-password'] = 'Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character';
     } else {
-        //rename the image file
-        $profpicture = md5($picture) . time() . $extension;
-        // Code for move image into directory
-        move_uploaded_file($_FILES["picture"]["tmp_name"], "img/profile-picture/" . $profpicture);
+        $options = array("cost" => 4);
+        $password = password_hash($password, PASSWORD_BCRYPT, $options);
 
-        //Query for data insertion
-        $sql = "INSERT INTO user(username, email, password, code, fullname, picture) VALUES(:username, :email, :password, :code, :fullname, :profpicture)";
+        $picture = $_FILES['picture']['name'];
 
-        $query = $dbh->prepare($sql);
-        $query->bindParam(':username', $username, PDO::PARAM_STR);
-        $query->bindParam(':email', $email, PDO::PARAM_STR);
-        $query->bindParam(':password', $password, PDO::PARAM_STR);
-        $query->bindParam(':code', $code, PDO::PARAM_STR);
-        $query->bindParam(':fullname', $fullname, PDO::PARAM_STR);
-        $query->bindParam(':profpicture', $profpicture, PDO::PARAM_STR);
-        $query->execute();
-
-        $lastInsertId = $dbh->lastInsertId();
-        if ($lastInsertId) {
-            $_SESSION['info'] = "You have successfully signed up. ";
-            // echo "<script>alert('You have successfully signed up');</script>";
-            // echo "<script type='text/javascript'> document.location ='login.php'; </script>";
+        // get the image extension
+        $extension = substr($picture, strlen($picture) - 4, strlen($picture));
+        // allowed extensions
+        $allowed_extensions = array(".jpg", "jpeg", ".png", ".gif");
+        // Validation for allowed extensions .in_array() function searches an array for a specific value.
+        if (!in_array($extension, $allowed_extensions)) {
+            echo "<script>alert('Invalid format. Only jpg / jpeg/ png /gif format allowed');</script>";
         } else {
-            $errors['db-error'] = 'Something Went Wrong. Please try again';
-            // echo "<script>alert('Something Went Wrong. Please try again');</script>";
+            //rename the image file
+            $profpicture = md5($picture) . time() . $extension;
+            // Code for move image into directory
+            move_uploaded_file($_FILES["picture"]["tmp_name"], "img/profile-picture/" . $profpicture);
+
+            //Query for data insertion
+            $sql = "INSERT INTO user(username, email, password, code, fullname, picture) VALUES(:username, :email, :password, :code, :fullname, :profpicture)";
+
+            $query = $dbh->prepare($sql);
+            $query->bindParam(':username', $username, PDO::PARAM_STR);
+            $query->bindParam(':email', $email, PDO::PARAM_STR);
+            $query->bindParam(':password', $password, PDO::PARAM_STR);
+            $query->bindParam(':code', $code, PDO::PARAM_STR);
+            $query->bindParam(':fullname', $fullname, PDO::PARAM_STR);
+            $query->bindParam(':profpicture', $profpicture, PDO::PARAM_STR);
+            $query->execute();
+
+            $lastInsertId = $dbh->lastInsertId();
+            if ($lastInsertId) {
+                $_SESSION['info'] = "You have successfully signed up. ";
+                // echo "<script>alert('You have successfully signed up');</script>";
+                // echo "<script type='text/javascript'> document.location ='login.php'; </script>";
+            } else {
+                $errors['db-error'] = 'Something Went Wrong. Please try again';
+                // echo "<script>alert('Something Went Wrong. Please try again');</script>";
+            }
         }
     }
 }
@@ -179,7 +189,6 @@ if (isset($_POST['check-email'])) {
 
                 $mail->send();
 
-                $_SESSION['info'] = "Password code has been sent to your email!";
                 $_SESSION['email'] = $email;
                 header('location: forgot-password-code.php');
             } catch (Exception $e) {
@@ -194,7 +203,6 @@ if (isset($_POST['check-email'])) {
 // if user click check password code button in forgot password code form
 if (isset($_POST['check-pwcode'])) {
     // getting post values
-    $_SESSION['info'] = "";
     $password_code = $_POST['password_code'];
 
     // query for data selection
@@ -209,7 +217,7 @@ if (isset($_POST['check-pwcode'])) {
         $result = $query->fetch();
         $email = $result['email'];
         $_SESSION['email'] = $email;
-        $_SESSION['info'] = "Please create a new password that are not the same as before";
+        
         header('location: forgot-password-new.php');
         exit();
     } else {
@@ -220,27 +228,35 @@ if (isset($_POST['check-pwcode'])) {
 // if user click change button in forgot password new form
 if (isset($_POST['change-password'])) {
     // getting post values
-    $_SESSION['info'] = "";
     $password = $_POST['password'];
     $old_password = $_POST['old_password'];
     $hash = password_hash($password, PASSWORD_DEFAULT);
 
-    $code = 0;
-    $email = $_SESSION['email']; // getting this email using session
+    //validate password strength
+    $uppercase = preg_match('@[A-Z]@', $password);
+    $lowercase = preg_match('@[a-z]@', $password);
+    $number    = preg_match('@[0-9]@', $password);
+    $specialChars = preg_match('@[^\w]@', $password);
 
-    if (password_verify($password, $old_password)) {
-        $errors['password-error'] = "New password cannot same with old password!";
+    if (!$uppercase || !$lowercase || !$number || !$specialChars || strlen($password) < 8) {
+        $errors['weak-password'] = 'Password should be at least 8 characters in length and should include at least one upper case letter, one number, and one special character';
     } else {
-        //Query for data update
-        $sql = "UPDATE user SET password=?, password_code=? WHERE email=?";
-        $query = $dbh->prepare($sql);
-        $query->execute([$hash, $code, $email]);
+        $code = 0;
+        $email = $_SESSION['email']; // getting this email using session
 
-        if ($query) {
-            $_SESSION['info'] = "Your password has been changed. You can now login with your new password.";
-            header('location: forgot-password-changed.php');
+        if (password_verify($password, $old_password)) {
+            $errors['password-error'] = "New password cannot same with old password!";
         } else {
-            $errors['db-error'] = "Something went wrong!";
+            //Query for data update
+            $sql = "UPDATE user SET password=?, password_code=? WHERE email=?";
+            $query = $dbh->prepare($sql);
+            $query->execute([$hash, $code, $email]);
+
+            if ($query) {
+                header('location: forgot-password-changed.php');
+            } else {
+                $errors['db-error'] = "Something went wrong!";
+            }
         }
     }
 }
@@ -4932,12 +4948,12 @@ if (isset($_POST['save-personnel-interview-worker-9-from-history'])) {
 
 if (isset($_POST['edit'])) {
     $assessee_id = $_POST['assessee_id'];
-    header('location: edit-assessment-from-history.php?assessee_id='. $assessee_id);
+    header('location: edit-assessment-from-history.php?assessee_id=' . $assessee_id);
 }
 
 if (isset($_POST['print'])) {
     $assessee_id = $_POST['assessee_id'];
-    header('location: print.php?assessee_id='. $assessee_id);
+    header('location: print.php?assessee_id=' . $assessee_id);
 }
 
 // if (isset($_GET['delete_id'])) {
@@ -5067,4 +5083,3 @@ function deletePersonnelInterviewWorker($assessee_id)
         return false;
     }
 }
-?>

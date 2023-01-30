@@ -1,7 +1,7 @@
 <?php require_once "controller.php"; ?>
 
 <?php
-if ($_SESSION['info'] == false) {
+if ($_SESSION['email'] == false) {
     header('location: login.php');
 }
 ?>
@@ -49,20 +49,7 @@ if ($_SESSION['info'] == false) {
                                 <div class="p-5">
                                     <div class="text-center">
                                         <h1 class="h4 text-gray-900 mb-4 font-weight-bold">Password Changed</h1>
-
-                                        <?php
-                                        if ($_SESSION['info'] != "") {
-                                        ?>
-                                            <div class="col-lg-12 mb-4">
-                                                <div class="card bg-success text-white shadow">
-                                                    <div class="card-body text-center font-weight-bold" style="margin: 10px;">
-                                                        <?php echo $_SESSION['info']; ?>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        <?php
-                                        }
-                                        ?>
+                                        <p class="mb-4">Your password has been changed. You can now login with your new password.</p>
                                         <?php
                                         if (count($errors) > 0) {
                                         ?>

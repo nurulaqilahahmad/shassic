@@ -46,7 +46,7 @@
                                         <div class="text-center">
                                             <h1 class="h4 text-gray-900 mb-4 font-weight-bold">Forgot Your Password?</h1>
                                             <p class="mb-4">We get it, stuff happens. Just enter your email address below
-                                                and we'll send you a code to reset your password!</p>
+                                                and we'll send you a code to reset your password.</p>
                                         </div>
                                         <?php
                                         if (count($errors) > 0) {
