@@ -1299,8 +1299,8 @@ if (isset($_POST['save-workplace-inspection-general'])) {
                         $conn1 = "UPDATE assessment SET total_percentage=(((:general_c_score + '$result->high_risk_c_score') / (72 - (:general_na_score + '$result->high_risk_na_score')) * 60)+'$results1->document_check_percentage'+'$results1->personnel_interview_percentage'), 
                         workplace_inspection_percentage=((:general_c_score + '$result->high_risk_c_score') / (72 - (:general_na_score + '$result->high_risk_na_score')) * 60) WHERE assessee_id=:assessee_id";
                         $update1 = $dbh->prepare($conn1);
-                        $update->bindParam(':general_c_score', $general_c_score, PDO::PARAM_STR);
-                        $update->bindParam(':general_na_score', $general_na_score, PDO::PARAM_STR);
+                        $update1->bindParam(':general_c_score', $general_c_score, PDO::PARAM_STR);
+                        $update1->bindParam(':general_na_score', $general_na_score, PDO::PARAM_STR);
                         $update1->execute();
                     }
                 }
@@ -1388,8 +1388,8 @@ if (isset($_POST['save-workplace-inspection-general-from-history'])) {
                         $conn1 = "UPDATE assessment SET total_percentage=(((:general_c_score + '$result->high_risk_c_score') / (72 - (:general_na_score + '$result->high_risk_na_score')) * 60)+'$results1->document_check_percentage'+'$results1->personnel_interview_percentage'), 
                         workplace_inspection_percentage=((:general_c_score + '$result->high_risk_c_score') / (72 - (:general_na_score + '$result->high_risk_na_score')) * 60) WHERE assessee_id=:assessee_id";
                         $update1 = $dbh->prepare($conn1);
-                        $update->bindParam(':general_c_score', $general_c_score, PDO::PARAM_STR);
-                        $update->bindParam(':general_na_score', $general_na_score, PDO::PARAM_STR);
+                        $update1->bindParam(':general_c_score', $general_c_score, PDO::PARAM_STR);
+                        $update1->bindParam(':general_na_score', $general_na_score, PDO::PARAM_STR);
                         $update1->execute();
                     }
                 }
@@ -1473,10 +1473,11 @@ if (isset($_POST['save-workplace-inspection-general-from-history'])) {
                 $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
 
                 if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET workplace_inspection_percentage=((:general_c_score + '$result->high_risk_c_score') / (72 - (:general_na_score + '$result->high_risk_na_score')) * 60) WHERE assessee_id=:assessee_id";
+                    $conn1 = "UPDATE assessment SET total_percentage=(((:general_c_score + '$result->high_risk_c_score') / (72 - (:general_na_score + '$result->high_risk_na_score')) * 60)+'$results1->document_check_percentage'+'$results1->personnel_interview_percentage'), 
+                    workplace_inspection_percentage=((:general_c_score + '$result->high_risk_c_score') / (72 - (:general_na_score + '$result->high_risk_na_score')) * 60) WHERE assessee_id=:assessee_id";
                     $update1 = $dbh->prepare($conn1);
-                    $update->bindParam(':general_c_score', $general_c_score, PDO::PARAM_STR);
-                    $update->bindParam(':general_na_score', $general_na_score, PDO::PARAM_STR);
+                    $update1->bindParam(':general_c_score', $general_c_score, PDO::PARAM_STR);
+                    $update1->bindParam(':general_na_score', $general_na_score, PDO::PARAM_STR);
                     $update1->execute();
                 }
             }
