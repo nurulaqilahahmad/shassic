@@ -135,21 +135,22 @@ require_once "controller.php";
                                             @media print {
                                                 body * {
                                                     visibility: hidden;
+                                                    /* overflow:visible !important; */
                                                 }
 
-                                                .print-container,
                                                 .print-container * {
                                                     visibility: visible;
                                                 }
 
                                                 .print-container {
-
-                                                    left: 0px;
-                                                    top: 0px;
+                                                    position: relative;
+                                                    left: 0;
+                                                    top: 0;
                                                 }
                                             }
                                         </style>
-                                        <div class="row print-container">
+
+                                        <span class="print-container">
                                             <div class="card-body">
 
                                                 <div class="text-center">
@@ -160,7 +161,7 @@ require_once "controller.php";
 
                                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                                     <thead>
-                                                        <th colspan="4">Title Here</th>
+                                                        <th colspan="4">Result SHASSIC Assessment</th>
                                                     </thead>
                                                 </table>
 
@@ -213,6 +214,7 @@ require_once "controller.php";
                                                                         </div>
                                                                     </td>
                                                                 </tr>
+
                                                             </tfoot>
                                                         </table>
                                                     </div>
@@ -232,19 +234,59 @@ require_once "controller.php";
                                                     </div>
                                                 </form>
 
-                                                <p align=left><b>SHASSIC Star Ranking Description</b></p>
-                                                <p align=left>90 to 100: 5 STAR(S)</p>
-                                                <p align=left>80 to 89.9: 4 STAR(S)</p>
-                                                <p align=left>70 to 79.9: 3 STAR(S)</p>
-                                                <p align=left>60 to 69.9: 2 STAR(S)</p>
-                                                <p align=left>50 to 59.9: 1 STAR(S)</p>
-                                                <p align=left>49 and below: Certificate of Participation ONLY</p>
-                                                <p align=left><b>Note: CIDB may award CCD point for the projects scored with star rankings</b></p>
+                                                <div style="font-size: small;">
+                                                    <p align=left><b>SHASSIC Star Ranking Description</b></p>
+                                                    <p align=left>90 to 100: 5 STAR(S)</p>
+                                                    <p align=left>80 to 89.9: 4 STAR(S)</p>
+                                                    <p align=left>70 to 79.9: 3 STAR(S)</p>
+                                                    <p align=left>60 to 69.9: 2 STAR(S)</p>
+                                                    <p align=left>50 to 59.9: 1 STAR(S)</p>
+                                                    <p align=left>49 and below: Certificate of Participation ONLY</p>
+                                                    <p align=left><b>Note: CIDB may award CCD point for the projects scored with star rankings</b></p><br>
+                                                </div>
+
+
+                                                <!-- For sign -->
+                                                <table>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td colspan="2" style="text-align: left;">Prepared By</td>
+                                                            <td colspan="2" style="text-align: left;">Checked By</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="text-align:left">Signature</td>
+                                                            <td style="text-align:left">:
+                                                                <hr>
+                                                            </td>
+                                                            <td style="text-align:left">Signature</td>
+                                                            <td style="text-align:left">:
+                                                                <hr>
+                                                            </td>
+                                                        </tr>
+
+                                                        <tr>
+                                                            <td style="width: 20%; text-align:left">Assessor name</td>
+                                                            <td style="width: 30%; text-align:left">:
+                                                                <hr>
+                                                            </td>
+                                                            <td style="width: 20%; text-align:left">Name</td>
+                                                            <td style="width: 30%; text-align:left">:
+                                                                <hr>
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td style="width: 20%; text-align:left">Department stamp</td>
+                                                            <td style="width: 30%; text-align:left">:</td>
+                                                            <td style="width: 20%; text-align:left">Department stamp</td>
+                                                            <td style="width: 30%; text-align:left">:</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
                                             </div>
-                                        </div>
-                                        
-                                        <!-- For sign -->
-                                        <p>Prepared By</p>
+                                        </span>
+
+
 
                                         <!-- For print -->
                                         <div class="form-group" id="row">
