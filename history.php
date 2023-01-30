@@ -232,7 +232,7 @@ require_once "controller.php";
                                                                         ?>
                                                                                 <!-- value from personnel subscore -->
                                                                                 <?php
-                                                                                $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id='$totalcnas->assessment_id'";
+                                                                                $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id='$totalcnas1->assessment_id'";
                                                                                 $query = $dbh->prepare($sql);
                                                                                 $query->execute();
                                                                                 $totalcna2 = $query->fetchAll(PDO::FETCH_OBJ);
