@@ -33,13 +33,10 @@ require_once "controller.php";
     <?php if ($_SESSION['login']) { ?>
 
         <div class="landing-container">
-            <div class="landing-navbar">
-                <img src="img/landing/logo.png" class="landing-logo">
-                <!-- <nav class="landing-nav">
-                    <ul class="landing-ul" id="menuList">
-                        <li class="landing-li"><a href="about.php" class="landing-a">ABOUT</a></li>
-                    </ul>
-                </nav> -->
+        <div class="landing-navbar">
+                <a href="landing.php" class="d-flex landing-a">
+                    <h1 style="font-size: 24px; font-weight: 700; color: #fff; margin-top: 3rem; margin-bottom: 3rem">SHASSIC<span style="color: #558381;">.</span></h1>
+                </a>
                 <img src="img/landing/menu.png" class="menu-icon" onclick="togglemenu()">
             </div>
 
