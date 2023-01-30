@@ -1036,7 +1036,7 @@ if (isset($_POST['save-document-check'])) {
 
                 if ($query->rowCount() > 0) {
                     foreach ($result1 as $results1) {
-                        $con = "UPDATE assessment SET assessee_id=:assessee_id, document_check_percentage=:document_check_percentage, total_percentage=('$results1->workplace_inspection_percentage'+'$results1->personnel_interview_percentage'+'$document_check_percentage') WHERE assessee_id='$result->assessment_id'";
+                        $con = "UPDATE assessment SET document_check_percentage=:document_check_percentage, total_percentage=('$results1->workplace_inspection_percentage'+'$results1->personnel_interview_percentage'+'$document_check_percentage') WHERE assessee_id='$result->assessment_id'";
                         $update = $dbh->prepare($con);
                         $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
                         $update->bindParam(':document_check_percentage', $document_check_percentage, PDO::PARAM_STR);
@@ -1124,7 +1124,7 @@ if (isset($_POST['save-document-check-from-history'])) {
 
                 if ($query->rowCount() > 0) {
                     foreach ($result1 as $results1) {
-                        $con = "UPDATE assessment SET assessee_id=:assessee_id, document_check_percentage=:document_check_percentage, total_percentage=('$results1->workplace_inspection_percentage'+'$results1->personnel_interview_percentage'+'$document_check_percentage') WHERE assessee_id='$result->assessment_id'";
+                        $con = "UPDATE assessment SET document_check_percentage=:document_check_percentage, total_percentage=('$results1->workplace_inspection_percentage'+'$results1->personnel_interview_percentage'+'$document_check_percentage') WHERE assessee_id='$result->assessment_id'";
                         $update = $dbh->prepare($con);
                         $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
                         $update->bindParam(':document_check_percentage', $document_check_percentage, PDO::PARAM_STR);
@@ -1133,6 +1133,91 @@ if (isset($_POST['save-document-check-from-history'])) {
                 }
             }
         }
+    }
+
+    foreach ($_POST['document_check_checklist_id'] as $document_check_checklist_id) {
+        if (isset($_POST['doccheck_' . $document_check_checklist_id])) {
+            $doccheck = $_POST['doccheck_' . $document_check_checklist_id];
+            $doc_check = implode(', ', $doccheck);
+        } else {
+            $doc_check = "";
+        }
+        if (isset($_POST['remarks_' . $document_check_checklist_id])) {
+            $remarks = $_POST['remarks_' . $document_check_checklist_id];
+        } else {
+            $remarks = '';
+        }
+
+        // query for data selection - document_check_assessment
+        $sql1 = "SELECT * FROM document_check_assessment WHERE document_check_checklist_id=:document_check_checklist_id AND assessment_id=:assessee_id";
+        $query1 = $dbh->prepare($sql1);
+        $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+        $query1->bindParam(':document_check_checklist_id', $document_check_checklist_id, PDO::PARAM_STR);
+        $query1->execute();
+        $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
+
+        if ($query1->rowCount() > 0) {
+            foreach ($results1 as $result1) {
+                //query for updation - document_check_assessment
+                $con1 = "UPDATE document_check_assessment SET status=:doc_check, remarks=:remarks WHERE document_check_checklist_id=:document_check_checklist_id AND assessment_id=:assessee_id";
+                $update1 = $dbh->prepare($con1);
+                $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+                $update1->bindParam(':doc_check', $doc_check, PDO::PARAM_STR);
+                $update1->bindParam(':remarks', $remarks, PDO::PARAM_STR);
+                $update1->bindParam(':document_check_checklist_id', $document_check_checklist_id, PDO::PARAM_STR);
+                $update1->execute();
+
+                if ($update1) {
+                    $infos['document-check-update-success'] = "Updated successfully";
+                } else {
+                    $errors['document-check-update-fail'] = "Something went wrong";
+                }
+            }
+        }
+    }
+}
+
+//if user click save-document-check-from-history button in assessment document check from history page
+if (isset($_POST['save-document-check-from-history'])) {
+    //getting the post value
+    $assessee_id = $_POST['assessee_id'];
+    $doc_check_c_score = $_POST['doc_check_c_score'];
+    $doc_check_na_score = $_POST['doc_check_na_score'];
+    $document_check_percentage = $_POST['document_check_percentage'];
+
+    // query for data selection - workplace_inspection_subscore
+    $sql = "SELECT * FROM document_check_subscore WHERE assessment_id=:assessee_id";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+    $query->execute();
+    $results = $query->fetchAll(PDO::FETCH_OBJ);
+
+    if ($query->rowCount() > 0) {
+        foreach ($results as $result) {
+            //query for updation
+            $con = "UPDATE document_check_subscore SET doc_check_c_score=:doc_check_c_score, doc_check_na_score=:doc_check_na_score WHERE assessment_id=:assessee_id";
+            $update = $dbh->prepare($con);
+            $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+            $update->bindParam(':doc_check_c_score', $doc_check_c_score, PDO::PARAM_STR);
+            $update->bindParam(':doc_check_na_score', $doc_check_na_score, PDO::PARAM_STR);
+            $update->execute();
+        }
+    }
+
+    // query for data selection
+    $sql = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
+    $query = $dbh->prepare($sql);
+    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+    $query->execute();
+    $result = $query->fetchAll(PDO::FETCH_OBJ);
+
+    if ($query->rowCount() > 0) {
+        //query for updation
+        $con = "UPDATE assessment SET document_check_percentage=:document_check_percentage WHERE assessee_id=:assessee_id";
+        $update = $dbh->prepare($con);
+        $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
+        $update->bindParam(':document_check_percentage', $document_check_percentage, PDO::PARAM_STR);
+        $update->execute();
     }
 
     foreach ($_POST['document_check_checklist_id'] as $document_check_checklist_id) {
@@ -1214,6 +1299,7 @@ if (isset($_POST['save-workplace-inspection-general'])) {
                         $conn1 = "UPDATE assessment SET total_percentage=(((:general_c_score + '$result->high_risk_c_score') / (72 - (:general_na_score + '$result->high_risk_na_score')) * 60)+'$results1->document_check_percentage'+'$results1->personnel_interview_percentage'), 
                         workplace_inspection_percentage=((:general_c_score + '$result->high_risk_c_score') / (72 - (:general_na_score + '$result->high_risk_na_score')) * 60) WHERE assessee_id=:assessee_id";
                         $update1 = $dbh->prepare($conn1);
+                        $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
                         $update1->bindParam(':general_c_score', $general_c_score, PDO::PARAM_STR);
                         $update1->bindParam(':general_na_score', $general_na_score, PDO::PARAM_STR);
                         $update1->execute();
@@ -1303,6 +1389,7 @@ if (isset($_POST['save-workplace-inspection-general-from-history'])) {
                         $conn1 = "UPDATE assessment SET total_percentage=(((:general_c_score + '$result->high_risk_c_score') / (72 - (:general_na_score + '$result->high_risk_na_score')) * 60)+'$results1->document_check_percentage'+'$results1->personnel_interview_percentage'), 
                         workplace_inspection_percentage=((:general_c_score + '$result->high_risk_c_score') / (72 - (:general_na_score + '$result->high_risk_na_score')) * 60) WHERE assessee_id=:assessee_id";
                         $update1 = $dbh->prepare($conn1);
+                        $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
                         $update1->bindParam(':general_c_score', $general_c_score, PDO::PARAM_STR);
                         $update1->bindParam(':general_na_score', $general_na_score, PDO::PARAM_STR);
                         $update1->execute();

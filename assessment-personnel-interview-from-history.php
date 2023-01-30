@@ -208,7 +208,7 @@ require_once "controller.php";
                                                         <input type="hidden" class="form-control form-control-user font-weight-bold" name="managerial_na_score" id="managerial_na_score" onchange="countSelected()">
                                                     </div>
                                                     <div class="col-sm-4 mb-3 mb-sm-0">
-                                                        <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-managerial">Save</button>
+                                                        <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-managerial-from-history">Save</button>
                                                     </div>
                                                 </div>
                                                 </form>
@@ -371,7 +371,7 @@ require_once "controller.php";
                                                         <input type="hidden" class="form-control form-control-user font-weight-bold" name="supervisory_na_score" id="supervisory_na_score" onchange="countSelected()">
                                                     </div>
                                                     <div class="col-sm-4 mb-3 mb-sm-0">
-                                                        <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-supervisory">Save</button>
+                                                        <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-supervisory-from-history">Save</button>
                                                     </div>
                                                 </div>
                                                 <!-- End of Form Group -->
@@ -482,7 +482,7 @@ require_once "controller.php";
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_1_na_score" id="worker_1_na_score" onchange="countSelected()">
                                                         </div>
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-1">Save</button>
+                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-1-from-history">Save</button>
                                                         </div>
                                                     </div>
                                                     </form>
@@ -577,7 +577,7 @@ require_once "controller.php";
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_2_na_score" id="worker_2_na_score" onchange="countSelected()">
                                                         </div>
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-2">Save</button>
+                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-2-from-history">Save</button>
                                                         </div>
                                                     </div>
                                                     </form>
@@ -672,7 +672,7 @@ require_once "controller.php";
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_3_na_score" id="worker_3_na_score" onchange="countSelected()">
                                                         </div>
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-3">Save</button>
+                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-3-from-history">Save</button>
                                                         </div>
                                                     </div>
                                                     </form>
@@ -767,7 +767,7 @@ require_once "controller.php";
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_4_na_score" id="worker_4_na_score" onchange="countSelected()">
                                                         </div>
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-4">Save</button>
+                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-4-from-history">Save</button>
                                                         </div>
                                                     </div>
                                                     </form>
@@ -862,7 +862,7 @@ require_once "controller.php";
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_5_na_score" id="worker_5_na_score" onchange="countSelected()">
                                                         </div>
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-5">Save</button>
+                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-5-from-history">Save</button>
                                                         </div>
                                                     </div>
                                                     </form>
@@ -957,7 +957,7 @@ require_once "controller.php";
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_6_na_score" id="worker_6_na_score" onchange="countSelected()">
                                                         </div>
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-6">Save</button>
+                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-6-from-history">Save</button>
                                                         </div>
                                                     </div>
                                                     </form>
@@ -1052,7 +1052,7 @@ require_once "controller.php";
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_7_na_score" id="worker_7_na_score" onchange="countSelected()">
                                                         </div>
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-7">Save</button>
+                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-7-from-history">Save</button>
                                                         </div>
                                                     </div>
                                                     </form>
@@ -1147,7 +1147,7 @@ require_once "controller.php";
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_8_na_score" id="worker_8_na_score" onchange="countSelected()">
                                                         </div>
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-8">Save</button>
+                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-8-from-history">Save</button>
                                                         </div>
                                                     </div>
                                                     </form>
@@ -1242,7 +1242,7 @@ require_once "controller.php";
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_9_na_score" id="worker_9_na_score" onchange="countSelected()">
                                                         </div>
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
-                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-9">Save</button>
+                                                            <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-personnel-interview-worker-9-from-history">Save</button>
                                                         </div>
                                                     </div>
                                                     </form>

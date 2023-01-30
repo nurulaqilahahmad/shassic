@@ -211,7 +211,7 @@ require_once "controller.php";
                                                         <input type="hidden" class="form-control form-control-user font-weight-bold" name="general_na_score" id="general_na_score" onchange="countSelected()">
                                                     </div>
                                                     <div class="col-sm-4 mb-3 mb-sm-0">
-                                                        <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection-general">Save</button>
+                                                        <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection-general-from-history">Save</button>
                                                     </div>
                                                 </div>
                                                 </form>
@@ -379,7 +379,7 @@ require_once "controller.php";
                                                         <input type="hidden" class="form-control form-control-user font-weight-bold" name="high_risk_na_score" id="high_risk_na_score" onchange="countSelected()">
                                                     </div>
                                                     <div class="col-sm-4 mb-3 mb-sm-0">
-                                                        <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection-high-risk">Save</button>
+                                                        <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-workplace-inspection-high-risk-from-history">Save</button>
                                                     </div>
                                                 </div>
                                                 </form>
