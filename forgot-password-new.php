@@ -58,19 +58,7 @@
                                             <div class="p-5">
                                                 <div class="text-center">
                                                     <h1 class="h4 text-gray-900 mb-4 font-weight-bold">New Password</h1>
-                                                    <?php
-                                                    if ($_SESSION['info'] != "") {
-                                                    ?>
-                                                        <div class="col-lg-12 mb-4">
-                                                            <div class="card bg-success text-white shadow">
-                                                                <div class="card-body text-center font-weight-bold" style="margin: 10px;">
-                                                                    <?php echo $_SESSION['info']; ?>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    <?php
-                                                    }
-                                                    ?>
+                                                    <p class="mb-4">Please create a new password that are not the same as before.</p>
                                                     <?php
                                                     if (count($errors) > 0) {
                                                     ?>

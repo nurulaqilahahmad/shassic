@@ -50,19 +50,7 @@ if ($email == false) {
                                     <form class="user" method="post">
                                         <div class="text-center">
                                             <h1 class="h4 text-gray-900 mb-4 font-weight-bold">Code Verification</h1>
-                                            <?php
-                                            if ($_SESSION['info'] != "") {
-                                            ?>
-                                                <div class="col-lg-12 mb-4">
-                                                    <div class="card bg-success text-white shadow">
-                                                        <div class="card-body text-center font-weight-bold" style="margin: 10px">
-                                                            <?php echo $_SESSION['info']; ?>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            <?php
-                                            }
-                                            ?>
+                                            <p class="mb-4">Please enter the code that has been sent to your email.</p>
                                             <?php
                                             if (count($errors) > 0) {
                                             ?>
