@@ -215,7 +215,7 @@ if ($query->rowCount() > 0) {
                                                     <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" onchange="countSelected()">
                                                 </div>
                                                 <div class="col-sm-4 mb-3 mb-sm-0">
-                                                    <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-document-check">Save</button>
+                                                    <button type="submit" class="btn btn-primary btn-user btn-block font-weight-bold" name="save-document-check-from-history">Save</button>
                                                 </div>
                                             </div>
                                             <!-- End of Form Group -->
