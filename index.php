@@ -79,7 +79,7 @@
                         <p data-aos="fade-up">Safety and Health Assessment System in Construction, or SHASSIC, is an independent method to
                             assess and evaluate the safety and health performance of a contractor in construction works / projects.
                             The assessment shall cover 25% to 75% of a project’s physical progress and shall be inclusive of
-                            construction planning stage and construction stage.</p>
+                            construction planning stage and construction stage. <br> - Construction Industry Standard (CIS) 10:2020</p>
                         <a data-aos="fade-up" data-aos-delay="200" href="login.php" class="btn-get-started" style="font-weight: bold;">Get Started</a>
                     </div>
                 </div>
