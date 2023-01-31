@@ -313,8 +313,10 @@ if ($query->rowCount() > 0) {
             var docCheckNAScore = document.getElementById('doc_check_na_score');
             var doc_check_c = document.querySelectorAll('input[class="checkbox1"]:checked').length;
             var doc_check_na = document.querySelectorAll('input[class="checkbox3"]:checked').length;
+            let e = doc_check_percent.toFixed(2);
             docCheckCScore.setAttribute('value', doc_check_c);
             docCheckNAScore.setAttribute('value', doc_check_na);
+            docCheckPercent.setAttribute('value', e);
         </script>
 
     <?php } else {
