@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jan 18, 2023 at 07:50 AM
+-- Generation Time: Jan 31, 2023 at 08:49 AM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 7.4.25
 
@@ -178,6 +178,7 @@ CREATE TABLE `document_check_subscore` (
   `id` bigint(20) NOT NULL,
   `assessment_id` bigint(20) NOT NULL,
   `doc_check_c_score` int(11) NOT NULL,
+  `doc_check_nc_score` int(11) NOT NULL,
   `doc_check_na_score` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -278,26 +279,37 @@ CREATE TABLE `personnel_interview_subscore` (
   `id` bigint(20) NOT NULL,
   `assessment_id` bigint(20) NOT NULL,
   `managerial_c_score` int(11) NOT NULL,
+  `managerial_nc_score` int(11) NOT NULL,
   `managerial_na_score` int(11) NOT NULL,
   `supervisory_c_score` int(11) NOT NULL,
+  `supervisory_nc_score` int(11) NOT NULL,
   `supervisory_na_score` int(11) NOT NULL,
   `worker_1_c_score` int(11) NOT NULL,
+  `worker_1_nc_score` int(11) NOT NULL,
   `worker_1_na_score` int(11) NOT NULL,
   `worker_2_c_score` int(11) NOT NULL,
+  `worker_2_nc_score` int(11) NOT NULL,
   `worker_2_na_score` int(11) NOT NULL,
   `worker_3_c_score` int(11) NOT NULL,
+  `worker_3_nc_score` int(11) NOT NULL,
   `worker_3_na_score` int(11) NOT NULL,
   `worker_4_c_score` int(11) NOT NULL,
+  `worker_4_nc_score` int(11) NOT NULL,
   `worker_4_na_score` int(11) NOT NULL,
   `worker_5_c_score` int(11) NOT NULL,
+  `worker_5_nc_score` int(11) NOT NULL,
   `worker_5_na_score` int(11) NOT NULL,
   `worker_6_c_score` int(11) NOT NULL,
+  `worker_6_nc_score` int(11) NOT NULL,
   `worker_6_na_score` int(11) NOT NULL,
   `worker_7_c_score` int(11) NOT NULL,
+  `worker_7_nc_score` int(11) NOT NULL,
   `worker_7_na_score` int(11) NOT NULL,
   `worker_8_c_score` int(11) NOT NULL,
+  `worker_8_nc_score` int(11) NOT NULL,
   `worker_8_na_score` int(11) NOT NULL,
   `worker_9_c_score` int(11) NOT NULL,
+  `worker_9_nc_score` int(11) NOT NULL,
   `worker_9_na_score` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -479,10 +491,12 @@ CREATE TABLE `user` (
   `id` bigint(20) NOT NULL,
   `username` varchar(200) NOT NULL,
   `email` varchar(200) NOT NULL,
+  `temp_email` varchar(200) NOT NULL,
   `password` varchar(200) NOT NULL,
   `code` varchar(200) NOT NULL,
   `fullname` varchar(200) NOT NULL,
   `picture` varchar(200) NOT NULL,
+  `email_code` mediumint(50) NOT NULL,
   `password_code` mediumint(50) NOT NULL,
   `creation_date` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -626,8 +640,10 @@ CREATE TABLE `workplace_inspection_subscore` (
   `id` bigint(20) NOT NULL,
   `assessment_id` bigint(20) NOT NULL,
   `general_c_score` int(11) NOT NULL,
+  `general_nc_score` int(11) NOT NULL,
   `general_na_score` int(11) NOT NULL,
   `high_risk_c_score` int(11) NOT NULL,
+  `high_risk_nc_score` int(11) NOT NULL,
   `high_risk_na_score` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
