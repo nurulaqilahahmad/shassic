@@ -311,8 +311,10 @@ if ($query->rowCount() > 0) {
             }
             var docCheckCScore = document.getElementById('doc_check_c_score');
             var docCheckNAScore = document.getElementById('doc_check_na_score');
+            var docCheckPercent = document.getElementById('document_check_percentage');
             var doc_check_c = document.querySelectorAll('input[class="checkbox1"]:checked').length;
             var doc_check_na = document.querySelectorAll('input[class="checkbox3"]:checked').length;
+            var doc_check_percent = (doc_check_c / (57 - doc_check_na) * 20);
             let e = doc_check_percent.toFixed(2);
             docCheckCScore.setAttribute('value', doc_check_c);
             docCheckNAScore.setAttribute('value', doc_check_na);
