@@ -114,7 +114,7 @@ require_once "controller.php";
                                                 </div>
                                                 <div class="form-group" id="row">
                                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                                        <input type="text" class="form-control form-control-user font-weight-bold" name="project_location" id="project_location" placeholder="Project Location" required>
+                                                        <input type="text" class="form-control form-control-user font-weight-bold" name="project_location" id="project_location" placeholder="Location (Street, ZIP, City, State)" required="true">
                                                     </div>
                                                     <div class="col-sm-6">
                                                         <input placeholder="Project Image" type="text" onfocus="(this.type='file')" class="form-control form-control-user font-weight-bold" name="project_picture" id="project_picture" accept="image/*" onchange="document.getElementById('project_picture').src = window.URL.createObjectURL(this.files[0])" required>

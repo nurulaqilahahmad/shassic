@@ -119,26 +119,32 @@ if (isset($_POST['register'])) {
             // Code for move image into directory
             move_uploaded_file($_FILES["picture"]["tmp_name"], "img/profile-picture/" . $profpicture);
 
-            //Query for data insertion
-            $sql = "INSERT INTO user(username, email, password, code, fullname, picture) VALUES(:username, :email, :password, :code, :fullname, :profpicture)";
+            $regex = '/^[0-9]{6}-[0-9]{2}-[0-9]{4}$/';
 
-            $query = $dbh->prepare($sql);
-            $query->bindParam(':username', $username, PDO::PARAM_STR);
-            $query->bindParam(':email', $email, PDO::PARAM_STR);
-            $query->bindParam(':password', $password, PDO::PARAM_STR);
-            $query->bindParam(':code', $code, PDO::PARAM_STR);
-            $query->bindParam(':fullname', $fullname, PDO::PARAM_STR);
-            $query->bindParam(':profpicture', $profpicture, PDO::PARAM_STR);
-            $query->execute();
+            if (preg_match($regex, $code)) {
+                //Query for data insertion
+                $sql = "INSERT INTO user(username, email, password, code, fullname, picture) VALUES(:username, :email, :password, :code, :fullname, :profpicture)";
 
-            $lastInsertId = $dbh->lastInsertId();
-            if ($lastInsertId) {
-                $_SESSION['info'] = "You have successfully signed up. ";
-                // echo "<script>alert('You have successfully signed up');</script>";
-                // echo "<script type='text/javascript'> document.location ='login.php'; </script>";
+                $query = $dbh->prepare($sql);
+                $query->bindParam(':username', $username, PDO::PARAM_STR);
+                $query->bindParam(':email', $email, PDO::PARAM_STR);
+                $query->bindParam(':password', $password, PDO::PARAM_STR);
+                $query->bindParam(':code', $code, PDO::PARAM_STR);
+                $query->bindParam(':fullname', $fullname, PDO::PARAM_STR);
+                $query->bindParam(':profpicture', $profpicture, PDO::PARAM_STR);
+                $query->execute();
+
+                $lastInsertId = $dbh->lastInsertId();
+                if ($lastInsertId) {
+                    $_SESSION['info'] = "You have successfully signed up. ";
+                    // echo "<script>alert('You have successfully signed up');</script>";
+                    // echo "<script type='text/javascript'> document.location ='login.php'; </script>";
+                } else {
+                    $errors['db-error'] = 'Something Went Wrong. Please try again';
+                    // echo "<script>alert('Something Went Wrong. Please try again');</script>";
+                }
             } else {
-                $errors['db-error'] = 'Something Went Wrong. Please try again';
-                // echo "<script>alert('Something Went Wrong. Please try again');</script>";
+                $errors['db-error'] = 'IC Invalid';
             }
         }
     }
@@ -217,7 +223,7 @@ if (isset($_POST['check-pwcode'])) {
         $result = $query->fetch();
         $email = $result['email'];
         $_SESSION['email'] = $email;
-        
+
         header('location: forgot-password-new.php');
         exit();
     } else {

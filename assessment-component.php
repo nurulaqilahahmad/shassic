@@ -33,12 +33,13 @@ require_once "controller.php";
             let valueContainer = document.querySelector("#progress-document-check");
 
             let progressValue = 0;
-            let speed = 50;
+            let speed = 0;
 
             let checkc = document.getElementById("doc_check_c_score").value;
+            let checknc = document.getElementById("doc_check_nc_score").value;
             let checkna = document.getElementById("doc_check_na_score").value;
 
-            let progressEndValue = Math.round((((parseInt(checkc) + parseInt(checkna)) / 57) * 100));
+            let progressEndValue = Math.round((((parseInt(checkc) + parseInt(checkna) + parseInt(checknc)) / 57) * 100));
 
             let progress = setInterval(() => {
                 if (progressValue == progressEndValue) {
@@ -70,13 +71,15 @@ require_once "controller.php";
             let progressValue = 0;
 
             let generalCScore = document.getElementById("general_c_score").value;
+            let generalNCScore = document.getElementById("general_nc_score").value;
             let generalNaScore = document.getElementById("general_na_score").value;
             let HighRiskCScore = document.getElementById("high_risk_c_score").value;
+            let HighRiskNCScore = document.getElementById("high_risk_nc_score").value;
             let HighRiskNaScore = document.getElementById("high_risk_na_score").value;
 
-            let progressEndValue = Math.round((((parseInt(generalCScore) + parseInt(generalNaScore) + parseInt(HighRiskCScore) + parseInt(HighRiskNaScore)) / 72) * 100));
+            let progressEndValue = Math.round((((parseInt(generalCScore) + parseInt(generalNaScore) + parseInt(HighRiskCScore) + parseInt(HighRiskNaScore) + parseInt(generalNCScore) + parseInt(HighRiskNCScore)) / 72) * 100));
 
-            let speed = 50;
+            let speed = 0;
 
             let progress = setInterval(() => {
                 if (progressValue == progressEndValue) {
@@ -107,8 +110,10 @@ require_once "controller.php";
             let progressValue = 0;
 
             let managerialcscore = document.getElementById("managerial_c_score").value;
+            let managerialncscore = document.getElementById("managerial_nc_score").value;
             let managerialnascore = document.getElementById("managerial_na_score").value;
             let supervisorycscore = document.getElementById("supervisory_c_score").value;
+            let supervisoryncscore = document.getElementById("supervisory_nc_score").value;
             let supervisorynascore = document.getElementById("supervisory_na_score").value;
 
             let workerc1 = document.getElementById("worker_1_c_score").value;
@@ -121,6 +126,16 @@ require_once "controller.php";
             let workerc8 = document.getElementById("worker_8_c_score").value;
             let workerc9 = document.getElementById("worker_9_c_score").value;
 
+            let workernc1 = document.getElementById("worker_1_nc_score").value;
+            let workernc2 = document.getElementById("worker_2_nc_score").value;
+            let workernc3 = document.getElementById("worker_3_nc_score").value;
+            let workernc4 = document.getElementById("worker_4_nc_score").value;
+            let workernc5 = document.getElementById("worker_5_nc_score").value;
+            let workernc6 = document.getElementById("worker_6_nc_score").value;
+            let workernc7 = document.getElementById("worker_7_nc_score").value;
+            let workernc8 = document.getElementById("worker_8_nc_score").value;
+            let workernc9 = document.getElementById("worker_9_nc_score").value;
+
             let workerna1 = document.getElementById("worker_1_na_score").value;
             let workerna2 = document.getElementById("worker_2_na_score").value;
             let workerna3 = document.getElementById("worker_3_na_score").value;
@@ -132,11 +147,12 @@ require_once "controller.php";
             let workerna9 = document.getElementById("worker_9_na_score").value;
 
             let workerc = parseInt(workerc1) + parseInt(workerc2) + parseInt(workerc3) + parseInt(workerc4) + parseInt(workerc5) + parseInt(workerc6) + parseInt(workerc7) + parseInt(workerc8) + parseInt(workerc9);
+            let workernc = parseInt(workernc1) + parseInt(workernc2) + parseInt(workernc3) + parseInt(workernc4) + parseInt(workernc5) + parseInt(workernc6) + parseInt(workernc7) + parseInt(workernc8) + parseInt(workernc9);
             let workerna = parseInt(workerna1) + parseInt(workerna2) + parseInt(workerna3) + parseInt(workerna4) + parseInt(workerna5) + parseInt(workerna6) + parseInt(workerna7) + parseInt(workerna8) + parseInt(workerna9);
 
-            let progressEndValue = Math.round((((parseInt(managerialcscore) + parseInt(managerialnascore) + parseInt(supervisorycscore) + parseInt(supervisorynascore) + workerc + workerna) / 186) * 100));
+            let progressEndValue = Math.round((((parseInt(managerialcscore) + parseInt(managerialncscore) + parseInt(managerialnascore) + parseInt(supervisorycscore) + parseInt(supervisoryncscore) + parseInt(supervisorynascore) + workerc + workernc + workerna) / 186) * 100));
 
-            let speed = 50;
+            let speed = 0;
 
             let progress = setInterval(() => {
                 if (progressValue == progressEndValue) {
@@ -264,6 +280,7 @@ require_once "controller.php";
                                                                 foreach ($totalcna as $totalcnas) {
                                                             ?>
                                                                     <input type="hidden" id="doc_check_c_score" value="<?php echo htmlentities($totalcnas->doc_check_c_score); ?>">
+                                                                    <input type="hidden" id="doc_check_nc_score" value="<?php echo htmlentities($totalcnas->doc_check_nc_score); ?>">
                                                                     <input type="hidden" id="doc_check_na_score" value="<?php echo htmlentities($totalcnas->doc_check_na_score); ?>">
                                                             <?php }
                                                             } ?>
@@ -278,8 +295,10 @@ require_once "controller.php";
                                                                 foreach ($totalcna as $totalcnas) {
                                                             ?>
                                                                     <input type="hidden" id="general_c_score" value="<?php echo htmlentities($totalcnas->general_c_score); ?>">
+                                                                    <input type="hidden" id="general_nc_score" value="<?php echo htmlentities($totalcnas->general_nc_score); ?>">
                                                                     <input type="hidden" id="general_na_score" value="<?php echo htmlentities($totalcnas->general_na_score); ?>">
                                                                     <input type="hidden" id="high_risk_c_score" value="<?php echo htmlentities($totalcnas->high_risk_c_score); ?>">
+                                                                    <input type="hidden" id="high_risk_nc_score" value="<?php echo htmlentities($totalcnas->high_risk_nc_score); ?>">
                                                                     <input type="hidden" id="high_risk_na_score" value="<?php echo htmlentities($totalcnas->high_risk_na_score); ?>">
                                                             <?php }
                                                             } ?>
@@ -294,35 +313,46 @@ require_once "controller.php";
                                                                 foreach ($totalcna1 as $totalcnas1) {
                                                             ?>
                                                                     <input type="hidden" id="managerial_c_score" value="<?php echo htmlentities($totalcnas1->managerial_c_score); ?>">
+                                                                    <input type="hidden" id="managerial_nc_score" value="<?php echo htmlentities($totalcnas1->managerial_nc_score); ?>">
                                                                     <input type="hidden" id="managerial_na_score" value="<?php echo htmlentities($totalcnas1->managerial_na_score); ?>">
                                                                     <input type="hidden" id="supervisory_c_score" value="<?php echo htmlentities($totalcnas1->supervisory_c_score); ?>">
+                                                                    <input type="hidden" id="supervisory_nc_score" value="<?php echo htmlentities($totalcnas1->supervisory_nc_score); ?>">
                                                                     <input type="hidden" id="supervisory_na_score" value="<?php echo htmlentities($totalcnas1->supervisory_na_score); ?>">
 
                                                                     <input type="hidden" id="worker_1_c_score" value="<?php echo htmlentities($totalcnas1->worker_1_c_score); ?>">
+                                                                    <input type="hidden" id="worker_1_nc_score" value="<?php echo htmlentities($totalcnas1->worker_1_nc_score); ?>">
                                                                     <input type="hidden" id="worker_1_na_score" value="<?php echo htmlentities($totalcnas1->worker_1_na_score); ?>">
 
                                                                     <input type="hidden" id="worker_2_c_score" value="<?php echo htmlentities($totalcnas1->worker_2_c_score); ?>">
+                                                                    <input type="hidden" id="worker_2_nc_score" value="<?php echo htmlentities($totalcnas1->worker_2_nc_score); ?>">
                                                                     <input type="hidden" id="worker_2_na_score" value="<?php echo htmlentities($totalcnas1->worker_2_na_score); ?>">
 
                                                                     <input type="hidden" id="worker_3_c_score" value="<?php echo htmlentities($totalcnas1->worker_3_c_score); ?>">
+                                                                    <input type="hidden" id="worker_3_nc_score" value="<?php echo htmlentities($totalcnas1->worker_3_nc_score); ?>">
                                                                     <input type="hidden" id="worker_3_na_score" value="<?php echo htmlentities($totalcnas1->worker_3_na_score); ?>">
 
                                                                     <input type="hidden" id="worker_4_c_score" value="<?php echo htmlentities($totalcnas1->worker_4_c_score); ?>">
+                                                                    <input type="hidden" id="worker_4_nc_score" value="<?php echo htmlentities($totalcnas1->worker_4_nc_score); ?>">
                                                                     <input type="hidden" id="worker_4_na_score" value="<?php echo htmlentities($totalcnas1->worker_4_na_score); ?>">
 
                                                                     <input type="hidden" id="worker_5_c_score" value="<?php echo htmlentities($totalcnas1->worker_5_c_score); ?>">
+                                                                    <input type="hidden" id="worker_5_nc_score" value="<?php echo htmlentities($totalcnas1->worker_5_nc_score); ?>">
                                                                     <input type="hidden" id="worker_5_na_score" value="<?php echo htmlentities($totalcnas1->worker_5_na_score); ?>">
 
                                                                     <input type="hidden" id="worker_6_c_score" value="<?php echo htmlentities($totalcnas1->worker_6_c_score); ?>">
+                                                                    <input type="hidden" id="worker_6_nc_score" value="<?php echo htmlentities($totalcnas1->worker_6_nc_score); ?>">
                                                                     <input type="hidden" id="worker_6_na_score" value="<?php echo htmlentities($totalcnas1->worker_6_na_score); ?>">
 
                                                                     <input type="hidden" id="worker_7_c_score" value="<?php echo htmlentities($totalcnas1->worker_7_c_score); ?>">
+                                                                    <input type="hidden" id="worker_7_nc_score" value="<?php echo htmlentities($totalcnas1->worker_7_nc_score); ?>">
                                                                     <input type="hidden" id="worker_7_na_score" value="<?php echo htmlentities($totalcnas1->worker_7_na_score); ?>">
 
                                                                     <input type="hidden" id="worker_8_c_score" value="<?php echo htmlentities($totalcnas1->worker_8_c_score); ?>">
+                                                                    <input type="hidden" id="worker_8_nc_score" value="<?php echo htmlentities($totalcnas1->worker_8_nc_score); ?>">
                                                                     <input type="hidden" id="worker_8_na_score" value="<?php echo htmlentities($totalcnas1->worker_8_na_score); ?>">
 
                                                                     <input type="hidden" id="worker_9_c_score" value="<?php echo htmlentities($totalcnas1->worker_9_c_score); ?>">
+                                                                    <input type="hidden" id="worker_9_nc_score" value="<?php echo htmlentities($totalcnas1->worker_9_nc_score); ?>">
                                                                     <input type="hidden" id="worker_9_na_score" value="<?php echo htmlentities($totalcnas1->worker_9_na_score); ?>">
                                                             <?php }
                                                             } ?>
