@@ -211,6 +211,7 @@ if ($query->rowCount() > 0) {
                                             <div class="form-group" id="row">
                                                 <div class="col-sm-4 mb-3 mb-sm-0">
                                                     <input type="hidden" class="form-control form-control-user font-weight-bold" name="doc_check_c_score" id="doc_check_c_score" onchange="countSelected()">
+                                                    <input type="hidden" class="form-control form-control-user font-weight-bold" name="doc_check_nc_score" id="doc_check_nc_score" onchange="countSelected()">
                                                     <input type="hidden" class="form-control form-control-user font-weight-bold" name="doc_check_na_score" id="doc_check_na_score" onchange="countSelected()">
                                                     <input type="hidden" class="form-control form-control-user font-weight-bold" name="document_check_percentage" id="document_check_percentage" onchange="countSelected()">
                                                 </div>
@@ -308,18 +309,22 @@ if ($query->rowCount() > 0) {
 
         // document.getElementById('selectedTotal').innerHTML = totalScore;
         document.getElementById('doc_check_c_score').value = countC;
+        document.getElementById('doc_check_nc_score').value = countNC;
         document.getElementById('doc_check_na_score').value = countNA;
         document.getElementById('document_check_percentage').value = d;
     }
 
     var docCheckCScore = document.getElementById('doc_check_c_score');
+    var docCheckNCScore = document.getElementById('doc_check_nc_score');
     var docCheckNAScore = document.getElementById('doc_check_na_score');
     var docCheckPercent = document.getElementById('document_check_percentage');
     var doc_check_c = document.querySelectorAll('input[class="checkbox1"]:checked').length;
+    var doc_check_nc = document.querySelectorAll('input[class="checkbox2"]:checked').length;
     var doc_check_na = document.querySelectorAll('input[class="checkbox3"]:checked').length;
     var doc_check_percent = (doc_check_c / (57 - doc_check_na) * 20);
     let e = doc_check_percent.toFixed(2);
     docCheckCScore.setAttribute('value', doc_check_c);
+    docCheckNCScore.setAttribute('value', doc_check_nc);
     docCheckNAScore.setAttribute('value', doc_check_na);
     docCheckPercent.setAttribute('value', e);
 </script>

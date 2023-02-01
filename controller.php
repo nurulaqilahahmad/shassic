@@ -1006,6 +1006,7 @@ if (isset($_POST['save-document-check'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $doc_check_c_score = $_POST['doc_check_c_score'];
+    $doc_check_nc_score = $_POST['doc_check_nc_score'];
     $doc_check_na_score = $_POST['doc_check_na_score'];
     $document_check_percentage = $_POST['document_check_percentage'];
 
@@ -1019,10 +1020,11 @@ if (isset($_POST['save-document-check'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE document_check_subscore SET doc_check_c_score=:doc_check_c_score, doc_check_na_score=:doc_check_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE document_check_subscore SET doc_check_c_score=:doc_check_c_score, doc_check_nc_score=:doc_check_nc_score, doc_check_na_score=:doc_check_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':doc_check_c_score', $doc_check_c_score, PDO::PARAM_STR);
+            $update->bindParam(':doc_check_nc_score', $doc_check_nc_score, PDO::PARAM_STR);
             $update->bindParam(':doc_check_na_score', $doc_check_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -1094,6 +1096,7 @@ if (isset($_POST['save-document-check-from-history'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $doc_check_c_score = $_POST['doc_check_c_score'];
+    $doc_check_nc_score = $_POST['doc_check_nc_score'];
     $doc_check_na_score = $_POST['doc_check_na_score'];
     $document_check_percentage = $_POST['document_check_percentage'];
 
@@ -1107,10 +1110,11 @@ if (isset($_POST['save-document-check-from-history'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE document_check_subscore SET doc_check_c_score=:doc_check_c_score, doc_check_na_score=:doc_check_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE document_check_subscore SET doc_check_c_score=:doc_check_c_score, doc_check_nc_score=:doc_check_nc_score, doc_check_na_score=:doc_check_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':doc_check_c_score', $doc_check_c_score, PDO::PARAM_STR);
+            $update->bindParam(':doc_check_nc_score', $doc_check_nc_score, PDO::PARAM_STR);
             $update->bindParam(':doc_check_na_score', $doc_check_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -1177,96 +1181,12 @@ if (isset($_POST['save-document-check-from-history'])) {
     }
 }
 
-//if user click save-document-check-from-history button in assessment document check from history page
-// if (isset($_POST['save-document-check-from-history'])) {
-//     //getting the post value
-//     $assessee_id = $_POST['assessee_id'];
-//     $doc_check_c_score = $_POST['doc_check_c_score'];
-//     $doc_check_na_score = $_POST['doc_check_na_score'];
-//     $document_check_percentage = $_POST['document_check_percentage'];
-
-//     // query for data selection - workplace_inspection_subscore
-//     $sql = "SELECT * FROM document_check_subscore WHERE assessment_id=:assessee_id";
-//     $query = $dbh->prepare($sql);
-//     $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-//     $query->execute();
-//     $results = $query->fetchAll(PDO::FETCH_OBJ);
-
-//     if ($query->rowCount() > 0) {
-//         foreach ($results as $result) {
-//             //query for updation
-//             $con = "UPDATE document_check_subscore SET doc_check_c_score=:doc_check_c_score, doc_check_na_score=:doc_check_na_score WHERE assessment_id=:assessee_id";
-//             $update = $dbh->prepare($con);
-//             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-//             $update->bindParam(':doc_check_c_score', $doc_check_c_score, PDO::PARAM_STR);
-//             $update->bindParam(':doc_check_na_score', $doc_check_na_score, PDO::PARAM_STR);
-//             $update->execute();
-//         }
-//     }
-
-//     // query for data selection
-//     $sql = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
-//     $query = $dbh->prepare($sql);
-//     $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-//     $query->execute();
-//     $result = $query->fetchAll(PDO::FETCH_OBJ);
-
-//     if ($query->rowCount() > 0) {
-//         //query for updation
-//         $con = "UPDATE assessment SET document_check_percentage=:document_check_percentage WHERE assessee_id=:assessee_id";
-//         $update = $dbh->prepare($con);
-//         $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-//         $update->bindParam(':document_check_percentage', $document_check_percentage, PDO::PARAM_STR);
-//         $update->execute();
-//     }
-
-//     foreach ($_POST['document_check_checklist_id'] as $document_check_checklist_id) {
-//         if (isset($_POST['doccheck_' . $document_check_checklist_id])) {
-//             $doccheck = $_POST['doccheck_' . $document_check_checklist_id];
-//             $doc_check = implode(', ', $doccheck);
-//         } else {
-//             $doc_check = "";
-//         }
-//         if (isset($_POST['remarks_' . $document_check_checklist_id])) {
-//             $remarks = $_POST['remarks_' . $document_check_checklist_id];
-//         } else {
-//             $remarks = '';
-//         }
-
-//         // query for data selection - document_check_assessment
-//         $sql1 = "SELECT * FROM document_check_assessment WHERE document_check_checklist_id=:document_check_checklist_id AND assessment_id=:assessee_id";
-//         $query1 = $dbh->prepare($sql1);
-//         $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-//         $query1->bindParam(':document_check_checklist_id', $document_check_checklist_id, PDO::PARAM_STR);
-//         $query1->execute();
-//         $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-//         if ($query1->rowCount() > 0) {
-//             foreach ($results1 as $result1) {
-//                 //query for updation - document_check_assessment
-//                 $con1 = "UPDATE document_check_assessment SET status=:doc_check, remarks=:remarks WHERE document_check_checklist_id=:document_check_checklist_id AND assessment_id=:assessee_id";
-//                 $update1 = $dbh->prepare($con1);
-//                 $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-//                 $update1->bindParam(':doc_check', $doc_check, PDO::PARAM_STR);
-//                 $update1->bindParam(':remarks', $remarks, PDO::PARAM_STR);
-//                 $update1->bindParam(':document_check_checklist_id', $document_check_checklist_id, PDO::PARAM_STR);
-//                 $update1->execute();
-
-//                 if ($update1) {
-//                     $infos['document-check-update-success'] = "Updated successfully";
-//                 } else {
-//                     $errors['document-check-update-fail'] = "Something went wrong";
-//                 }
-//             }
-//         }
-//     }
-// }
-
 //if user click save-workplace-inspection-general button in assessment workplace inspection page
 if (isset($_POST['save-workplace-inspection-general'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $general_c_score = $_POST['general_c_score'];
+    $general_nc_score = $_POST['general_nc_score'];
     $general_na_score = $_POST['general_na_score'];
 
     // query for data selection - workplace_inspection_subscore
@@ -1279,10 +1199,11 @@ if (isset($_POST['save-workplace-inspection-general'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE workplace_inspection_subscore SET general_c_score=:general_c_score, general_na_score=:general_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE workplace_inspection_subscore SET general_c_score=:general_c_score, general_nc_score=:general_nc_score, general_na_score=:general_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':general_c_score', $general_c_score, PDO::PARAM_STR);
+            $update->bindParam(':general_nc_score', $general_nc_score, PDO::PARAM_STR);
             $update->bindParam(':general_na_score', $general_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -1357,6 +1278,7 @@ if (isset($_POST['save-workplace-inspection-general-from-history'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $general_c_score = $_POST['general_c_score'];
+    $general_nc_score = $_POST['general_nc_score'];
     $general_na_score = $_POST['general_na_score'];
 
     // query for data selection - workplace_inspection_subscore
@@ -1369,10 +1291,11 @@ if (isset($_POST['save-workplace-inspection-general-from-history'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE workplace_inspection_subscore SET general_c_score=:general_c_score, general_na_score=:general_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE workplace_inspection_subscore SET general_c_score=:general_c_score, general_nc_score=:general_nc_score, general_na_score=:general_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':general_c_score', $general_c_score, PDO::PARAM_STR);
+            $update->bindParam(':general_nc_score', $general_nc_score, PDO::PARAM_STR);
             $update->bindParam(':general_na_score', $general_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -1394,93 +1317,6 @@ if (isset($_POST['save-workplace-inspection-general-from-history'])) {
                         $update1->bindParam(':general_na_score', $general_na_score, PDO::PARAM_STR);
                         $update1->execute();
                     }
-                }
-            }
-        }
-    }
-
-    foreach ($_POST['workplace_inspection_checklist_id'] as $workplace_inspection_checklist_id) {
-        if (isset($_POST['workinsp_' . $workplace_inspection_checklist_id])) {
-            $workinsp = $_POST['workinsp_' . $workplace_inspection_checklist_id];
-            $work_insp = implode(', ', $workinsp);
-        } else {
-            $work_insp = "";
-        }
-        if (isset($_POST['remarks_' . $workplace_inspection_checklist_id])) {
-            $remarks = $_POST['remarks_' . $workplace_inspection_checklist_id];
-        } else {
-            $remarks = '';
-        }
-
-        // query for data selection - workplace_inspection_assessment
-        $sql1 = "SELECT * FROM workplace_inspection_assessment WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
-        $query1 = $dbh->prepare($sql1);
-        $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        $query1->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
-        $query1->execute();
-        $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-        if ($query1->rowCount() > 0) {
-            foreach ($results1 as $result1) {
-                //query for updation - workplace_inspection_assessment
-                $con1 = "UPDATE workplace_inspection_assessment SET status=:work_insp, remarks=:remarks WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
-                $update1 = $dbh->prepare($con1);
-                $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $update1->bindParam(':work_insp', $work_insp, PDO::PARAM_STR);
-                $update1->bindParam(':remarks', $remarks, PDO::PARAM_STR);
-                $update1->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
-                $update1->execute();
-
-                if ($update1) {
-                    $infos['workplace-inspection-general-update-success'] = "Updated successfully";
-                } else {
-                    $errors['workplace-inspection-general-update-fail'] = "Something went wrong";
-                }
-            }
-            // header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
-        }
-    }
-}
-
-//if user click save-workplace-inspection-general-from-history button in assessment workplace inspection from history page
-if (isset($_POST['save-workplace-inspection-general-from-history'])) {
-    //getting the post value
-    $assessee_id = $_POST['assessee_id'];
-    $general_c_score = $_POST['general_c_score'];
-    $general_na_score = $_POST['general_na_score'];
-
-    // query for data selection - workplace_inspection_subscore
-    $sql = "SELECT * FROM workplace_inspection_subscore WHERE assessment_id=:assessee_id";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-    $query->execute();
-    $results = $query->fetchAll(PDO::FETCH_OBJ);
-
-    if ($query->rowCount() > 0) {
-        foreach ($results as $result) {
-            //query for updation
-            $con = "UPDATE workplace_inspection_subscore SET general_c_score=:general_c_score, general_na_score=:general_na_score WHERE assessment_id=:assessee_id";
-            $update = $dbh->prepare($con);
-            $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-            $update->bindParam(':general_c_score', $general_c_score, PDO::PARAM_STR);
-            $update->bindParam(':general_na_score', $general_na_score, PDO::PARAM_STR);
-            $update->execute();
-
-            if ($update) {
-                //query for data selection
-                $conn = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
-                $query1 = $dbh->prepare($conn);
-                $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $query1->execute();
-                $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-                if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET total_percentage=(((:general_c_score + '$result->high_risk_c_score') / (72 - (:general_na_score + '$result->high_risk_na_score')) * 60)+'$results1->document_check_percentage'+'$results1->personnel_interview_percentage'), 
-                    workplace_inspection_percentage=((:general_c_score + '$result->high_risk_c_score') / (72 - (:general_na_score + '$result->high_risk_na_score')) * 60) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update1->bindParam(':general_c_score', $general_c_score, PDO::PARAM_STR);
-                    $update1->bindParam(':general_na_score', $general_na_score, PDO::PARAM_STR);
-                    $update1->execute();
                 }
             }
         }
@@ -1534,6 +1370,7 @@ if (isset($_POST['save-workplace-inspection-high-risk'])) {
     //getting the post values
     $assessee_id = $_POST['assessee_id'];
     $high_risk_c_score = $_POST['high_risk_c_score'];
+    $high_risk_nc_score = $_POST['high_risk_nc_score'];
     $high_risk_na_score = $_POST['high_risk_na_score'];
 
     // query for data selection - workplace_inspection_subscore
@@ -1546,10 +1383,11 @@ if (isset($_POST['save-workplace-inspection-high-risk'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE workplace_inspection_subscore SET high_risk_c_score=:high_risk_c_score, high_risk_na_score=:high_risk_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE workplace_inspection_subscore SET high_risk_c_score=:high_risk_c_score, high_risk_nc_score=:high_risk_nc_score, high_risk_na_score=:high_risk_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':high_risk_c_score', $high_risk_c_score, PDO::PARAM_STR);
+            $update->bindParam(':high_risk_nc_score', $high_risk_nc_score, PDO::PARAM_STR);
             $update->bindParam(':high_risk_na_score', $high_risk_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -1676,6 +1514,7 @@ if (isset($_POST['save-workplace-inspection-high-risk-from-history'])) {
     //getting the post values
     $assessee_id = $_POST['assessee_id'];
     $high_risk_c_score = $_POST['high_risk_c_score'];
+    $high_risk_nc_score = $_POST['high_risk_nc_score'];
     $high_risk_na_score = $_POST['high_risk_na_score'];
 
     // query for data selection - workplace_inspection_subscore
@@ -1688,10 +1527,11 @@ if (isset($_POST['save-workplace-inspection-high-risk-from-history'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE workplace_inspection_subscore SET high_risk_c_score=:high_risk_c_score, high_risk_na_score=:high_risk_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE workplace_inspection_subscore SET high_risk_c_score=:high_risk_c_score, high_risk_nc_score=:high_risk_nc_score, high_risk_na_score=:high_risk_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':high_risk_c_score', $high_risk_c_score, PDO::PARAM_STR);
+            $update->bindParam(':high_risk_nc_score', $high_risk_nc_score, PDO::PARAM_STR);
             $update->bindParam(':high_risk_na_score', $high_risk_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -1713,145 +1553,6 @@ if (isset($_POST['save-workplace-inspection-high-risk-from-history'])) {
                         $update1->bindParam(':high_risk_na_score', $high_risk_na_score, PDO::PARAM_STR);
                         $update1->execute();
                     }
-                }
-            }
-        }
-    }
-
-    foreach ($_POST['workplace_inspection_checklist_id'] as $workplace_inspection_checklist_id) {
-        if (isset($_POST['highrisk1_' . $workplace_inspection_checklist_id])) {
-            $highrisk1 = $_POST['highrisk1_' . $workplace_inspection_checklist_id];
-            $high_risk_1 = implode(', ', $highrisk1);
-        } else {
-            $high_risk_1 = "";
-        }
-        if (isset($_POST['highrisk2_' . $workplace_inspection_checklist_id])) {
-            $highrisk2 = $_POST['highrisk2_' . $workplace_inspection_checklist_id];
-            $high_risk_2 = implode(', ', $highrisk2);
-        } else {
-            $high_risk_2 = "";
-        }
-        if (isset($_POST['highrisk3_' . $workplace_inspection_checklist_id])) {
-            $highrisk3 = $_POST['highrisk3_' . $workplace_inspection_checklist_id];
-            $high_risk_3 = implode(', ', $highrisk3);
-        } else {
-            $high_risk_3 = "";
-        }
-        if (isset($_POST['remarks_' . $workplace_inspection_checklist_id])) {
-            $remarks = $_POST['remarks_' . $workplace_inspection_checklist_id];
-        } else {
-            $remarks = '';
-        }
-
-        // query for data selection - workplace_inspection_high_risk_1
-        $sql1 = "SELECT * FROM workplace_inspection_high_risk_1 WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
-        $query1 = $dbh->prepare($sql1);
-        $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        $query1->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
-        $query1->execute();
-        $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-        if ($query1->rowCount() > 0) {
-            foreach ($results1 as $result1) {
-                //query for updation - workplace_inspection_high_risk_1
-                $con1 = "UPDATE workplace_inspection_high_risk_1 SET status=:high_risk_1 WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
-                $update1 = $dbh->prepare($con1);
-                $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $update1->bindParam(':high_risk_1', $high_risk_1, PDO::PARAM_STR);
-                $update1->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
-                $update1->execute();
-            }
-        }
-
-        // query for data selection - workplace_inspection_high_risk_2
-        $sql2 = "SELECT * FROM workplace_inspection_high_risk_2 WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
-        $query2 = $dbh->prepare($sql2);
-        $query2->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        $query2->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
-        $query2->execute();
-        $results2 = $query2->fetchAll(PDO::FETCH_OBJ);
-
-        if ($query2->rowCount() > 0) {
-            foreach ($results2 as $result2) {
-                //query for updation - workplace_inspection_high_risk_2
-                $con2 = "UPDATE workplace_inspection_high_risk_2 SET status=:high_risk_2 WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
-                // $con1 = "UPDATE workplace_inspection_high_risk_1 SET status=? WHERE assessment_id=:assessee_id AND workplace_inspection_checklist_id=?";
-                $update2 = $dbh->prepare($con2);
-                $update2->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $update2->bindParam(':high_risk_2', $high_risk_2, PDO::PARAM_STR);
-                $update2->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
-                $update2->execute();
-            }
-        }
-
-        // query for data selection - workplace_inspection_high_risk_3
-        $sql3 = "SELECT * FROM workplace_inspection_high_risk_3 WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
-        $query3 = $dbh->prepare($sql3);
-        $query3->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        $query3->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
-        $query3->execute();
-        $results3 = $query3->fetchAll(PDO::FETCH_OBJ);
-
-        if ($query3->rowCount() > 0) {
-            foreach ($results3 as $result3) {
-                //query for updation - workplace_inspection_high_risk_3
-                $con3 = "UPDATE workplace_inspection_high_risk_3 SET status=:high_risk_3, remarks=:remarks WHERE workplace_inspection_checklist_id=:workplace_inspection_checklist_id AND assessment_id=:assessee_id";
-                $update3 = $dbh->prepare($con3);
-                $update3->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $update3->bindParam(':high_risk_3', $high_risk_3, PDO::PARAM_STR);
-                $update3->bindParam(':remarks', $remarks, PDO::PARAM_STR);
-                $update3->bindParam(':workplace_inspection_checklist_id', $workplace_inspection_checklist_id, PDO::PARAM_STR);
-                $update3->execute();
-            }
-        }
-
-        if ($update1 || $update2 || $update3) {
-            $infos['workplace-insepection-high-risk-success'] = "Updated successfully";
-        } else {
-            $errors['workplace-insepection-high-risk-fail'] = "Something went wrong";
-        }
-    }
-}
-
-//if user click save-workplace-inspection-high-risk-from-history button in assessment workplace inspection from history page
-if (isset($_POST['save-workplace-inspection-high-risk-from-history'])) {
-    //getting the post values
-    $assessee_id = $_POST['assessee_id'];
-    $high_risk_c_score = $_POST['high_risk_c_score'];
-    $high_risk_na_score = $_POST['high_risk_na_score'];
-
-    // query for data selection - workplace_inspection_subscore
-    $sql = "SELECT * FROM workplace_inspection_subscore WHERE assessment_id=:assessee_id";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-    $query->execute();
-    $results = $query->fetchAll(PDO::FETCH_OBJ);
-
-    if ($query->rowCount() > 0) {
-        foreach ($results as $result) {
-            //query for updation
-            $con = "UPDATE workplace_inspection_subscore SET high_risk_c_score=:high_risk_c_score, high_risk_na_score=:high_risk_na_score WHERE assessment_id=:assessee_id";
-            $update = $dbh->prepare($con);
-            $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-            $update->bindParam(':high_risk_c_score', $high_risk_c_score, PDO::PARAM_STR);
-            $update->bindParam(':high_risk_na_score', $high_risk_na_score, PDO::PARAM_STR);
-            $update->execute();
-
-            if ($update) {
-                //query for data selection
-                $conn = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
-                $query1 = $dbh->prepare($conn);
-                $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $query1->execute();
-                $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-                if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET workplace_inspection_percentage=((:high_risk_c_score + '$result->general_c_score') / (72 - (:high_risk_na_score + '$result->general_na_score')) * 60) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                    $update1->bindParam(':high_risk_c_score', $high_risk_c_score, PDO::PARAM_STR);
-                    $update1->bindParam(':high_risk_na_score', $high_risk_na_score, PDO::PARAM_STR);
-                    $update1->execute();
                 }
             }
         }
@@ -1957,6 +1658,7 @@ if (isset($_POST['save-personnel-interview-managerial'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $managerial_c_score = $_POST['managerial_c_score'];
+    $managerial_nc_score = $_POST['managerial_nc_score'];
     $managerial_na_score = $_POST['managerial_na_score'];
 
     // query for data selection - personnel_interview_subscore
@@ -1969,10 +1671,11 @@ if (isset($_POST['save-personnel-interview-managerial'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE personnel_interview_subscore SET managerial_c_score=:managerial_c_score, managerial_na_score=:managerial_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE personnel_interview_subscore SET managerial_c_score=:managerial_c_score, managerial_nc_score=:managerial_nc_score, managerial_na_score=:managerial_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':managerial_c_score', $managerial_c_score, PDO::PARAM_STR);
+            $update->bindParam(':managerial_nc_score', $managerial_nc_score, PDO::PARAM_STR);
             $update->bindParam(':managerial_na_score', $managerial_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -2047,6 +1750,7 @@ if (isset($_POST['save-personnel-interview-managerial-from-history'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $managerial_c_score = $_POST['managerial_c_score'];
+    $managerial_nc_score = $_POST['managerial_nc_score'];
     $managerial_na_score = $_POST['managerial_na_score'];
 
     // query for data selection - personnel_interview_subscore
@@ -2059,10 +1763,11 @@ if (isset($_POST['save-personnel-interview-managerial-from-history'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE personnel_interview_subscore SET managerial_c_score=:managerial_c_score, managerial_na_score=:managerial_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE personnel_interview_subscore SET managerial_c_score=:managerial_c_score, managerial_nc_score=:managerial_nc_score, managerial_na_score=:managerial_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':managerial_c_score', $managerial_c_score, PDO::PARAM_STR);
+            $update->bindParam(':managerial_nc_score', $managerial_nc_score, PDO::PARAM_STR);
             $update->bindParam(':managerial_na_score', $managerial_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -2084,93 +1789,6 @@ if (isset($_POST['save-personnel-interview-managerial-from-history'])) {
                         $update1->bindParam(':managerial_na_score', $managerial_na_score, PDO::PARAM_STR);
                         $update1->execute();
                     }
-                }
-            }
-        }
-    }
-
-    foreach ($_POST['personnel_interview_checklist_id'] as $personnel_interview_checklist_id) {
-        if (isset($_POST['managerial_' . $personnel_interview_checklist_id])) {
-            $_managerial = $_POST['managerial_' . $personnel_interview_checklist_id];
-            $managerial = implode(', ', $_managerial);
-        } else {
-            $managerial = '';
-        }
-        if (isset($_POST['remarks_' . $personnel_interview_checklist_id])) {
-            $remarks = $_POST['remarks_' . $personnel_interview_checklist_id];
-        } else {
-            $remarks = '';
-        }
-
-        // query for data selection - personnel_interview_managerial
-        $sql1 = "SELECT * FROM personnel_interview_managerial WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-        $query1 = $dbh->prepare($sql1);
-        $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        $query1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-        $query1->execute();
-        $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-        if ($query1->rowCount() > 0) {
-            foreach ($results1 as $result1) {
-                //query for updation - workplace_inspection_high_risk_1
-                $con1 = "UPDATE personnel_interview_managerial SET status=:managerial, remarks=:remarks WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-                $update1 = $dbh->prepare($con1);
-                $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $update1->bindParam(':managerial', $managerial, PDO::PARAM_STR);
-                $update1->bindParam(':remarks', $remarks, PDO::PARAM_STR);
-                $update1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-                $update1->execute();
-
-                if ($update1) {
-                    $infos['personnel-interview-managerial-update-success'] = "Updated successfully";
-                } else {
-                    $errors['personnel-interview-managerial-update-fail'] = "Something went wrong";
-                }
-            }
-            // header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
-        }
-    }
-}
-
-//if user click save-personnel-interview-managerial-from-history button in assessment personnel interview from history page
-if (isset($_POST['save-personnel-interview-managerial-from-history'])) {
-    //getting the post value
-    $assessee_id = $_POST['assessee_id'];
-    $managerial_c_score = $_POST['managerial_c_score'];
-    $managerial_na_score = $_POST['managerial_na_score'];
-
-    // query for data selection - personnel_interview_subscore
-    $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id=:assessee_id";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-    $query->execute();
-    $results = $query->fetchAll(PDO::FETCH_OBJ);
-
-    if ($query->rowCount() > 0) {
-        foreach ($results as $result) {
-            //query for updation
-            $con = "UPDATE personnel_interview_subscore SET managerial_c_score=:managerial_c_score, managerial_na_score=:managerial_na_score WHERE assessment_id=:assessee_id";
-            $update = $dbh->prepare($con);
-            $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-            $update->bindParam(':managerial_c_score', $managerial_c_score, PDO::PARAM_STR);
-            $update->bindParam(':managerial_na_score', $managerial_na_score, PDO::PARAM_STR);
-            $update->execute();
-
-            if ($update) {
-                //query for data selection
-                $conn = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
-                $query1 = $dbh->prepare($conn);
-                $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $query1->execute();
-                $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-                if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=((:managerial_c_score+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - (:managerial_na_score+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                    $update1->bindParam(':managerial_c_score', $managerial_c_score, PDO::PARAM_STR);
-                    $update1->bindParam(':managerial_na_score', $managerial_na_score, PDO::PARAM_STR);
-                    $update1->execute();
                 }
             }
         }
@@ -2224,6 +1842,7 @@ if (isset($_POST['save-personnel-interview-supervisory'])) {
     //getting the post values
     $assessee_id = $_POST['assessee_id'];
     $supervisory_c_score = $_POST['supervisory_c_score'];
+    $supervisory_nc_score = $_POST['supervisory_nc_score'];
     $supervisory_na_score = $_POST['supervisory_na_score'];
 
     // query for data selection - personnel_interview_subscore
@@ -2236,10 +1855,11 @@ if (isset($_POST['save-personnel-interview-supervisory'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE personnel_interview_subscore SET supervisory_c_score=:supervisory_c_score, supervisory_na_score=:supervisory_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE personnel_interview_subscore SET supervisory_c_score=:supervisory_c_score, supervisory_nc_score=:supervisory_nc_score, supervisory_na_score=:supervisory_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':supervisory_c_score', $supervisory_c_score, PDO::PARAM_STR);
+            $update->bindParam(':supervisory_nc_score', $supervisory_nc_score, PDO::PARAM_STR);
             $update->bindParam(':supervisory_na_score', $supervisory_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -2365,6 +1985,7 @@ if (isset($_POST['save-personnel-interview-supervisory-from-history'])) {
     //getting the post values
     $assessee_id = $_POST['assessee_id'];
     $supervisory_c_score = $_POST['supervisory_c_score'];
+    $supervisory_nc_score = $_POST['supervisory_nc_score'];
     $supervisory_na_score = $_POST['supervisory_na_score'];
 
     // query for data selection - personnel_interview_subscore
@@ -2377,10 +1998,11 @@ if (isset($_POST['save-personnel-interview-supervisory-from-history'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE personnel_interview_subscore SET supervisory_c_score=:supervisory_c_score, supervisory_na_score=:supervisory_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE personnel_interview_subscore SET supervisory_c_score=:supervisory_c_score, supervisory_nc_score=:supervisory_nc_score, supervisory_na_score=:supervisory_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':supervisory_c_score', $supervisory_c_score, PDO::PARAM_STR);
+            $update->bindParam(':supervisory_nc_score', $supervisory_nc_score, PDO::PARAM_STR);
             $update->bindParam(':supervisory_na_score', $supervisory_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -2402,144 +2024,6 @@ if (isset($_POST['save-personnel-interview-supervisory-from-history'])) {
                         $update1->bindParam(':supervisory_na_score', $supervisory_na_score, PDO::PARAM_STR);
                         $update1->execute();
                     }
-                }
-            }
-        }
-    }
-
-    foreach ($_POST['personnel_interview_checklist_id'] as $personnel_interview_checklist_id) {
-        if (isset($_POST['supervisory1_' . $personnel_interview_checklist_id])) {
-            $supervisory1 = $_POST['supervisory1_' . $personnel_interview_checklist_id];
-            $supervisory_1 = implode(', ', $supervisory1);
-        } else {
-            $supervisory_1 = "";
-        }
-        if (isset($_POST['supervisory2_' . $personnel_interview_checklist_id])) {
-            $supervisory2 = $_POST['supervisory2_' . $personnel_interview_checklist_id];
-            $supervisory_2 = implode(', ', $supervisory2);
-        } else {
-            $supervisory_2 = "";
-        }
-        if (isset($_POST['supervisory3_' . $personnel_interview_checklist_id])) {
-            $supervisory3 = $_POST['supervisory3_' . $personnel_interview_checklist_id];
-            $supervisory_3 = implode(', ', $supervisory3);
-        } else {
-            $supervisory_3 = "";
-        }
-        if (isset($_POST['remarks_' . $personnel_interview_checklist_id])) {
-            $remarks = $_POST['remarks_' . $personnel_interview_checklist_id];
-        } else {
-            $remarks = '';
-        }
-
-        // query for data selection - personnel_interview_supervisory_1
-        $sql1 = "SELECT * FROM personnel_interview_supervisory_1 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-        $query1 = $dbh->prepare($sql1);
-        $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        $query1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-        $query1->execute();
-        $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-        if ($query1->rowCount() > 0) {
-            foreach ($results1 as $result1) {
-                //query for updation - personnel_interview_supervisory_1
-                $con1 = "UPDATE personnel_interview_supervisory_1 SET status=:supervisory_1 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-                $update1 = $dbh->prepare($con1);
-                $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $update1->bindParam(':supervisory_1', $supervisory_1, PDO::PARAM_STR);
-                $update1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-                $update1->execute();
-            }
-        }
-
-        // query for data selection - personnel_interview_supervisory_2
-        $sql2 = "SELECT * FROM personnel_interview_supervisory_2 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-        $query2 = $dbh->prepare($sql2);
-        $query2->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        $query2->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-        $query2->execute();
-        $results2 = $query2->fetchAll(PDO::FETCH_OBJ);
-
-        if ($query2->rowCount() > 0) {
-            foreach ($results2 as $result2) {
-                //query for updation - personnel_interview_supervisory_2
-                $con2 = "UPDATE personnel_interview_supervisory_2 SET status=:supervisory_2 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-                $update2 = $dbh->prepare($con2);
-                $update2->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $update2->bindParam(':supervisory_2', $supervisory_2, PDO::PARAM_STR);
-                $update2->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-                $update2->execute();
-            }
-        }
-
-        // query for data selection - personnel_interview_supervisory_3
-        $sql3 = "SELECT * FROM personnel_interview_supervisory_3 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-        $query3 = $dbh->prepare($sql3);
-        $query3->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        $query3->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-        $query3->execute();
-        $results3 = $query3->fetchAll(PDO::FETCH_OBJ);
-
-        if ($query3->rowCount() > 0) {
-            foreach ($results3 as $result3) {
-                //query for updation - personnel_interview_supervisory_3
-                $con3 = "UPDATE personnel_interview_supervisory_3 SET status=:supervisory_3, remarks=:remarks WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-                $update3 = $dbh->prepare($con3);
-                $update3->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $update3->bindParam(':supervisory_3', $supervisory_3, PDO::PARAM_STR);
-                $update3->bindParam(':remarks', $remarks, PDO::PARAM_STR);
-                $update3->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-                $update3->execute();
-            }
-        }
-
-        if ($update1 || $update2 || $update3) {
-            $infos['personnel-interview-supervisory-update-success'] = "Updated successfully";
-        } else {
-            $errors['personnel-interview-supervisory-update-fail'] = "Something went wrong";
-        }
-    }
-}
-
-//if user click save-personnel-interview-supervisory-from-history button in assessment personnel interview from history page
-if (isset($_POST['save-personnel-interview-supervisory-from-history'])) {
-    //getting the post values
-    $assessee_id = $_POST['assessee_id'];
-    $supervisory_c_score = $_POST['supervisory_c_score'];
-    $supervisory_na_score = $_POST['supervisory_na_score'];
-
-    // query for data selection - personnel_interview_subscore
-    $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id=:assessee_id";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-    $query->execute();
-    $results = $query->fetchAll(PDO::FETCH_OBJ);
-
-    if ($query->rowCount() > 0) {
-        foreach ($results as $result) {
-            //query for updation
-            $con = "UPDATE personnel_interview_subscore SET supervisory_c_score=:supervisory_c_score, supervisory_na_score=:supervisory_na_score WHERE assessment_id=:assessee_id";
-            $update = $dbh->prepare($con);
-            $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-            $update->bindParam(':supervisory_c_score', $supervisory_c_score, PDO::PARAM_STR);
-            $update->bindParam(':supervisory_na_score', $supervisory_na_score, PDO::PARAM_STR);
-            $update->execute();
-
-            if ($update) {
-                //query for data selection
-                $conn = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
-                $query1 = $dbh->prepare($conn);
-                $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $query1->execute();
-                $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-                if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=(('$result->managerial_c_score'+:supervisory_c_score+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+:supervisory_na_score+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                    $update1->bindParam(':supervisory_c_score', $supervisory_c_score, PDO::PARAM_STR);
-                    $update1->bindParam(':supervisory_na_score', $supervisory_na_score, PDO::PARAM_STR);
-                    $update1->execute();
                 }
             }
         }
@@ -2644,6 +2128,7 @@ if (isset($_POST['save-personnel-interview-worker-1'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $worker_1_c_score = $_POST['worker_1_c_score'];
+    $worker_1_nc_score = $_POST['worker_1_nc_score'];
     $worker_1_na_score = $_POST['worker_1_na_score'];
 
     // query for data selection - personnel_interview_subscore
@@ -2656,10 +2141,11 @@ if (isset($_POST['save-personnel-interview-worker-1'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_1_c_score=:worker_1_c_score, worker_1_na_score=:worker_1_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE personnel_interview_subscore SET worker_1_c_score=:worker_1_c_score, worker_1_nc_score=:worker_1_nc_score, worker_1_na_score=:worker_1_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':worker_1_c_score', $worker_1_c_score, PDO::PARAM_STR);
+            $update->bindParam(':worker_1_nc_score', $worker_1_nc_score, PDO::PARAM_STR);
             $update->bindParam(':worker_1_na_score', $worker_1_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -2734,6 +2220,7 @@ if (isset($_POST['save-personnel-interview-worker-1-from-history'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $worker_1_c_score = $_POST['worker_1_c_score'];
+    $worker_1_nc_score = $_POST['worker_1_nc_score'];
     $worker_1_na_score = $_POST['worker_1_na_score'];
 
     // query for data selection - personnel_interview_subscore
@@ -2746,10 +2233,11 @@ if (isset($_POST['save-personnel-interview-worker-1-from-history'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_1_c_score=:worker_1_c_score, worker_1_na_score=:worker_1_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE personnel_interview_subscore SET worker_1_c_score=:worker_1_c_score, worker_1_nc_score=:worker_1_nc_score, worker_1_na_score=:worker_1_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':worker_1_c_score', $worker_1_c_score, PDO::PARAM_STR);
+            $update->bindParam(':worker_1_nc_score', $worker_1_nc_score, PDO::PARAM_STR);
             $update->bindParam(':worker_1_na_score', $worker_1_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -2771,93 +2259,6 @@ if (isset($_POST['save-personnel-interview-worker-1-from-history'])) {
                         $update1->bindParam(':worker_1_na_score', $worker_1_na_score, PDO::PARAM_STR);
                         $update1->execute();
                     }
-                }
-            }
-        }
-    }
-
-    foreach ($_POST['personnel_interview_checklist_id'] as $personnel_interview_checklist_id) {
-        if (isset($_POST['worker1_' . $personnel_interview_checklist_id])) {
-            $worker_1 = $_POST['worker1_' . $personnel_interview_checklist_id];
-            $worker1 = implode(', ', $worker_1);
-        } else {
-            $worker1 = '';
-        }
-        if (isset($_POST['remarks_' . $personnel_interview_checklist_id])) {
-            $remarks = $_POST['remarks_' . $personnel_interview_checklist_id];
-        } else {
-            $remarks = '';
-        }
-
-        // query for data selection - personnel_interview_worker_1
-        $sql1 = "SELECT * FROM personnel_interview_worker_1 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-        $query1 = $dbh->prepare($sql1);
-        $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        $query1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-        $query1->execute();
-        $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-        if ($query1->rowCount() > 0) {
-            foreach ($results1 as $result1) {
-                //query for updation - personnel_interview_worker_1
-                $con1 = "UPDATE personnel_interview_worker_1 SET status=:worker1, remarks=:remarks WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-                $update1 = $dbh->prepare($con1);
-                $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $update1->bindParam(':worker1', $worker1, PDO::PARAM_STR);
-                $update1->bindParam(':remarks', $remarks, PDO::PARAM_STR);
-                $update1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-                $update1->execute();
-
-                if ($update1) {
-                    $infos['personnel-interview-worker-1-update-success'] = "Updated successfully";
-                } else {
-                    $errors['personnel-interview-worker-1-update-fail'] = "Something went wrong";
-                }
-            }
-            // header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
-        }
-    }
-}
-
-//if user click save-personnel-interview-worker-1-from-history button in assessment personnel interview from history page
-if (isset($_POST['save-personnel-interview-worker-1-from-history'])) {
-    //getting the post value
-    $assessee_id = $_POST['assessee_id'];
-    $worker_1_c_score = $_POST['worker_1_c_score'];
-    $worker_1_na_score = $_POST['worker_1_na_score'];
-
-    // query for data selection - personnel_interview_subscore
-    $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id=:assessee_id";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-    $query->execute();
-    $results = $query->fetchAll(PDO::FETCH_OBJ);
-
-    if ($query->rowCount() > 0) {
-        foreach ($results as $result) {
-            //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_1_c_score=:worker_1_c_score, worker_1_na_score=:worker_1_na_score WHERE assessment_id=:assessee_id";
-            $update = $dbh->prepare($con);
-            $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-            $update->bindParam(':worker_1_c_score', $worker_1_c_score, PDO::PARAM_STR);
-            $update->bindParam(':worker_1_na_score', $worker_1_na_score, PDO::PARAM_STR);
-            $update->execute();
-
-            if ($update) {
-                //query for data selection
-                $conn = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
-                $query1 = $dbh->prepare($conn);
-                $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $query1->execute();
-                $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-                if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+:worker_1_c_score+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+:worker_1_na_score+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_1_c_score', $worker_1_c_score, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_1_na_score', $worker_1_na_score, PDO::PARAM_STR);
-                    $update1->execute();
                 }
             }
         }
@@ -2911,6 +2312,7 @@ if (isset($_POST['save-personnel-interview-worker-2'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $worker_2_c_score = $_POST['worker_2_c_score'];
+    $worker_2_nc_score = $_POST['worker_2_nc_score'];
     $worker_2_na_score = $_POST['worker_2_na_score'];
 
     // query for data selection - personnel_interview_subscore
@@ -2923,10 +2325,11 @@ if (isset($_POST['save-personnel-interview-worker-2'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_2_c_score=:worker_2_c_score, worker_2_na_score=:worker_2_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE personnel_interview_subscore SET worker_2_c_score=:worker_2_c_score, worker_2_nc_score=:worker_2_nc_score, worker_2_na_score=:worker_2_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':worker_2_c_score', $worker_2_c_score, PDO::PARAM_STR);
+            $update->bindParam(':worker_2_nc_score', $worker_2_nc_score, PDO::PARAM_STR);
             $update->bindParam(':worker_2_na_score', $worker_2_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -3001,6 +2404,7 @@ if (isset($_POST['save-personnel-interview-worker-2-from-history'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $worker_2_c_score = $_POST['worker_2_c_score'];
+    $worker_2_nc_score = $_POST['worker_2_nc_score'];
     $worker_2_na_score = $_POST['worker_2_na_score'];
 
     // query for data selection - personnel_interview_subscore
@@ -3013,10 +2417,11 @@ if (isset($_POST['save-personnel-interview-worker-2-from-history'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_2_c_score=:worker_2_c_score, worker_2_na_score=:worker_2_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE personnel_interview_subscore SET worker_2_c_score=:worker_2_c_score, worker_2_nc_score=:worker_2_nc_score, worker_2_na_score=:worker_2_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':worker_2_c_score', $worker_2_c_score, PDO::PARAM_STR);
+            $update->bindParam(':worker_2_nc_score', $worker_2_nc_score, PDO::PARAM_STR);
             $update->bindParam(':worker_2_na_score', $worker_2_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -3038,93 +2443,6 @@ if (isset($_POST['save-personnel-interview-worker-2-from-history'])) {
                         $update1->bindParam(':worker_2_na_score', $worker_2_na_score, PDO::PARAM_STR);
                         $update1->execute();
                     }
-                }
-            }
-        }
-    }
-
-    foreach ($_POST['personnel_interview_checklist_id'] as $personnel_interview_checklist_id) {
-        if (isset($_POST['worker2_' . $personnel_interview_checklist_id])) {
-            $worker_2 = $_POST['worker2_' . $personnel_interview_checklist_id];
-            $worker2 = implode(', ', $worker_2);
-        } else {
-            $worker2 = '';
-        }
-        if (isset($_POST['remarks_' . $personnel_interview_checklist_id])) {
-            $remarks = $_POST['remarks_' . $personnel_interview_checklist_id];
-        } else {
-            $remarks = '';
-        }
-
-        // query for data selection - personnel_interview_worker_2
-        $sql1 = "SELECT * FROM personnel_interview_worker_2 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-        $query1 = $dbh->prepare($sql1);
-        $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        $query1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-        $query1->execute();
-        $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-        if ($query1->rowCount() > 0) {
-            foreach ($results1 as $result1) {
-                //query for updation - personnel_interview_worker_2
-                $con1 = "UPDATE personnel_interview_worker_2 SET status=:worker2, remarks=:remarks WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-                $update1 = $dbh->prepare($con1);
-                $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $update1->bindParam(':worker2', $worker2, PDO::PARAM_STR);
-                $update1->bindParam(':remarks', $remarks, PDO::PARAM_STR);
-                $update1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-                $update1->execute();
-
-                if ($update1) {
-                    $infos['personnel-interview-worker-2-update-success'] = "Updated successfully";
-                } else {
-                    $errors['personnel-interview-worker-2-update-fail'] = "Something went wrong";
-                }
-            }
-            // header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
-        }
-    }
-}
-
-//if user click save-personnel-interview-worker-2-from-history button in assessment personnel interview from history page
-if (isset($_POST['save-personnel-interview-worker-2-from-history'])) {
-    //getting the post value
-    $assessee_id = $_POST['assessee_id'];
-    $worker_2_c_score = $_POST['worker_2_c_score'];
-    $worker_2_na_score = $_POST['worker_2_na_score'];
-
-    // query for data selection - personnel_interview_subscore
-    $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id=:assessee_id";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-    $query->execute();
-    $results = $query->fetchAll(PDO::FETCH_OBJ);
-
-    if ($query->rowCount() > 0) {
-        foreach ($results as $result) {
-            //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_2_c_score=:worker_2_c_score, worker_2_na_score=:worker_2_na_score WHERE assessment_id=:assessee_id";
-            $update = $dbh->prepare($con);
-            $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-            $update->bindParam(':worker_2_c_score', $worker_2_c_score, PDO::PARAM_STR);
-            $update->bindParam(':worker_2_na_score', $worker_2_na_score, PDO::PARAM_STR);
-            $update->execute();
-
-            if ($update) {
-                //query for data selection
-                $conn = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
-                $query1 = $dbh->prepare($conn);
-                $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $query1->execute();
-                $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-                if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+:worker_2_c_score+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+:worker_2_na_score+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_2_c_score', $worker_2_c_score, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_2_na_score', $worker_2_na_score, PDO::PARAM_STR);
-                    $update1->execute();
                 }
             }
         }
@@ -3178,6 +2496,7 @@ if (isset($_POST['save-personnel-interview-worker-3'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $worker_3_c_score = $_POST['worker_3_c_score'];
+    $worker_3_nc_score = $_POST['worker_3_nc_score'];
     $worker_3_na_score = $_POST['worker_3_na_score'];
 
     // query for data selection - personnel_interview_subscore
@@ -3190,10 +2509,11 @@ if (isset($_POST['save-personnel-interview-worker-3'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_3_c_score=:worker_3_c_score, worker_3_na_score=:worker_3_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE personnel_interview_subscore SET worker_3_c_score=:worker_3_c_score, worker_3_nc_score=:worker_3_nc_score, worker_3_na_score=:worker_3_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':worker_3_c_score', $worker_3_c_score, PDO::PARAM_STR);
+            $update->bindParam(':worker_3_nc_score', $worker_3_nc_score, PDO::PARAM_STR);
             $update->bindParam(':worker_3_na_score', $worker_3_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -3268,6 +2588,7 @@ if (isset($_POST['save-personnel-interview-worker-3-from-history'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $worker_3_c_score = $_POST['worker_3_c_score'];
+    $worker_3_nc_score = $_POST['worker_3_nc_score'];
     $worker_3_na_score = $_POST['worker_3_na_score'];
 
     // query for data selection - personnel_interview_subscore
@@ -3280,10 +2601,11 @@ if (isset($_POST['save-personnel-interview-worker-3-from-history'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_3_c_score=:worker_3_c_score, worker_3_na_score=:worker_3_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE personnel_interview_subscore SET worker_3_c_score=:worker_3_c_score, worker_3_nc_score=:worker_3_nc_score, worker_3_na_score=:worker_3_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':worker_3_c_score', $worker_3_c_score, PDO::PARAM_STR);
+            $update->bindParam(':worker_3_nc_score', $worker_3_nc_score, PDO::PARAM_STR);
             $update->bindParam(':worker_3_na_score', $worker_3_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -3305,93 +2627,6 @@ if (isset($_POST['save-personnel-interview-worker-3-from-history'])) {
                         $update1->bindParam(':worker_3_na_score', $worker_3_na_score, PDO::PARAM_STR);
                         $update1->execute();
                     }
-                }
-            }
-        }
-    }
-
-    foreach ($_POST['personnel_interview_checklist_id'] as $personnel_interview_checklist_id) {
-        if (isset($_POST['worker3_' . $personnel_interview_checklist_id])) {
-            $worker_3 = $_POST['worker3_' . $personnel_interview_checklist_id];
-            $worker3 = implode(', ', $worker_3);
-        } else {
-            $worker3 = '';
-        }
-        if (isset($_POST['remarks_' . $personnel_interview_checklist_id])) {
-            $remarks = $_POST['remarks_' . $personnel_interview_checklist_id];
-        } else {
-            $remarks = '';
-        }
-
-        // query for data selection - personnel_interview_worker_3
-        $sql1 = "SELECT * FROM personnel_interview_worker_3 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-        $query1 = $dbh->prepare($sql1);
-        $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        $query1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-        $query1->execute();
-        $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-        if ($query1->rowCount() > 0) {
-            foreach ($results1 as $result1) {
-                //query for updation - personnel_interview_worker_3
-                $con1 = "UPDATE personnel_interview_worker_3 SET status=:worker3, remarks=:remarks WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-                $update1 = $dbh->prepare($con1);
-                $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $update1->bindParam(':worker3', $worker3, PDO::PARAM_STR);
-                $update1->bindParam(':remarks', $remarks, PDO::PARAM_STR);
-                $update1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-                $update1->execute();
-
-                if ($update1) {
-                    $infos['personnel-interview-worker-3-update-success'] = "Updated successfully";
-                } else {
-                    $errors['personnel-interview-worker-3-update-fail'] = "Something went wrong";
-                }
-            }
-            // header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
-        }
-    }
-}
-
-//if user click save-personnel-interview-worker-3-from-history button in assessment personnel interview from history page
-if (isset($_POST['save-personnel-interview-worker-3-from-history'])) {
-    //getting the post value
-    $assessee_id = $_POST['assessee_id'];
-    $worker_3_c_score = $_POST['worker_3_c_score'];
-    $worker_3_na_score = $_POST['worker_3_na_score'];
-
-    // query for data selection - personnel_interview_subscore
-    $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id=:assessee_id";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-    $query->execute();
-    $results = $query->fetchAll(PDO::FETCH_OBJ);
-
-    if ($query->rowCount() > 0) {
-        foreach ($results as $result) {
-            //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_3_c_score=:worker_3_c_score, worker_3_na_score=:worker_3_na_score WHERE assessment_id=:assessee_id";
-            $update = $dbh->prepare($con);
-            $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-            $update->bindParam(':worker_3_c_score', $worker_3_c_score, PDO::PARAM_STR);
-            $update->bindParam(':worker_3_na_score', $worker_3_na_score, PDO::PARAM_STR);
-            $update->execute();
-
-            if ($update) {
-                //query for data selection
-                $conn = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
-                $query1 = $dbh->prepare($conn);
-                $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $query1->execute();
-                $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-                if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+:worker_3_c_score+'$result->worker_4_c_score'+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+:worker_3_na_score+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_3_c_score', $worker_3_c_score, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_3_na_score', $worker_3_na_score, PDO::PARAM_STR);
-                    $update1->execute();
                 }
             }
         }
@@ -3445,6 +2680,7 @@ if (isset($_POST['save-personnel-interview-worker-4'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $worker_4_c_score = $_POST['worker_4_c_score'];
+    $worker_4_nc_score = $_POST['worker_4_nc_score'];
     $worker_4_na_score = $_POST['worker_4_na_score'];
 
     // query for data selection - personnel_interview_subscore
@@ -3457,10 +2693,11 @@ if (isset($_POST['save-personnel-interview-worker-4'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_4_c_score=:worker_4_c_score, worker_4_na_score=:worker_4_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE personnel_interview_subscore SET worker_4_c_score=:worker_4_c_score, worker_4_nc_score=:worker_4_nc_score, worker_4_na_score=:worker_4_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':worker_4_c_score', $worker_4_c_score, PDO::PARAM_STR);
+            $update->bindParam(':worker_4_nc_score', $worker_4_nc_score, PDO::PARAM_STR);
             $update->bindParam(':worker_4_na_score', $worker_4_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -3535,6 +2772,7 @@ if (isset($_POST['save-personnel-interview-worker-4-from-history'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $worker_4_c_score = $_POST['worker_4_c_score'];
+    $worker_4_nc_score = $_POST['worker_4_nc_score'];
     $worker_4_na_score = $_POST['worker_4_na_score'];
 
     // query for data selection - personnel_interview_subscore
@@ -3547,10 +2785,11 @@ if (isset($_POST['save-personnel-interview-worker-4-from-history'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_4_c_score=:worker_4_c_score, worker_4_na_score=:worker_4_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE personnel_interview_subscore SET worker_4_c_score=:worker_4_c_score, worker_4_nc_score=:worker_4_nc_score, worker_4_na_score=:worker_4_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':worker_4_c_score', $worker_4_c_score, PDO::PARAM_STR);
+            $update->bindParam(':worker_4_nc_score', $worker_4_nc_score, PDO::PARAM_STR);
             $update->bindParam(':worker_4_na_score', $worker_4_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -3572,93 +2811,6 @@ if (isset($_POST['save-personnel-interview-worker-4-from-history'])) {
                         $update1->bindParam(':worker_4_na_score', $worker_4_na_score, PDO::PARAM_STR);
                         $update1->execute();
                     }
-                }
-            }
-        }
-    }
-
-    foreach ($_POST['personnel_interview_checklist_id'] as $personnel_interview_checklist_id) {
-        if (isset($_POST['worker4_' . $personnel_interview_checklist_id])) {
-            $worker_4 = $_POST['worker4_' . $personnel_interview_checklist_id];
-            $worker4 = implode(', ', $worker_4);
-        } else {
-            $worker4 = '';
-        }
-        if (isset($_POST['remarks_' . $personnel_interview_checklist_id])) {
-            $remarks = $_POST['remarks_' . $personnel_interview_checklist_id];
-        } else {
-            $remarks = '';
-        }
-
-        // query for data selection - personnel_interview_worker_4
-        $sql1 = "SELECT * FROM personnel_interview_worker_4 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-        $query1 = $dbh->prepare($sql1);
-        $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        $query1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-        $query1->execute();
-        $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-        if ($query1->rowCount() > 0) {
-            foreach ($results1 as $result1) {
-                //query for updation - personnel_interview_worker_4
-                $con1 = "UPDATE personnel_interview_worker_4 SET status=:worker4, remarks=:remarks WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-                $update1 = $dbh->prepare($con1);
-                $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $update1->bindParam(':worker4', $worker4, PDO::PARAM_STR);
-                $update1->bindParam(':remarks', $remarks, PDO::PARAM_STR);
-                $update1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-                $update1->execute();
-
-                if ($update1) {
-                    $infos['personnel-interview-worker-4-update-success'] = "Updated successfully";
-                } else {
-                    $errors['personnel-interview-worker-4-update-fail'] = "Something went wrong";
-                }
-            }
-            // header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
-        }
-    }
-}
-
-//if user click save-personnel-interview-worker-4-from-history button in assessment personnel interview from history page
-if (isset($_POST['save-personnel-interview-worker-4-from-history'])) {
-    //getting the post value
-    $assessee_id = $_POST['assessee_id'];
-    $worker_4_c_score = $_POST['worker_4_c_score'];
-    $worker_4_na_score = $_POST['worker_4_na_score'];
-
-    // query for data selection - personnel_interview_subscore
-    $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id=:assessee_id";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-    $query->execute();
-    $results = $query->fetchAll(PDO::FETCH_OBJ);
-
-    if ($query->rowCount() > 0) {
-        foreach ($results as $result) {
-            //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_4_c_score=:worker_4_c_score, worker_4_na_score=:worker_4_na_score WHERE assessment_id=:assessee_id";
-            $update = $dbh->prepare($con);
-            $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-            $update->bindParam(':worker_4_c_score', $worker_4_c_score, PDO::PARAM_STR);
-            $update->bindParam(':worker_4_na_score', $worker_4_na_score, PDO::PARAM_STR);
-            $update->execute();
-
-            if ($update) {
-                //query for data selection
-                $conn = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
-                $query1 = $dbh->prepare($conn);
-                $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $query1->execute();
-                $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-                if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+:worker_4_c_score+'$result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+:worker_4_na_score+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_4_c_score', $worker_4_c_score, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_4_na_score', $worker_4_na_score, PDO::PARAM_STR);
-                    $update1->execute();
                 }
             }
         }
@@ -3712,6 +2864,7 @@ if (isset($_POST['save-personnel-interview-worker-5'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $worker_5_c_score = $_POST['worker_5_c_score'];
+    $worker_5_nc_score = $_POST['worker_5_nc_score'];
     $worker_5_na_score = $_POST['worker_5_na_score'];
 
     // query for data selection - personnel_interview_subscore
@@ -3724,10 +2877,11 @@ if (isset($_POST['save-personnel-interview-worker-5'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_5_c_score=:worker_5_c_score, worker_5_na_score=:worker_5_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE personnel_interview_subscore SET worker_5_c_score=:worker_5_c_score, worker_5_nc_score=:worker_5_nc_score, worker_5_na_score=:worker_5_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':worker_5_c_score', $worker_5_c_score, PDO::PARAM_STR);
+            $update->bindParam(':worker_5_nc_score', $worker_5_nc_score, PDO::PARAM_STR);
             $update->bindParam(':worker_5_na_score', $worker_5_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -3801,6 +2955,7 @@ if (isset($_POST['save-personnel-interview-worker-5-from-history'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $worker_5_c_score = $_POST['worker_5_c_score'];
+    $worker_5_nc_score = $_POST['worker_5_nc_score'];
     $worker_5_na_score = $_POST['worker_5_na_score'];
 
     // query for data selection - personnel_interview_subscore
@@ -3813,10 +2968,11 @@ if (isset($_POST['save-personnel-interview-worker-5-from-history'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_5_c_score=:worker_5_c_score, worker_5_na_score=:worker_5_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE personnel_interview_subscore SET worker_5_c_score=:worker_5_c_score, worker_5_nc_score=:worker_5_nc_score, worker_5_na_score=:worker_5_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':worker_5_c_score', $worker_5_c_score, PDO::PARAM_STR);
+            $update->bindParam(':worker_5_nc_score', $worker_5_nc_score, PDO::PARAM_STR);
             $update->bindParam(':worker_5_na_score', $worker_5_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -3837,92 +2993,6 @@ if (isset($_POST['save-personnel-interview-worker-5-from-history'])) {
                         $update->bindParam(':worker_5_na_score', $worker_5_na_score, PDO::PARAM_STR);
                         $update1->execute();
                     }
-                }
-            }
-        }
-    }
-
-    foreach ($_POST['personnel_interview_checklist_id'] as $personnel_interview_checklist_id) {
-        if (isset($_POST['worker5_' . $personnel_interview_checklist_id])) {
-            $worker_5 = $_POST['worker5_' . $personnel_interview_checklist_id];
-            $worker5 = implode(', ', $worker_5);
-        } else {
-            $worker5 = '';
-        }
-        if (isset($_POST['remarks_' . $personnel_interview_checklist_id])) {
-            $remarks = $_POST['remarks_' . $personnel_interview_checklist_id];
-        } else {
-            $remarks = '';
-        }
-
-        // query for data selection - personnel_interview_worker_5
-        $sql1 = "SELECT * FROM personnel_interview_worker_5 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-        $query1 = $dbh->prepare($sql1);
-        $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        $query1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-        $query1->execute();
-        $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-        if ($query1->rowCount() > 0) {
-            foreach ($results1 as $result1) {
-                //query for updation - personnel_interview_worker_5
-                $con1 = "UPDATE personnel_interview_worker_5 SET status=:worker5, remarks=:remarks WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-                $update1 = $dbh->prepare($con1);
-                $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $update1->bindParam(':worker5', $worker5, PDO::PARAM_STR);
-                $update1->bindParam(':remarks', $remarks, PDO::PARAM_STR);
-                $update1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-                $update1->execute();
-
-                if ($update1) {
-                    $infos['personnel-interview-worker-5-update-success'] = "Updated successfully";
-                } else {
-                    $errors['personnel-interview-worker-5-update-fail'] = "Something went wrong";
-                }
-            }
-            // header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
-        }
-    }
-}
-
-//if user click save-personnel-interview-worker-5-from-history button in assessment personnel interview from history page
-if (isset($_POST['save-personnel-interview-worker-5-from-history'])) {
-    //getting the post value
-    $assessee_id = $_POST['assessee_id'];
-    $worker_5_c_score = $_POST['worker_5_c_score'];
-    $worker_5_na_score = $_POST['worker_5_na_score'];
-
-    // query for data selection - personnel_interview_subscore
-    $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id=:assessee_id";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-    $query->execute();
-    $results = $query->fetchAll(PDO::FETCH_OBJ);
-
-    if ($query->rowCount() > 0) {
-        foreach ($results as $result) {
-            //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_5_c_score=:worker_5_c_score, worker_5_na_score=:worker_5_na_score WHERE assessment_id=:assessee_id";
-            $update = $dbh->prepare($con);
-            $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-            $update->bindParam(':worker_5_c_score', $worker_5_c_score, PDO::PARAM_STR);
-            $update->bindParam(':worker_5_na_score', $worker_5_na_score, PDO::PARAM_STR);
-            $update->execute();
-
-            if ($update) {
-                //query for data selection
-                $conn = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
-                $query1 = $dbh->prepare($conn);
-                $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $query1->execute();
-                $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-                if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+:worker_5_c_score+'$result->worker_6_c_score'+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+:worker_5_na_score+'$result->worker_6_na_score'+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update->bindParam(':worker_5_c_score', $worker_5_c_score, PDO::PARAM_STR);
-                    $update->bindParam(':worker_5_na_score', $worker_5_na_score, PDO::PARAM_STR);
-                    $update1->execute();
                 }
             }
         }
@@ -3976,6 +3046,7 @@ if (isset($_POST['save-personnel-interview-worker-6'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $worker_6_c_score = $_POST['worker_6_c_score'];
+    $worker_6_nc_score = $_POST['worker_6_nc_score'];
     $worker_6_na_score = $_POST['worker_6_na_score'];
 
     // query for data selection - personnel_interview_subscore
@@ -3988,10 +3059,11 @@ if (isset($_POST['save-personnel-interview-worker-6'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_6_c_score=:worker_6_c_score, worker_6_na_score=:worker_6_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE personnel_interview_subscore SET worker_6_c_score=:worker_6_c_score, worker_6_nc_score=:worker_6_nc_score, worker_6_na_score=:worker_6_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':worker_6_c_score', $worker_6_c_score, PDO::PARAM_STR);
+            $update->bindParam(':worker_6_nc_score', $worker_6_nc_score, PDO::PARAM_STR);
             $update->bindParam(':worker_6_na_score', $worker_6_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -4066,6 +3138,7 @@ if (isset($_POST['save-personnel-interview-worker-6-from-history'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $worker_6_c_score = $_POST['worker_6_c_score'];
+    $worker_6_nc_score = $_POST['worker_6_nc_score'];
     $worker_6_na_score = $_POST['worker_6_na_score'];
 
     // query for data selection - personnel_interview_subscore
@@ -4078,10 +3151,11 @@ if (isset($_POST['save-personnel-interview-worker-6-from-history'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_6_c_score=:worker_6_c_score, worker_6_na_score=:worker_6_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE personnel_interview_subscore SET worker_6_c_score=:worker_6_c_score, worker_6_nc_score=:worker_6_nc_score, worker_6_na_score=:worker_6_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':worker_6_c_score', $worker_6_c_score, PDO::PARAM_STR);
+            $update->bindParam(':worker_6_nc_score', $worker_6_nc_score, PDO::PARAM_STR);
             $update->bindParam(':worker_6_na_score', $worker_6_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -4103,93 +3177,6 @@ if (isset($_POST['save-personnel-interview-worker-6-from-history'])) {
                         $update1->bindParam(':worker_6_na_score', $worker_6_na_score, PDO::PARAM_STR);
                         $update1->execute();
                     }
-                }
-            }
-        }
-    }
-
-    foreach ($_POST['personnel_interview_checklist_id'] as $personnel_interview_checklist_id) {
-        if (isset($_POST['worker6_' . $personnel_interview_checklist_id])) {
-            $worker_6 = $_POST['worker6_' . $personnel_interview_checklist_id];
-            $worker6 = implode(', ', $worker_6);
-        } else {
-            $worker6 = '';
-        }
-        if (isset($_POST['remarks_' . $personnel_interview_checklist_id])) {
-            $remarks = $_POST['remarks_' . $personnel_interview_checklist_id];
-        } else {
-            $remarks = '';
-        }
-
-        // query for data selection - personnel_interview_worker_6
-        $sql1 = "SELECT * FROM personnel_interview_worker_6 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-        $query1 = $dbh->prepare($sql1);
-        $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        $query1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-        $query1->execute();
-        $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-        if ($query1->rowCount() > 0) {
-            foreach ($results1 as $result1) {
-                //query for updation - personnel_interview_worker_6
-                $con1 = "UPDATE personnel_interview_worker_6 SET status=:worker6, remarks=:remarks WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-                $update1 = $dbh->prepare($con1);
-                $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $update1->bindParam(':worker6', $worker6, PDO::PARAM_STR);
-                $update1->bindParam(':remarks', $remarks, PDO::PARAM_STR);
-                $update1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-                $update1->execute();
-
-                if ($update1) {
-                    $infos['personnel-interview-worker-6-update-success'] = "Updated successfully";
-                } else {
-                    $errors['personnel-interview-worker-6-update-fail'] = "Something went wrong";
-                }
-            }
-            // header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
-        }
-    }
-}
-
-//if user click save-personnel-interview-worker-6-from-history button in assessment personnel interview from history page
-if (isset($_POST['save-personnel-interview-worker-6-from-history'])) {
-    //getting the post value
-    $assessee_id = $_POST['assessee_id'];
-    $worker_6_c_score = $_POST['worker_6_c_score'];
-    $worker_6_na_score = $_POST['worker_6_na_score'];
-
-    // query for data selection - personnel_interview_subscore
-    $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id=:assessee_id";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-    $query->execute();
-    $results = $query->fetchAll(PDO::FETCH_OBJ);
-
-    if ($query->rowCount() > 0) {
-        foreach ($results as $result) {
-            //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_6_c_score=:worker_6_c_score, worker_6_na_score=:worker_6_na_score WHERE assessment_id=:assessee_id";
-            $update = $dbh->prepare($con);
-            $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-            $update->bindParam(':worker_6_c_score', $worker_6_c_score, PDO::PARAM_STR);
-            $update->bindParam(':worker_6_na_score', $worker_6_na_score, PDO::PARAM_STR);
-            $update->execute();
-
-            if ($update) {
-                //query for data selection
-                $conn = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
-                $query1 = $dbh->prepare($conn);
-                $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $query1->execute();
-                $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-                if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'result->worker_5_c_score'+:worker_6_c_score+'$result->worker_7_c_score'+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+:worker_6_na_score+'$result->worker_7_na_score'+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_6_c_score', $worker_6_c_score, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_6_na_score', $worker_6_na_score, PDO::PARAM_STR);
-                    $update1->execute();
                 }
             }
         }
@@ -4243,6 +3230,7 @@ if (isset($_POST['save-personnel-interview-worker-7'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $worker_7_c_score = $_POST['worker_7_c_score'];
+    $worker_7_nc_score = $_POST['worker_7_nc_score'];
     $worker_7_na_score = $_POST['worker_7_na_score'];
 
     // query for data selection - personnel_interview_subscore
@@ -4255,10 +3243,11 @@ if (isset($_POST['save-personnel-interview-worker-7'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_7_c_score=:worker_7_c_score, worker_7_na_score=:worker_7_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE personnel_interview_subscore SET worker_7_c_score=:worker_7_c_score, worker_7_nc_score=:worker_7_nc_score, worker_7_na_score=:worker_7_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':worker_7_c_score', $worker_7_c_score, PDO::PARAM_STR);
+            $update->bindParam(':worker_7_nc_score', $worker_7_nc_score, PDO::PARAM_STR);
             $update->bindParam(':worker_7_na_score', $worker_7_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -4333,6 +3322,7 @@ if (isset($_POST['save-personnel-interview-worker-7-from-history'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $worker_7_c_score = $_POST['worker_7_c_score'];
+    $worker_7_nc_score = $_POST['worker_7_nc_score'];
     $worker_7_na_score = $_POST['worker_7_na_score'];
 
     // query for data selection - personnel_interview_subscore
@@ -4345,10 +3335,11 @@ if (isset($_POST['save-personnel-interview-worker-7-from-history'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_7_c_score=:worker_7_c_score, worker_7_na_score=:worker_7_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE personnel_interview_subscore SET worker_7_c_score=:worker_7_c_score, worker_7_nc_score=:worker_7_nc_score, worker_7_na_score=:worker_7_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':worker_7_c_score', $worker_7_c_score, PDO::PARAM_STR);
+            $update->bindParam(':worker_7_nc_score', $worker_7_nc_score, PDO::PARAM_STR);
             $update->bindParam(':worker_7_na_score', $worker_7_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -4370,93 +3361,6 @@ if (isset($_POST['save-personnel-interview-worker-7-from-history'])) {
                         $update1->bindParam(':worker_7_na_score', $worker_7_na_score, PDO::PARAM_STR);
                         $update1->execute();
                     }
-                }
-            }
-        }
-    }
-
-    foreach ($_POST['personnel_interview_checklist_id'] as $personnel_interview_checklist_id) {
-        if (isset($_POST['worker7_' . $personnel_interview_checklist_id])) {
-            $worker_7 = $_POST['worker7_' . $personnel_interview_checklist_id];
-            $worker7 = implode(', ', $worker_7);
-        } else {
-            $worker7 = '';
-        }
-        if (isset($_POST['remarks_' . $personnel_interview_checklist_id])) {
-            $remarks = $_POST['remarks_' . $personnel_interview_checklist_id];
-        } else {
-            $remarks = '';
-        }
-
-        // query for data selection - personnel_interview_worker_7
-        $sql1 = "SELECT * FROM personnel_interview_worker_7 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-        $query1 = $dbh->prepare($sql1);
-        $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        $query1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-        $query1->execute();
-        $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-        if ($query1->rowCount() > 0) {
-            foreach ($results1 as $result1) {
-                //query for updation - personnel_interview_worker_6
-                $con1 = "UPDATE personnel_interview_worker_7 SET status=:worker7, remarks=:remarks WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-                $update1 = $dbh->prepare($con1);
-                $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $update1->bindParam(':worker7', $worker7, PDO::PARAM_STR);
-                $update1->bindParam(':remarks', $remarks, PDO::PARAM_STR);
-                $update1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-                $update1->execute();
-
-                if ($update1) {
-                    $infos['personnel-interview-worker-7-update-success'] = "Updated successfully";
-                } else {
-                    $errors['personnel-interview-worker-7-update-fail'] = "Something went wrong";
-                }
-            }
-            // header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
-        }
-    }
-}
-
-//if user click save-personnel-interview-worker-7-from-history button in assessment personnel interview from history page
-if (isset($_POST['save-personnel-interview-worker-7-from-history'])) {
-    //getting the post value
-    $assessee_id = $_POST['assessee_id'];
-    $worker_7_c_score = $_POST['worker_7_c_score'];
-    $worker_7_na_score = $_POST['worker_7_na_score'];
-
-    // query for data selection - personnel_interview_subscore
-    $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id=:assessee_id";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-    $query->execute();
-    $results = $query->fetchAll(PDO::FETCH_OBJ);
-
-    if ($query->rowCount() > 0) {
-        foreach ($results as $result) {
-            //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_7_c_score=:worker_7_c_score, worker_7_na_score=:worker_7_na_score WHERE assessment_id=:assessee_id";
-            $update = $dbh->prepare($con);
-            $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-            $update->bindParam(':worker_7_c_score', $worker_7_c_score, PDO::PARAM_STR);
-            $update->bindParam(':worker_7_na_score', $worker_7_na_score, PDO::PARAM_STR);
-            $update->execute();
-
-            if ($update) {
-                //query for data selection
-                $conn = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
-                $query1 = $dbh->prepare($conn);
-                $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $query1->execute();
-                $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-                if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'result->worker_5_c_score'+'$result->worker_6_c_score'+:worker_7_c_score+'$result->worker_8_c_score'+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+:worker_7_na_score+'$result->worker_8_na_score'+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_7_c_score', $worker_7_c_score, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_7_na_score', $worker_7_na_score, PDO::PARAM_STR);
-                    $update1->execute();
                 }
             }
         }
@@ -4510,6 +3414,7 @@ if (isset($_POST['save-personnel-interview-worker-8'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $worker_8_c_score = $_POST['worker_8_c_score'];
+    $worker_8_nc_score = $_POST['worker_8_nc_score'];
     $worker_8_na_score = $_POST['worker_8_na_score'];
 
     // query for data selection - personnel_interview_subscore
@@ -4522,10 +3427,11 @@ if (isset($_POST['save-personnel-interview-worker-8'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_8_c_score=:worker_8_c_score, worker_8_na_score=:worker_8_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE personnel_interview_subscore SET worker_8_c_score=:worker_8_c_score, worker_8_nc_score=:worker_8_nc_score,  worker_8_na_score=:worker_8_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':worker_8_c_score', $worker_8_c_score, PDO::PARAM_STR);
+            $update->bindParam(':worker_8_nc_score', $worker_8_nc_score, PDO::PARAM_STR);
             $update->bindParam(':worker_8_na_score', $worker_8_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -4600,6 +3506,7 @@ if (isset($_POST['save-personnel-interview-worker-8-from-history'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $worker_8_c_score = $_POST['worker_8_c_score'];
+    $worker_8_nc_score = $_POST['worker_8_nc_score'];
     $worker_8_na_score = $_POST['worker_8_na_score'];
 
     // query for data selection - personnel_interview_subscore
@@ -4612,10 +3519,11 @@ if (isset($_POST['save-personnel-interview-worker-8-from-history'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_8_c_score=:worker_8_c_score, worker_8_na_score=:worker_8_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE personnel_interview_subscore SET worker_8_c_score=:worker_8_c_score, worker_8_nc_score=:worker_8_nc_score, worker_8_na_score=:worker_8_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':worker_8_c_score', $worker_8_c_score, PDO::PARAM_STR);
+            $update->bindParam(':worker_8_nc_score', $worker_8_nc_score, PDO::PARAM_STR);
             $update->bindParam(':worker_8_na_score', $worker_8_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -4637,93 +3545,6 @@ if (isset($_POST['save-personnel-interview-worker-8-from-history'])) {
                         $update1->bindParam(':worker_8_na_score', $worker_8_na_score, PDO::PARAM_STR);
                         $update1->execute();
                     }
-                }
-            }
-        }
-    }
-
-    foreach ($_POST['personnel_interview_checklist_id'] as $personnel_interview_checklist_id) {
-        if (isset($_POST['worker8_' . $personnel_interview_checklist_id])) {
-            $worker_8 = $_POST['worker8_' . $personnel_interview_checklist_id];
-            $worker8 = implode(', ', $worker_8);
-        } else {
-            $worker8 = '';
-        }
-        if (isset($_POST['remarks_' . $personnel_interview_checklist_id])) {
-            $remarks = $_POST['remarks_' . $personnel_interview_checklist_id];
-        } else {
-            $remarks = '';
-        }
-
-        // query for data selection - personnel_interview_worker_8
-        $sql1 = "SELECT * FROM personnel_interview_worker_8 WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-        $query1 = $dbh->prepare($sql1);
-        $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-        $query1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-        $query1->execute();
-        $results1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-        if ($query1->rowCount() > 0) {
-            foreach ($results1 as $result1) {
-                //query for updation - personnel_interview_worker_8
-                $con1 = "UPDATE personnel_interview_worker_8 SET status=:worker8, remarks=:remarks WHERE personnel_interview_checklist_id=:personnel_interview_checklist_id AND assessment_id=:assessee_id";
-                $update1 = $dbh->prepare($con1);
-                $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $update1->bindParam(':worker8', $worker8, PDO::PARAM_STR);
-                $update1->bindParam(':remarks', $remarks, PDO::PARAM_STR);
-                $update1->bindParam(':personnel_interview_checklist_id', $personnel_interview_checklist_id, PDO::PARAM_STR);
-                $update1->execute();
-
-                if ($update1) {
-                    $infos['personnel-interview-worker-8-update-success'] = "Updated successfully";
-                } else {
-                    $errors['personnel-interview-worker-8-update-fail'] = "Something went wrong";
-                }
-            }
-            // header("location: assessment-workplace-inspection.php?assessee_id=" . $assessee_id . "&info=" . $info);
-        }
-    }
-}
-
-//if user click save-personnel-interview-worker-8-from-history button in assessment personnel interview from history page
-if (isset($_POST['save-personnel-interview-worker-8-from-history'])) {
-    //getting the post value
-    $assessee_id = $_POST['assessee_id'];
-    $worker_8_c_score = $_POST['worker_8_c_score'];
-    $worker_8_na_score = $_POST['worker_8_na_score'];
-
-    // query for data selection - personnel_interview_subscore
-    $sql = "SELECT * FROM personnel_interview_subscore WHERE assessment_id=:assessee_id";
-    $query = $dbh->prepare($sql);
-    $query->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-    $query->execute();
-    $results = $query->fetchAll(PDO::FETCH_OBJ);
-
-    if ($query->rowCount() > 0) {
-        foreach ($results as $result) {
-            //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_8_c_score=:worker_8_c_score, worker_8_na_score=:worker_8_na_score WHERE assessment_id=:assessee_id";
-            $update = $dbh->prepare($con);
-            $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-            $update->bindParam(':worker_8_c_score', $worker_8_c_score, PDO::PARAM_STR);
-            $update->bindParam(':worker_8_na_score', $worker_8_na_score, PDO::PARAM_STR);
-            $update->execute();
-
-            if ($update) {
-                //query for data selection
-                $conn = "SELECT * FROM assessment WHERE assessee_id=:assessee_id";
-                $query1 = $dbh->prepare($conn);
-                $query1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                $query1->execute();
-                $result1 = $query1->fetchAll(PDO::FETCH_OBJ);
-
-                if ($query1->rowCount() > 0) {
-                    $conn1 = "UPDATE assessment SET personnel_interview_percentage=(('$result->managerial_c_score'+'$result->supervisory_c_score'+'$result->worker_1_c_score'+'$result->worker_2_c_score'+'$result->worker_3_c_score'+'$result->worker_4_c_score'+'result->worker_5_c_score'+'$result->worker_6_c_score'+'$result->worker_7_c_score'+:worker_8_c_score+'$result->worker_9_c_score') / (186 - ('$result->managerial_na_score'+'$result->supervisory_na_score'+'$result->worker_1_na_score'+'$result->worker_2_na_score'+'$result->worker_3_na_score'+'$result->worker_4_na_score'+'$result->worker_5_na_score'+'$result->worker_6_na_score'+'$result->worker_7_na_score'+:worker_8_na_score+'$result->worker_9_na_score')) * 20) WHERE assessee_id=:assessee_id";
-                    $update1 = $dbh->prepare($conn1);
-                    $update1->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_8_c_score', $worker_8_c_score, PDO::PARAM_STR);
-                    $update1->bindParam(':worker_8_na_score', $worker_8_na_score, PDO::PARAM_STR);
-                    $update1->execute();
                 }
             }
         }
@@ -4777,6 +3598,7 @@ if (isset($_POST['save-personnel-interview-worker-9'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $worker_9_c_score = $_POST['worker_9_c_score'];
+    $worker_9_nc_score = $_POST['worker_9_nc_score'];
     $worker_9_na_score = $_POST['worker_9_na_score'];
 
     // query for data selection - personnel_interview_subscore
@@ -4789,10 +3611,11 @@ if (isset($_POST['save-personnel-interview-worker-9'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_9_c_score=:worker_9_c_score, worker_9_na_score=:worker_9_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE personnel_interview_subscore SET worker_9_c_score=:worker_9_c_score, worker_9_nc_score=:worker_9_nc_score, worker_9_na_score=:worker_9_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':worker_9_c_score', $worker_9_c_score, PDO::PARAM_STR);
+            $update->bindParam(':worker_9_nc_score', $worker_9_nc_score, PDO::PARAM_STR);
             $update->bindParam(':worker_9_na_score', $worker_9_na_score, PDO::PARAM_STR);
             $update->execute();
 
@@ -4867,6 +3690,7 @@ if (isset($_POST['save-personnel-interview-worker-9-from-history'])) {
     //getting the post value
     $assessee_id = $_POST['assessee_id'];
     $worker_9_c_score = $_POST['worker_9_c_score'];
+    $worker_9_nc_score = $_POST['worker_9_nc_score'];
     $worker_9_na_score = $_POST['worker_9_na_score'];
 
     // query for data selection - personnel_interview_subscore
@@ -4879,10 +3703,11 @@ if (isset($_POST['save-personnel-interview-worker-9-from-history'])) {
     if ($query->rowCount() > 0) {
         foreach ($results as $result) {
             //query for updation
-            $con = "UPDATE personnel_interview_subscore SET worker_9_c_score=:worker_9_c_score, worker_9_na_score=:worker_9_na_score WHERE assessment_id=:assessee_id";
+            $con = "UPDATE personnel_interview_subscore SET worker_9_c_score=:worker_9_c_score, worker_9_nc_score=:worker_9_nc_score, worker_9_na_score=:worker_9_na_score WHERE assessment_id=:assessee_id";
             $update = $dbh->prepare($con);
             $update->bindParam(':assessee_id', $assessee_id, PDO::PARAM_STR);
             $update->bindParam(':worker_9_c_score', $worker_9_c_score, PDO::PARAM_STR);
+            $update->bindParam(':worker_9_nc_score', $worker_9_nc_score, PDO::PARAM_STR);
             $update->bindParam(':worker_9_na_score', $worker_9_na_score, PDO::PARAM_STR);
             $update->execute();
 

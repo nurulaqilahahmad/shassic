@@ -205,6 +205,7 @@ require_once "controller.php";
                                                 <div class="form-group" id="row">
                                                     <div class="col-sm-4 mb-3 mb-sm-0">
                                                         <input type="hidden" class="form-control form-control-user font-weight-bold" name="general_c_score" id="general_c_score" onchange="countSelected()">
+                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="general_nc_score" id="general_nc_score" onchange="countSelected()">
                                                         <input type="hidden" class="form-control form-control-user font-weight-bold" name="general_na_score" id="general_na_score" onchange="countSelected()">
                                                     </div>
                                                     <div class="col-sm-4 mb-3 mb-sm-0">
@@ -373,6 +374,7 @@ require_once "controller.php";
                                                 <div class="form-group" id="row">
                                                     <div class="col-sm-4 mb-3 mb-sm-0">
                                                         <input type="hidden" class="form-control form-control-user font-weight-bold" name="high_risk_c_score" id="high_risk_c_score" onchange="countSelected()">
+                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="high_risk_nc_score" id="high_risk_nc_score" onchange="countSelected()">
                                                         <input type="hidden" class="form-control form-control-user font-weight-bold" name="high_risk_na_score" id="high_risk_na_score" onchange="countSelected()">
                                                     </div>
                                                     <div class="col-sm-4 mb-3 mb-sm-0">
@@ -569,35 +571,34 @@ require_once "controller.php";
                 document.getElementById('selectedNA4').innerHTML = countNA4;
 
                 totalScore = countC + countNC + countNA;
-                // document.getElementById('selectedTotal').innerHTML = totalScore;
-                // document.getElementById('general_score').value = totalScore;
-                // workInsp_general = (countC / (9 - countNA));
-                // let g = workInsp_general.toFixed(2);
                 document.getElementById('general_c_score').value = countC;
+                document.getElementById('general_nc_score').value = countNC;
                 document.getElementById('general_na_score').value = countNA;
 
                 totalScore2 = countC2 + countNC2 + countNA2 + countC3 + countNC3 + countNA3 + countC4 + countNC4 + countNA4;
-                // document.getElementById('selectedTotal2').innerHTML = totalScore2;
-                // highrisk1 = (countC2 / (21 - countNA2));
-                // highrisk2 = (countC3 / (21 - countNA3));
-                // highrisk3 = (countC4 / (21 - countNA4));
-                // workInsp_highrisk = highrisk1 + highrisk2 + highrisk3;
                 document.getElementById('high_risk_c_score').value = countC2 + countC3 + countC4;
+                document.getElementById('high_risk_nc_score').value = countNC2 + countNC3 + countNC4;
                 document.getElementById('high_risk_na_score').value = countNA2 + countNA3 + countNA4;
             }
 
             var generalCScore = document.getElementById('general_c_score');
+            var generalNCScore = document.getElementById('general_nc_score');
             var generalNAScore = document.getElementById('general_na_score');
             var general_c = document.querySelectorAll('input[class="checkbox1"]:checked').length;
+            var general_nc = document.querySelectorAll('input[class="checkbox2"]:checked').length;
             var general_na = document.querySelectorAll('input[class="checkbox3"]:checked').length;
             generalCScore.setAttribute('value', general_c);
+            generalNCScore.setAttribute('value', general_nc);
             generalNAScore.setAttribute('value', general_na);
 
             var highRiskCScore = document.getElementById('high_risk_c_score');
+            var highRiskNCScore = document.getElementById('high_risk_nc_score');
             var highRiskNAScore = document.getElementById('high_risk_na_score');
             var highrisk_c = document.querySelectorAll('input[class="checkbox4"]:checked').length + document.querySelectorAll('input[class="checkbox7"]:checked').length + document.querySelectorAll('input[class="checkbox10"]:checked').length;
+            var highrisk_nc = document.querySelectorAll('input[class="checkbox5"]:checked').length + document.querySelectorAll('input[class="checkbox8"]:checked').length + document.querySelectorAll('input[class="checkbox11"]:checked').length;
             var highrisk_na = document.querySelectorAll('input[class="checkbox6"]:checked').length + document.querySelectorAll('input[class="checkbox9"]:checked').length + document.querySelectorAll('input[class="checkbox12"]:checked').length;
             highRiskCScore.setAttribute('value', highrisk_c);
+            highRiskNCScore.setAttribute('value', highrisk_nc);
             highRiskNAScore.setAttribute('value', highrisk_na);
         </script>
 
