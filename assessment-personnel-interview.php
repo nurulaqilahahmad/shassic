@@ -204,6 +204,7 @@ require_once "controller.php";
                                                 <div class="form-group" id="row">
                                                     <div class="col-sm-4 mb-3 mb-sm-0">
                                                         <input type="hidden" class="form-control form-control-user font-weight-bold" name="managerial_c_score" id="managerial_c_score" onchange="countSelected()">
+                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="managerial_nc_score" id="managerial_nc_score" onchange="countSelected()">
                                                         <input type="hidden" class="form-control form-control-user font-weight-bold" name="managerial_na_score" id="managerial_na_score" onchange="countSelected()">
                                                     </div>
                                                     <div class="col-sm-4 mb-3 mb-sm-0">
@@ -367,6 +368,7 @@ require_once "controller.php";
                                                 <div class="form-group" id="row">
                                                     <div class="col-sm-4 mb-3 mb-sm-0">
                                                         <input type="hidden" class="form-control form-control-user font-weight-bold" name="supervisory_c_score" id="supervisory_c_score" onchange="countSelected()">
+                                                        <input type="hidden" class="form-control form-control-user font-weight-bold" name="supervisory_nc_score" id="supervisory_nc_score" onchange="countSelected()">
                                                         <input type="hidden" class="form-control form-control-user font-weight-bold" name="supervisory_na_score" id="supervisory_na_score" onchange="countSelected()">
                                                     </div>
                                                     <div class="col-sm-4 mb-3 mb-sm-0">
@@ -478,6 +480,7 @@ require_once "controller.php";
                                                     <div class="form-group" id="row">
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_1_c_score" id="worker_1_c_score" onchange="countSelected()">
+                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_1_nc_score" id="worker_1_nc_score" onchange="countSelected()">
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_1_na_score" id="worker_1_na_score" onchange="countSelected()">
                                                         </div>
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
@@ -573,6 +576,7 @@ require_once "controller.php";
                                                     <div class="form-group" id="row">
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_2_c_score" id="worker_2_c_score" onchange="countSelected()">
+                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_2_nc_score" id="worker_2_nc_score" onchange="countSelected()">
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_2_na_score" id="worker_2_na_score" onchange="countSelected()">
                                                         </div>
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
@@ -668,6 +672,7 @@ require_once "controller.php";
                                                     <div class="form-group" id="row">
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_3_c_score" id="worker_3_c_score" onchange="countSelected()">
+                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_3_nc_score" id="worker_3_nc_score" onchange="countSelected()">
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_3_na_score" id="worker_3_na_score" onchange="countSelected()">
                                                         </div>
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
@@ -763,6 +768,7 @@ require_once "controller.php";
                                                     <div class="form-group" id="row">
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_4_c_score" id="worker_4_c_score" onchange="countSelected()">
+                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_4_nc_score" id="worker_4_nc_score" onchange="countSelected()">
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_4_na_score" id="worker_4_na_score" onchange="countSelected()">
                                                         </div>
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
@@ -858,6 +864,7 @@ require_once "controller.php";
                                                     <div class="form-group" id="row">
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_5_c_score" id="worker_5_c_score" onchange="countSelected()">
+                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_5_nc_score" id="worker_5_nc_score" onchange="countSelected()">
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_5_na_score" id="worker_5_na_score" onchange="countSelected()">
                                                         </div>
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
@@ -953,6 +960,7 @@ require_once "controller.php";
                                                     <div class="form-group" id="row">
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_6_c_score" id="worker_6_c_score" onchange="countSelected()">
+                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_6_nc_score" id="worker_6_nc_score" onchange="countSelected()">
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_6_na_score" id="worker_6_na_score" onchange="countSelected()">
                                                         </div>
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
@@ -1048,6 +1056,7 @@ require_once "controller.php";
                                                     <div class="form-group" id="row">
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_7_c_score" id="worker_7_c_score" onchange="countSelected()">
+                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_7_nc_score" id="worker_7_nc_score" onchange="countSelected()">
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_7_na_score" id="worker_7_na_score" onchange="countSelected()">
                                                         </div>
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
@@ -1143,6 +1152,7 @@ require_once "controller.php";
                                                     <div class="form-group" id="row">
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_8_c_score" id="worker_8_c_score" onchange="countSelected()">
+                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_8_nc_score" id="worker_8_nc_score" onchange="countSelected()">
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_8_na_score" id="worker_8_na_score" onchange="countSelected()">
                                                         </div>
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
@@ -1238,6 +1248,7 @@ require_once "controller.php";
                                                     <div class="form-group" id="row">
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_9_c_score" id="worker_9_c_score" onchange="countSelected()">
+                                                            <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_9_nc_score" id="worker_9_nc_score" onchange="countSelected()">
                                                             <input type="hidden" class="form-control form-control-user font-weight-bold" name="worker_9_na_score" id="worker_9_na_score" onchange="countSelected()">
                                                         </div>
                                                         <div class="col-sm-4 mb-3 mb-sm-0">
@@ -1358,6 +1369,7 @@ require_once "controller.php";
 
                 totalScore = countC + countNC + countNA;
                 document.getElementById('managerial_c_score').value = countC;
+                document.getElementById('managerial_nc_score').value = countNC;
                 document.getElementById('managerial_na_score').value = countNA;
 
                 //supervisory 1
@@ -1456,6 +1468,7 @@ require_once "controller.php";
 
                 totalScore2 = countC2 + countNC2 + countNA2 + countC3 + countNC3 + countNA3 + countC4 + countNC4 + countNA4;
                 document.getElementById('supervisory_c_score').value = countC2 + countC3 + countC4;
+                document.getElementById('supervisory_nc_score').value = countNC2 + countNC3 + countNC4;
                 document.getElementById('supervisory_na_score').value = countNA2 + countNA3 + countNA4;
 
                 //worker 1
@@ -1492,6 +1505,7 @@ require_once "controller.php";
 
                 totalScore3 = countC5 + countNC5 + countNA5;
                 document.getElementById('worker_1_c_score').value = countC5;
+                document.getElementById('worker_1_nc_score').value = countNC5;
                 document.getElementById('worker_1_na_score').value = countNA5;
 
                 //worker 2
@@ -1528,6 +1542,7 @@ require_once "controller.php";
 
                 totalScore4 = countC6 + countNC6 + countNA6;
                 document.getElementById('worker_2_c_score').value = countC6;
+                document.getElementById('worker_2_nc_score').value = countNC6;
                 document.getElementById('worker_2_na_score').value = countNA6;
 
                 //worker 3
@@ -1564,6 +1579,7 @@ require_once "controller.php";
 
                 totalScore5 = countC7 + countNC7 + countNA7;
                 document.getElementById('worker_3_c_score').value = countC7;
+                document.getElementById('worker_3_nc_score').value = countNC7;
                 document.getElementById('worker_3_na_score').value = countNA7;
 
                 //worker 4
@@ -1600,6 +1616,7 @@ require_once "controller.php";
 
                 totalScore6 = countC8 + countNC8 + countNA8;
                 document.getElementById('worker_4_c_score').value = countC8;
+                document.getElementById('worker_4_nc_score').value = countNC8;
                 document.getElementById('worker_4_na_score').value = countNA8;
 
                 //worker 5
@@ -1636,6 +1653,7 @@ require_once "controller.php";
 
                 totalScore7 = countC9 + countNC9 + countNA9;
                 document.getElementById('worker_5_c_score').value = countC9;
+                document.getElementById('worker_5_nc_score').value = countNC9;
                 document.getElementById('worker_5_na_score').value = countNA9;
 
                 //worker 6
@@ -1672,6 +1690,7 @@ require_once "controller.php";
 
                 totalScore8 = countC10 + countNC10 + countNA10;
                 document.getElementById('worker_6_c_score').value = countC10;
+                document.getElementById('worker_6_nc_score').value = countNC10;
                 document.getElementById('worker_6_na_score').value = countNA10;
 
                 //worker 7
@@ -1708,6 +1727,7 @@ require_once "controller.php";
 
                 totalScore9 = countC11 + countNC11 + countNA11;
                 document.getElementById('worker_7_c_score').value = countC11;
+                document.getElementById('worker_7_nc_score').value = countNC11;
                 document.getElementById('worker_7_na_score').value = countNA11;
 
                 //worker 8
@@ -1744,6 +1764,7 @@ require_once "controller.php";
 
                 totalScore10 = countC12 + countNC12 + countNA12;
                 document.getElementById('worker_8_c_score').value = countC12;
+                document.getElementById('worker_8_nc_score').value = countNC12;
                 document.getElementById('worker_8_na_score').value = countNA12;
 
                 //worker 9
@@ -1780,84 +1801,118 @@ require_once "controller.php";
 
                 totalScore11 = countC13 + countNC13 + countNA13;
                 document.getElementById('worker_9_c_score').value = countC13;
+                document.getElementById('worker_9_nc_score').value = countNC13;
                 document.getElementById('worker_9_na_score').value = countNA13;
             }
 
             var managerialCScore = document.getElementById('managerial_c_score');
+            var managerialNCScore = document.getElementById('managerial_nc_score');
             var managerialNAScore = document.getElementById('managerial_na_score');
             var managerial_c = document.querySelectorAll('input[class="checkbox1"]:checked').length;
+            var managerial_nc = document.querySelectorAll('input[class="checkbox2"]:checked').length;
             var managerial_na = document.querySelectorAll('input[class="checkbox3"]:checked').length;
             managerialCScore.setAttribute('value', managerial_c);
+            managerialNCScore.setAttribute('value', managerial_nc);
             managerialNAScore.setAttribute('value', managerial_na);
 
             var supervisoryCScore = document.getElementById('supervisory_c_score');
+            var supervisoryNCScore = document.getElementById('supervisory_nc_score');
             var supervisoryNAScore = document.getElementById('supervisory_na_score');
             var supervisory_c = document.querySelectorAll('input[class="checkbox4"]:checked').length + document.querySelectorAll('input[class="checkbox7"]:checked').length + document.querySelectorAll('input[class="checkbox10"]:checked').length;
+            var supervisory_nc = document.querySelectorAll('input[class="checkbox5"]:checked').length + document.querySelectorAll('input[class="checkbox8"]:checked').length + document.querySelectorAll('input[class="checkbox11"]:checked').length;
             var supervisory_na = document.querySelectorAll('input[class="checkbox6"]:checked').length + document.querySelectorAll('input[class="checkbox9"]:checked').length + document.querySelectorAll('input[class="checkbox12"]:checked').length;
             supervisoryCScore.setAttribute('value', supervisory_c);
+            supervisoryNCScore.setAttribute('value', supervisory_nc);
             supervisoryNAScore.setAttribute('value', supervisory_na);
 
             var worker1CScore = document.getElementById('worker_1_c_score');
+            var worker1NCScore = document.getElementById('worker_1_nc_score');
             var worker1NAScore = document.getElementById('worker_1_na_score');
             var worker1_c = document.querySelectorAll('input[class="checkbox13"]:checked').length;
+            var worker1_nc = document.querySelectorAll('input[class="checkbox14"]:checked').length;
             var worker1_na = document.querySelectorAll('input[class="checkbox15"]:checked').length;
             worker1CScore.setAttribute('value', worker1_c);
+            worker1NCScore.setAttribute('value', worker1_nc);
             worker1NAScore.setAttribute('value', worker1_na);
 
             var worker2CScore = document.getElementById('worker_2_c_score');
+            var worker2NCScore = document.getElementById('worker_2_nc_score');
             var worker2NAScore = document.getElementById('worker_2_na_score');
             var worker2_c = document.querySelectorAll('input[class="checkbox16"]:checked').length;
+            var worker2_nc = document.querySelectorAll('input[class="checkbox17"]:checked').length;
             var worker2_na = document.querySelectorAll('input[class="checkbox18"]:checked').length;
             worker2CScore.setAttribute('value', worker2_c);
+            worker2NCScore.setAttribute('value', worker2_nc);
             worker2NAScore.setAttribute('value', worker2_na);
 
             var worker3CScore = document.getElementById('worker_3_c_score');
+            var worker3NCScore = document.getElementById('worker_3_nc_score');
             var worker3NAScore = document.getElementById('worker_3_na_score');
             var worker3_c = document.querySelectorAll('input[class="checkbox19"]:checked').length;
+            var worker3_nc = document.querySelectorAll('input[class="checkbox20"]:checked').length;
             var worker3_na = document.querySelectorAll('input[class="checkbox21"]:checked').length;
             worker3CScore.setAttribute('value', worker3_c);
+            worker3NCScore.setAttribute('value', worker3_nc);
             worker3NAScore.setAttribute('value', worker3_na);
 
             var worker4CScore = document.getElementById('worker_4_c_score');
+            var worker4NCScore = document.getElementById('worker_4_nc_score');
             var worker4NAScore = document.getElementById('worker_4_na_score');
             var worker4_c = document.querySelectorAll('input[class="checkbox22"]:checked').length;
+            var worker4_nc = document.querySelectorAll('input[class="checkbox23"]:checked').length;
             var worker4_na = document.querySelectorAll('input[class="checkbox24"]:checked').length;
             worker4CScore.setAttribute('value', worker4_c);
+            worker4NCScore.setAttribute('value', worker4_nc);
             worker4NAScore.setAttribute('value', worker4_na);
 
             var worker5CScore = document.getElementById('worker_5_c_score');
+            var worker5NCScore = document.getElementById('worker_5_nc_score');
             var worker5NAScore = document.getElementById('worker_5_na_score');
             var worker5_c = document.querySelectorAll('input[class="checkbox25"]:checked').length;
+            var worker5_nc = document.querySelectorAll('input[class="checkbox26"]:checked').length;
             var worker5_na = document.querySelectorAll('input[class="checkbox27"]:checked').length;
             worker5CScore.setAttribute('value', worker5_c);
+            worker5NCScore.setAttribute('value', worker5_nc);
             worker5NAScore.setAttribute('value', worker5_na);
 
             var worker6CScore = document.getElementById('worker_6_c_score');
+            var worker6NCScore = document.getElementById('worker_6_nc_score');
             var worker6NAScore = document.getElementById('worker_6_na_score');
             var worker6_c = document.querySelectorAll('input[class="checkbox28"]:checked').length;
+            var worker6_nc = document.querySelectorAll('input[class="checkbox29"]:checked').length;
             var worker6_na = document.querySelectorAll('input[class="checkbox30"]:checked').length;
             worker6CScore.setAttribute('value', worker6_c);
+            worker6NCScore.setAttribute('value', worker6_nc);
             worker6NAScore.setAttribute('value', worker6_na);
 
             var worker7CScore = document.getElementById('worker_7_c_score');
+            var worker7NCScore = document.getElementById('worker_7_nc_score');
             var worker7NAScore = document.getElementById('worker_7_na_score');
             var worker7_c = document.querySelectorAll('input[class="checkbox31"]:checked').length;
+            var worker7_nc = document.querySelectorAll('input[class="checkbox32"]:checked').length;
             var worker7_na = document.querySelectorAll('input[class="checkbox33"]:checked').length;
             worker7CScore.setAttribute('value', worker7_c);
+            worker7NCScore.setAttribute('value', worker7_nc);
             worker7NAScore.setAttribute('value', worker7_na);
 
             var worker8CScore = document.getElementById('worker_8_c_score');
+            var worker8NCScore = document.getElementById('worker_8_nc_score');
             var worker8NAScore = document.getElementById('worker_8_na_score');
             var worker8_c = document.querySelectorAll('input[class="checkbox34"]:checked').length;
+            var worker8_nc = document.querySelectorAll('input[class="checkbox35"]:checked').length;
             var worker8_na = document.querySelectorAll('input[class="checkbox36"]:checked').length;
             worker8CScore.setAttribute('value', worker8_c);
+            worker8NCScore.setAttribute('value', worker8_nc);
             worker8NAScore.setAttribute('value', worker8_na);
 
             var worker9CScore = document.getElementById('worker_9_c_score');
+            var worker9NCScore = document.getElementById('worker_9_nc_score');
             var worker9NAScore = document.getElementById('worker_9_na_score');
             var worker9_c = document.querySelectorAll('input[class="checkbox37"]:checked').length;
+            var worker9_nc = document.querySelectorAll('input[class="checkbox38"]:checked').length;
             var worker9_na = document.querySelectorAll('input[class="checkbox39"]:checked').length;
             worker9CScore.setAttribute('value', worker9_c);
+            worker9NCScore.setAttribute('value', worker9_nc);
             worker9NAScore.setAttribute('value', worker9_na);
         </script>
 
