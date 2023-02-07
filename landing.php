@@ -115,7 +115,7 @@ require_once "controller.php";
 
                                     <!-- Page Heading -->
                                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                                        <h1 class=" h1 mb-0 text-white font-weight-bold"><span>SHASSIC</span></h1>
+                                        <h1 class=" h1 mb-0 text-white font-weight-bold"><span>SHASSIC CALCULATOR</span></h1>
                                     </div>
 
                                     <!-- Content Row -->

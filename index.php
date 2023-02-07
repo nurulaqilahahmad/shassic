@@ -75,7 +75,7 @@
             <div class="container">
                 <div class="row justify-content-center">
                     <div class="col-lg-6 text-center">
-                        <h2 data-aos="fade-down">Welcome to <br><span>SHASSIC</span></h2>
+                        <h2 data-aos="fade-down">Welcome to <br><span>SHASSIC CALCULATOR</span></h2>
                         <p data-aos="fade-up">Safety and Health Assessment System in Construction, or SHASSIC, is an independent method to
                             assess and evaluate the safety and health performance of a contractor in construction works / projects.
                             The assessment shall cover 25% to 75% of a project’s physical progress and shall be inclusive of
