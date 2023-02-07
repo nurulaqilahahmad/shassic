@@ -98,7 +98,7 @@
                                                 <input type="text" class="form-control form-control-user font-weight-bold" name="username" id="username" placeholder="Username" required>
                                             </div>
                                             <div class="col-sm-6">
-                                                <input type="text" class="form-control form-control-user font-weight-bold" name="code" id="code" placeholder="Code" required>
+                                                <input type="text" class="form-control form-control-user font-weight-bold" name="code" id="code" placeholder="IC eg. 990104-07-5555" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
